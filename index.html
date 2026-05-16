@@ -2,314 +2,316 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Camino Portugués 2027</title>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --black:#0e0d0b;--dark:#161410;--border:#3a3630;
-  --muted:#8a8070;--warm:#c8b89a;--cream:#f0e8d8;
-  --gold:#c9922a;--glt:#e8b84b;
-  --green:#3a5c3a;--green2:#5a8c5a;--red:#8c3a2a;--sky:#4a7c9a;
-  --serif:'Libre Baskerville',Georgia,serif;
-  --sans:'DM Sans',system-ui,sans-serif;
+  --deep:#0b2540;--ocean:#1a4a6b;--wave:#2171a8;--horizon:#5aabcf;
+  --foam:#d6eef8;--sand:#e8d5a8;--sand-lt:#f5ead0;--sand-pale:#fdf8ee;
+  --coral:#d4603a;--coral-lt:#f0a882;--shell:#c8a87a;
+  --muted:#5a7a95;--ink:#0b1f30;--border:#cde2f0;--border-s:rgba(200,168,122,.3);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Barlow',system-ui,sans-serif;
 }
-html{scroll-behavior:smooth;background:#0e0d0b;}
-body{background:var(--black);color:var(--cream);font-family:var(--sans);font-weight:300;line-height:1.75;overflow-x:hidden;}
+html{scroll-behavior:smooth;}
+body{background:var(--sand-pale);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.75;overflow-x:hidden;}
 
 /* HERO */
-#hero{position:relative;height:100svh;min-height:520px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#050403;}
-.hbg{position:absolute;inset:0;}
-.hbg svg{width:100%;height:100%;display:block;}
-.hgrad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(5,4,3,.05) 0%,rgba(5,4,3,.97) 100%);z-index:1;}
-.hbody{position:relative;z-index:2;padding:0 1.4rem 2.5rem;}
-.heyebrow{display:flex;align-items:center;gap:.75rem;margin-bottom:1.1rem;}
-.heyebrow span{font-size:.63rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);}
-.hline{flex:1;height:1px;background:var(--gold);opacity:.3;}
-.h1{font-family:var(--serif);font-size:clamp(2.8rem,12vw,6.5rem);font-weight:400;line-height:.95;color:var(--cream);margin-bottom:1.1rem;}
-.h1 em{font-style:italic;color:var(--glt);}
-.hmeta{display:flex;align-items:center;gap:1rem;margin-bottom:1.3rem;flex-wrap:wrap;}
-.hstat .n{font-family:var(--serif);font-size:1.35rem;color:var(--cream);display:block;line-height:1;}
-.hstat .u{font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
-.hvl{width:1px;height:28px;background:var(--border);}
-.hcrew{display:flex;gap:.45rem;flex-wrap:wrap;}
-.pill{border:1px solid rgba(200,184,154,.22);color:var(--warm);padding:.26rem .8rem;border-radius:99px;font-size:.73rem;background:rgba(255,255,255,.04);}
-.pill.q{border-color:rgba(201,146,42,.35);color:var(--glt);}
-.sarrow{position:absolute;bottom:1.25rem;right:1.4rem;z-index:2;color:var(--muted);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;animation:fl 2.5s ease-in-out infinite;}
-@keyframes fl{0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
+#hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 1.5rem 0;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(180deg,#061828 0%,#0b2540 25%,#0f3558 45%,#1a4a6b 65%,#2171a8 82%,#3a8fc4 92%,#5aabcf 100%);}
+.hero-light{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:400px;background:radial-gradient(ellipse,rgba(255,220,160,.18) 0%,transparent 65%);}
+.hero-pat{position:absolute;inset:0;background-image:radial-gradient(circle at 15% 35%,rgba(91,171,207,.08) 0%,transparent 40%),radial-gradient(circle at 85% 25%,rgba(212,96,58,.06) 0%,transparent 30%);}
+.hero-waves{position:absolute;bottom:160px;left:0;right:0;width:100%;height:80px;opacity:.12;}
+.hero-beach{position:absolute;bottom:0;left:0;right:0;height:130px;background:linear-gradient(180deg,transparent 0%,rgba(232,213,168,.15) 40%,rgba(232,213,168,.55) 70%,var(--sand-lt) 100%);}
+.hero-content{position:relative;z-index:2;padding-bottom:3rem;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;margin-bottom:2rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(10px);padding:.32rem 1rem;border-radius:2rem;font-size:.63rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.7);}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--coral);flex-shrink:0;}
+.hero-h1{font-family:var(--serif);font-size:clamp(3rem,13vw,6.5rem);font-weight:400;color:#fff;line-height:.93;margin-bottom:.6rem;}
+.hero-h1 em{font-style:italic;color:var(--sand);}
+.hero-horizon{display:flex;align-items:center;gap:.85rem;margin:.9rem 0 1.1rem;}
+.hl{flex:1;height:1px;background:linear-gradient(to right,var(--sand),transparent);}
+.hl.r{background:linear-gradient(to left,var(--sand),transparent);}
+.hero-sub{font-size:.88rem;color:rgba(255,255,255,.5);letter-spacing:.04em;margin-bottom:1.75rem;}
+.hero-stats{display:flex;gap:1.75rem;margin-bottom:1.75rem;}
+.hstat .n{font-family:var(--serif);font-size:1.65rem;color:#fff;display:block;line-height:1;}
+.hstat .u{font-size:.58rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;}
+.hero-pills{display:flex;gap:.4rem;flex-wrap:wrap;}
+.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);padding:.28rem .85rem;border-radius:99px;font-size:.73rem;backdrop-filter:blur(6px);}
+.pill.q{border-color:rgba(212,96,58,.35);color:var(--coral-lt);}
+.beach-trans{position:relative;z-index:3;height:60px;background:linear-gradient(180deg,transparent 0%,var(--sand-pale) 100%);}
 
-/* NAV */
-#nav{position:sticky;top:0;z-index:200;background:rgba(14,13,11,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;padding:0 .4rem;}
-#nav::-webkit-scrollbar{display:none;}
-#nav a{display:block;font-size:.61rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;white-space:nowrap;padding:.8rem .65rem;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
-#nav a.on,#nav a:hover{color:var(--glt);border-bottom-color:var(--gold);}
-
-/* LAYOUT */
-.sec{max-width:680px;margin:0 auto;padding:3.5rem 1.4rem;background:var(--black);}
-.lbl{font-size:.63rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:500;display:block;margin-bottom:.5rem;}
-h2{font-family:var(--serif);font-size:clamp(1.8rem,5.5vw,2.8rem);font-weight:400;line-height:1.1;color:var(--cream);margin-bottom:1.1rem;}
-h2 em{font-style:italic;color:var(--glt);}
-.prose{color:var(--warm);font-size:.93rem;line-height:1.85;margin-bottom:.8rem;}
-.prose strong{color:var(--cream);font-weight:500;}
-hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.4rem;}
-.ibox{border-left:2px solid var(--gold);padding:.7rem .9rem;background:rgba(201,146,42,.06);font-size:.83rem;color:var(--warm);margin:.9rem 0;}
-.ibox strong{color:var(--cream);}
-.wbox{border-left:2px solid var(--border);padding:.7rem .9rem;background:rgba(138,128,112,.05);font-size:.8rem;color:var(--muted);margin:.9rem 0;}
-.wbox strong{color:var(--warm);}
-
-/* STATS */
-.ostats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);margin-top:1.75rem;}
-.ostat{padding:1.1rem .75rem;text-align:center;border-right:1px solid var(--border);}
-.ostat:last-child{border:none;}
-.ostat .n{font-family:var(--serif);font-size:1.85rem;color:var(--cream);display:block;line-height:1;}
-.ostat .l{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:.25rem;}
-
-/* KALENDER */
-.kalender{margin:1.5rem 0;}
-.kday{display:grid;grid-template-columns:72px 1fr;border-bottom:1px solid var(--border);}
-.kday:last-child{border:none;}
-.kday-left{padding:.85rem .75rem .85rem 0;border-right:1px solid var(--border);text-align:right;}
-.kday-dn{font-family:var(--serif);font-size:.95rem;color:var(--cream);display:block;line-height:1.2;}
-.kday-dd{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;}
-.kday-right{padding:.85rem 0 .85rem 1rem;}
-.kday-right h4{font-size:.9rem;font-weight:500;color:var(--cream);margin-bottom:.2rem;display:flex;align-items:center;gap:.5rem;}
-.kday-right p{font-size:.8rem;color:var(--muted);}
-.kdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.kdot.w{background:var(--green);}
-.kdot.r{background:var(--gold);}
-.kdot.t{background:var(--sky);}
-.kdot.f{background:var(--red);}
-.kdot.d{background:var(--border);}
-
-/* ANREISE */
-.atl{margin:1.5rem 0;}
-.aday{display:grid;grid-template-columns:72px 1fr;border-bottom:1px solid var(--border);}
-.aday:last-child{border:none;}
-.aday-left{padding:.9rem .75rem .9rem 0;border-right:1px solid var(--border);text-align:right;}
-.aday-dn{font-family:var(--serif);font-size:.95rem;color:var(--cream);display:block;line-height:1.2;}
-.aday-dd{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;}
-.aday-right{padding:.9rem 0 .9rem 1rem;}
-.aday-right h4{font-size:.9rem;font-weight:500;color:var(--cream);margin-bottom:.25rem;}
-.aday-right p{font-size:.82rem;color:var(--muted);}
-.klink{font-size:.72rem;color:var(--gold);text-decoration:none;}
-.klink:hover{text-decoration:underline;}
-.ptips{list-style:none;margin-top:.75rem;}
-.ptips li{display:flex;gap:.6rem;padding:.38rem 0;border-bottom:1px solid var(--border);font-size:.85rem;color:var(--warm);}
-.ptips li:last-child{border:none;}
-.ptips li::before{content:'→';color:var(--gold);flex-shrink:0;}
-
-/* OVERVIEW ELEVATION */
-.elev-overview{margin:1.75rem 0;}
-.elev-svg{width:100%;display:block;overflow:visible;}
-
-/* ETAPPEN */
-.stage{margin-bottom:3.5rem;padding-bottom:3.5rem;border-bottom:1px solid var(--border);background:var(--black);}
-.stage:last-child{border:none;margin-bottom:0;padding-bottom:0;}
-.stage-head{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:.75rem;margin-bottom:1rem;}
-.sdot{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1rem;flex-shrink:0;}
-.sdot.w{background:var(--green);color:#fff;}
-.sdot.r{background:var(--gold);color:var(--black);}
-.sdot.f{background:var(--red);color:#fff;}
-.sdot.d{background:var(--dark);color:var(--muted);border:1px solid var(--border);}
-.stitle{font-family:var(--serif);font-size:1.05rem;color:var(--cream);line-height:1.25;}
-.ssub{font-size:.7rem;color:var(--muted);margin-top:.08rem;}
-.skm{font-family:var(--serif);font-size:1.2rem;color:var(--cream);text-align:right;display:block;}
-.sele{font-size:.63rem;color:var(--muted);text-align:right;}
-.spills{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.9rem;}
-.sp{font-size:.65rem;padding:.18rem .5rem;border:1px solid var(--border);color:var(--warm);border-radius:99px;}
-.sp.u{border-color:rgba(90,140,90,.4);color:var(--green2);}
-.sp.dn{border-color:rgba(140,58,42,.4);color:#c46050;}
-.sp.t{border-color:rgba(201,146,42,.3);color:var(--glt);}
-.sp-prose{font-size:.9rem;color:var(--warm);line-height:1.82;margin-bottom:.75rem;}
-.sp-prose strong{color:var(--cream);font-weight:500;}
-.sp-prose em{color:var(--glt);font-style:normal;}
-.hls{display:flex;flex-wrap:wrap;gap:.28rem;margin:.85rem 0;}
-.hl{font-size:.66rem;color:var(--muted);background:var(--black);border:1px solid var(--border);padding:.16rem .45rem;}
-
-/* ELEVATION PROFILE PER STAGE */
-.stage-elev{margin:1rem 0;}
-.stage-elev-label{font-size:.63rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
-.stage-elev-svg{width:100%;display:block;border:1px solid var(--border);background:#161410;}
-
-/* MAP LINKS — no iframes */
-.map-links{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1rem 0;}
-.map-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1rem;border:1px solid var(--border);text-decoration:none;font-size:.78rem;font-weight:500;color:var(--warm);transition:border-color .2s,color .2s;text-align:center;}
-.map-btn:hover{border-color:var(--gold);color:var(--glt);}
-.map-btn .icon{font-size:1rem;}
-.map-btn.primary{border-color:rgba(201,146,42,.4);color:var(--glt);}
-
-/* RESTAURANTS */
-.rest-city{margin-bottom:2.25rem;}
-.rest-city-hd{display:flex;align-items:baseline;gap:.75rem;margin-bottom:.65rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);}
-.rest-city-name{font-family:var(--serif);font-size:1.2rem;color:var(--cream);}
-.rest-city-day{font-size:.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
-.ri{padding:.85rem 0;border-bottom:1px solid rgba(58,54,48,.5);display:grid;grid-template-columns:1fr auto;gap:.75rem;align-items:start;}
-.ri:last-child{border:none;}
-.ri-name{font-size:.9rem;font-weight:500;color:var(--cream);}
-.ri-type{font-size:.65rem;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;margin-top:.08rem;}
-.ri-desc{font-size:.8rem;color:var(--muted);margin-top:.22rem;line-height:1.6;}
-.ri-must{font-size:.75rem;color:var(--warm);margin-top:.28rem;}
-.ri-must em{color:var(--glt);font-style:normal;}
-.ri-price strong{font-family:var(--serif);font-size:1.05rem;color:var(--cream);display:block;text-align:right;}
-.ri-price span{font-size:.62rem;color:var(--muted);white-space:nowrap;}
-
-/* TIPPS */
-.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:1.25rem;}
-.tc{background:var(--dark);padding:1.1rem;}
-.tc h3{font-size:.85rem;font-weight:500;color:var(--cream);margin-bottom:.65rem;}
-.tc ul{list-style:none;}
-.tc li{font-size:.78rem;color:var(--warm);padding:.27rem 0;border-bottom:1px solid var(--border);display:flex;gap:.35rem;align-items:flex-start;}
-.tc li:last-child{border:none;}
-.tc li::before{content:'—';color:var(--border);flex-shrink:0;margin-top:.1rem;}
+/* COUNTDOWN */
+#countdown{background:var(--deep);padding:.8rem 1.5rem;text-align:center;}
+.cd-inner{max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap;}
+.cd-label{font-size:.68rem;color:rgba(255,255,255,.4);letter-spacing:.12em;text-transform:uppercase;}
+.cd-nums{display:flex;gap:.5rem;align-items:center;}
+.cd-unit{text-align:center;}
+.cd-num{font-family:var(--serif);font-size:1.4rem;color:var(--sand);display:block;line-height:1;}
+.cd-u{font-size:.55rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em;}
+.cd-sep{font-family:var(--serif);font-size:1.2rem;color:rgba(255,255,255,.2);}
 
 /* WETTER */
-.wrow{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:1.3rem 0;background:var(--border);}
-.wc{background:var(--dark);padding:1.1rem .65rem;text-align:center;}
-.wc .icon{font-size:1.3rem;margin-bottom:.35rem;}
-.wc .val{font-family:var(--serif);font-size:1.4rem;color:var(--cream);display:block;}
-.wc .lbl{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:.18rem;}
+#wetter-live{background:var(--ocean);padding:.7rem 1.5rem;}
+.wx-inner{max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;}
+.wx-loc{font-size:.68rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase;}
+.wx-data{display:flex;align-items:center;gap:.75rem;}
+.wx-temp{font-family:var(--serif);font-size:1.4rem;color:var(--sand);}
+.wx-desc{font-size:.78rem;color:rgba(255,255,255,.6);}
+.wx-loading{font-size:.78rem;color:rgba(255,255,255,.4);font-style:italic;}
+.wx-icon{font-size:1.4rem;}
 
-/* BUDGET */
-.btbl{width:100%;border-collapse:collapse;margin-top:1.3rem;}
-.btbl tr{border-bottom:1px solid var(--border);}
-.btbl td{padding:.65rem 0;font-size:.86rem;}
-.btbl td:first-child{color:var(--warm);}
-.btbl td:last-child{text-align:right;color:var(--cream);font-weight:500;font-family:var(--serif);}
-.btbl .tot td{border-top:1px solid var(--gold);padding-top:.9rem;color:var(--glt);}
-.btbl .tot td:last-child{font-size:1.15rem;}
+/* NAV */
+nav{background:rgba(253,248,238,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-s);display:flex;overflow-x:auto;scrollbar-width:none;padding:0 .5rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(11,37,64,.08);}
+nav::-webkit-scrollbar{display:none;}
+nav a{font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;white-space:nowrap;padding:.82rem .7rem;border-bottom:2px solid transparent;transition:all .2s;}
+nav a.on,nav a:hover{color:var(--ocean);border-bottom-color:var(--wave);}
 
-/* LINKS */
-.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1.25rem;}
-.lcard{border:1px solid var(--border);padding:1rem;text-decoration:none;display:block;transition:border-color .2s;}
-.lcard:hover{border-color:var(--gold);}
-.lcard-icon{font-size:1.3rem;margin-bottom:.4rem;}
-.lcard-name{font-size:.87rem;font-weight:500;color:var(--cream);margin-bottom:.15rem;}
-.lcard-desc{font-size:.73rem;color:var(--muted);}
-.lcard-url{font-size:.65rem;color:var(--gold);margin-top:.35rem;}
+/* SECTION */
+.sec{max-width:680px;margin:0 auto;padding:3rem 1.5rem;}
+.chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--foam);color:var(--ocean);font-size:.62rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:.22rem .7rem;border-radius:2rem;margin-bottom:.5rem;}
+.chip-dot{width:5px;height:5px;background:var(--coral);border-radius:50%;}
+h2{font-family:var(--serif);font-size:clamp(1.9rem,5.5vw,2.8rem);font-weight:400;line-height:1.1;color:var(--ink);margin-bottom:.25rem;}
+h2 em{font-style:italic;color:var(--wave);}
+.sec-rule{display:flex;align-items:center;gap:.65rem;margin:.7rem 0 1.1rem;}
+.sec-rule-line{height:1px;flex:1;background:linear-gradient(to right,var(--border),transparent);}
+.prose{color:var(--muted);font-size:.93rem;line-height:1.85;margin-bottom:.8rem;}
+.prose strong{color:var(--ink);font-weight:500;}
+hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.5rem;}
+.ibox{border-left:3px solid var(--wave);padding:.7rem .9rem;background:var(--foam);font-size:.83rem;color:var(--ocean);margin:.9rem 0;border-radius:0 .5rem .5rem 0;}
+.ibox strong{font-weight:600;}
+.wbox{border-left:3px solid var(--border-s);padding:.7rem .9rem;background:var(--sand-lt);font-size:.8rem;color:var(--muted);margin:.9rem 0;border-radius:0 .5rem .5rem 0;}
+.wbox strong{color:var(--ink);}
 
-/* CREW */
-#crew{background:var(--dark);padding:3.5rem 1.4rem;}
-.crew-in{max-width:680px;margin:0 auto;}
-.ccards{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:1.75rem;background:var(--border);}
-.cc{background:var(--dark);padding:1.4rem;text-align:center;}
-.cc.q{background:rgba(201,146,42,.04);}
-.cav{width:46px;height:46px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.15rem;color:var(--cream);margin:0 auto .6rem;}
-.cc.q .cav{border-color:rgba(201,146,42,.4);color:var(--glt);}
-.cname{font-family:var(--serif);font-size:1.05rem;color:var(--cream);}
-.crole{font-size:.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:.22rem;}
-.cc.q .crole{color:var(--gold);}
-.cnote{text-align:center;font-size:.78rem;color:var(--muted);margin-top:1.25rem;}
-.cnote strong{color:var(--glt);}
+/* STAT STRIP */
+.stat-strip{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border:1px solid var(--border);border-radius:1.1rem;overflow:hidden;margin-top:1.5rem;box-shadow:0 2px 16px rgba(11,37,64,.06);}
+.sstat{padding:1rem .75rem;text-align:center;border-right:1px solid var(--border);}
+.sstat:last-child{border:none;}
+.sstat .n{font-family:var(--serif);font-size:1.85rem;color:var(--ocean);display:block;line-height:1;}
+.sstat .l{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:.22rem;}
 
-/* FOOTER */
-#foot{padding:3.5rem 1.4rem 5rem;text-align:center;background:var(--dark);border-top:1px solid var(--border);}
-.fw{font-family:var(--serif);font-size:clamp(2.4rem,9vw,4.5rem);font-style:italic;color:var(--glt);display:block;margin-bottom:.4rem;}
-.fs{font-size:.75rem;color:var(--muted);letter-spacing:.1em;}
-.fc{display:flex;justify-content:center;gap:.65rem;flex-wrap:wrap;margin-top:1.1rem;}
-.fc span{font-size:.68rem;color:var(--border);}
-.fc .nm{color:var(--muted);}
+/* KALENDER */
+.kalender{margin:1.5rem 0;background:#fff;border:1px solid var(--border);border-radius:1.1rem;overflow:hidden;box-shadow:0 2px 12px rgba(11,37,64,.05);}
+.kday{display:grid;grid-template-columns:72px 1fr;border-bottom:1px solid var(--border);}
+.kday:last-child{border:none;}
+.kday-left{padding:.85rem .75rem .85rem 0;border-right:1px solid var(--border);text-align:right;background:var(--sand-pale);}
+.kday-dn{font-family:var(--serif);font-size:.95rem;color:var(--ink);display:block;line-height:1.2;}
+.kday-dd{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;}
+.kday-right{padding:.85rem 0 .85rem 1rem;}
+.kday-right h4{font-size:.88rem;font-weight:500;color:var(--ink);margin-bottom:.18rem;display:flex;align-items:center;gap:.4rem;}
+.kday-right p{font-size:.78rem;color:var(--muted);}
+.kdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.kdot.w{background:var(--wave);}
+.kdot.r{background:var(--shell);}
+.kdot.t{background:var(--horizon);}
+.kdot.f{background:var(--coral);}
+.kdot.d{background:var(--border);}
 
-@media(max-width:380px){.tgrid,.link-grid{grid-template-columns:1fr;}}
+/* STAGE */
+.stage{background:#fff;border:1px solid var(--border);border-radius:1.25rem;overflow:hidden;margin-bottom:1rem;box-shadow:0 4px 24px rgba(11,37,64,.07);}
+.stage-head{padding:1.25rem 1.25rem 1.1rem;background:linear-gradient(135deg,var(--deep) 0%,var(--ocean) 60%,var(--wave) 100%);position:relative;overflow:hidden;}
+.stage-head::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(-12deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 19px);}
+.sh-grid{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:.75rem;position:relative;}
+.snum{width:44px;height:44px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);border-radius:.75rem;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.25rem;color:#fff;flex-shrink:0;}
+.snum.rest{background:rgba(212,96,58,.25);border-color:rgba(212,96,58,.4);}
+.snum.fin{background:rgba(255,255,255,.2);}
+.stitle{font-size:.93rem;font-weight:500;color:#fff;line-height:1.25;}
+.ssub{font-size:.68rem;color:rgba(255,255,255,.5);margin-top:.08rem;}
+.skm{font-family:var(--serif);font-size:1.3rem;color:#fff;display:block;text-align:right;line-height:1;}
+.sele{font-size:.62rem;color:rgba(255,255,255,.5);text-align:right;}
+.pills{display:flex;gap:.3rem;flex-wrap:wrap;padding:.85rem 1.25rem .5rem;}
+.sp{font-size:.64rem;padding:.2rem .55rem;border-radius:99px;font-weight:500;}
+.sp.up{background:var(--foam);color:var(--ocean);}
+.sp.dn{background:#fdecea;color:#c0392b;}
+.sp.t{background:var(--sand-lt);color:var(--shell);}
+.sp.n{background:var(--sand-pale);color:var(--muted);}
+.elev-wrap{padding:.25rem 1.25rem .85rem;}
+.elev-lbl{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;}
+.elev-svg{width:100%;display:block;border-radius:.75rem;overflow:hidden;}
+.s-prose{padding:0 1.25rem .9rem;font-size:.88rem;color:var(--muted);line-height:1.82;}
+.s-prose strong{color:var(--ink);font-weight:500;}
+.s-prose em{color:var(--wave);font-style:normal;}
+.card-hr{border:none;border-top:1px solid var(--border);}
+.map-row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:.85rem 1.25rem;}
+.mbtn{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.65rem;border-radius:.85rem;text-decoration:none;font-size:.75rem;font-weight:500;transition:all .2s;}
+.mbtn.k{background:var(--foam);color:var(--ocean);border:1.5px solid var(--border);}
+.mbtn.k:hover{background:var(--ocean);color:#fff;}
+.mbtn.g{background:var(--sand-lt);color:var(--muted);border:1.5px solid var(--border-s);}
+.mbtn.g:hover{border-color:var(--wave);color:var(--ocean);}
+.tags{display:flex;flex-wrap:wrap;gap:.3rem;padding:0 1.25rem .85rem;}
+.tag{font-size:.67rem;color:var(--ocean);background:var(--foam);padding:.18rem .5rem;border-radius:99px;}
+
+/* DAY CARDS */
+.day-cards{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:.85rem 1.25rem 1.25rem;}
+.dc{border-radius:.85rem;padding:.9rem;}
+.dc-ocean{background:linear-gradient(135deg,var(--deep) 0%,var(--ocean) 100%);}
+.dc-sand{background:var(--sand-lt);border:1px solid var(--border-s);}
+.dc-icon{font-size:1rem;margin-bottom:.28rem;}
+.dc-lbl{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.28rem;}
+.dc-ocean .dc-lbl{color:rgba(255,255,255,.45);}
+.dc-sand .dc-lbl{color:var(--muted);}
+.dc-name{font-size:.83rem;font-weight:500;color:#fff;}
+.dc-sub-note{font-size:.7rem;color:rgba(255,255,255,.35);margin-top:.15rem;}
+.rest-list{display:flex;flex-direction:column;gap:.25rem;}
+.rest-entry a{display:block;color:var(--ocean);text-decoration:none;font-size:.76rem;font-weight:500;padding:.18rem 0;border-bottom:1px solid var(--border-s);}
+.rest-entry a:last-child,.rest-entry:last-child a{border:none;}
+.rest-entry a:hover{color:var(--wave);}
+.rest-entry.ph{font-size:.76rem;color:var(--muted);font-style:italic;}
+
+/* RESTAURANTS SECTION */
+.rest-city{margin-bottom:2rem;}
+.rest-city-hd{display:flex;align-items:baseline;gap:.75rem;margin-bottom:.5rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);}
+.rest-city-name{font-family:var(--serif);font-size:1.2rem;color:var(--ink);}
+.rest-city-day{font-size:.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
+.ri{padding:.65rem 0;border-bottom:1px solid var(--border);}
+.ri:last-child{border:none;}
+.ri a{color:var(--ocean);text-decoration:none;font-size:.87rem;font-weight:500;}
+.ri a:hover{color:var(--wave);}
+
 /* FITNESS */
-.fitness-note{font-size:.75rem;color:var(--muted);margin-bottom:1.5rem;font-style:italic;}
-.fitness-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.88rem;}
-.fitness-table thead tr{background:var(--green);color:#fff;}
-.fitness-table thead td{padding:.55rem .75rem;font-size:.72rem;font-weight:500;letter-spacing:.04em;}
+.fitness-table{width:100%;border-collapse:collapse;margin:1.25rem 0;border-radius:1rem;overflow:hidden;box-shadow:0 2px 12px rgba(11,37,64,.06);}
+.fitness-table thead td{background:var(--ocean);color:#fff;padding:.6rem .75rem;font-size:.72rem;font-weight:600;letter-spacing:.04em;}
 .fitness-table tbody tr{border-bottom:1px solid var(--border);}
-.fitness-table tbody tr:last-child{border-bottom:none;}
-.fitness-table tbody td{padding:.6rem .75rem;color:var(--warm);}
-.fitness-table tbody td:first-child{color:var(--cream);font-family:var(--serif);}
-.fitness-table tbody td.kcal{color:var(--glt);font-weight:500;font-family:var(--serif);font-size:.95rem;}
-.fitness-table .total-row td{background:rgba(201,146,42,.06);color:var(--glt);font-weight:500;border-top:1px solid var(--gold);}
-.fitness-table .total-row td:first-child{font-family:var(--serif);}
-.fitness-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:1.25rem 0;}
-.fitness-stat{background:var(--dark);border:1px solid var(--border);padding:1rem .75rem;text-align:center;}
-.fitness-stat .n{font-family:var(--serif);font-size:1.7rem;color:var(--cream);display:block;line-height:1;}
-.fitness-stat .u{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:.25rem;}
-.fitness-equiv{margin:1.25rem 0;}
+.fitness-table tbody tr:nth-child(even){background:var(--foam);}
+.fitness-table tbody td{padding:.6rem .75rem;font-size:.85rem;color:var(--muted);}
+.fitness-table tbody td:first-child{color:var(--ink);font-weight:500;}
+.fitness-table .kcal{color:var(--ocean);font-weight:600;font-family:var(--serif);}
+.fitness-table .total-row td{background:var(--foam);color:var(--ocean);font-weight:600;border-top:2px solid var(--wave);}
+.fstats{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin:1.25rem 0;}
+.fstat{background:#fff;border:1px solid var(--border);border-radius:1rem;padding:1rem .75rem;text-align:center;}
+.fstat .n{font-family:var(--serif);font-size:1.6rem;color:var(--ocean);display:block;line-height:1;}
+.fstat .u{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem;}
 .feq-item{display:flex;align-items:center;gap:.75rem;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.85rem;}
 .feq-item:last-child{border:none;}
 .feq-icon{font-size:1.2rem;flex-shrink:0;width:28px;text-align:center;}
-.feq-text{color:var(--warm);}
-.feq-text strong{color:var(--cream);}
-.fitness-bar-wrap{margin:.3rem 0 0;}
-.fitness-bar-bg{background:var(--border);height:5px;border-radius:2px;overflow:hidden;}
-.fitness-bar-fill{height:5px;border-radius:2px;}
+.feq-text{color:var(--muted);}
+.feq-text strong{color:var(--ink);}
 
-/* UNTERKUNFT & RESTAURANT CARDS */
-.day-cards{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1rem;}
-.day-card{border:1px solid var(--border);padding:1rem;background:var(--dark);}
-.day-card-icon{font-size:1rem;margin-bottom:.3rem;}
-.day-card-title{font-size:.63rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
-.day-card-name{font-size:.88rem;font-weight:500;color:var(--cream);margin-bottom:.2rem;}
-.day-card-desc{font-size:.75rem;color:var(--muted);line-height:1.5;}
-.day-card a{color:var(--gold);text-decoration:none;font-size:.72rem;display:inline-block;margin-top:.35rem;}
-.day-card a:hover{text-decoration:underline;}
-.day-card.placeholder{border-style:dashed;border-color:rgba(58,54,48,.8);}
-.day-card.placeholder .day-card-name{color:var(--muted);}
-.rest-list{display:flex;flex-direction:column;gap:.4rem;}
-.rest-entry{font-size:.8rem;color:var(--warm);}
-.rest-entry a{color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:.3rem;font-size:.78rem;}
-.rest-entry a:hover{text-decoration:underline;}
-@media(max-width:400px){.day-cards{grid-template-columns:1fr;}}
+/* STEMPEL */
+.stempel-list{margin:1.25rem 0;}
+.stempel-item{display:grid;grid-template-columns:36px 1fr 52px;align-items:center;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border);}
+.stempel-item:last-child{border:none;}
+.stempel-circle{width:34px;height:34px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--sand-pale);}
+.stempel-num{font-family:var(--serif);font-size:.85rem;color:var(--muted);}
+.stempel-city{font-size:.88rem;font-weight:500;color:var(--ink);}
+.stempel-where{font-size:.72rem;color:var(--muted);margin-top:.08rem;}
+.stempel-box{width:50px;height:34px;border:1.5px dashed var(--border);border-radius:.4rem;background:var(--sand-pale);}
 
+/* TIPPS */
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1.25rem;}
+.tc{background:#fff;border:1px solid var(--border);border-radius:1rem;padding:1.1rem;}
+.tc h3{font-size:.85rem;font-weight:500;color:var(--ink);margin-bottom:.65rem;}
+.tc ul{list-style:none;}
+.tc li{font-size:.78rem;color:var(--muted);padding:.27rem 0;border-bottom:1px solid var(--border);display:flex;gap:.35rem;align-items:flex-start;}
+.tc li:last-child{border:none;}
+.tc li::before{content:'→';color:var(--wave);flex-shrink:0;margin-top:.1rem;}
+
+/* WETTER SECTION */
+.wrow{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin:1.25rem 0;}
+.wc{background:linear-gradient(135deg,var(--ocean) 0%,var(--wave) 100%);border-radius:1rem;padding:1.1rem .65rem;text-align:center;color:#fff;}
+.wc .icon{font-size:1.3rem;margin-bottom:.35rem;}
+.wc .val{font-family:var(--serif);font-size:1.4rem;color:#fff;display:block;}
+.wc .lbl{font-size:.6rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em;margin-top:.18rem;}
+
+/* BUDGET */
+.btbl{width:100%;border-collapse:collapse;margin-top:1.25rem;background:#fff;border-radius:1rem;overflow:hidden;box-shadow:0 2px 12px rgba(11,37,64,.05);}
+.btbl tr{border-bottom:1px solid var(--border);}
+.btbl tr:nth-child(even){background:var(--sand-pale);}
+.btbl td{padding:.65rem .85rem;font-size:.88rem;}
+.btbl td:first-child{color:var(--muted);}
+.btbl td:last-child{text-align:right;color:var(--ink);font-weight:500;font-family:var(--serif);}
+.btbl .tot td{background:var(--foam);color:var(--ocean);font-weight:600;border-top:2px solid var(--wave);}
+
+/* LINKS */
+.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1.25rem;}
+.lcard{border:1px solid var(--border);border-radius:1rem;padding:1rem;text-decoration:none;background:#fff;transition:all .2s;}
+.lcard:hover{border-color:var(--wave);box-shadow:0 4px 16px rgba(33,113,168,.12);}
+.lcard-icon{font-size:1.3rem;margin-bottom:.35rem;}
+.lcard-name{font-size:.87rem;font-weight:500;color:var(--ink);margin-bottom:.12rem;}
+.lcard-desc{font-size:.73rem;color:var(--muted);}
+.lcard-url{font-size:.65rem;color:var(--ocean);margin-top:.3rem;font-weight:500;}
+
+/* CREW */
+#crew{background:var(--deep);padding:4rem 1.5rem;}
+.crew-in{max-width:680px;margin:0 auto;}
+.crew-in h2{color:#fff;}
+.crew-in h2 em{color:var(--sand);}
+.ccards{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.75rem;}
+.cc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:1.25rem;padding:1.4rem;text-align:center;}
+.cc.q{border-color:rgba(212,96,58,.25);background:rgba(212,96,58,.06);}
+.cav{width:48px;height:48px;border:1.5px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.2rem;color:#fff;margin:0 auto .6rem;}
+.cc.q .cav{border-color:rgba(212,96,58,.4);color:var(--coral-lt);}
+.cname{font-family:var(--serif);font-size:1.05rem;color:#fff;}
+.crole{font-size:.63rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;margin-top:.22rem;}
+.cc.q .crole{color:var(--coral-lt);}
+.cnote{text-align:center;font-size:.78rem;color:rgba(255,255,255,.35);margin-top:1.25rem;}
+.cnote strong{color:var(--sand);}
+
+/* FOOTER */
+#foot{background:var(--deep);border-top:1px solid rgba(255,255,255,.06);padding:3rem 1.5rem 5rem;text-align:center;}
+.fw{font-family:var(--serif);font-size:clamp(2.2rem,8vw,4rem);font-style:italic;color:var(--sand);display:block;margin-bottom:.4rem;}
+.fs{font-size:.75rem;color:rgba(255,255,255,.3);letter-spacing:.1em;}
+.fc{display:flex;justify-content:center;gap:.65rem;flex-wrap:wrap;margin-top:1rem;}
+.fc span{font-size:.68rem;color:rgba(255,255,255,.15);}
+.fc .nm{color:rgba(255,255,255,.3);}
+
+@media(max-width:380px){.tgrid,.link-grid,.fstats,.wrow,.day-cards,.ccards,.sh-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hbg">
-    <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="hsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0d1a0f"/><stop offset="100%" stop-color="#162515"/></linearGradient>
-        <radialGradient id="hglow" cx="50%" cy="35%" r="50%"><stop offset="0%" stop-color="#c9922a" stop-opacity=".07"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-      </defs>
-      <rect width="800" height="600" fill="url(#hsky)"/>
-      <rect width="800" height="600" fill="url(#hglow)"/>
-      <!-- Distant ridge -->
-      <path d="M0 260 Q200 200 400 230 Q600 260 800 210 L800 600 L0 600Z" fill="#0d1f0d" opacity=".85"/>
-      <path d="M0 310 Q150 255 350 275 Q550 300 800 255 L800 600 L0 600Z" fill="#102210" opacity=".9"/>
-      <!-- Tree line left -->
-      <g fill="#1a3a18"><rect x="-8" y="195" width="16" height="205"/><ellipse cx="0" cy="188" rx="26" ry="52"/><rect x="25" y="210" width="14" height="190"/><ellipse cx="32" cy="203" rx="22" ry="44"/><rect x="58" y="185" width="18" height="215"/><ellipse cx="67" cy="177" rx="28" ry="56"/><rect x="95" y="200" width="15" height="200"/><ellipse cx="103" cy="193" rx="23" ry="46"/><rect x="128" y="175" width="19" height="225"/><ellipse cx="137" cy="167" rx="30" ry="58"/></g>
-      <!-- Tree line right -->
-      <g fill="#1a3a18"><rect x="720" y="190" width="17" height="210"/><ellipse cx="728" cy="182" rx="27" ry="54"/><rect x="748" y="178" width="19" height="222"/><ellipse cx="757" cy="170" rx="30" ry="58"/><rect x="778" y="205" width="15" height="195"/><ellipse cx="786" cy="197" rx="24" ry="46"/></g>
-      <!-- Path -->
-      <path d="M330 600 Q355 470 345 365 Q335 285 375 235 Q415 185 405 150" stroke="#a09070" stroke-width="52" fill="none" stroke-linecap="round" opacity=".55"/>
-      <path d="M335 600 Q358 470 348 365 Q340 285 378 235 Q415 188 407 154" stroke="#c8b888" stroke-width="28" fill="none" stroke-linecap="round" opacity=".35"/>
-      <!-- Granite stones -->
-      <ellipse cx="343" cy="560" rx="10" ry="5" fill="#6a5a40" opacity=".4"/>
-      <ellipse cx="356" cy="510" rx="8" ry="4" fill="#6a5a40" opacity=".35"/>
-      <ellipse cx="362" cy="450" rx="7" ry="3.5" fill="#6a5a40" opacity=".3"/>
-      <!-- Yellow arrow post -->
-      <g transform="translate(295,320)"><rect x="0" y="0" width="5" height="65" fill="#7a6a50"/><path d="M5 14 L30 14 L30 9 L44 22 L30 35 L30 30 L5 30Z" fill="#e8b84b"/></g>
-      <g transform="translate(400,240)"><rect x="0" y="0" width="4" height="52" fill="#7a6a50"/><path d="M4 11 L24 11 L24 7 L36 17 L24 27 L24 23 L4 23Z" fill="#e8b84b"/></g>
-      <!-- Shell marker -->
-      <g transform="translate(408,146)" opacity=".75"><circle r="14" fill="none" stroke="#e8b84b" stroke-width="1.5"/><path d="M0,-10 Q7,0 0,10 Q-7,0 0,-10Z" fill="#e8b84b" opacity=".5"/><line x1="-10" y1="0" x2="10" y2="0" stroke="#e8b84b" stroke-width="1"/></g>
-      <!-- Ferns -->
-      <path d="M90 600 Q105 570 118 582 Q108 555 130 562" stroke="#2a5018" stroke-width="2.5" fill="none" opacity=".6"/>
-      <path d="M680 600 Q695 568 708 580 Q698 553 720 560" stroke="#2a5018" stroke-width="2.5" fill="none" opacity=".6"/>
-    </svg>
-  </div>
-  <div class="hgrad"></div>
-  <div class="hbody">
-    <div class="heyebrow"><span>Camino Portugués · 2027</span><div class="hline"></div></div>
-    <div class="h1">Der Weg<br>nach <em>Santiago</em></div>
-    <div class="hmeta">
+  <div class="hero-bg"></div>
+  <div class="hero-light"></div>
+  <div class="hero-pat"></div>
+  <svg class="hero-waves" viewBox="0 0 800 80" preserveAspectRatio="none">
+    <path d="M0 40 Q100 20 200 40 Q300 60 400 40 Q500 20 600 40 Q700 60 800 40" stroke="white" stroke-width="1" fill="none"/>
+    <path d="M0 55 Q100 35 200 55 Q300 75 400 55 Q500 35 600 55 Q700 75 800 55" stroke="white" stroke-width=".6" fill="none"/>
+  </svg>
+  <div class="hero-beach"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><div class="eyebrow-dot"></div>Camino Portugués · 2027</div>
+    <h1 class="hero-h1">Der Weg<br>nach <em>Santiago</em></h1>
+    <div class="hero-horizon"><div class="hl"></div><span style="font-size:.85rem;opacity:.5;">🐚</span><div class="hl r"></div></div>
+    <p class="hero-sub">Porto · Valença · Santiago de Compostela · 8 Tage</p>
+    <div class="hero-stats">
       <div class="hstat"><span class="n">~117</span><span class="u">km</span></div>
-      <div class="hvl"></div>
       <div class="hstat"><span class="n">6</span><span class="u">Wandertage</span></div>
-      <div class="hvl"></div>
       <div class="hstat"><span class="n">Jun</span><span class="u">2027</span></div>
     </div>
-    <div class="hcrew">
+    <div class="hero-pills">
       <span class="pill">Ante</span><span class="pill">Kevin</span>
       <span class="pill q">Simon?</span><span class="pill q">Luis?</span>
     </div>
   </div>
-  <div class="sarrow">↓ scroll</div>
 </section>
+<div class="beach-trans"></div>
+
+<!-- COUNTDOWN -->
+<div id="countdown">
+  <div class="cd-inner">
+    <span class="cd-label">Abreise nach Porto in</span>
+    <div class="cd-nums" id="cd-nums">
+      <div class="cd-unit"><span class="cd-num" id="cd-d">—</span><span class="cd-u">Tage</span></div>
+      <span class="cd-sep">·</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-h">—</span><span class="cd-u">Std</span></div>
+      <span class="cd-sep">·</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-m">—</span><span class="cd-u">Min</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE WETTER -->
+<div id="wetter-live">
+  <div class="wx-inner">
+    <span class="wx-loc">📍 Santiago de Compostela — aktuell</span>
+    <div class="wx-data" id="wx-data">
+      <span class="wx-loading">Wetter wird geladen…</span>
+    </div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -318,88 +320,26 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.4rem;}
   <a href="#anreise">Anreise</a>
   <a href="#etappen">Etappen</a>
   <a href="#restaurants">Essen</a>
+  <a href="#stempel">Stempel</a>
+  <a href="#fitness">Fitness</a>
   <a href="#tipps">Tipps</a>
   <a href="#wetter">Wetter</a>
   <a href="#budget">Budget</a>
-  <a href="#fitness">Fitness</a>
   <a href="#links">Links</a>
   <a href="#crew">Crew</a>
 </nav>
 
 <!-- INTRO -->
 <section id="intro" class="sec">
-  <span class="lbl">Der Plan</span>
+  <div class="chip"><div class="chip-dot"></div>Der Plan</div>
   <h2>Warum der <em>Camino Portugués</em>?</h2>
-  <p class="prose">Der Camino Portugués ist der zweitbeliebteste Jakobsweg der Welt. Er führt durch das tiefgrüne Galicien, über mittelalterliche Steinbrücken, durch autofreie Altstädte und entlang der Rías Baixas bis zum Finale auf dem Praza do Obradoiro in Santiago.</p>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">⚓</span><div class="sec-rule-line"></div></div>
+  <p class="prose">Der Camino Portugués ist der zweitbeliebteste Jakobsweg der Welt. Er führt durch das tiefgrüne Galicien, über mittelalterliche Steinbrücken, durch autofreie Altstädte und entlang der <strong>Rías Baixas</strong> — dem Atlantik so nah, dass man das Salz riecht.</p>
   <p class="prose">Euer Abschnitt ab Valença qualifiziert für die <strong>Compostela-Urkunde</strong>. Ende Juni: Sonnenuntergang um 22 Uhr, 22–26°C.</p>
-  <div class="ostats">
-    <div class="ostat"><span class="n">~117</span><div class="l">km gesamt</div></div>
-    <div class="ostat"><span class="n">6</span><div class="l">Wandertage</div></div>
-    <div class="ostat"><span class="n">↑1550m</span><div class="l">Höhenmeter</div></div>
-  </div>
-
-  <!-- Overview elevation all stages -->
-  <div style="margin-top:2rem;">
-    <div class="lbl" style="margin-bottom:.6rem;">Gesamtübersicht · alle Etappen</div>
-    <div class="elev-overview"><svg class="elev-svg" viewBox="0 0 700 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Etappenübersicht">
-<rect width="700" height="160" fill="#161410"/>
-<line x1="40" y1="116.0" x2="688" y2="116.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="36" y="119.5" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">0km</text>
-<line x1="40" y1="79.1" x2="688" y2="79.1" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="36" y="82.6" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">10km</text>
-<line x1="40" y1="42.2" x2="688" y2="42.2" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="36" y="45.7" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">20km</text>
-<defs><linearGradient id="bg0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a7a4a" stop-opacity=".85"/><stop offset="100%" stop-color="#4a7a4a" stop-opacity=".25"/></linearGradient></defs>
-<rect x="60.8" y="45.8" width="50.9" height="70.2" fill="url(#bg0)"/>
-<rect x="60.8" y="45.8" width="50.9" height="70.2" fill="none" stroke="#4a7a4a" stroke-width="1"/>
-<rect x="60.8" y="16.8" width="19.3" height="27.0" fill="#7ab87a" opacity=".45"/>
-<text x="86.3" y="144.0" text-anchor="middle" fill="#6a6050" font-size="8" font-family="DM Sans,system-ui">19km</text>
-<text x="86.3" y="129.0" text-anchor="middle" fill="#c8b89a" font-size="9" font-family="DM Sans,system-ui">Tag 1</text>
-<text x="86.3" y="138.0" text-anchor="middle" fill="#8a8070" font-size="8" font-family="DM Sans,system-ui">Sa</text>
-<defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a8a4a" stop-opacity=".85"/><stop offset="100%" stop-color="#5a8a4a" stop-opacity=".25"/></linearGradient></defs>
-<rect x="153.4" y="60.6" width="50.9" height="55.4" fill="url(#bg1)"/>
-<rect x="153.4" y="60.6" width="50.9" height="55.4" fill="none" stroke="#5a8a4a" stroke-width="1"/>
-<rect x="153.4" y="26.2" width="19.3" height="32.4" fill="#7ab87a" opacity=".45"/>
-<text x="178.9" y="144.0" text-anchor="middle" fill="#6a6050" font-size="8" font-family="DM Sans,system-ui">15km</text>
-<text x="178.9" y="129.0" text-anchor="middle" fill="#c8b89a" font-size="9" font-family="DM Sans,system-ui">Tag 2</text>
-<text x="178.9" y="138.0" text-anchor="middle" fill="#8a8070" font-size="8" font-family="DM Sans,system-ui">So</text>
-<defs><linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a7a4a" stop-opacity=".85"/><stop offset="100%" stop-color="#4a7a4a" stop-opacity=".25"/></linearGradient></defs>
-<rect x="246.0" y="45.8" width="50.9" height="70.2" fill="url(#bg2)"/>
-<rect x="246.0" y="45.8" width="50.9" height="70.2" fill="none" stroke="#4a7a4a" stroke-width="1"/>
-<rect x="246.0" y="16.8" width="19.3" height="27.0" fill="#7ab87a" opacity=".45"/>
-<text x="271.4" y="144.0" text-anchor="middle" fill="#6a6050" font-size="8" font-family="DM Sans,system-ui">19km</text>
-<text x="271.4" y="129.0" text-anchor="middle" fill="#c8b89a" font-size="9" font-family="DM Sans,system-ui">Tag 3</text>
-<text x="271.4" y="138.0" text-anchor="middle" fill="#8a8070" font-size="8" font-family="DM Sans,system-ui">Mo</text>
-<rect x="338.5" y="20" width="50.9" height="96" fill="#c9922a" opacity=".18"/>
-<text x="364.0" y="73.0" text-anchor="middle" font-size="16">☀️</text>
-<text x="364.0" y="129.0" text-anchor="middle" fill="#c8b89a" font-size="9" font-family="DM Sans,system-ui">Tag 4</text>
-<text x="364.0" y="138.0" text-anchor="middle" fill="#8a8070" font-size="8" font-family="DM Sans,system-ui">Di</text>
-<defs><linearGradient id="bg4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6a9a5a" stop-opacity=".85"/><stop offset="100%" stop-color="#6a9a5a" stop-opacity=".25"/></linearGradient></defs>
-<rect x="431.1" y="34.8" width="50.9" height="81.2" fill="url(#bg4)"/>
-<rect x="431.1" y="34.8" width="50.9" height="81.2" fill="none" stroke="#6a9a5a" stroke-width="1"/>
-<rect x="431.1" y="16.6" width="19.3" height="16.2" fill="#7ab87a" opacity=".45"/>
-<text x="456.6" y="144.0" text-anchor="middle" fill="#6a6050" font-size="8" font-family="DM Sans,system-ui">22km</text>
-<text x="456.6" y="129.0" text-anchor="middle" fill="#c8b89a" font-size="9" font-family="DM Sans,system-ui">Tag 5</text>
-<text x="456.6" y="138.0" text-anchor="middle" fill="#8a8070" font-size="8" font-family="DM Sans,system-ui">Mi</text>
-<defs><linearGradient id="bg5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a8a4a" stop-opacity=".85"/><stop offset="100%" stop-color="#5a8a4a" stop-opacity=".25"/></linearGradient></defs>
-<rect x="523.7" y="49.5" width="50.9" height="66.5" fill="url(#bg5)"/>
-<rect x="523.7" y="49.5" width="50.9" height="66.5" fill="none" stroke="#5a8a4a" stroke-width="1"/>
-<rect x="523.7" y="25.9" width="19.3" height="21.6" fill="#7ab87a" opacity=".45"/>
-<text x="549.1" y="144.0" text-anchor="middle" fill="#6a6050" font-size="8" font-family="DM Sans,system-ui">18km</text>
-<text x="549.1" y="129.0" text-anchor="middle" fill="#c8b89a" font-size="9" font-family="DM Sans,system-ui">Tag 6</text>
-<text x="549.1" y="138.0" text-anchor="middle" fill="#8a8070" font-size="8" font-family="DM Sans,system-ui">Do</text>
-<defs><linearGradient id="bg6" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8a4a3a" stop-opacity=".85"/><stop offset="100%" stop-color="#8a4a3a" stop-opacity=".25"/></linearGradient></defs>
-<rect x="616.3" y="27.4" width="50.9" height="88.6" fill="url(#bg6)"/>
-<rect x="616.3" y="27.4" width="50.9" height="88.6" fill="none" stroke="#8a4a3a" stroke-width="1"/>
-<rect x="616.3" y="-17.8" width="19.3" height="43.2" fill="#7ab87a" opacity=".45"/>
-<text x="641.7" y="144.0" text-anchor="middle" fill="#6a6050" font-size="8" font-family="DM Sans,system-ui">24km</text>
-<text x="641.7" y="129.0" text-anchor="middle" fill="#c8b89a" font-size="9" font-family="DM Sans,system-ui">Tag 7</text>
-<text x="641.7" y="138.0" text-anchor="middle" fill="#8a8070" font-size="8" font-family="DM Sans,system-ui">Fr</text>
-<rect x="40" y="6" width="10" height="8" fill="#4a7a4a" opacity=".8"/>
-<text x="53" y="13" fill="#8a8070" font-size="8" font-family="DM Sans,system-ui">Distanz (km)</text>
-<rect x="122" y="6" width="10" height="8" fill="#7ab87a" opacity=".45"/>
-<text x="136" y="13" fill="#8a8070" font-size="8" font-family="DM Sans,system-ui">Höhenmeter ↑</text>
-</svg></div>
+  <div class="stat-strip">
+    <div class="sstat"><span class="n">~117</span><div class="l">km gesamt</div></div>
+    <div class="sstat"><span class="n">6</span><div class="l">Wandertage</div></div>
+    <div class="sstat"><span class="n">↑1550m</span><div class="l">Höhenmeter</div></div>
   </div>
 </section>
 
@@ -407,12 +347,13 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.4rem;}
 
 <!-- KALENDER -->
 <section id="kalender" class="sec">
-  <span class="lbl">Übersicht</span>
+  <div class="chip"><div class="chip-dot"></div>Übersicht</div>
   <h2>8 Tage auf <em>einen Blick</em></h2>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">〜</span><div class="sec-rule-line"></div></div>
   <div class="kalender">
     <div class="kday"><div class="kday-left"><span class="kday-dn">Fr</span><span class="kday-dd">25. Jun</span></div><div class="kday-right"><h4><span class="kdot t"></span>✈️ Anreise Porto</h4><p>Zürich → Porto · Abend Ribeira · Früh schlafen</p></div></div>
     <div class="kday"><div class="kday-left"><span class="kday-dn">Sa</span><span class="kday-dd">26. Jun</span></div><div class="kday-right"><h4><span class="kdot w"></span>Tag 1 · Valença → O Porriño</h4><p>Zug Porto→Valença früh · ~19 km · Grenzübertritt 🇵🇹→🇪🇸</p></div></div>
-    <div class="kday"><div class="kday-left"><span class="kday-dn">So</span><span class="kday-dd">27. Jun</span></div><div class="kday-right"><h4><span class="kdot w"></span>Tag 2 · O Porriño → Redondela</h4><p>~15 km · Erste Ría-Ausblicke · Austern am Abend</p></div></div>
+    <div class="kday"><div class="kday-left"><span class="kday-dn">So</span><span class="kday-dd">27. Jun</span></div><div class="kday-right"><h4><span class="kdot w"></span>Tag 2 · O Porriño → Redondela</h4><p>~15 km · Erste Rías-Ausblicke · Austern am Abend</p></div></div>
     <div class="kday"><div class="kday-left"><span class="kday-dn">Mo</span><span class="kday-dd">28. Jun</span></div><div class="kday-right"><h4><span class="kdot w"></span>Tag 3 · Redondela → Pontevedra</h4><p>~19 km · Schönste Etappe · 2 Nächte buchen!</p></div></div>
     <div class="kday"><div class="kday-left"><span class="kday-dn">Di</span><span class="kday-dd">29. Jun</span></div><div class="kday-right"><h4><span class="kdot r"></span>Tag 4 · Strandtag O Grove ☀️</h4><p>Taxi · Meeresfrüchte · Albariño · Abends zurück</p></div></div>
     <div class="kday"><div class="kday-left"><span class="kday-dn">Mi</span><span class="kday-dd">30. Jun</span></div><div class="kday-right"><h4><span class="kdot w"></span>Tag 5 · Pontevedra → Caldas de Reis</h4><p>~22 km · Wälder & Hórreos · Thermalquellen</p></div></div>
@@ -426,446 +367,228 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.4rem;}
 
 <!-- ANREISE -->
 <section id="anreise" class="sec">
-  <span class="lbl">Anreise</span>
+  <div class="chip"><div class="chip-dot"></div>Anreise</div>
   <h2>Freitag Porto,<br>Samstag <em>Valença</em></h2>
-  <div class="atl">
-    <div class="aday">
-      <div class="aday-left"><span class="aday-dn">Fr</span><span class="aday-dd">25. Juni</span></div>
-      <div class="aday-right"><h4>✈️ Zürich → Porto</h4><p>Direktflug ~2,5 Std. Abend Ribeira — Vinho Verde, Francesinha, Pastel de Nata. Früh schlafen.</p><a class="klink" href="https://www.google.com/flights?q=ZRH+OPO" target="_blank">→ Flüge suchen</a></div>
-    </div>
-    <div class="aday">
-      <div class="aday-left"><span class="aday-dn">Sa</span><span class="aday-dd">26. Juni</span></div>
-      <div class="aday-right"><h4>🚂 Porto → Valença</h4><p>Frühzug ab São Bento (~7–8 Uhr), IC 1:45 Std., ~12 €. Ankommen, Pilgerkredential, loswandern.</p><a class="klink" href="https://www.cp.pt" target="_blank">→ Tickets auf cp.pt</a></div>
-    </div>
-  </div>
-  <ul class="ptips">
-    <li>Abendessen: Cais da Ribeira direkt am Wasser</li>
-    <li>Aussicht: Miradouro da Serra do Pilar</li>
-    <li>Francesinha probieren — das Gericht Portos</li>
-    <li>IC-Zug buchen auf cp.pt (nicht Regional)</li>
-    <li>Pilgerkredential kaufen: ab Valença im Albergue</li>
-  </ul>
-  <div class="day-cards">
-  <div class="day-card placeholder">
-    <div class="day-card-icon">🏨</div>
-    <div class="day-card-title">Unterkunft</div>
-    <div class="day-card-name">Noch nicht gebucht</div>
-    <div class="day-card-desc">Platzhalter — hier Name und Link ergänzen</div>
-  </div>
-  <div class="day-card">
-    <div class="day-card-icon">🍽️</div>
-    <div class="day-card-title">Restaurant</div>
-    <div class="rest-list"><div class="rest-entry" style="color:var(--muted);font-style:italic;">🍽️ Noch kein Restaurant ausgewählt</div></div>
-  </div>
-  </div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">⚓</span><div class="sec-rule-line"></div></div>
+  <p class="prose">Freitag 25. Juni: Zürich → Porto, Direktflug ~2,5 Std. Abend Ribeira — Vinho Verde, Francesinha. Samstag früh: Zug São Bento → Valença, 1:45 Std., ~12 €. Pilgerkredential kaufen, loswandern.</p>
+  <div class="wbox">🚂 Tickets auf <a href="https://www.cp.pt" target="_blank" style="color:var(--ocean);font-weight:500;">cp.pt</a> · ✈️ Flüge auf <a href="https://www.google.com/flights?q=ZRH+OPO" target="_blank" style="color:var(--ocean);font-weight:500;">Google Flights</a></div>
 </section>
 
 <hr class="rule">
 
 <!-- ETAPPEN -->
 <section id="etappen" class="sec">
-  <span class="lbl">Die Route</span>
+  <div class="chip"><div class="chip-dot"></div>Die Route</div>
   <h2>Sieben Tage <em>Galicien</em></h2>
-  <p class="prose" style="margin-bottom:2rem;">Jede Etappe mit Höhenprofil und direkten Links zu Komoot und Google Maps.</p>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">〜</span><div class="sec-rule-line"></div></div>
+  <p class="prose" style="margin-bottom:1.5rem;">Jede Etappe mit Höhenprofil und Links zu Komoot & Google Maps.</p>
 
   <!-- TAG 1 -->
   <div class="stage">
-    <div class="stage-head">
-      <div class="sdot w">1</div>
+    <div class="stage-head"><div class="sh-grid">
+      <div class="snum">1</div>
       <div><div class="stitle">Valença → O Porriño</div><div class="ssub">Sa 26. Jun · Grenzübertritt 🇵🇹→🇪🇸</div></div>
       <div><span class="skm">~19 km</span><span class="sele">↑250m · ↓200m</span></div>
-    </div>
-    <div class="spills"><span class="sp u">↑ 250m</span><span class="sp dn">↓ 200m</span><span class="sp t">4–5 Std.</span><span class="sp">Leicht</span></div>
-
-    <div class="stage-elev">
-      <div class="stage-elev-label">Höhenprofil</div>
-      <svg class="stage-elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-<rect width="700" height="110" fill="#161410"/>
-<line x1="46" y1="80.0" x2="684" y2="80.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="83.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">-2m</text>
-<line x1="46" y1="58.0" x2="684" y2="58.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="61.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">61m</text>
-<line x1="46" y1="36.0" x2="684" y2="36.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="39.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">124m</text>
-<line x1="46" y1="14.0" x2="684" y2="14.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="17.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">187m</text>
-<defs><linearGradient id="pg8542" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a7a4a" stop-opacity=".75"/><stop offset="100%" stop-color="#4a7a4a" stop-opacity=".1"/></linearGradient></defs>
-<polygon points="46.0,70.6 81.8,69.5 117.7,67.1 153.5,61.8 189.4,51.4 225.2,47.9 261.1,53.1 296.9,56.6 332.7,54.9 368.6,47.9 404.4,40.9 440.3,30.4 476.1,23.4 512.0,28.7 547.8,37.4 583.6,44.4 619.5,47.9 655.3,51.4 684.0,58.3 684.0,80 46.0,80" fill="url(#pg8542)"/>
-<path d="M 46.0,70.6 L 81.8,69.5 L 117.7,67.1 L 153.5,61.8 L 189.4,51.4 L 225.2,47.9 L 261.1,53.1 L 296.9,56.6 L 332.7,54.9 L 368.6,47.9 L 404.4,40.9 L 440.3,30.4 L 476.1,23.4 L 512.0,28.7 L 547.8,37.4 L 583.6,44.4 L 619.5,47.9 L 655.3,51.4 L 684.0,58.3" fill="none" stroke="#4a7a4a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="46.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">0km</text>
-<text x="189.4" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">4km</text>
-<text x="332.7" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">8km</text>
-<text x="476.1" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">12km</text>
-<text x="619.5" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">16km</text>
-<text x="684" y="24.0" text-anchor="end" fill="#4a7a4a" font-size="9" font-weight="bold" font-family="DM Sans,system-ui">↑250m ↓200m</text>
-</svg>
-    </div>
-
-    <p class="sp-prose"><strong>Valença:</strong> Die Fortaleza liegt direkt am Weg — von den Mauern auf den Minho schauen. Dann die <em>Ponte Internacional von 1885</em> überqueren: zu Fuß von Portugal nach Spanien. Erster emotionaler Moment.</p>
-    <p class="sp-prose"><strong>Tui:</strong> Erste Pilgerstadt Spaniens. Romanisch-gotische Kathedrale aus dem 12. Jh. Mindestens 30 Min. einplanen.</p>
-    <p class="sp-prose"><strong>Abzweigung vor O Porriño:</strong> <em>Links nehmen = Río Louro Flussweg</em> durch das Naturgebiet As Gándaras. Rechts = Industriegebiet. Links empfohlen.</p>
-    <div class="map-links">
-      <a class="map-btn primary" href="https://www.komoot.com/tour/1626454112" target="_blank"><span class="icon">🗺️</span> Komoot öffnen</a>
-      <a class="map-btn" href="https://www.google.com/maps/dir/Valen%C3%A7a+Portugal/O+Porri%C3%B1o+Spain/@42.04,-8.63,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd25c1c4b56b25b1:0x500ef6143a2dc5!2m2!1d-8.634!2d41.934!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!3e2" target="_blank"><span class="icon">📍</span> Google Maps</a>
-    </div>
-    <div class="hls"><span class="hl">Fortaleza de Valença</span><span class="hl">Ponte Internacional 1885</span><span class="hl">Tui Kathedrale 12. Jh.</span><span class="hl">Río Louro Flussweg</span></div>
+    </div></div>
+    <div class="pills"><span class="sp up">↑ 250m</span><span class="sp dn">↓ 200m</span><span class="sp t">4–5 Std.</span><span class="sp n">Leicht</span></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="700" height="110" fill="#fdf8ee"/>
+      <defs><linearGradient id="eg250" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2171a8" stop-opacity=".5"/><stop offset="100%" stop-color="#2171a8" stop-opacity=".04"/></linearGradient></defs>
+      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <polygon points="46,85 82,82 121,76 163,64 206,58 249,61 292,67 335,61 378,55 421,49 464,36 507,28 543,32 586,41 628,50 671,53 688,56 688,84 46,84" fill="url(#eg250)"/>
+      <path d="M 46 85 L 82 82 L 121 76 L 163 64 L 206 58 L 249 61 L 292 67 L 335 61 L 378 55 L 421 49 L 464 36 L 507 28 L 543 32 L 586 41 L 628 50 L 671 53 L 688 56" fill="none" stroke="#2171a8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑250m ↓200m</text>
+    </svg></div>
+    <p class="s-prose"><strong>Fortaleza de Valença</strong> direkt am Weg — von den Mauern auf den Minho schauen. Dann die <em>Ponte Internacional 1885</em> überqueren: Portugal nach Spanien. <strong>Tui:</strong> Kathedrale 12. Jh., Iglesia de San Francisco 14. Jh. <em>Links nehmen = Río Louro Flussweg.</em></p>
+    <hr class="card-hr">
+    <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/1626454112" target="_blank">🗺️ Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/Valen%C3%A7a+Portugal/O+Porri%C3%B1o+Spain/@42.04,-8.63,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd25c1c4b56b25b1:0x500ef6143a2dc5!2m2!1d-8.634!2d41.934!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!3e2" target="_blank">📍 Google Maps</a></div>
+    <div class="tags"><span class="tag">Fortaleza de Valença</span><span class="tag">Ponte Internacional 1885</span><span class="tag">Kathedrale Tui 12. Jh.</span><span class="tag">Iglesia San Francisco 14. Jh.</span><span class="tag">Río Louro Flussweg</span></div>
+    <hr class="card-hr">
     <div class="day-cards">
-    <div class="day-card placeholder">
-      <div class="day-card-icon">🏨</div>
-      <div class="day-card-title">Unterkunft</div>
-      <div class="day-card-name">Noch nicht gebucht</div>
-      <div class="day-card-desc">Platzhalter — hier Name und Link ergänzen</div>
-    </div>
-    <div class="day-card">
-      <div class="day-card-icon">🍽️</div>
-      <div class="day-card-title">Restaurant</div>
-      <div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">🍽️ A Naveira</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">🍽️ Restaurante Louro</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">🍽️ O Cruceiro</a></div></div>
-    </div>
+      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name">Noch nicht buchbar</div><div class="dc-sub-note">Ab ca. Juli 2026</div></div>
+      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">🍽️ Restaurante Paso a Nivel</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">🍽️ Cólleo Con Pinzas Cervecería</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">🍽️ Restaurante Nómadas World Food</a></div></div></div>
     </div>
   </div>
 
   <!-- TAG 2 -->
   <div class="stage">
-    <div class="stage-head">
-      <div class="sdot w">2</div>
+    <div class="stage-head"><div class="sh-grid">
+      <div class="snum">2</div>
       <div><div class="stitle">O Porriño → Redondela</div><div class="ssub">So 27. Jun · Erste Rías-Ausblicke</div></div>
       <div><span class="skm">~15 km</span><span class="sele">↑300m · ↓350m</span></div>
-    </div>
-    <div class="spills"><span class="sp u">↑ 300m</span><span class="sp dn">↓ 350m</span><span class="sp t">3,5–4,5 Std.</span><span class="sp">Leicht–Mittel</span></div>
-
-    <div class="stage-elev">
-      <div class="stage-elev-label">Höhenprofil</div>
-      <svg class="stage-elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-<rect width="700" height="110" fill="#161410"/>
-<line x1="46" y1="80.0" x2="684" y2="80.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="83.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">-48m</text>
-<line x1="46" y1="58.0" x2="684" y2="58.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="61.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">87m</text>
-<line x1="46" y1="36.0" x2="684" y2="36.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="39.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">222m</text>
-<line x1="46" y1="14.0" x2="684" y2="14.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="17.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">358m</text>
-<defs><linearGradient id="pg9882" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a8a4a" stop-opacity=".75"/><stop offset="100%" stop-color="#5a8a4a" stop-opacity=".1"/></linearGradient></defs>
-<polygon points="46.0,62.4 86.4,61.6 126.8,59.2 167.1,54.3 207.5,47.8 247.9,40.5 288.3,33.2 328.7,25.9 369.0,23.4 409.4,28.3 449.8,34.8 490.2,42.9 530.6,51.1 570.9,57.6 611.3,62.4 643.6,66.5 684.0,70.6 684.0,80 46.0,80" fill="url(#pg9882)"/>
-<path d="M 46.0,62.4 L 86.4,61.6 L 126.8,59.2 L 167.1,54.3 L 207.5,47.8 L 247.9,40.5 L 288.3,33.2 L 328.7,25.9 L 369.0,23.4 L 409.4,28.3 L 449.8,34.8 L 490.2,42.9 L 530.6,51.1 L 570.9,57.6 L 611.3,62.4 L 643.6,66.5 L 684.0,70.6" fill="none" stroke="#5a8a4a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="46.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">0km</text>
-<text x="167.1" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">3km</text>
-<text x="288.3" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">6km</text>
-<text x="409.4" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">9km</text>
-<text x="530.6" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">12km</text>
-<text x="651.7" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">15km</text>
-<text x="684" y="24.0" text-anchor="end" fill="#5a8a4a" font-size="9" font-weight="bold" font-family="DM Sans,system-ui">↑300m ↓350m</text>
-</svg>
-    </div>
-
-    <p class="sp-prose"><strong>Chan das Pipas Forest:</strong> Kiefernwälder, Dorf <em>Mos</em> (nicht durchhetzen), Pazo de Mos direkt am Weg.</p>
-    <p class="sp-prose"><strong>Santa María de Guizán:</strong> Steiler Anstieg — belohnt mit dem ersten echten Blick auf die <em>Ría de Vigo</em> in der Tiefe.</p>
-    <p class="sp-prose"><strong>Redondela:</strong> Steiler Abstieg auf Granitplatten — Stöcke hilfreich. Zwei <em>Eisenbahnviadukte</em> mitten im Ort. Austern ~8–10 €.</p>
-    <div class="map-links">
-      <a class="map-btn primary" href="https://www.komoot.com/tour/1628537182" target="_blank"><span class="icon">🗺️</span> Komoot öffnen</a>
-      <a class="map-btn" href="https://www.google.com/maps/dir/O+Porri%C3%B1o+Spain/Redondela+Spain/@42.22,-8.61,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!3e2" target="_blank"><span class="icon">📍</span> Google Maps</a>
-    </div>
-    <div class="hls"><span class="hl">Chan das Pipas Forest</span><span class="hl">Erster Ría de Vigo Blick</span><span class="hl">Viadukte Redondela</span><span class="hl">🦪 Austern frisch</span></div>
+    </div></div>
+    <div class="pills"><span class="sp up">↑ 300m</span><span class="sp dn">↓ 350m</span><span class="sp t">3,5–4,5 Std.</span><span class="sp n">Leicht–Mittel</span></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="700" height="110" fill="#fdf8ee"/>
+      <defs><linearGradient id="eg300" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2171a8" stop-opacity=".5"/><stop offset="100%" stop-color="#2171a8" stop-opacity=".04"/></linearGradient></defs>
+      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <polygon points="46,69 89,68 135,63 181,54 228,43 274,30 321,19 368,21 414,28 461,38 507,50 554,63 600,70 647,72 688,71 688,84 46,84" fill="url(#eg300)"/>
+      <path d="M 46 69 L 89 68 L 135 63 L 181 54 L 228 43 L 274 30 L 321 19 L 368 21 L 414 28 L 461 38 L 507 50 L 554 63 L 600 70 L 647 72 L 688 71" fill="none" stroke="#2171a8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑300m ↓350m</text>
+    </svg></div>
+    <p class="s-prose"><strong>Pazo de Mos</strong> direkt am Weg. Anstieg zu Santa María de Guizán — erster echter Blick auf die <em>Ría de Vigo</em>. Abstieg auf Granitplatten (Stöcke hilfreich). <strong>Redondela:</strong> Iglesia de Santiago 16. Jh., zwei <em>Eisenbahnviadukte</em> mitten im Ort.</p>
+    <hr class="card-hr">
+    <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/1628537182" target="_blank">🗺️ Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/O+Porri%C3%B1o+Spain/Redondela+Spain/@42.22,-8.61,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!3e2" target="_blank">📍 Google Maps</a></div>
+    <div class="tags"><span class="tag">Pazo de Mos</span><span class="tag">Santa María de Guizán</span><span class="tag">Erster Ría de Vigo Blick</span><span class="tag">Viadukte Redondela</span><span class="tag">Iglesia de Santiago 16. Jh.</span></div>
+    <hr class="card-hr">
     <div class="day-cards">
-    <div class="day-card placeholder">
-      <div class="day-card-icon">🏨</div>
-      <div class="day-card-title">Unterkunft</div>
-      <div class="day-card-name">Noch nicht gebucht</div>
-      <div class="day-card-desc">Platzhalter — hier Name und Link ergänzen</div>
-    </div>
-    <div class="day-card">
-      <div class="day-card-icon">🍽️</div>
-      <div class="day-card-title">Restaurant</div>
-      <div class="rest-list">
-        <div class="rest-entry"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">🍽️ Marisquería O Xantar</a></div>
-        <div class="rest-entry"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">🍽️ Restaurant 2</a></div>
-      </div>
-    </div>
+      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name">Noch nicht buchbar</div><div class="dc-sub-note">Ab ca. Juli 2026</div></div>
+      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">🍽️ A Coté Redondela</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">🍽️ Taberna O' Tranquilo</a></div></div></div>
     </div>
   </div>
 
   <!-- TAG 3 -->
   <div class="stage">
-    <div class="stage-head">
-      <div class="sdot w">3</div>
+    <div class="stage-head"><div class="sh-grid">
+      <div class="snum">3</div>
       <div><div class="stitle">Redondela → Pontevedra</div><div class="ssub">Mo 28. Jun · Schönste Etappe</div></div>
       <div><span class="skm">~19 km</span><span class="sele">↑250m · ↓300m</span></div>
-    </div>
-    <div class="spills"><span class="sp u">↑ 250m</span><span class="sp dn">↓ 300m</span><span class="sp t">4,5–5,5 Std.</span><span class="sp">Mittel</span></div>
-
-    <div class="stage-elev">
-      <div class="stage-elev-label">Höhenprofil</div>
-      <svg class="stage-elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-<rect width="700" height="110" fill="#161410"/>
-<line x1="46" y1="80.0" x2="684" y2="80.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="83.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">-30m</text>
-<line x1="46" y1="58.0" x2="684" y2="58.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="61.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">63m</text>
-<line x1="46" y1="36.0" x2="684" y2="36.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="39.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">156m</text>
-<line x1="46" y1="14.0" x2="684" y2="14.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="17.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">250m</text>
-<defs><linearGradient id="pg8542" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a7a4a" stop-opacity=".75"/><stop offset="100%" stop-color="#4a7a4a" stop-opacity=".1"/></linearGradient></defs>
-<polygon points="46.0,70.6 81.8,65.9 117.7,56.4 153.5,44.6 189.4,35.2 225.2,28.1 261.1,23.4 296.9,27.0 332.7,32.9 368.6,42.3 404.4,37.6 440.3,31.7 476.1,35.2 512.0,42.3 547.8,49.4 583.6,56.4 619.5,62.3 655.3,65.9 684.0,68.2 684.0,80 46.0,80" fill="url(#pg8542)"/>
-<path d="M 46.0,70.6 L 81.8,65.9 L 117.7,56.4 L 153.5,44.6 L 189.4,35.2 L 225.2,28.1 L 261.1,23.4 L 296.9,27.0 L 332.7,32.9 L 368.6,42.3 L 404.4,37.6 L 440.3,31.7 L 476.1,35.2 L 512.0,42.3 L 547.8,49.4 L 583.6,56.4 L 619.5,62.3 L 655.3,65.9 L 684.0,68.2" fill="none" stroke="#4a7a4a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="46.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">0km</text>
-<text x="189.4" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">4km</text>
-<text x="332.7" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">8km</text>
-<text x="476.1" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">12km</text>
-<text x="619.5" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">16km</text>
-<text x="684" y="24.0" text-anchor="end" fill="#4a7a4a" font-size="9" font-weight="bold" font-family="DM Sans,system-ui">↑250m ↓300m</text>
-</svg>
-    </div>
-
-    <p class="sp-prose"><strong>Verea Vella da Canicouva:</strong> Alter Pilgerpfad aus Granitplatten — einer der authentischsten Abschnitte des ganzen Camino Portugués.</p>
-    <p class="sp-prose"><strong>Kirche Santa Marta de Ribarteme (13. Jh.):</strong> Auf einem Hügel, Panoramablick über die Ría de Vigo. Kurze Pause unbedingt.</p>
-    <p class="sp-prose"><strong>Pontevedra:</strong> Komplett autofrei. Pflicht: <em>Kirche La Peregrina</em> (Grundriss = Jakobsmuschel). <strong>2 Nächte buchen!</strong></p>
-    <div class="ibox"><strong>Wichtig:</strong> 2 Nächte Pontevedra buchen — Tag 3 + Rückkehr Di von O Grove. Gleiche Unterkunft = kein Gepäckwechsel.</div>
-    <div class="map-links">
-      <a class="map-btn primary" href="https://www.komoot.com/tour/759245072" target="_blank"><span class="icon">🗺️</span> Komoot öffnen</a>
-      <a class="map-btn" href="https://www.google.com/maps/dir/Redondela+Spain/Pontevedra+Spain/@42.36,-8.62,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!1m5!1m1!1s0xd254e16a17ef631:0x6a00d3b37bcf700!2m2!1d-8.645!2d42.431!3e2" target="_blank"><span class="icon">📍</span> Google Maps</a>
-    </div>
-    <div class="hls"><span class="hl">Verea Vella Steinpfad</span><span class="hl">Santa Marta 13. Jh.</span><span class="hl">Brücke Pontesampaio</span><span class="hl">La Peregrina (Muschelgrundriss)</span><span class="hl">Pontevedra autofrei</span></div>
+    </div></div>
+    <div class="pills"><span class="sp up">↑ 250m</span><span class="sp dn">↓ 300m</span><span class="sp t">4,5–5,5 Std.</span><span class="sp n">Mittel</span></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="700" height="110" fill="#fdf8ee"/>
+      <defs><linearGradient id="eg250" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2171a8" stop-opacity=".5"/><stop offset="100%" stop-color="#2171a8" stop-opacity=".04"/></linearGradient></defs>
+      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <polygon points="46,71 88,60 130,43 172,28 214,23 257,28 299,34 341,38 383,31 425,26 467,29 509,34 551,42 594,55 636,66 688,71 688,84 46,84" fill="url(#eg250)"/>
+      <path d="M 46 71 L 88 60 L 130 43 L 172 28 L 214 23 L 257 28 L 299 34 L 341 38 L 383 31 L 425 26 L 467 29 L 509 34 L 551 42 L 594 55 L 636 66 L 688 71" fill="none" stroke="#2171a8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑250m ↓300m</text>
+    </svg></div>
+    <p class="s-prose"><strong>Verea Vella da Canicouva</strong> — alter Pilgerpfad aus Granitplatten. <strong>Kirche Santa Marta de Ribarteme (13. Jh.)</strong> mit Panoramablick. <strong>Brücke Pontesampaio</strong> — Napoleon 1809. <strong>Pontevedra:</strong> autofrei, <em>Iglesia La Peregrina</em> (Grundriss = Jakobsmuschel), Ruinas de Santo Domingo.</p>
+    <div class="ibox"><strong>Wichtig:</strong> 2 Nächte Pontevedra buchen — Mo + Di Rückkehr von O Grove.</div>
+    <hr class="card-hr">
+    <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/759245072" target="_blank">🗺️ Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/Redondela+Spain/Pontevedra+Spain/@42.36,-8.62,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!1m5!1m1!1s0xd254e16a17ef631:0x6a00d3b37bcf700!2m2!1d-8.645!2d42.431!3e2" target="_blank">📍 Google Maps</a></div>
+    <div class="tags"><span class="tag">Verea Vella Steinpfad</span><span class="tag">Santa Marta de Ribarteme 13. Jh.</span><span class="tag">Brücke Pontesampaio</span><span class="tag">La Peregrina (Muschelgrundriss)</span><span class="tag">Ruinas de Santo Domingo</span></div>
+    <hr class="card-hr">
     <div class="day-cards">
-    <div class="day-card placeholder">
-      <div class="day-card-icon">🏨</div>
-      <div class="day-card-title">Unterkunft</div>
-      <div class="day-card-name">Noch nicht gebucht</div>
-      <div class="day-card-desc">Platzhalter — hier Name und Link ergänzen</div>
-    </div>
-    <div class="day-card">
-      <div class="day-card-icon">🍽️</div>
-      <div class="day-card-title">Restaurant</div>
-      <div class="rest-list"><div class="rest-entry" style="color:var(--muted);font-style:italic;">🍽️ Noch kein Restaurant ausgewählt</div></div>
-    </div>
+      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name">Noch nicht buchbar</div><div class="dc-sub-note">Ab ca. Juli 2026</div></div>
+      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry ph">🍽️ Noch kein Restaurant</div></div></div>
     </div>
   </div>
 
   <!-- TAG 4 -->
   <div class="stage">
-    <div class="stage-head">
-      <div class="sdot r">4</div>
+    <div class="stage-head"><div class="sh-grid">
+      <div class="snum rest">4</div>
       <div><div class="stitle">Pontevedra ↔ O Grove</div><div class="ssub">Di 29. Jun · Strandtag ☀️</div></div>
       <div><span class="skm">Taxi</span><span class="sele">Ruhetag</span></div>
-    </div>
-    <div class="wbox">🚕 Taxi Pontevedra → O Grove: ~30 Min., 25–30 €. Abends zurück nach Pontevedra.</div>
-    <p class="sp-prose"><strong>O Grove:</strong> Halbinsel in den Rías Baixas — Austernfarmen, Atlantikstrände, bestes Meeresfrüchte-Essen der Route.</p>
-    <p class="sp-prose"><strong>Strände:</strong> <em>Praia A Lanzada</em> — langer Atlantikstrand. <em>Praia de Meloxo</em> — ruhiger.</p>
-    <p class="sp-prose"><strong>Das Essen:</strong> Nécoras, Percebes (unvergesslich), Vieiras. Dazu <em>Albariño</em>. In einer Marisquería am Hafen sitzen und Zeit vergessen.</p>
-    <div class="map-links">
-      <a class="map-btn primary" href="https://www.google.com/maps/place/O+Grove,+Pontevedra,+Spain/@42.4965,-8.8671,13z" target="_blank"><span class="icon">📍</span> O Grove auf Maps</a>
-      <a class="map-btn" href="https://www.google.com/maps/place/Praia+A+Lanzada,+O+Grove,+Spain/@42.4718,-8.8702,14z" target="_blank"><span class="icon">🏖️</span> Praia A Lanzada</a>
-    </div>
-    <div class="hls"><span class="hl">🏖️ Praia A Lanzada</span><span class="hl">🦀 Percebes & Nécoras</span><span class="hl">🍷 Albariño Rías Baixas</span><span class="hl">Marisquería am Hafen</span></div>
+    </div></div>
+    <div class="wbox">🚕 Taxi Pontevedra → O Grove ~30 Min., 25–30 €. Abends zurück (gleiche Unterkunft).</div>
+    <p class="s-prose"><strong>Praia A Lanzada</strong> — langer Atlantikstrand (keltischer Kultort). <strong>Aquarium Galicia</strong> O Grove. Muschelfarmen-Bateas sichtbar vom Ufer. <em>Marisquería D'Berto</em> direkt am Hafen — das kulinarische Highlight der Route.</p>
+    <div class="tags"><span class="tag">🏖️ Praia A Lanzada</span><span class="tag">Aquarium Galicia</span><span class="tag">🦀 Percebes & Nécoras</span><span class="tag">🍷 Albariño Rías Baixas</span></div>
+    <hr class="card-hr">
     <div class="day-cards">
-    <div class="day-card placeholder">
-      <div class="day-card-icon">🏨</div>
-      <div class="day-card-title">Unterkunft</div>
-      <div class="day-card-name">Noch nicht gebucht</div>
-      <div class="day-card-desc">Platzhalter — hier Name und Link ergänzen</div>
-    </div>
-    <div class="day-card">
-      <div class="day-card-icon">🍽️</div>
-      <div class="day-card-title">Restaurant</div>
-      <div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/AZPBBD2UeobWE8M69" target="_blank">🍽️ Restaurant O Grove</a></div></div>
-    </div>
+      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name">Noch nicht buchbar</div><div class="dc-sub-note">Ab ca. Juli 2026</div></div>
+      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/AZPBBD2UeobWE8M69" target="_blank">🍽️ Marisquería D'Berto</a></div></div></div>
     </div>
   </div>
 
   <!-- TAG 5 -->
   <div class="stage">
-    <div class="stage-head">
-      <div class="sdot w">5</div>
+    <div class="stage-head"><div class="sh-grid">
+      <div class="snum">5</div>
       <div><div class="stitle">Pontevedra → Caldas de Reis</div><div class="ssub">Mi 30. Jun · Wälder & Therme</div></div>
       <div><span class="skm">~22 km</span><span class="sele">↑150m · ↓200m</span></div>
-    </div>
-    <div class="spills"><span class="sp u">↑ 150m</span><span class="sp dn">↓ 200m</span><span class="sp t">4,5–5,5 Std.</span><span class="sp">Leicht</span></div>
-
-    <div class="stage-elev">
-      <div class="stage-elev-label">Höhenprofil</div>
-      <svg class="stage-elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-<rect width="700" height="110" fill="#161410"/>
-<line x1="46" y1="80.0" x2="684" y2="80.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="83.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">3m</text>
-<line x1="46" y1="58.0" x2="684" y2="58.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="61.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">42m</text>
-<line x1="46" y1="36.0" x2="684" y2="36.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="39.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">82m</text>
-<line x1="46" y1="14.0" x2="684" y2="14.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="17.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">122m</text>
-<defs><linearGradient id="pg8384" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6a9a5a" stop-opacity=".75"/><stop offset="100%" stop-color="#6a9a5a" stop-opacity=".1"/></linearGradient></defs>
-<polygon points="46.0,70.6 89.5,65.0 133.0,56.7 176.5,48.4 220.0,37.3 263.5,29.0 307.0,23.4 350.5,26.2 394.0,31.7 437.5,37.3 481.0,45.6 524.5,53.9 568.0,60.6 611.5,65.0 655.0,67.2 684.0,67.8 684.0,80 46.0,80" fill="url(#pg8384)"/>
-<path d="M 46.0,70.6 L 89.5,65.0 L 133.0,56.7 L 176.5,48.4 L 220.0,37.3 L 263.5,29.0 L 307.0,23.4 L 350.5,26.2 L 394.0,31.7 L 437.5,37.3 L 481.0,45.6 L 524.5,53.9 L 568.0,60.6 L 611.5,65.0 L 655.0,67.2 L 684.0,67.8" fill="none" stroke="#6a9a5a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="46.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">0km</text>
-<text x="191.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">5km</text>
-<text x="336.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">10km</text>
-<text x="481.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">15km</text>
-<text x="626.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">20km</text>
-<text x="684" y="24.0" text-anchor="end" fill="#6a9a5a" font-size="9" font-weight="bold" font-family="DM Sans,system-ui">↑150m ↓200m</text>
-</svg>
-    </div>
-
-    <p class="sp-prose"><strong>Galicisches Hinterland:</strong> Überall <em>Hórreos</em> — galicische Kornspeicher auf Steinsäulen. Kastanien, Kiefern, Eukalyptus. Ruhigste Etappe.</p>
-    <p class="sp-prose"><strong>Caldas de Reis:</strong> Sofort nach Ankunft: <em>Termas</em> bis 49°C. Hotel Balneario Davila bietet Tageskarten an.</p>
-    <div class="map-links">
-      <a class="map-btn primary" href="https://www.komoot.com/tour/1628539777" target="_blank"><span class="icon">🗺️</span> Komoot öffnen</a>
-      <a class="map-btn" href="https://www.google.com/maps/dir/Pontevedra+Spain/Caldas+de+Reis+Spain/@42.51,-8.64,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd254e16a17ef631:0x6a00d3b37bcf700!2m2!1d-8.645!2d42.431!1m5!1m1!1s0xd253d69ef97d16d:0x300ef8143a2dc5!2m2!1d-8.644!2d42.601!3e2" target="_blank"><span class="icon">📍</span> Google Maps</a>
-    </div>
-    <div class="hls"><span class="hl">Hórreos galiciens</span><span class="hl">Igrexa Santa María de Alba</span><span class="hl">♨️ Termas 49°C</span><span class="hl">Balneario Davila</span></div>
+    </div></div>
+    <div class="pills"><span class="sp up">↑ 150m</span><span class="sp dn">↓ 200m</span><span class="sp t">4,5–5,5 Std.</span><span class="sp n">Leicht</span></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="700" height="110" fill="#fdf8ee"/>
+      <defs><linearGradient id="eg150" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5aabcf" stop-opacity=".5"/><stop offset="100%" stop-color="#5aabcf" stop-opacity=".04"/></linearGradient></defs>
+      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <polygon points="46,71 88,68 132,63 176,58 220,51 264,45 308,42 352,44 396,47 440,51 484,55 528,60 572,65 616,68 660,70 688,71 688,84 46,84" fill="url(#eg150)"/>
+      <path d="M 46 71 L 88 68 L 132 63 L 176 58 L 220 51 L 264 45 L 308 42 L 352 44 L 396 47 L 440 51 L 484 55 L 528 60 L 572 65 L 616 68 L 660 70 L 688 71" fill="none" stroke="#5aabcf" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑150m ↓200m</text>
+    </svg></div>
+    <p class="s-prose"><strong>Igrexa de Santa María de Alba (12. Jh.)</strong> — romanisch, keltische Kultobjekte im Boden. Überall <em>Hórreos</em> — galicische Kornspeicher auf Steinsäulen. <strong>Ponte Pedriña</strong> über den Río Umia. <strong>Caldas de Reis:</strong> Sofort in die <em>Termas Romanas</em> (bis 49°C).</p>
+    <hr class="card-hr">
+    <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/1628539777" target="_blank">🗺️ Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/Pontevedra+Spain/Caldas+de+Reis+Spain/@42.51,-8.64,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd254e16a17ef631:0x6a00d3b37bcf700!2m2!1d-8.645!2d42.431!1m5!1m1!1s0xd253d69ef97d16d:0x300ef8143a2dc5!2m2!1d-8.644!2d42.601!3e2" target="_blank">📍 Google Maps</a></div>
+    <div class="tags"><span class="tag">Igrexa Santa María de Alba 12. Jh.</span><span class="tag">Hórreos galiciens</span><span class="tag">Ponte Pedriña</span><span class="tag">♨️ Termas Romanas 49°C</span></div>
+    <hr class="card-hr">
     <div class="day-cards">
-    <div class="day-card placeholder">
-      <div class="day-card-icon">🏨</div>
-      <div class="day-card-title">Unterkunft</div>
-      <div class="day-card-name">Noch nicht gebucht</div>
-      <div class="day-card-desc">Platzhalter — hier Name und Link ergänzen</div>
-    </div>
-    <div class="day-card">
-      <div class="day-card-icon">🍽️</div>
-      <div class="day-card-title">Restaurant</div>
-      <div class="rest-list">
-        <div class="rest-entry"><a href="https://maps.app.goo.gl/NcCPNykYhKCSCoEm8" target="_blank">🍽️ Restaurant 1</a></div>
-        <div class="rest-entry"><a href="https://maps.app.goo.gl/qZnPDYuRfTnv6amy5" target="_blank">🍽️ Restaurant 2</a></div>
-        <div class="rest-entry"><a href="https://maps.app.goo.gl/PFzQbgbFc7aciaL79" target="_blank">⭐ Favorit</a></div>
-      </div>
-    </div>
+      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name">Noch nicht buchbar</div><div class="dc-sub-note">Ab ca. Juli 2026</div></div>
+      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/NcCPNykYhKCSCoEm8" target="_blank">🍽️ Meson Bermaña</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/qZnPDYuRfTnv6amy5" target="_blank">🍽️ A Bodega do Roxo</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/PFzQbgbFc7aciaL79" target="_blank">🍽️ O Muiño ⭐</a></div></div></div>
     </div>
   </div>
 
   <!-- TAG 6 -->
   <div class="stage">
-    <div class="stage-head">
-      <div class="sdot w">6</div>
+    <div class="stage-head"><div class="sh-grid">
+      <div class="snum">6</div>
       <div><div class="stitle">Caldas de Reis → Padrón</div><div class="ssub">Do 1. Jul · Geschichte & Pimientos</div></div>
       <div><span class="skm">~18 km</span><span class="sele">↑200m · ↓250m</span></div>
-    </div>
-    <div class="spills"><span class="sp u">↑ 200m</span><span class="sp dn">↓ 250m</span><span class="sp t">4–5 Std.</span><span class="sp">Leicht</span></div>
-
-    <div class="stage-elev">
-      <div class="stage-elev-label">Höhenprofil</div>
-      <svg class="stage-elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-<rect width="700" height="110" fill="#161410"/>
-<line x1="46" y1="80.0" x2="684" y2="80.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="83.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">-31m</text>
-<line x1="46" y1="58.0" x2="684" y2="58.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="61.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">53m</text>
-<line x1="46" y1="36.0" x2="684" y2="36.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="39.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">137m</text>
-<line x1="46" y1="14.0" x2="684" y2="14.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="17.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">221m</text>
-<defs><linearGradient id="pg1866" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a8a4a" stop-opacity=".75"/><stop offset="100%" stop-color="#5a8a4a" stop-opacity=".1"/></linearGradient></defs>
-<polygon points="46.0,65.3 82.5,62.7 118.9,57.5 155.4,48.3 191.8,37.8 228.3,28.7 264.7,23.4 301.2,26.0 337.7,32.6 374.1,40.5 410.6,47.0 447.0,52.2 483.5,56.2 519.9,60.1 556.4,64.0 592.9,67.2 629.3,69.3 665.8,69.8 684.0,70.6 684.0,80 46.0,80" fill="url(#pg1866)"/>
-<path d="M 46.0,65.3 L 82.5,62.7 L 118.9,57.5 L 155.4,48.3 L 191.8,37.8 L 228.3,28.7 L 264.7,23.4 L 301.2,26.0 L 337.7,32.6 L 374.1,40.5 L 410.6,47.0 L 447.0,52.2 L 483.5,56.2 L 519.9,60.1 L 556.4,64.0 L 592.9,67.2 L 629.3,69.3 L 665.8,69.8 L 684.0,70.6" fill="none" stroke="#5a8a4a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="46.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">0km</text>
-<text x="191.8" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">4km</text>
-<text x="337.7" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">8km</text>
-<text x="483.5" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">12km</text>
-<text x="629.3" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">16km</text>
-<text x="684" y="24.0" text-anchor="end" fill="#5a8a4a" font-size="9" font-weight="bold" font-family="DM Sans,system-ui">↑200m ↓250m</text>
-</svg>
-    </div>
-
-    <p class="sp-prose"><strong>Café-Bar Casa Esperón:</strong> Legendärer Pilgerstopp in Santa Mariña de Carracedo — meistens voll, immer gut.</p>
-    <p class="sp-prose"><strong>Padrón:</strong> Laut Legende landete hier das Steinboot mit den Gebeinen des Apostels. <em>Iglesia de Santiago</em> bewahrt den Padrón-Stein. Rosalía de Castro und Camilo José Cela lebten hier.</p>
-    <p class="sp-prose"><strong>Abend:</strong> <em>Pimientos de Padrón</em> — gebraten, grobes Meersalz: <em>"uns pican, outros non."</em></p>
-    <div class="map-links">
-      <a class="map-btn primary" href="https://www.komoot.com/tour/1630715447" target="_blank"><span class="icon">🗺️</span> Komoot öffnen</a>
-      <a class="map-btn" href="https://www.google.com/maps/dir/Caldas+de+Reis+Spain/Padr%C3%B3n+Spain/@42.67,-8.65,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd253d69ef97d16d:0x300ef8143a2dc5!2m2!1d-8.644!2d42.601!1m5!1m1!1s0xd2559d5e4e3e14d:0x200ef8143a2dc5!2m2!1d-8.657!2d42.738!3e2" target="_blank"><span class="icon">📍</span> Google Maps</a>
-    </div>
-    <div class="hls"><span class="hl">Café-Bar Casa Esperón</span><span class="hl">Monte Castelo & alte Mühlen</span><span class="hl">Iglesia de Santiago</span><span class="hl">Rosalía de Castro</span><span class="hl">🫑 Pimientos de Padrón</span></div>
+    </div></div>
+    <div class="pills"><span class="sp up">↑ 200m</span><span class="sp dn">↓ 250m</span><span class="sp t">4–5 Std.</span><span class="sp n">Leicht</span></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="700" height="110" fill="#fdf8ee"/>
+      <defs><linearGradient id="eg200" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2171a8" stop-opacity=".5"/><stop offset="100%" stop-color="#2171a8" stop-opacity=".04"/></linearGradient></defs>
+      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <polygon points="46,70 88,66 132,56 176,41 220,29 264,22 308,25 352,30 396,37 440,44 484,51 528,58 572,64 616,70 660,73 688,74 688,84 46,84" fill="url(#eg200)"/>
+      <path d="M 46 70 L 88 66 L 132 56 L 176 41 L 220 29 L 264 22 L 308 25 L 352 30 L 396 37 L 440 44 L 484 51 L 528 58 L 572 64 L 616 70 L 660 73 L 688 74" fill="none" stroke="#2171a8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑200m ↓250m</text>
+    </svg></div>
+    <p class="s-prose">Café-Bar Casa Esperón — legendärer Pilgerstopp. Alte Steinbrücken über den Río Ulla. <strong>Padrón:</strong> <em>Iglesia de Santiago</em> mit dem Padrón-Stein in der Krypta. <strong>Casa Museo Rosalía de Castro</strong>. <strong>Colegiata de Santa María la Mayor</strong>. Abends: <em>Pimientos de Padrón — "uns pican, outros non."</em></p>
+    <hr class="card-hr">
+    <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/1630715447" target="_blank">🗺️ Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/Caldas+de+Reis+Spain/Padr%C3%B3n+Spain/@42.67,-8.65,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd253d69ef97d16d:0x300ef8143a2dc5!2m2!1d-8.644!2d42.601!1m5!1m1!1s0xd2559d5e4e3e14d:0x200ef8143a2dc5!2m2!1d-8.657!2d42.738!3e2" target="_blank">📍 Google Maps</a></div>
+    <div class="tags"><span class="tag">Iglesia de Santiago (Padrón-Stein)</span><span class="tag">Casa Museo Rosalía de Castro</span><span class="tag">Colegiata Santa María la Mayor</span><span class="tag">🫑 Pimientos de Padrón</span></div>
+    <hr class="card-hr">
     <div class="day-cards">
-    <div class="day-card placeholder">
-      <div class="day-card-icon">🏨</div>
-      <div class="day-card-title">Unterkunft</div>
-      <div class="day-card-name">Noch nicht gebucht</div>
-      <div class="day-card-desc">Platzhalter — hier Name und Link ergänzen</div>
-    </div>
-    <div class="day-card">
-      <div class="day-card-icon">🍽️</div>
-      <div class="day-card-title">Restaurant</div>
-      <div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">🍽️ Restaurant 1</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">🍽️ Restaurant 2</a></div></div>
-    </div>
+      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name">Noch nicht buchbar</div><div class="dc-sub-note">Ab ca. Juli 2026</div></div>
+      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">🍽️ Pulpería Rial</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">🍽️ O Alpendre</a></div></div></div>
     </div>
   </div>
 
   <!-- TAG 7 -->
   <div class="stage">
-    <div class="stage-head">
-      <div class="sdot f">7</div>
+    <div class="stage-head"><div class="sh-grid">
+      <div class="snum fin">7</div>
       <div><div class="stitle">Padrón → Santiago de Compostela</div><div class="ssub">Fr 2. Jul · Das Finale 🎉</div></div>
       <div><span class="skm">~24 km</span><span class="sele">↑400m · ↓150m</span></div>
-    </div>
-    <div class="spills"><span class="sp u">↑ 400m</span><span class="sp dn">↓ 150m</span><span class="sp t">5–6,5 Std.</span><span class="sp">Mittel–Schwer</span></div>
-
-    <div class="stage-elev">
-      <div class="stage-elev-label">Höhenprofil</div>
-      <svg class="stage-elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-<rect width="700" height="110" fill="#161410"/>
-<line x1="46" y1="80.0" x2="684" y2="80.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="83.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">-70m</text>
-<line x1="46" y1="58.0" x2="684" y2="58.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="61.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">105m</text>
-<line x1="46" y1="36.0" x2="684" y2="36.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="39.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">280m</text>
-<line x1="46" y1="14.0" x2="684" y2="14.0" stroke="#2a2620" stroke-width="1" stroke-dasharray="3 4"/>
-<text x="42" y="17.0" text-anchor="end" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">455m</text>
-<defs><linearGradient id="pg5426" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8a4a3a" stop-opacity=".75"/><stop offset="100%" stop-color="#8a4a3a" stop-opacity=".1"/></linearGradient></defs>
-<polygon points="46.0,70.6 73.1,69.9 100.3,68.7 127.4,66.8 154.6,63.7 181.7,59.9 208.9,54.9 236.0,49.2 263.2,44.2 290.3,39.8 317.5,37.3 344.6,34.1 371.8,32.2 398.9,29.7 426.1,26.6 439.7,24.7 453.2,23.4 466.8,25.3 480.4,28.5 507.5,32.2 534.7,34.7 561.8,36.6 589.0,37.9 616.1,37.5 643.3,37.9 670.4,38.3 684.0,38.5 684.0,80 46.0,80" fill="url(#pg5426)"/>
-<path d="M 46.0,70.6 L 73.1,69.9 L 100.3,68.7 L 127.4,66.8 L 154.6,63.7 L 181.7,59.9 L 208.9,54.9 L 236.0,49.2 L 263.2,44.2 L 290.3,39.8 L 317.5,37.3 L 344.6,34.1 L 371.8,32.2 L 398.9,29.7 L 426.1,26.6 L 439.7,24.7 L 453.2,23.4 L 466.8,25.3 L 480.4,28.5 L 507.5,32.2 L 534.7,34.7 L 561.8,36.6 L 589.0,37.9 L 616.1,37.5 L 643.3,37.9 L 670.4,38.3 L 684.0,38.5" fill="none" stroke="#8a4a3a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="46.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">0km</text>
-<text x="181.7" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">5km</text>
-<text x="317.5" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">10km</text>
-<text x="453.2" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">15km</text>
-<text x="589.0" y="96.0" text-anchor="middle" fill="#8a8070" font-size="9" font-family="DM Sans,system-ui">20km</text>
-<text x="684" y="24.0" text-anchor="end" fill="#8a4a3a" font-size="9" font-weight="bold" font-family="DM Sans,system-ui">↑400m ↓150m</text>
-</svg>
-    </div>
-
-    <div class="ibox"><strong>Vor 7:30 Uhr starten</strong> — längster Tag. Ziel: <strong>Pilgermesse 12 Uhr</strong> in der Kathedrale.</div>
-    <p class="sp-prose"><strong>Monte do Gozo:</strong> Hügel der Freude — hier sehen Pilger die Türme zum ersten Mal. Anhalten. Atmen. Das ist der Moment.</p>
-    <p class="sp-prose"><strong>Santiago:</strong> Durch mittelalterliche Gassen auf den <em>Praza do Obradoiro</em>. Wer weint, weint — das ist normal. Compostela: Rúa das Carretas 33, tägl. 9–21 Uhr.</p>
-    <div class="map-links">
-      <a class="map-btn primary" href="https://www.komoot.com/tour/2025325469" target="_blank"><span class="icon">🗺️</span> Komoot öffnen</a>
-      <a class="map-btn" href="https://www.google.com/maps/dir/Padr%C3%B3n+Spain/Santiago+de+Compostela+Spain/@42.80,-8.60,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2559d5e4e3e14d:0x200ef8143a2dc5!2m2!1d-8.657!2d42.738!1m5!1m1!1s0xd2ef47a96cfd2fd:0x100ef8143a29c1!2m2!1d-8.545!2d42.880!3e2" target="_blank"><span class="icon">📍</span> Google Maps</a>
-    </div>
-    <div class="hls"><span class="hl">Monte do Gozo</span><span class="hl">⛪ Praza do Obradoiro</span><span class="hl">Compostela-Urkunde</span><span class="hl">Botafumeiro 12 Uhr</span></div>
+    </div></div>
+    <div class="pills"><span class="sp up">↑ 400m</span><span class="sp dn">↓ 150m</span><span class="sp t">5–6,5 Std.</span><span class="sp n">Mittel–Schwer</span></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
+      <rect width="700" height="110" fill="#fdf8ee"/>
+      <defs><linearGradient id="eg400" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4603a" stop-opacity=".5"/><stop offset="100%" stop-color="#d4603a" stop-opacity=".04"/></linearGradient></defs>
+      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
+      <polygon points="46,74 75,73 104,70 133,65 163,57 192,47 221,36 251,26 280,19 309,17 338,16 367,18 397,21 426,24 455,27 484,30 513,31 543,29 572,27 601,26 630,26 659,26 688,26 688,84 46,84" fill="url(#eg400)"/>
+      <path d="M 46 74 L 75 73 L 104 70 L 133 65 L 163 57 L 192 47 L 221 36 L 251 26 L 280 19 L 309 17 L 338 16 L 367 18 L 397 21 L 426 24 L 455 27 L 484 30 L 513 31 L 543 29 L 572 27 L 601 26 L 630 26 L 659 26 L 688 26" fill="none" stroke="#d4603a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑400m ↓150m</text>
+    </svg></div>
+    <div class="ibox"><strong>Vor 7:30 Uhr starten</strong> — längster Tag. Ziel: <strong>Pilgermesse 12 Uhr.</strong></div>
+    <p class="s-prose"><strong>Igrexa de Santa María de Iria Flavia (10. Jh.)</strong> kurz nach Padrón. <strong>Monte do Gozo</strong> — Hügel der Freude, erster Blick auf die Türme. Anhalten. Atmen. <strong>Santiago:</strong> Pórtico de la Gloria (12. Jh.), <em>Praza do Obradoiro</em>. Compostela: Rúa das Carretas 33, 9–21 Uhr.</p>
+    <hr class="card-hr">
+    <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/2025325469" target="_blank">🗺️ Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/Padr%C3%B3n+Spain/Santiago+de+Compostela+Spain/@42.80,-8.60,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2559d5e4e3e14d:0x200ef8143a2dc5!2m2!1d-8.657!2d42.738!1m5!1m1!1s0xd2ef47a96cfd2fd:0x100ef8143a29c1!2m2!1d-8.545!2d42.880!3e2" target="_blank">📍 Google Maps</a></div>
+    <div class="tags"><span class="tag">Iria Flavia 10. Jh.</span><span class="tag">Monte do Gozo</span><span class="tag">Pórtico de la Gloria 12. Jh.</span><span class="tag">⛪ Praza do Obradoiro</span><span class="tag">Compostela-Urkunde</span><span class="tag">Botafumeiro 12 Uhr</span></div>
+    <hr class="card-hr">
     <div class="day-cards">
-    <div class="day-card placeholder">
-      <div class="day-card-icon">🏨</div>
-      <div class="day-card-title">Unterkunft</div>
-      <div class="day-card-name">Noch nicht gebucht</div>
-      <div class="day-card-desc">Platzhalter — hier Name und Link ergänzen</div>
-    </div>
-    <div class="day-card">
-      <div class="day-card-icon">🍽️</div>
-      <div class="day-card-title">Restaurant</div>
-      <div class="rest-list"><div class="rest-entry" style="color:var(--muted);font-style:italic;">🍽️ Noch kein Restaurant ausgewählt</div></div>
-    </div>
+      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name">Noch nicht buchbar</div><div class="dc-sub-note">Ab ca. Juli 2026</div></div>
+      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry ph">🍽️ Noch kein Restaurant</div></div></div>
     </div>
   </div>
 
   <!-- TAG 8 -->
   <div class="stage">
-    <div class="stage-head">
-      <div class="sdot d">8</div>
+    <div class="stage-head"><div class="sh-grid">
+      <div class="snum" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);">8</div>
       <div><div class="stitle">Santiago de Compostela</div><div class="ssub">Sa 3. Jul · Feiern & Erkunden</div></div>
       <div><span class="skm">—</span><span class="sele">Ruhetag</span></div>
-    </div>
-    <p class="sp-prose"><strong>Pilgermesse 12 Uhr:</strong> Das <em>Botafumeiro</em> schwingt durch das Kirchenschiff. Früh da sein.</p>
-    <p class="sp-prose"><strong>Kathedrale:</strong> Krypta (Grab des Apostels), Dachbesichtigung, Museum.</p>
-    <p class="sp-prose"><strong>Heimreise:</strong> Flughafen SCQ 10 km, Taxi ~25 €. Oder Zug Porto (~4 Std.) für Rückflug Zürich.</p>
-    <div class="hls"><span class="hl">Botafumeiro & Pilgermesse</span><span class="hl">Kathedrale Krypta & Dach</span><span class="hl">🐙 Pulpo a feira</span><span class="hl">🎂 Tarta de Santiago</span><span class="hl">SCQ → ZRH</span></div>
+    </div></div>
+    <p class="s-prose" style="padding-top:.9rem;"><strong>Pilgermesse 12 Uhr</strong> — Botafumeiro. Früh da sein. <strong>Kathedrale:</strong> Krypta (Grab des Apostels), Dachbesichtigung. <strong>Parador de Santiago</strong> (ehem. Königliches Hospital, 15. Jh.). <strong>Mercado de Abastos</strong> (1941). Heimreise: SCQ → ZRH, Taxi ~25 €.</p>
+    <div class="tags"><span class="tag">Botafumeiro & Pilgermesse</span><span class="tag">Kathedrale Krypta & Dach</span><span class="tag">Parador de Santiago 15. Jh.</span><span class="tag">Mercado de Abastos</span><span class="tag">🐙 Pulpo a feira</span><span class="tag">🎂 Tarta de Santiago</span></div>
+    <hr class="card-hr">
     <div class="day-cards">
-    <div class="day-card placeholder">
-      <div class="day-card-icon">🏨</div>
-      <div class="day-card-title">Unterkunft</div>
-      <div class="day-card-name">Noch nicht gebucht</div>
-      <div class="day-card-desc">Platzhalter — hier Name und Link ergänzen</div>
-    </div>
-    <div class="day-card">
-      <div class="day-card-icon">🍽️</div>
-      <div class="day-card-title">Restaurant</div>
-      <div class="rest-list"><div class="rest-entry" style="color:var(--muted);font-style:italic;">🍽️ Noch kein Restaurant ausgewählt</div></div>
-    </div>
+      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name">Noch nicht buchbar</div><div class="dc-sub-note">Ab ca. Juli 2026</div></div>
+      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry ph">🍽️ Noch kein Restaurant</div></div></div>
     </div>
   </div>
 </section>
@@ -874,177 +597,133 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.4rem;}
 
 <!-- RESTAURANTS -->
 <section id="restaurants" class="sec">
-  <span class="lbl">Gastronomie</span>
+  <div class="chip"><div class="chip-dot"></div>Gastronomie</div>
   <h2>Wo ihr <em>esst</em></h2>
-  <p class="prose">Nur bestätigte Restaurants — alles mit direktem Link zu Google Maps.</p>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">🍷</span><div class="sec-rule-line"></div></div>
+  <p class="prose">Nur bestätigte Restaurants — alle mit direktem Link.</p>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">O Porriño</div><div class="rest-city-day">Tag 1</div></div><div class="ri"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">🍽️ Restaurante Paso a Nivel</a></div><div class="ri"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">🍽️ Cólleo Con Pinzas Cervecería</a></div><div class="ri"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">🍽️ Restaurante Nómadas World Food</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Redondela</div><div class="rest-city-day">Tag 2</div></div><div class="ri"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">🍽️ A Coté Redondela</a></div><div class="ri"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">🍽️ Taberna O' Tranquilo</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">O Grove</div><div class="rest-city-day">Tag 4 · Strandtag</div></div><div class="ri"><a href="https://maps.app.goo.gl/AZPBBD2UeobWE8M69" target="_blank">🍽️ Marisquería D'Berto</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Caldas de Reis</div><div class="rest-city-day">Tag 5</div></div><div class="ri"><a href="https://maps.app.goo.gl/NcCPNykYhKCSCoEm8" target="_blank">🍽️ Meson Bermaña</a></div><div class="ri"><a href="https://maps.app.goo.gl/qZnPDYuRfTnv6amy5" target="_blank">🍽️ A Bodega do Roxo</a></div><div class="ri"><a href="https://maps.app.goo.gl/PFzQbgbFc7aciaL79" target="_blank">⭐ O Muiño — Favorit</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Padrón</div><div class="rest-city-day">Tag 6</div></div><div class="ri"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">🍽️ Pulpería Rial</a></div><div class="ri"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">🍽️ O Alpendre</a></div></div>
+  <div class="wbox">🍷 <strong>Wein:</strong> <em>Albariño</em> (Weißwein, perfekt zu Meeresfrüchten) oder <em>Ribeiro tinto</em> (leichter Rotwein, oft vom Fass). Beide D.O. aus Galicien.</div>
+</section>
 
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">O Porriño</div><div class="rest-city-day">Tag 1 — Abend</div></div>
-<div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank" style="color:var(--gold);text-decoration:none;">A Naveira ↗</a></div></div></div><div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank" style="color:var(--gold);text-decoration:none;">Restaurante Louro ↗</a></div></div></div><div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank" style="color:var(--gold);text-decoration:none;">O Cruceiro ↗</a></div></div></div>
-  </div>
+<hr class="rule">
 
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Redondela</div><div class="rest-city-day">Tag 2 — Abend</div></div>
-<div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank" style="color:var(--gold);text-decoration:none;">Restaurant 1 ↗</a></div></div></div><div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank" style="color:var(--gold);text-decoration:none;">Restaurant 2 ↗</a></div></div></div>
-  </div>
+<!-- STEMPEL -->
+<section id="stempel" class="sec">
+  <div class="chip"><div class="chip-dot"></div>Pilgerstempel</div>
+  <h2>Dein <em>Kredential</em></h2>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">📋</span><div class="sec-rule-line"></div></div>
+  <p class="prose">Mindestens <strong>2 Stempel pro Tag</strong> sammeln für die Compostela-Urkunde. Die wichtigsten Stempelorte:</p>
+  <div class="stempel-list"><div class="stempel-item done">
+  <div class="stempel-circle"><span class="stempel-num">1</span></div>
+  <div class="stempel-info"><div class="stempel-city">Valença</div><div class="stempel-where">Touristinfo / Albergue</div></div>
+  <div class="stempel-box"></div>
+</div><div class="stempel-item done">
+  <div class="stempel-circle"><span class="stempel-num">2</span></div>
+  <div class="stempel-info"><div class="stempel-city">Tui</div><div class="stempel-where">Kathedrale · Pilgerbüro</div></div>
+  <div class="stempel-box"></div>
+</div><div class="stempel-item ">
+  <div class="stempel-circle"><span class="stempel-num">3</span></div>
+  <div class="stempel-info"><div class="stempel-city">O Porriño</div><div class="stempel-where">Albergue Municipal</div></div>
+  <div class="stempel-box"></div>
+</div><div class="stempel-item ">
+  <div class="stempel-circle"><span class="stempel-num">4</span></div>
+  <div class="stempel-info"><div class="stempel-city">Redondela</div><div class="stempel-where">Iglesia de Santiago</div></div>
+  <div class="stempel-box"></div>
+</div><div class="stempel-item ">
+  <div class="stempel-circle"><span class="stempel-num">5</span></div>
+  <div class="stempel-info"><div class="stempel-city">Pontevedra</div><div class="stempel-where">Santuario La Peregrina</div></div>
+  <div class="stempel-box"></div>
+</div><div class="stempel-item ">
+  <div class="stempel-circle"><span class="stempel-num">6</span></div>
+  <div class="stempel-info"><div class="stempel-city">Caldas de Reis</div><div class="stempel-where">Iglesia de Santa Tomás</div></div>
+  <div class="stempel-box"></div>
+</div><div class="stempel-item ">
+  <div class="stempel-circle"><span class="stempel-num">7</span></div>
+  <div class="stempel-info"><div class="stempel-city">Padrón</div><div class="stempel-where">Iglesia de Santiago</div></div>
+  <div class="stempel-box"></div>
+</div><div class="stempel-item ">
+  <div class="stempel-circle"><span class="stempel-num">8</span></div>
+  <div class="stempel-info"><div class="stempel-city">Teo / Milladoiro</div><div class="stempel-where">Kurz vor Santiago</div></div>
+  <div class="stempel-box"></div>
+</div><div class="stempel-item ">
+  <div class="stempel-circle"><span class="stempel-num">9</span></div>
+  <div class="stempel-info"><div class="stempel-city">Santiago de Compostela</div><div class="stempel-where">Kathedrale · Pilgerbüro</div></div>
+  <div class="stempel-box"></div>
+</div></div>
+  <div class="wbox">📋 <strong>Pilgerkredential</strong> kaufen ab dem ersten Albergue in Valença (~2 €). Sellos gibt es in Albergues, Kirchen, Bars und Touristinfos.</div>
+</section>
 
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">O Grove</div><div class="rest-city-day">Tag 4 — Strandtag</div></div>
-<div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/AZPBBD2UeobWE8M69" target="_blank" style="color:var(--gold);text-decoration:none;">Restaurant ↗</a></div></div></div>
-  </div>
+<hr class="rule">
 
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Caldas de Reis</div><div class="rest-city-day">Tag 5 — Abend</div></div>
-<div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/NcCPNykYhKCSCoEm8" target="_blank" style="color:var(--gold);text-decoration:none;">Restaurant 1 ↗</a></div></div></div><div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/qZnPDYuRfTnv6amy5" target="_blank" style="color:var(--gold);text-decoration:none;">Restaurant 2 ↗</a></div></div></div><div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/PFzQbgbFc7aciaL79" target="_blank" style="color:var(--gold);text-decoration:none;">⭐ Favorit ↗</a></div></div></div>
-  </div>
-
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Padrón</div><div class="rest-city-day">Tag 6 — Abend</div></div>
-<div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank" style="color:var(--gold);text-decoration:none;">Restaurant 1 ↗</a></div></div></div><div class="ri"><div><div class="ri-name"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank" style="color:var(--gold);text-decoration:none;">Restaurant 2 ↗</a></div></div></div>
-  </div>
-
-  <div class="wbox">🍷 <strong>Wein:</strong> Immer <em>Albariño</em> (Weisswein, perfekt zu Meeresfrüchten) oder <em>Ribeiro tinto</em> (Rotwein, oft vom Fass).</div>
+<!-- FITNESS -->
+<section id="fitness" class="sec">
+  <div class="chip"><div class="chip-dot"></div>Fitness</div>
+  <h2>Was der Körper <em>leistet</em></h2>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">💪</span><div class="sec-rule-line"></div></div>
+  <p class="prose" style="font-size:.8rem;font-style:italic;">95 kg + 8 kg Rucksack · MET-Methode · ±15% individuelle Abweichung</p>
+  <table class="fitness-table">
+    <thead><tr><td>Etappe</td><td>km</td><td>↑ Hm</td><td>Zeit</td><td>kcal</td></tr></thead>
+    <tbody>
+      <tr><td>Tag 1 · Valença → O Porriño</td><td>19</td><td>250m</td><td>~4,5h</td><td class="kcal">~2'750</td></tr>
+      <tr><td>Tag 2 · O Porriño → Redondela</td><td>15</td><td>300m</td><td>~4h</td><td class="kcal">~2'550</td></tr>
+      <tr><td>Tag 3 · Redondela → Pontevedra</td><td>19</td><td>250m</td><td>~5h</td><td class="kcal">~3'050</td></tr>
+      <tr><td>Tag 4 · O Grove ☀️</td><td>—</td><td>—</td><td>Ruhetag</td><td class="kcal" style="color:var(--shell)">~500</td></tr>
+      <tr><td>Tag 5 · Pontevedra → Caldas</td><td>22</td><td>150m</td><td>~5h</td><td class="kcal">~2'900</td></tr>
+      <tr><td>Tag 6 · Caldas → Padrón</td><td>18</td><td>200m</td><td>~4,5h</td><td class="kcal">~2'700</td></tr>
+      <tr><td>Tag 7 · Padrón → Santiago</td><td>24</td><td>400m</td><td>~5,8h</td><td class="kcal">~3'650</td></tr>
+      <tr class="total-row"><td><strong>Total</strong></td><td><strong>117</strong></td><td><strong>1550m</strong></td><td>~29h</td><td class="kcal"><strong>~18'100</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="fstats"><div class="fstat"><span class="n">~18'100</span><div class="u">kcal total</div></div><div class="fstat"><span class="n">~2'930</span><div class="u">kcal/Tag</div></div><div class="fstat"><span class="n">~150</span><div class="u">kcal/km</div></div></div>
+  <div class="feq-item"><div class="feq-icon">🍕</div><div class="feq-text"><strong>~54 Pizzen</strong> — sehr verdient</div></div>
+  <div class="feq-item"><div class="feq-icon">🍺</div><div class="feq-text"><strong>~120 Bier</strong> (0.3L) — extrem verdient</div></div>
+  <div class="feq-item"><div class="feq-icon">⚖️</div><div class="feq-text"><strong>~2.4 kg Fett</strong> theoretisch abgebaut</div></div>
+  <div class="wbox">💡 Bei 87 kg wären es ~8% weniger — ~16'650 kcal total. Die Knie beim Abstieg auf Granitplatten würden den Unterschied spüren.</div>
 </section>
 
 <hr class="rule">
 
 <!-- TIPPS -->
 <section id="tipps" class="sec">
-  <span class="lbl">Vorbereitung</span>
+  <div class="chip"><div class="chip-dot"></div>Vorbereitung</div>
   <h2>Was ihr <em>wissen müsst</em></h2>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">📋</span><div class="sec-rule-line"></div></div>
   <div class="tgrid">
-    <div class="tc"><h3>👟 Schuhe</h3><ul><li>Nie neue Schuhe — 100 km einlaufen</li><li>Ab Herbst 2026 beginnen</li><li>Trailrunner > Wanderstiefel</li><li>Sandalen für Abende</li><li>Merino-Socken, nie Baumwolle</li></ul></div>
+    <div class="tc"><h3>👟 Schuhe</h3><ul><li>Nie neue Schuhe starten</li><li>100 km einlaufen ab Herbst 2026</li><li>Trailrunner > Wanderstiefel</li><li>Merino-Socken, nie Baumwolle</li><li>Sandalen für Abende</li></ul></div>
     <div class="tc"><h3>🎒 Gepäck</h3><ul><li>Max. 8–9 kg am Rücken</li><li>Gepäcktransport ~7–8 €/Tag</li><li>3 Wanderoutfits reichen</li><li>Waschen überall ~5 €</li><li>Kopflampe mitnehmen</li></ul></div>
     <div class="tc"><h3>🩹 Blasen</h3><ul><li>Leukotape, kein Pflaster</li><li>Problemstellen vorkleben</li><li>Blase stechen, flach lassen</li><li>Farmacia überall vorhanden</li><li>Simon fragen — er weiß's</li></ul></div>
-    <div class="tc"><h3>📱 Navigation</h3><ul><li>Buen Camino App (Offline!)</li><li>Maps.me als Backup</li><li>Pilgerkredential ab Valença</li><li>Sellos täglich sammeln</li><li>100 km für Compostela</li></ul></div>
-    <div class="tc"><h3>🍽️ Unterwegs</h3><ul><li>Menú del Peregrino ~11 €</li><li>Morgens: Café + Bocadillo</li><li>Albariño & Ribeiro trinken</li><li>Fuente-Wasser kostenlos</li><li>Nie Pulpo a feira ablehnen</li></ul></div>
+    <div class="tc"><h3>📱 Navigation</h3><ul><li>Buen Camino App (Offline!)</li><li>Maps.me als Backup</li><li>Pilgerkredential ab Valença</li><li>Sellos täglich sammeln</li><li>100 km = Compostela</li></ul></div>
+    <div class="tc"><h3>🍽️ Unterwegs</h3><ul><li>Menú del Peregrino ~11 €</li><li>Albariño & Ribeiro trinken</li><li>Fuente-Wasser kostenlos</li><li>Alle 1,5h essen</li><li>Bocadillo morgens</li></ul></div>
     <div class="tc"><h3>💊 Gesundheit</h3><ul><li>Sonnencreme SPF50 täglich</li><li>Elektrolyte für heiße Tage</li><li>Ibuprofen + Paracetamol</li><li>Trekkingstöcke sehr empfohlen</li><li>EHIC-Karte mitnehmen</li></ul></div>
   </div>
-</section>
-
-
-<hr class="rule">
-
-<!-- FITNESS -->
-<section id="fitness" class="sec">
-  <span class="lbl">Fitness & Kalorien</span>
-  <h2>Was der Körper <em>leistet</em></h2>
-  <p class="prose">6 Wandertage, 117 km, 1550 Höhenmeter — das ist kein Spaziergang. Hier die geschätzten Kalorienverbräuche pro Etappe.</p>
-  <p class="fitness-note">Berechnung basierend auf 95 kg Körpergewicht + 8 kg Rucksack, MET-Methode mit Höhenmeter-Zuschlag. Individuelle Werte können ±15% abweichen.</p>
-
-  <table class="fitness-table">
-    <thead>
-      <tr>
-        <td>Etappe</td>
-        <td>km</td>
-        <td>↑ Hm</td>
-        <td>Zeit</td>
-        <td>kcal</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Tag 1 · Valença → O Porriño</td>
-        <td>19</td><td>250m</td><td>~4,5 h</td>
-        <td class="kcal">~2'750</td>
-      </tr>
-      <tr>
-        <td>Tag 2 · O Porriño → Redondela</td>
-        <td>15</td><td>300m</td><td>~4 h</td>
-        <td class="kcal">~2'550</td>
-      </tr>
-      <tr>
-        <td>Tag 3 · Redondela → Pontevedra</td>
-        <td>19</td><td>250m</td><td>~5 h</td>
-        <td class="kcal">~3'050</td>
-      </tr>
-      <tr>
-        <td>Tag 4 · O Grove ☀️</td>
-        <td>—</td><td>—</td><td>Ruhetag</td>
-        <td class="kcal" style="color:var(--gold)">~400</td>
-      </tr>
-      <tr>
-        <td>Tag 5 · Pontevedra → Caldas</td>
-        <td>22</td><td>150m</td><td>~5 h</td>
-        <td class="kcal">~3'650</td>
-      </tr>
-      <tr>
-        <td>Tag 6 · Caldas → Padrón</td>
-        <td>18</td><td>200m</td><td>~4,5 h</td>
-        <td class="kcal">~2'700</td>
-      </tr>
-      <tr>
-        <td>Tag 7 · Padrón → Santiago</td>
-        <td>24</td><td>400m</td><td>~5,8 h</td>
-        <td class="kcal">~3'650</td>
-      </tr>
-      <tr class="total-row">
-        <td><strong>Total</strong></td>
-        <td><strong>117</strong></td>
-        <td><strong>1550m</strong></td>
-        <td>~29 h</td>
-        <td class="kcal"><strong>~18'100</strong></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="fitness-stats">
-    <div class="fitness-stat">
-      <span class="n">~18'100</span>
-      <div class="u">kcal total</div>
-    </div>
-    <div class="fitness-stat">
-      <span class="n">~2'930</span>
-      <div class="u">kcal/Tag ⌀</div>
-    </div>
-    <div class="fitness-stat">
-      <span class="n">~150</span>
-      <div class="u">kcal/km ⌀</div>
-    </div>
-  </div>
-
-  <div class="section-label" style="font-size:.63rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:500;margin:1.5rem 0 .75rem;">Das entspricht …</div>
-  <div class="fitness-equiv">
-    <div class="feq-item">
-      <div class="feq-icon">🍕</div>
-      <div class="feq-text"><strong>~54 Pizzen</strong> (Margherita, 330 kcal/Stück)</div>
-    </div>
-    <div class="feq-item">
-      <div class="feq-icon">🍺</div>
-      <div class="feq-text"><strong>~120 Bier</strong> (je 150 kcal/0.3L) — ihr habt euch die Abende verdient</div>
-    </div>
-    <div class="feq-item">
-      <div class="feq-icon">🎂</div>
-      <div class="feq-text"><strong>~22 Tarta de Santiago</strong> (Mandelkuchen, ~800 kcal/Stück)</div>
-    </div>
-    <div class="feq-item">
-      <div class="feq-icon">🏃</div>
-      <div class="feq-text"><strong>~170 km Laufen</strong> entspricht dem gleichen Kalorienverbrauch</div>
-    </div>
-    <div class="feq-item">
-      <div class="feq-icon">⚖️</div>
-      <div class="feq-text"><strong>~2.4 kg Fett</strong> theoretisch abgebaut (bei 7700 kcal/kg)</div>
-    </div>
-  </div>
-
-  <div class="wbox">💡 <strong>Essen ist Pflicht:</strong> Der Körper braucht auf der Etappe alle 1,5–2 Stunden Energie. Gute Bocadillos, Nüsse und Bananen unterwegs. Abends: kein schlechtes Gewissen beim Pulpo und Albariño.</div>
 </section>
 
 <hr class="rule">
 
 <!-- WETTER -->
 <section id="wetter" class="sec">
-  <span class="lbl">Klima</span>
+  <div class="chip"><div class="chip-dot"></div>Klima</div>
   <h2>Ende Juni in <em>Galicien</em></h2>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">🌊</span><div class="sec-rule-line"></div></div>
   <div class="wrow">
     <div class="wc"><div class="icon">🌡️</div><span class="val">22–26°C</span><div class="lbl">Temperatur</div></div>
     <div class="wc"><div class="icon">☀️</div><span class="val">~9 h</span><div class="lbl">Sonne/Tag</div></div>
     <div class="wc"><div class="icon">🌧️</div><span class="val">selten</span><div class="lbl">Regen</div></div>
   </div>
-  <div class="wbox"><strong>Immer eine Regenjacke dabei</strong> — Ende Juni ist der trockenste Monat, kurze Schauer trotzdem möglich. Sonnenuntergang ~22 Uhr.</div>
+  <div class="wbox"><strong>Immer eine Regenjacke dabei</strong> — Galicien ist grün aus gutem Grund. Ende Juni ist der trockenste Monat, kurze Schauer möglich. Sonnenuntergang ~22 Uhr.</div>
 </section>
 
 <hr class="rule">
 
 <!-- BUDGET -->
 <section id="budget" class="sec">
-  <span class="lbl">Kosten</span>
+  <div class="chip"><div class="chip-dot"></div>Kosten</div>
   <h2>Was die Reise <em>kostet</em></h2>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">💰</span><div class="sec-rule-line"></div></div>
   <table class="btbl">
     <tr><td>Flug ZRH ↔ Porto (hin/zurück)</td><td>180–280 €</td></tr>
     <tr><td>Zug Porto → Valença</td><td>~12 €</td></tr>
@@ -1061,15 +740,16 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.4rem;}
 
 <!-- LINKS -->
 <section id="links" class="sec">
-  <span class="lbl">Nützliche Links</span>
+  <div class="chip"><div class="chip-dot"></div>Nützliche Links</div>
   <h2>Alles was ihr <em>braucht</em></h2>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">🔗</span><div class="sec-rule-line"></div></div>
   <div class="link-grid">
-    <a class="lcard" href="https://www.cp.pt/passageiros/pt" target="_blank"><div class="lcard-icon">🚂</div><div class="lcard-name">CP Züge Portugal</div><div class="lcard-desc">Tickets Porto → Valença buchen</div><div class="lcard-url">cp.pt ↗</div></a>
+    <a class="lcard" href="https://www.cp.pt/passageiros/pt" target="_blank"><div class="lcard-icon">🚂</div><div class="lcard-name">CP Züge Portugal</div><div class="lcard-desc">Tickets Porto → Valença</div><div class="lcard-url">cp.pt ↗</div></a>
     <a class="lcard" href="https://www.komoot.com/collection/2499323" target="_blank"><div class="lcard-icon">🗺️</div><div class="lcard-name">Komoot Sammlung</div><div class="lcard-desc">Alle Etappen als Kollektion</div><div class="lcard-url">komoot.com ↗</div></a>
     <a class="lcard" href="https://oficinadelperegrino.com/en/" target="_blank"><div class="lcard-icon">📜</div><div class="lcard-name">Pilgerbüro Santiago</div><div class="lcard-desc">Compostela-Urkunde & Infos</div><div class="lcard-url">oficinadelperegrino.com ↗</div></a>
-    <a class="lcard" href="https://www.booking.com/searchresults.de.html?ss=Pontevedra" target="_blank"><div class="lcard-icon">🏨</div><div class="lcard-name">Hotels Pontevedra</div><div class="lcard-desc">2 Nächte buchen (Tag 3+4)</div><div class="lcard-url">booking.com ↗</div></a>
-    <a class="lcard" href="https://www.booking.com/searchresults.de.html?ss=Santiago+de+Compostela" target="_blank"><div class="lcard-icon">🏨</div><div class="lcard-name">Hotels Santiago</div><div class="lcard-desc">Ankunftsabend früh buchen!</div><div class="lcard-url">booking.com ↗</div></a>
-    <a class="lcard" href="https://www.google.com/flights?q=ZRH+OPO" target="_blank"><div class="lcard-icon">✈️</div><div class="lcard-name">Flüge ZRH → Porto</div><div class="lcard-desc">Für Freitag 25. Juni 2027</div><div class="lcard-url">Google Flights ↗</div></a>
+    <a class="lcard" href="https://www.booking.com/searchresults.de.html?ss=Pontevedra" target="_blank"><div class="lcard-icon">🏨</div><div class="lcard-name">Hotels Pontevedra</div><div class="lcard-desc">2 Nächte buchen!</div><div class="lcard-url">booking.com ↗</div></a>
+    <a class="lcard" href="https://www.booking.com/searchresults.de.html?ss=Santiago+de+Compostela" target="_blank"><div class="lcard-icon">🏨</div><div class="lcard-name">Hotels Santiago</div><div class="lcard-desc">Früh buchen!</div><div class="lcard-url">booking.com ↗</div></a>
+    <a class="lcard" href="https://www.google.com/flights?q=ZRH+OPO" target="_blank"><div class="lcard-icon">✈️</div><div class="lcard-name">Flüge ZRH → Porto</div><div class="lcard-desc">25. Juni 2027</div><div class="lcard-url">Google Flights ↗</div></a>
   </div>
 </section>
 
@@ -1078,15 +758,16 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.4rem;}
 <!-- CREW -->
 <section id="crew">
   <div class="crew-in">
-    <span class="lbl">Die Gruppe</span>
+    <div class="chip" style="background:rgba(255,255,255,.08);color:var(--sand);"><div class="chip-dot"></div>Die Gruppe</div>
     <h2>Wer macht <em>den Weg?</em></h2>
+    <div class="sec-rule"><div class="sec-rule-line" style="background:linear-gradient(to right,rgba(255,255,255,.15),transparent);"></div><span style="color:rgba(255,255,255,.2);font-size:.75rem;">⚓</span><div class="sec-rule-line" style="background:linear-gradient(to right,rgba(255,255,255,.15),transparent);"></div></div>
     <div class="ccards">
       <div class="cc"><div class="cav">A</div><div class="cname">Ante</div><div class="crole">Fest dabei ✓</div></div>
       <div class="cc"><div class="cav">K</div><div class="cname">Kevin</div><div class="crole">Fest dabei ✓</div></div>
       <div class="cc q"><div class="cav">S</div><div class="cname">Simon</div><div class="crole">Vielleicht · Camino-Erfahrung ★</div></div>
       <div class="cc q"><div class="cav">L</div><div class="cname">Luis</div><div class="crole">Vielleicht</div></div>
     </div>
-    <p class="cnote">Simon & Luis müssen bis <strong>Anfang 2027</strong> zusagen.</p>
+    <p class="cnote">Simon & Luis bis <strong>Anfang 2027</strong> zusagen.</p>
   </div>
 </section>
 
@@ -1094,28 +775,50 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.4rem;}
 <footer id="foot">
   <span class="fw">Buen Camino.</span>
   <div class="fs">Porto · Valença · Santiago de Compostela · Juni 2027</div>
-  <div class="fc">
-    <span class="nm">Ante</span><span>·</span><span class="nm">Kevin</span><span>·</span>
-    <span class="nm">Simon?</span><span>·</span><span class="nm">Luis?</span>
-  </div>
+  <div class="fc"><span class="nm">Ante</span><span>·</span><span class="nm">Kevin</span><span>·</span><span class="nm">Simon?</span><span>·</span><span class="nm">Luis?</span></div>
 </footer>
 
 <script>
-/* ── NAV ── */
-const secs = document.querySelectorAll('[id]');
-const links = document.querySelectorAll('#nav a');
-const obs = new IntersectionObserver(es => {
-  es.forEach(e => {
-    if (e.isIntersecting) {
-      links.forEach(l => l.classList.remove('on'));
-      const a = document.querySelector(`#nav a[href="#${e.target.id}"]`);
-      if (a) a.classList.add('on');
-    }
-  });
-}, { threshold: 0.15, rootMargin: '-55px 0px 0px 0px' });
-secs.forEach(s => { if (s.id) obs.observe(s); });
+/* NAV */
+const secs=document.querySelectorAll('[id]'),links=document.querySelectorAll('#nav a');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('on'));const a=document.querySelector(`#nav a[href="#${e.target.id}"]`);if(a)a.classList.add('on');}})},{threshold:.15,rootMargin:'-55px 0px 0px 0px'});
+secs.forEach(s=>{if(s.id)obs.observe(s);});
 
-// elevation rendered as inline SVG
+/* COUNTDOWN */
+function updateCountdown(){
+  const target=new Date('2027-06-25T18:00:00');
+  const now=new Date();
+  const diff=target-now;
+  if(diff<=0){document.getElementById('countdown').style.display='none';return;}
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor((diff%86400000)/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  document.getElementById('cd-d').textContent=d;
+  document.getElementById('cd-h').textContent=h;
+  document.getElementById('cd-m').textContent=m;
+}
+updateCountdown();
+setInterval(updateCountdown,60000);
+
+/* LIVE WETTER via Open-Meteo (kostenlos, kein API-Key nötig) */
+async function loadWetter(){
+  try{
+    // Santiago de Compostela: 42.88, -8.545
+    const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=42.88&longitude=-8.545&current=temperature_2m,weathercode,windspeed_10m&timezone=Europe/Madrid');
+    const d=await r.json();
+    const temp=Math.round(d.current.temperature_2m);
+    const code=d.current.weathercode;
+    const wind=Math.round(d.current.windspeed_10m);
+    const icons={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'🌨️',75:'🌨️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+    const descs={0:'Klar',1:'Meist klar',2:'Teilweise bewölkt',3:'Bewölkt',45:'Nebel',51:'Leichter Niesel',61:'Leichter Regen',63:'Regen',80:'Regenschauer',95:'Gewitter'};
+    const icon=icons[code]||'🌡️';
+    const desc=descs[code]||'—';
+    document.getElementById('wx-data').innerHTML=`<span class="wx-icon">${icon}</span><span class="wx-temp">${temp}°C</span><span class="wx-desc">${desc} · 💨 ${wind} km/h</span>`;
+  }catch(e){
+    document.getElementById('wx-data').innerHTML='<span class="wx-loading">Wetter nicht verfügbar</span>';
+  }
+}
+loadWetter();
 </script>
 </body>
 </html>
