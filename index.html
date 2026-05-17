@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Camino Portugués 2027</title>
+<meta name="description" content="Camino Portugués 2027 — Ante, Kevin, Mike & Luis. Porto · Valença · Santiago de Compostela · ~117 km · 8 Tage.">
+<meta property="og:title" content="Camino Portugués 2027 🐚">
+<meta property="og:description" content="Der Weg nach Santiago — Porto · Valença · ~117 km · Juni 2027">
+<meta property="og:type" content="website">
+<meta property="og:image" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGIyNTQwIi8+PHBhdGggZD0iTTUwIDE1IFE2NSAyNSA3MiA0MCBRNzggNTUgNzAgNjggUTYyIDgwIDUwIDg1IFEzOCA4MCAzMCA2OCBRMjIgNTUgMjggNDAgUTM1IDI1IDUwIDE1WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThkNWE4IiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNNTAgMTUgTDUwIDg1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zMCA2OCBRNDAgNjAgNTAgNTUgUTYwIDYwIDcwIDY4IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0yOCA0MCBRMzggNDggNTAgNTAgUTYyIDQ4IDcyIDQwIiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zNSAyNSBRNDIgMzggNTAgNDIgUTU4IDM4IDY1IDI1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNSIvPjwvc3ZnPg==">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGIyNTQwIi8+PHBhdGggZD0iTTUwIDE1IFE2NSAyNSA3MiA0MCBRNzggNTUgNzAgNjggUTYyIDgwIDUwIDg1IFEzOCA4MCAzMCA2OCBRMjIgNTUgMjggNDAgUTM1IDI1IDUwIDE1WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThkNWE4IiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNNTAgMTUgTDUwIDg1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zMCA2OCBRNDAgNjAgNTAgNTUgUTYwIDYwIDcwIDY4IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0yOCA0MCBRMzggNDggNTAgNTAgUTYyIDQ4IDcyIDQwIiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zNSAyNSBRNDIgMzggNTAgNDIgUTU4IDM4IDY1IDI1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNSIvPjwvc3ZnPg==">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -190,13 +196,17 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.5rem;}
 
 /* STEMPEL */
 .stempel-list{margin:1.25rem 0;}
-.stempel-item{display:grid;grid-template-columns:36px 1fr 52px;align-items:center;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border);}
+.stempel-item{display:grid;grid-template-columns:36px 1fr 32px;align-items:center;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .stempel-item:last-child{border:none;}
 .stempel-circle{width:34px;height:34px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--sand-pale);}
 .stempel-num{font-family:var(--serif);font-size:.85rem;color:var(--muted);}
 .stempel-city{font-size:.88rem;font-weight:500;color:var(--ink);}
 .stempel-where{font-size:.72rem;color:var(--muted);margin-top:.08rem;}
-.stempel-box{width:50px;height:34px;border:1.5px dashed var(--border);border-radius:.4rem;background:var(--sand-pale);}
+.stempel-check{width:28px;height:28px;border-radius:.5rem;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;background:var(--sand-pale);transition:all .2s;flex-shrink:0;}
+.stempel-item.checked .stempel-circle{background:var(--ocean);border-color:var(--ocean);}
+.stempel-item.checked .stempel-num{color:#fff;}
+.stempel-item.checked .stempel-city{color:var(--ocean);}
+.stempel-item.checked .stempel-check{background:var(--ocean);border-color:var(--ocean);}
 
 /* TIPPS */
 .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1.25rem;}
@@ -237,7 +247,7 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.5rem;}
 .crew-in{max-width:680px;margin:0 auto;}
 .crew-in h2{color:#fff;}
 .crew-in h2 em{color:var(--sand);}
-.ccards{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.75rem;}
+.ccards{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.75rem;}.ccards-5{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:1.75rem;}
 .cc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:1.25rem;padding:1.4rem;text-align:center;}
 .cc.q{border-color:rgba(212,96,58,.25);background:rgba(212,96,58,.06);}
 .cav{width:48px;height:48px;border:1.5px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.2rem;color:#fff;margin:0 auto .6rem;}
@@ -282,8 +292,8 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.5rem;}
       <div class="hstat"><span class="n">Jun</span><span class="u">2027</span></div>
     </div>
     <div class="hero-pills">
-      <span class="pill">Ante</span><span class="pill">Kevin</span>
-      <span class="pill q">Simon?</span><span class="pill q">Luis?</span>
+      <span class="pill">Ante</span><span class="pill">Kevin</span><span class="pill">Mike</span><span class="pill">Luis</span>
+      <span class="pill q">Simon?</span>
     </div>
   </div>
 </section>
@@ -620,39 +630,39 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.5rem;}
   <div class="stempel-list"><div class="stempel-item done">
   <div class="stempel-circle"><span class="stempel-num">1</span></div>
   <div class="stempel-info"><div class="stempel-city">Valença</div><div class="stempel-where">Touristinfo / Albergue</div></div>
-  <div class="stempel-box"></div>
+  <div class="stempel-check"></div>
 </div><div class="stempel-item done">
   <div class="stempel-circle"><span class="stempel-num">2</span></div>
   <div class="stempel-info"><div class="stempel-city">Tui</div><div class="stempel-where">Kathedrale · Pilgerbüro</div></div>
-  <div class="stempel-box"></div>
+  <div class="stempel-check"></div>
 </div><div class="stempel-item ">
   <div class="stempel-circle"><span class="stempel-num">3</span></div>
   <div class="stempel-info"><div class="stempel-city">O Porriño</div><div class="stempel-where">Albergue Municipal</div></div>
-  <div class="stempel-box"></div>
+  <div class="stempel-check"></div>
 </div><div class="stempel-item ">
   <div class="stempel-circle"><span class="stempel-num">4</span></div>
   <div class="stempel-info"><div class="stempel-city">Redondela</div><div class="stempel-where">Iglesia de Santiago</div></div>
-  <div class="stempel-box"></div>
+  <div class="stempel-check"></div>
 </div><div class="stempel-item ">
   <div class="stempel-circle"><span class="stempel-num">5</span></div>
   <div class="stempel-info"><div class="stempel-city">Pontevedra</div><div class="stempel-where">Santuario La Peregrina</div></div>
-  <div class="stempel-box"></div>
+  <div class="stempel-check"></div>
 </div><div class="stempel-item ">
   <div class="stempel-circle"><span class="stempel-num">6</span></div>
   <div class="stempel-info"><div class="stempel-city">Caldas de Reis</div><div class="stempel-where">Iglesia de Santa Tomás</div></div>
-  <div class="stempel-box"></div>
+  <div class="stempel-check"></div>
 </div><div class="stempel-item ">
   <div class="stempel-circle"><span class="stempel-num">7</span></div>
   <div class="stempel-info"><div class="stempel-city">Padrón</div><div class="stempel-where">Iglesia de Santiago</div></div>
-  <div class="stempel-box"></div>
+  <div class="stempel-check"></div>
 </div><div class="stempel-item ">
   <div class="stempel-circle"><span class="stempel-num">8</span></div>
   <div class="stempel-info"><div class="stempel-city">Teo / Milladoiro</div><div class="stempel-where">Kurz vor Santiago</div></div>
-  <div class="stempel-box"></div>
+  <div class="stempel-check"></div>
 </div><div class="stempel-item ">
   <div class="stempel-circle"><span class="stempel-num">9</span></div>
   <div class="stempel-info"><div class="stempel-city">Santiago de Compostela</div><div class="stempel-where">Kathedrale · Pilgerbüro</div></div>
-  <div class="stempel-box"></div>
+  <div class="stempel-check"></div>
 </div></div>
   <div class="wbox">📋 <strong>Pilgerkredential</strong> kaufen ab dem ersten Albergue in Valença (~2 €). Sellos gibt es in Albergues, Kirchen, Bars und Touristinfos.</div>
 </section>
@@ -760,13 +770,14 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.5rem;}
     <div class="chip" style="background:rgba(255,255,255,.08);color:var(--sand);"><div class="chip-dot"></div>Die Gruppe</div>
     <h2>Wer macht <em>den Weg?</em></h2>
     <div class="sec-rule"><div class="sec-rule-line" style="background:linear-gradient(to right,rgba(255,255,255,.15),transparent);"></div><span style="color:rgba(255,255,255,.2);font-size:.75rem;">⚓</span><div class="sec-rule-line" style="background:linear-gradient(to right,rgba(255,255,255,.15),transparent);"></div></div>
-    <div class="ccards">
+    <div class="ccards-5">
       <div class="cc"><div class="cav">A</div><div class="cname">Ante</div><div class="crole">Fest dabei ✓</div></div>
       <div class="cc"><div class="cav">K</div><div class="cname">Kevin</div><div class="crole">Fest dabei ✓</div></div>
+      <div class="cc"><div class="cav">M</div><div class="cname">Mike</div><div class="crole">Fest dabei ✓</div></div>
+      <div class="cc"><div class="cav">L</div><div class="cname">Luis</div><div class="crole">Fest dabei ✓</div></div>
       <div class="cc q"><div class="cav">S</div><div class="cname">Simon</div><div class="crole">Vielleicht · Camino-Erfahrung ★</div></div>
-      <div class="cc q"><div class="cav">L</div><div class="cname">Luis</div><div class="crole">Vielleicht</div></div>
     </div>
-    <p class="cnote">Simon & Luis bis <strong>Anfang 2027</strong> zusagen.</p>
+    <p class="cnote">Simon bis <strong>Anfang 2027</strong> zusagen.</p>
   </div>
 </section>
 
@@ -774,7 +785,7 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0 1.5rem;}
 <footer id="foot">
   <span class="fw">Buen Camino.</span>
   <div class="fs">Porto · Valença · Santiago de Compostela · Juni 2027</div>
-  <div class="fc"><span class="nm">Ante</span><span>·</span><span class="nm">Kevin</span><span>·</span><span class="nm">Simon?</span><span>·</span><span class="nm">Luis?</span></div>
+  <div class="fc"><span class="nm">Ante</span><span>·</span><span class="nm">Kevin</span><span>·</span><span class="nm">Mike</span><span>·</span><span class="nm">Luis</span><span>·</span><span class="nm">Simon?</span></div>
 </footer>
 
 <script>
@@ -818,6 +829,24 @@ async function loadWetter(){
   }
 }
 loadWetter();
+
+/* STEMPEL TRACKER */
+function initStempel() {
+  const items = document.querySelectorAll('.stempel-item');
+  const saved = JSON.parse(localStorage.getItem('camino_stempel') || '[]');
+  items.forEach((item, i) => {
+    const check = item.querySelector('.stempel-check');
+    if (saved.includes(i)) { item.classList.add('checked'); if(check) check.textContent='✓'; }
+    item.addEventListener('click', () => {
+      item.classList.toggle('checked');
+      const isChecked = item.classList.contains('checked');
+      if(check) check.textContent = isChecked ? '✓' : '';
+      const state = [...document.querySelectorAll('.stempel-item')].map((el,j) => el.classList.contains('checked') ? j : null).filter(x => x !== null);
+      localStorage.setItem('camino_stempel', JSON.stringify(state));
+    });
+  });
+}
+initStempel();
 </script>
 </body>
 </html>
