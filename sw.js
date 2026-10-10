@@ -1,5 +1,5 @@
 /* Camino 2027 – Offline-Cache */
-const CACHE = 'camino-v3';
+const CACHE = 'camino-v4';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png'];
 
 self.addEventListener('install', e => {
@@ -15,7 +15,11 @@ self.addEventListener('fetch', e => {
   const put = res => { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); return res; };
   // Seite & Wetter & Kartenkacheln: zuerst Netz, sonst Cache
   if (url.origin === location.origin || url.hostname.endsWith('open-meteo.com') || url.hostname.endsWith('tile.openstreetmap.org')) {
-    e.respondWith(fetch(req).then(put).catch(() => caches.match(req).then(r => r || caches.match('./index.html'))));
+    // Netz zuerst, aber nach 3 s auf den Cache ausweichen (schwacher Empfang)
+    const net = fetch(req).then(put);
+    const fallback = () => caches.match(req).then(r => r || (req.mode === 'navigate' ? caches.match('./index.html') : undefined));
+    const timeout = new Promise(res => setTimeout(() => res(fallback()), 3000));
+    e.respondWith(Promise.race([net.catch(fallback), timeout.then(r => r || net)]).then(r => r || Response.error()));
     return;
   }
   // Schriften & Bibliotheken: zuerst Cache
