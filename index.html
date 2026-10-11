@@ -597,6 +597,20 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
 .loc-out{font-size:.8rem;color:var(--ink);line-height:1.5;flex:1 1 220px;}
 .loc-out:empty{display:none;}
 .loc-out a{color:var(--link);font-weight:500;}
+.det{margin:0 1.25rem 1rem;border:1px solid var(--border);border-radius:.9rem;background:var(--card);padding:.75rem .9rem;}
+.det-h{font:700 .72rem var(--head);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;}
+.det ul{list-style:none;margin:0;padding:0;}
+.det li{padding:.5rem 0;border-top:1px solid var(--border);font-size:.85rem;line-height:1.45;}
+.det li:first-child{border-top:0;padding-top:.2rem;}
+.det li a{color:var(--link);font-weight:600;text-decoration:none;}
+.det-w{display:inline-block;margin-left:.45rem;font-size:.7rem;padding:.05rem .45rem;border-radius:99px;background:var(--foam);color:var(--link);vertical-align:1px;}
+.det-t{color:var(--muted);font-size:.8rem;margin-top:.1rem;}
+.det-fold{margin:.2rem 0 .8rem;}
+.det-fold summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;font-size:.85rem;color:var(--link);border:1px solid var(--border);border-radius:.9rem;padding:0 .9rem;background:var(--card2);list-style:none;}
+.det-fold summary::-webkit-details-marker{display:none;}
+.det-fold summary::after{content:'▾';margin-left:auto;transition:transform .2s;}
+.det-fold[open] summary::after{transform:rotate(180deg);}
+.det-fold .det{margin:.5rem 0 0;}
 #compostela a,.loc-out a{color:var(--link);}
 .kasse{margin-top:1.1rem;}
 .kasse .btn{margin-top:.4rem;}
@@ -1967,7 +1981,7 @@ function dayPlan(i){
   out.walk=x.km/4.3+x.up*1.8/1000;out.total=out.walk+(x.km>=15?1:.5);
   out.target=tmax>=30?13.5:tmax>=26?14:15;
   if(fix.start!=null){out.start=fix.start;out.arrive=fix.start+(tzOf(x.place)-tz)+out.total;}
-  else{out.start=Math.min(9,Math.max(q15(sr+.25),Math.floor((out.target-out.total)*4)/4));out.arrive=out.start+out.total;}
+  else{out.start=8;out.arrive=out.start+out.total;out.early=tmax>=28;}
   return out;
 }
 const fH=h=>String(Math.round(h*2)/2).replace('.',',');
@@ -1976,8 +1990,9 @@ function planHTML(i){
   const sun=`🌅 Sonnenaufgang ${hm(p.sr)}${p.srTag} · 🌇 Untergang ${hm(p.ss)}`;
   if(p.start==null)return `<div class="plan-box"><div class="plan-main">${sun}</div>${p.note?`<div class="plan-sub">${p.note}</div>`:''}</div>`;
   const why=p.tmaxFc?`Prognose ${p.tmax}°`:'Juni-Mittel ~23°';
-  return `<div class="plan-box"><div class="plan-main">⏰ Start-Tipp <b>${hm(p.start)}</b> → Ankunft ca. <b>${hm(p.arrive)}</b></div>
-    <div class="plan-sub">Gehzeit ~${fH(p.walk)} h, mit Pausen ~${fH(p.total)} h · ${why}${p.tmax>=26?' – vor der Mittagshitze ankommen':''}</div>
+  const hot=p.early?' – heiss: lieber 7:30 los':'';
+  return `<div class="plan-box"><div class="plan-main">⏰ Abmarsch <b>${hm(p.start)}</b> → Ankunft ca. <b>${hm(p.arrive)}</b></div>
+    <div class="plan-sub">Gehzeit ~${fH(p.walk)} h, mit Pausen ~${fH(p.total)} h · ${why}${hot}</div>
     <div class="plan-sub">${sun}</div>
     ${p.note?`<div class="plan-sub">${p.note}</div>`:''}</div>`;
 }
@@ -1996,7 +2011,7 @@ function shareText(i){
   const x=DAYS[i],p=dayPlan(i),L=[];
   L.push(`🐚 Camino · ${fmt(x.d)}${x.stage&&x.stage<8?` · Tag ${x.stage}`:''}`);
   L.push(`*${x.title.replace(/[🎉🚤]\s*/g,'').trim()}*${x.km?` · ${String(x.km).replace('.',',')} km`:''}${x.up?` · ↑${x.up} m`:''}`);
-  if(p.start!=null)L.push(`⏰ Start ${hm(p.start)} → Ankunft ca. ${hm(p.arrive)}`);
+  if(p.start!=null)L.push(`⏰ Abmarsch ${hm(p.start)} → Ankunft ca. ${hm(p.arrive)}`);
   if(x.hl)L.push('⭐ '+x.hl.join(', '));
   if(x.cafe)L.push('☕ '+x.cafe);
   if(x.hotel)L.push(`🏨 ${x.hotel} · Check-in ${x.ci}${x.tel?` · ${x.tel}`:''}\n📍 https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}`);
@@ -2093,8 +2108,9 @@ function buildBook(){
       <p>${escH(x.info)}</p>
       ${x.hl?`<p><b>Highlights:</b> ${x.hl.map(escH).join(' · ')}</p>`:''}
       ${x.cafe?`<p><b>Pause:</b> ${escH(x.cafe)}</p>`:''}
-      <div class="pb-box"><div class="l">Zeiten</div><p>${p.start!=null?`Start-Tipp <b>${hm(p.start)}</b> → Ankunft ca. ${hm(p.arrive)} · `:''}Sonnenaufgang ${hm(p.sr)}${p.srTag} · Sonnenuntergang ${hm(p.ss)}</p>${p.note?`<p style="font-size:9pt">${escH(p.note)}</p>`:''}</div>
+      <div class="pb-box"><div class="l">Zeiten</div><p>${p.start!=null?`Abmarsch <b>${hm(p.start)}</b> → Ankunft ca. ${hm(p.arrive)} · `:''}Sonnenaufgang ${hm(p.sr)}${p.srTag} · Sonnenuntergang ${hm(p.ss)}</p>${p.note?`<p style="font-size:9pt">${escH(p.note)}</p>`:''}</div>
       ${x.hotel?`<div class="pb-box"><div class="l">Unterkunft</div><p><b>${escH(x.hotel)}</b>${x.bf?' · mit Frühstück':''}<br>${escH(x.place)} · Check-in ${escH(x.ci)} · Check-out ${escH(x.co)}<br><span class="pb-tel">☎ ${x.tel?x.tel.replace(/^\+(351|34)/,'+$1 '):'–'}</span></p></div>`:''}
+      ${DETOURS[x.d]?`<div class="pb-box"><div class="l">Abstecher</div><ul>${DETOURS[x.d].map(o=>`<li><b>${escH(o.n)}</b> (${escH(o.w)})</li>`).join('')}</ul></div>`:''}
       ${r.length?`<div class="pb-box"><div class="l">Abendessen</div><ul>${r.map(n=>`<li>${escH(n)}</li>`).join('')}</ul></div>`:''}
       <div class="pb-box"><div class="l">Notizen</div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div></section>`);
   });
@@ -2102,6 +2118,59 @@ function buildBook(){
 }
 window.addEventListener('beforeprint',buildBook);
 document.getElementById('print-btn').addEventListener('click',()=>{buildBook();window.print();});
+
+/* ===== v8: Abstecher pro Tag ===== */
+/* w = Aufwand: «am Weg», «im Ort», «+x km», «Taxi» */
+const DETOURS={
+ '2027-06-12':[
+  {n:'Festung Valença',w:'Start · im Ort',t:'Vor dem Losgehen eine Runde auf den Mauern – Blick über den Minho nach Tui.',q:'Fortaleza de Valença'},
+  {n:'Kathedrale Tui mit Kreuzgang',w:'am Weg · ~45 Min.',t:'Wehrkathedrale aus dem 12. Jh.; Kreuzgang und Turm gegen Eintritt.',q:'Catedral de Tui'},
+  {n:'Klarissenkloster «As Encerradas»',w:'am Weg',t:'Mandelgebäck der Nonnen kaufen – die «Delicias» gibt es durch die Drehtür.',q:'Convento de las Clarisas Tui'},
+  {n:'Flussweg durch die Gándaras',w:'+0,5 km',t:'Ab Orbenlle die ausgeschilderte Variante am Louro statt 3 km durchs Industriegebiet.',q:'Gándaras de Budiño'}],
+ '2027-06-13':[
+  {n:'Pazo de Mos',w:'am Weg',t:'Herrenhaus aus dem 17. Jh. direkt an der alten Römerstrasse.',q:'Pazo de los Marqueses de Mos'},
+  {n:'Römischer Meilenstein',w:'am Weg',t:'Rund 100 m nach der Kapelle Santiaguiño de Antas: Meilenstein der Via XIX.',q:'Capela de Santiaguiño de Antas Mos'},
+  {n:'Castro de Torroso',w:'kurzer Abstecher',t:'Eisenzeitliche Siedlung, 1983 entdeckt.',q:'Castro de Torroso Mos'},
+  {n:'Ensenada de San Simón',w:'Abendspaziergang oder Taxi',t:'Bucht mit der Klosterinsel San Simón – schön zum Sonnenuntergang.',q:'Ensenada de San Simón Redondela'}],
+ '2027-06-14':[
+  {n:'Aussicht auf die Ría de Vigo',w:'+0,6 km',t:'Bei ca. km 4, nahe einer alten Poststation, 300 m vom Weg.',q:'Cesantes Redondela'},
+  {n:'Kirche Santiago de Arcade',w:'kurzer Abstecher',t:'Romanische Kirche aus dem 12. Jh. – passt zur Austernpause.',q:'Igrexa de Santiago de Arcade'},
+  {n:'Burg Soutomaior',w:'Taxi',t:'Burg mit Park, Mai–Sept. täglich 10–21 Uhr, ca. 2 €. Zu Fuss zu weit.',q:'Castelo de Soutomaior'},
+  {n:'Altstadt Pontevedra',w:'im Ort · abends',t:'Praza da Leña, Basílica Santa María, Ruinen von Santo Domingo, Santuario da Peregrina.',q:'Praza da Leña Pontevedra'},
+  {n:'Illa das Esculturas',w:'im Ort',t:'Skulpturenpark auf einer Flussinsel im Lérez – ruhiger Abendspaziergang.',q:'Illa das Esculturas Pontevedra'}],
+ '2027-06-15':[
+  {n:'Kloster Poio',w:'am Weg · ~30 Min.',t:'Benediktinerkloster mit Kreuzgang und einem der längsten Hórreos Galiciens.',q:'Mosteiro de Poio'},
+  {n:'Combarro am Wasser',w:'kleiner Umweg',t:'Nicht gleich bergauf, sondern geradeaus durch die Gassen: Hórreos und Wegkreuze direkt am Meer.',q:'Combarro'},
+  {n:'Vesper im Kloster Armenteira',w:'im Ort · abends',t:'Die Zisterzienserinnen singen das Abendgebet – Zeit vor Ort erfragen.',q:'Mosteiro de Armenteira'}],
+ '2027-06-16':[
+  {n:'Mühlen am rechten Ufer',w:'am Weg',t:'Auf der Ruta da Pedra e da Auga die rechte Bachseite nehmen – näher an den Mühlen.',q:'Ruta da Pedra e da Auga Armenteira'},
+  {n:'Strände vor Vilanova',w:'am Weg · letzte 3 km',t:'Sandwege mit Stränden und Strandbars – Füsse ins Wasser.',q:'Praia O Terrón Vilanova de Arousa'},
+  {n:'Casa-Museo Valle-Inclán',w:'im Ort',t:'Geburtshaus des Schriftstellers. Für Pilger gratis; Mi 10–14 und 17–21 Uhr.',q:'Casa Museo Valle-Inclán Vilanova de Arousa'},
+  {n:'Monte Lobeira',w:'Taxi',t:'Aussichtsberg (290 m) über die Ría de Arousa bis zu den Ons-Inseln.',q:'Miradoiro Monte Lobeira Vilanova de Arousa'}],
+ '2027-06-17':[
+  {n:'Steinkreuze am Ulla',w:'vom Boot aus',t:'17 Wegkreuze säumen die Ruta Marítima Xacobea – vorne sitzen.',q:'Pontecesures'},
+  {n:'Santiaguiño do Monte',w:'im Ort · ~1 h',t:'Steintreppe ab der Fonte do Carme hinauf zur Einsiedelei, wo Jakobus gepredigt haben soll.',q:'Santiaguiño do Monte Padrón'},
+  {n:'Kirche Santiago mit «O Pedrón»',w:'im Ort',t:'Unter dem Altar der Stein, an dem das Boot mit Jakobus festgemacht haben soll.',q:'Igrexa de Santiago de Padrón'},
+  {n:'Casa de Rosalía de Castro',w:'nahe Hotel',t:'Haus der Dichterin in A Matanza bei Iria Flavia, Eintritt ca. 3 €. Garten frei.',q:'Casa Museo Rosalía de Castro Padrón'},
+  {n:'Pimientos de Padrón',w:'abends',t:'Saison Mai–Oktober – die echten kommen aus Herbón.',q:'Padrón'}],
+ '2027-06-18':[
+  {n:'Santuario A Escravitude',w:'am Weg',t:'Barockkirche aus dem 16. Jh. über einer heiligen Quelle.',q:'Santuario da Escravitude'},
+  {n:'Castro Lupario',w:'+2,5 km',t:'Keltische Wallanlage der Königin Lupa, Abzweig in Rúa de Francos – mit Kapelle San Martiño und einem der ältesten Wegkreuze Galiciens.',q:'Castro Lupario'},
+  {n:'Aussicht Agro dos Mosteiros',w:'am Weg',t:'Erster Blick auf die Türme der Kathedrale.',q:'Agro dos Mosteiros Santiago'}],
+ '2027-06-19':[
+  {n:'Dächer der Kathedrale',w:'Santiago · vorab buchen',t:'Führung über die Granitdächer – Tickets früh reservieren.',q:'Cubiertas Catedral de Santiago'},
+  {n:'Torre de Hércules',w:'A Coruña · ~30 Min. zu Fuss',t:'Ältester noch betriebener römischer Leuchtturm, UNESCO-Welterbe. Am Meer entlang hin.',q:'Torre de Hércules'}]
+};
+function detourHTML(d,compact){
+  const L=DETOURS[d];if(!L)return '';
+  return `<div class="det"><div class="det-h">🔭 Abstecher &amp; Sehenswertes</div><ul>${L.map(x=>`<li><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">${escH(x.n)}</a><span class="det-w">${escH(x.w)}</span>${compact?'':`<div class="det-t">${escH(x.t)}</div>`}</li>`).join('')}</ul></div>`;
+}
+STAGES.forEach((s,k)=>{const sd=SDAYS[k];if(!sd)return;const sh=s.querySelector('.stage-share');if(!sh)return;
+  const box=document.createElement('div');box.innerHTML=detourHTML(sd.d,false);if(box.firstChild)sh.after(box.firstChild);});
+const _renderToday3=renderToday;
+renderToday=function(i){_renderToday3(i);const body=document.querySelector('#today-card .tc-body');const btns=body&&body.querySelector('.tc-btns');
+  if(!btns)return;const box=document.createElement('div');const L=DETOURS[DAYS[i].d];if(!L)return;box.innerHTML=`<details class="det-fold"><summary>🔭 ${L.length} Abstecher &amp; Sehenswertes</summary>${detourHTML(DAYS[i].d,false)}</details>`;body.insertBefore(box.firstChild,btns);};
+(function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
 
 /* ===== OFFLINE ===== */
 if('serviceWorker' in navigator && location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}
