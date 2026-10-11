@@ -1,6 +1,8 @@
 /* Camino 2027 – Offline-Cache */
-const CACHE = 'camino-v5';
-const CORE = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png'];
+const CACHE = 'camino-v6';
+const CORE = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png',
+  './images/porto/porto-douro-sonnenuntergang-800.webp', './images/porto/porto-ponte-luis-blaue-stunde-800.webp',
+  './images/porto/porto-ribeira-800.webp', './images/porto/porto-pasteis-de-nata-800.webp'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
