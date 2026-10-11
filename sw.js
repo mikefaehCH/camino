@@ -1,8 +1,11 @@
 /* Camino 2027 – Offline-Cache */
-const CACHE = 'camino-v6';
+const CACHE = 'camino-v7';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png',
   './images/porto/porto-douro-sonnenuntergang-800.webp', './images/porto/porto-ponte-luis-blaue-stunde-800.webp',
-  './images/porto/porto-ribeira-800.webp', './images/porto/porto-pasteis-de-nata-800.webp'];
+  './images/porto/porto-ribeira-800.webp', './images/porto/porto-pasteis-de-nata-800.webp',
+  './vendor/leaflet/leaflet.js', './vendor/leaflet/leaflet.css', './vendor/leaflet/images/layers.png', './vendor/leaflet/images/layers-2x.png',
+  './vendor/fonts/manrope-latin-500-normal.woff2', './vendor/fonts/manrope-latin-700-normal.woff2', './vendor/fonts/manrope-latin-800-normal.woff2',
+  './vendor/fonts/dm-sans-latin-400-normal.woff2', './vendor/fonts/dm-sans-latin-500-normal.woff2', './vendor/fonts/dm-sans-latin-700-normal.woff2'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
@@ -24,6 +27,6 @@ self.addEventListener('fetch', e => {
     e.respondWith(Promise.race([net.catch(fallback), timeout.then(r => r || net)]).then(r => r || Response.error()));
     return;
   }
-  // Schriften & Bibliotheken: zuerst Cache
+  // Übrige externe Dateien: zuerst Cache
   e.respondWith(caches.match(req).then(r => r || fetch(req).then(put)));
 });

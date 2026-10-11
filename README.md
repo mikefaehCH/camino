@@ -11,6 +11,7 @@ Live: https://mikefaehch.github.io/camino/
 | `sw.js` | Service Worker (Offline). Bei Änderungen `CACHE`-Version hochzählen |
 | `manifest.webmanifest`, `icon*` | PWA / «Zum Home-Bildschirm» |
 | `images/` | Lokale Bilder (WebP, 800 px und 1600 px) |
+| `vendor/` | Schriften (Manrope, DM Sans, OFL) und Leaflet 1.9.4 – lokal statt von Google/CDN |
 
 Reisedaten (Tage, Hotels, Telefon, Koordinaten) stehen im JavaScript-Array `DAYS` in `index.html`.
 
@@ -25,6 +26,15 @@ pro Kapitel (`00-porto` … `09-a-coruna`) ein `hero` und eine `gallery` – ins
 
 Aktuell eingesetzt: 4 Porto-Beispielbilder (Unsplash, Status `EXAMPLE_ONLY_PORTO`). Sie ersetzen nicht die finale Bildauswahl.
 
+## Unterwegs-Funktionen (v7)
+
+- **Wo bin ich?** (Karte und Heute-Karte): GPS-Standort auf der Karte, Luftlinie zum Hotel des gewählten Tags, Link zur Fussnavigation in Google Maps.
+- **Start-Tipp** pro Etappe: Sonnenauf-/-untergang (offline berechnet), Gehzeit (km/4,3 + 1,8 h pro 1000 Hm, plus Pausen) und Startvorschlag nach Tageshöchsttemperatur. Sonderfälle Tag 1 (Transfer) und Bootstag in `PLAN_FIX`.
+- **Teilen**: Tagesinfos als Text über das Teilen-Menü des Handys bzw. WhatsApp.
+- **Splitwise**: Einladungslink in `SPLITWISE_URL` (oben im Script-Teil «v7: Konfiguration») eintragen.
+- **Compostela & Pilgermesse**: eigener Abschnitt unter «Infos» (Stand Oktober 2026, vor der Reise prüfen).
+- **Reisebuch**: Knopf unter «Infos» erzeugt ein A5-Heft (Drucken oder «Als PDF sichern»).
+
 ## Getestet (Headless Chromium, 11.10.2026)
 
 - 390 px und 1280 px, hell und dunkel, ohne JavaScript-Fehler, kein horizontales Scrollen
@@ -35,6 +45,6 @@ Aktuell eingesetzt: 4 Porto-Beispielbilder (Unsplash, Status `EXAMPLE_ONLY_PORTO
 
 ## Bekannte Grenzen
 
-- Karte, Wetter und Schriften laden von externen Diensten (OpenStreetMap, Open-Meteo, Google Fonts) und sind nur online bzw. nach erstem Laden verfügbar.
+- Kartenkacheln und Wetter laden von OpenStreetMap bzw. Open-Meteo und sind nur online bzw. nach erstem Laden verfügbar. Schriften und Kartenbibliothek liegen lokal.
 - 4 Hotelpins sind ungefähr (im Popup markiert).
 - **Kein Zugangsschutz:** GitHub Pages ist öffentlich. Vor sensiblen Inhalten (Buchungsnummern, Gruppenfotos) Schutz auf Hosting-Ebene einrichten, z. B. Cloudflare Pages + Cloudflare Access.
