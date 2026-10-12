@@ -849,6 +849,12 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 .gallery figcaption{font-size:.8rem!important;color:var(--ink);}
 .gallery figcaption .cr{display:block;margin-top:.1rem;}
 
+/* ===== v15 ===== */
+#map{isolation:isolate;position:relative;z-index:0;}
+.theme-btn{z-index:1200!important;}
+.bk-cost{font-size:.85rem;color:var(--ink);margin:.1rem 0 .5rem;}
+.bk.flight .bk-cost{margin-top:.3rem;}
+.see{font-size:.8rem;color:var(--forest);margin-left:.35rem;}
 /* ===== v14 ===== */
 .s-lead{padding:1.1rem 1.25rem .2rem;font-family:var(--serif);font-size:1.15rem;line-height:1.5;color:var(--ink);max-width:38rem;}
 .more{margin:.2rem 1.25rem .4rem;}
@@ -1279,7 +1285,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <table class="ctbl">
     <tr class="cg"><td colspan="3">Gebucht</td></tr>
     <tr><td>Flüge ZRH → Porto · A Coruña → ZRH, inkl. Koffer &amp; Sitzplatz</td><td><span class="st ok">gebucht</span></td><td>CHF –</td></tr>
-    <tr><td>Unterkünfte, 9 Nächte</td><td><span class="st ok">gebucht</span></td><td>CHF –</td></tr>
+    <tr><td>Unterkünfte, 9 Nächte <a class="see" href="#bk-list">Details</a></td><td><span class="st ok">gebucht</span></td><td>CHF –</td></tr>
     <tr class="cg"><td colspan="3">Noch offen</td></tr>
     <tr><td>Transfer Porto → Valença + Gepäcktransport</td><td><span class="st">Offerte</span></td><td>CHF –</td></tr>
     <tr><td>Boot Translatio Vilanova → Pontecesures</td><td><span class="st">offen</span></td><td>noch unbekannt</td></tr>
@@ -2228,15 +2234,31 @@ loadWX().then(()=>{STAGES.forEach((s,i)=>{const sd=SDAYS[i];const w=s.querySelec
 })();
 
 /* ===== BUCHUNGEN ===== */
+/* Preise laut Buchungsbestätigungen, Gruppe à 4 Personen; leer = Betrag noch nicht erfasst */
+const STAY_COST={
+ '2027-06-11':{pay:'Überweisung vor Anreise'},
+ '2027-06-12':{pay:'wird belastet'},
+ '2027-06-13':{pay:'bezahlt'},
+ '2027-06-14':{pay:'Zahlung vor Ort'},
+ '2027-06-15':{pay:'Zahlung vor Ort'},
+ '2027-06-16':{pay:'Buchungsbestätigung fehlt noch'},
+ '2027-06-17':{pay:'Zahlung vor Ort'},
+ '2027-06-18':{pay:'teilweise bezahlt, Rest + Kurtaxe vor Ort'},
+ '2027-06-19':{pay:'Zahlung vor Ort'}
+};
+const eurF=n=>'€ '+n.toLocaleString('de-CH',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
+function costLine(d){const c=STAY_COST[d];if(!c)return '';
+  const price=c.eur!=null?`${eurF(c.eur)} für 4 · ca. ${eurF(Math.round(c.eur/4))} p. P.`:'Preis noch nicht erfasst';
+  return `<div class="bk-cost">${price} · ${c.pay}</div>`;}
 (function(){
   const fl=(d,name,meta)=>{const y=dt(d);return `<div class="bk flight"><div class="bk-date"><b>${y.getDate()}.</b><span>${WD[y.getDay()]} · Jun</span></div><div><div class="bk-name">${name}</div><div class="bk-meta">${meta}</div></div></div>`;};
-  let html=fl('2027-06-11','Chair Airlines CS176','Zürich 15:35 → Porto 17:15 · Koffer 23 kg + Handgepäck 8 kg · Sitzplätze reserviert');
+  let html=fl('2027-06-11','Chair Airlines CS176','Zürich 15:35 → Porto 17:15 · Koffer 23 kg + Handgepäck 8 kg · Sitzplätze reserviert<div class="bk-cost">Hin- und Rückflug zusammen CHF – p. P. (inkl. Koffer &amp; Sitzplatz)</div>');
   DAYS.filter(x=>x.hotel).forEach((x,i,a)=>{const y=dt(x.d);const out=a[i+1]?a[i+1].d:'2027-06-20';const o=dt(out);
     html+=`<div class="bk"><div class="bk-date"><b>${y.getDate()}.</b><span>${WD[y.getDay()]} → ${WD[o.getDay()]}</span></div><div>
       <div class="bk-name">${x.hotel}${x.bf?'<span class="badge">Frühstück</span>':''}</div>
-      <div class="bk-meta">${x.place} · Check-in ${x.ci} · Check-out ${x.co}</div>
+      <div class="bk-meta">${x.place} · Check-in ${x.ci} · Check-out ${x.co}</div>${costLine(x.d)}
       <div class="bk-btns">${x.tel?`<a class="btn" href="tel:${x.tel}">${ICON('phone')} ${x.tel.replace(/^\+(351|34)/,'+$1 ')}</a>`:''}<a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">${ICON('map-pin')} Karte</a></div></div></div>`;});
-  html+=fl('2027-06-20','Air Europa UX7234 + UX1671','A Coruña 12:35 → Madrid 13:45 · Madrid 15:10 → Zürich 17:30 · Koffer 23 kg durchgecheckt');
+  html+=fl('2027-06-20','Air Europa UX7234 + UX1671','A Coruña 12:35 → Madrid 13:45 · Madrid 15:10 → Zürich 17:30 · Koffer 23 kg durchgecheckt<div class="bk-cost">im Flugpreis oben enthalten · nicht erstattbar</div>');
   document.getElementById('bk-list').innerHTML=html;
 })();
 
@@ -2656,7 +2678,8 @@ const JLINES={
   const box=document.getElementById('journey');if(!box)return;
   box.innerHTML=DAYS.map((x,i)=>{
     const ch=((IMAGE_MAP.dayChapters||{})[x.d]||[])[0];const c=ch&&IMAGE_MAP.chapters[ch];
-    const hero=c&&c.hero&&c.hero.src?c.hero:null;
+    const JOVR={'2027-06-20':['09-a-coruna','C03']};const ov=JOVR[x.d];
+    const hero=ov?(IMAGE_MAP.chapters[ov[0]].gallery.find(g=>g.id===ov[1]&&g.src)||null):(c&&c.hero&&c.hero.src?c.hero:null);
     const img=hero?`<img src="${escH(hero.src)}" ${hero.srcset?`srcset="${escH(hero.srcset)}" sizes="(min-width:900px) 560px, 100vw"`:''} alt="${escH(hero.alt||x.title)}" loading="lazy" decoding="async" width="1600" height="1067"${hero.pos?` style="object-position:${escH(hero.pos)}"`:''}>`:`<div class="img-ph" aria-hidden="true"></div>`;
     const walk=x.stage&&x.stage<8;
     const meta=walk?`Tag ${x.stage} · ${fmt(x.d)}`:fmt(x.d);
