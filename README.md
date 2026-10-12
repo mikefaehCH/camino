@@ -7,11 +7,11 @@ Live: https://mikefaehch.github.io/camino/
 
 | Datei | Zweck |
 |---|---|
-| `index.html` | Ganze Seite: Inhalte, Design «Atlas», Funktionen, Bildkonfiguration |
+| `index.html` | Ganze Seite: Inhalte, Design «Camino Journal» (v12), Funktionen, Bildkonfiguration |
 | `sw.js` | Service Worker (Offline). Bei Änderungen `CACHE`-Version hochzählen |
 | `manifest.webmanifest`, `icon*` | PWA / «Zum Home-Bildschirm» |
 | `images/` | Lokale Bilder (WebP, 800 px und 1600 px) |
-| `vendor/` | Schriften (Manrope, DM Sans, OFL) und Leaflet 1.9.4 – lokal statt von Google/CDN |
+| `vendor/` | Schriften (Fraunces, DM Sans, OFL) und Leaflet 1.9.4 – lokal statt von Google/CDN |
 
 Reisedaten (Tage, Hotels, Telefon, Koordinaten) stehen im JavaScript-Array `DAYS` in `index.html`.
 
@@ -52,3 +52,12 @@ Aktuell eingesetzt: 35 Bilder (Unsplash und Wikimedia Commons). Ort jedes Unspla
 - Kartenkacheln und Wetter laden von OpenStreetMap bzw. Open-Meteo und sind nur online bzw. nach erstem Laden verfügbar. Schriften und Kartenbibliothek liegen lokal.
 - 4 Hotelpins sind ungefähr (im Popup markiert).
 - **Kein Zugangsschutz:** GitHub Pages ist öffentlich. Vor sensiblen Inhalten (Buchungsnummern, Gruppenfotos) Schutz auf Hosting-Ebene einrichten, z. B. Cloudflare Pages + Cloudflare Access.
+
+## Design «Camino Journal» (v12)
+
+- Farben: Ivory #F7F5EF, Charcoal #252923, Forest #344D41, Sage #9CA99A, Sandstone #C5A789, Stone #ECE9E1 (Variablen ganz unten im Style-Block, Dunkelmodus inklusive).
+- Schriften: Fraunces (Titel), DM Sans (Text), lokal in `vendor/fonts/`.
+- Aufbau: Hero → Einführung mit 4 Kennzahlen → «Zehn Tage, ein Weg» (Bildkarten aus `DAYS` + `IMAGE_MAP`) → Karte → Heute → Etappen im Detail → «Reise organisieren» → Buchungen, Anreise, Restaurants, Infos → Crew.
+- Während der Reise (oder abends davor) rückt «Heute» direkt unter die Navigation.
+- Etappendetail-Reihenfolge per JS: Bild, Einführung, Fakten, Route & Höhenprofil, Sehenswertes, Galerie, Essen, Unterkunft, Praktisch.
+- Bilder mit Status `WIKIMEDIA_ATTRIBUTION_PENDING` werden nicht angezeigt, bis Urheber und Lizenz eingetragen sind (Status dann auf `WIKIMEDIA_OK` setzen und `credit` ergänzen).
