@@ -1281,11 +1281,8 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <li><b>Fotoalbum</b> anlegen und hier verlinken</li>
     </ul></div>
   </div>
-<h3 class="sub-h" id="kosten">Kosten pro Person</h3>
+<h3 class="sub-h" id="kosten">Weitere Kosten pro Person</h3>
   <table class="ctbl">
-    <tr class="cg"><td colspan="3">Gebucht</td></tr>
-    <tr><td>Flüge ZRH → Porto · A Coruña → ZRH, inkl. Koffer &amp; Sitzplatz</td><td><span class="st ok">gebucht</span></td><td>CHF –</td></tr>
-    <tr><td>Unterkünfte, 9 Nächte <a class="see" href="#bk-list">Details</a></td><td><span class="st ok">gebucht</span></td><td>CHF –</td></tr>
     <tr class="cg"><td colspan="3">Noch offen</td></tr>
     <tr><td>Transfer Porto → Valença + Gepäcktransport</td><td><span class="st">Offerte</span></td><td>CHF –</td></tr>
     <tr><td>Boot Translatio Vilanova → Pontecesures</td><td><span class="st">offen</span></td><td>noch unbekannt</td></tr>
@@ -1293,9 +1290,9 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <tr><td>Essen &amp; Trinken, 10 Tage</td><td><span class="st">Schätzung</span></td><td>CHF –</td></tr>
     <tr><td>Lokale Fahrten (Zug A Coruña, Taxi)</td><td><span class="st">Schätzung</span></td><td>CHF –</td></tr>
     <tr><td>Eintritte &amp; Diverses</td><td><span class="st">Schätzung</span></td><td>CHF –</td></tr>
-    <tr class="tot"><td colspan="2"><strong>Total</strong> ohne Boot</td><td><strong>CHF –</strong></td></tr>
+    <tr class="tot"><td colspan="2"><strong>Total</strong> ohne Flüge, Unterkünfte und Boot</td><td><strong>CHF –</strong></td></tr>
   </table>
-  <p class="fn">Total = Summe der Positionen oben (gebucht CHF – + Offerte CHF – + Schätzungen CHF –).</p>
+  <p class="fn">Summe der Positionen oben (Offerte CHF – + Schätzungen CHF –).</p>
   <div class="kasse">
     <h3 class="sub-h">Gemeinsame Kasse</h3>
     <p class="prose">Ausgaben unterwegs (Essen, Taxi, Boot, Eintritte) gleich nach dem Bezahlen in Splitwise eintragen, Währung EUR. Am Schluss zeigt Splitwise, wer wem wie viel schuldet – einmal ausgleichen, fertig.</p>
@@ -2234,31 +2231,16 @@ loadWX().then(()=>{STAGES.forEach((s,i)=>{const sd=SDAYS[i];const w=s.querySelec
 })();
 
 /* ===== BUCHUNGEN ===== */
-/* Preise laut Buchungsbestätigungen, Gruppe à 4 Personen; leer = Betrag noch nicht erfasst */
-const STAY_COST={
- '2027-06-11':{pay:'Überweisung vor Anreise'},
- '2027-06-12':{pay:'wird belastet'},
- '2027-06-13':{pay:'bezahlt'},
- '2027-06-14':{pay:'Zahlung vor Ort'},
- '2027-06-15':{pay:'Zahlung vor Ort'},
- '2027-06-16':{pay:'Buchungsbestätigung fehlt noch'},
- '2027-06-17':{pay:'Zahlung vor Ort'},
- '2027-06-18':{pay:'teilweise bezahlt, Rest + Kurtaxe vor Ort'},
- '2027-06-19':{pay:'Zahlung vor Ort'}
-};
-const eurF=n=>'€ '+n.toLocaleString('de-CH',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
-function costLine(d){const c=STAY_COST[d];if(!c)return '';
-  const price=c.eur!=null?`${eurF(c.eur)} für 4 · ca. ${eurF(Math.round(c.eur/4))} p. P.`:'Preis noch nicht erfasst';
-  return `<div class="bk-cost">${price} · ${c.pay}</div>`;}
+
 (function(){
   const fl=(d,name,meta)=>{const y=dt(d);return `<div class="bk flight"><div class="bk-date"><b>${y.getDate()}.</b><span>${WD[y.getDay()]} · Jun</span></div><div><div class="bk-name">${name}</div><div class="bk-meta">${meta}</div></div></div>`;};
-  let html=fl('2027-06-11','Chair Airlines CS176','Zürich 15:35 → Porto 17:15 · Koffer 23 kg + Handgepäck 8 kg · Sitzplätze reserviert<div class="bk-cost">Hin- und Rückflug zusammen CHF – p. P. (inkl. Koffer &amp; Sitzplatz)</div>');
+  let html=fl('2027-06-11','Chair Airlines CS176','Zürich 15:35 → Porto 17:15 · Koffer 23 kg + Handgepäck 8 kg · Sitzplätze reserviert');
   DAYS.filter(x=>x.hotel).forEach((x,i,a)=>{const y=dt(x.d);const out=a[i+1]?a[i+1].d:'2027-06-20';const o=dt(out);
     html+=`<div class="bk"><div class="bk-date"><b>${y.getDate()}.</b><span>${WD[y.getDay()]} → ${WD[o.getDay()]}</span></div><div>
       <div class="bk-name">${x.hotel}${x.bf?'<span class="badge">Frühstück</span>':''}</div>
-      <div class="bk-meta">${x.place} · Check-in ${x.ci} · Check-out ${x.co}</div>${costLine(x.d)}
+      <div class="bk-meta">${x.place} · Check-in ${x.ci} · Check-out ${x.co}</div>
       <div class="bk-btns">${x.tel?`<a class="btn" href="tel:${x.tel}">${ICON('phone')} ${x.tel.replace(/^\+(351|34)/,'+$1 ')}</a>`:''}<a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">${ICON('map-pin')} Karte</a></div></div></div>`;});
-  html+=fl('2027-06-20','Air Europa UX7234 + UX1671','A Coruña 12:35 → Madrid 13:45 · Madrid 15:10 → Zürich 17:30 · Koffer 23 kg durchgecheckt<div class="bk-cost">im Flugpreis oben enthalten · nicht erstattbar</div>');
+  html+=fl('2027-06-20','Air Europa UX7234 + UX1671','A Coruña 12:35 → Madrid 13:45 · Madrid 15:10 → Zürich 17:30 · Koffer 23 kg durchgecheckt');
   document.getElementById('bk-list').innerHTML=html;
 })();
 
