@@ -69,3 +69,11 @@ Aktuell eingesetzt: 35 Bilder (Unsplash und Wikimedia Commons). Ort jedes Unspla
 - Keine Standard-Emojis mehr; funktionale Symbole als Lucide-Icons (Sprite `#i-…`, Funktion `ICON(name)`).
 - Bildquellen als Fussnote (10,5 px, gedämpft, Unterstreichung nur bei Hover/Fokus).
 - Redundanzen entfernt: tägliche Abmarschzeit, Check-out- und Gepäckzeilen im Morgenblock, Höhen-/Zeit-Pills, Tags, doppelte Restaurantbox, Fülltexte.
+
+## Optimierung V3 (v14)
+
+- Etappen: kurze Einleitung (2–3 Sätze), Höhenmeter nur im Etappenkopf, Highlights aus `DETOURS`, ausführlicher Text unter «Mehr zur Etappe». Fehler korrigiert (Santa Marta = Capela de Santa Marta, 1617; nicht Ribarteme).
+- Fitness-Abschnitt entfernt; «Vorbereitung» ohne unbelegte Preise und pauschale Medikamente.
+- Wetter mit AEMET-Normwerten (Santiago, 1981–2010). Compostela: Anrechnung der Bootsstrecke vor der Reise beim Pilgerbüro klären.
+- Planen: «Flüge & Unterkünfte bestätigt», Notfall oben, Aufgaben nach «Später / Vor der Abreise / Optional», Kosten gebucht/offen/geschätzt mit nachvollziehbarer Summe.
+- Restaurants: eine Quelle (Abschnitt «Wo ihr esst»); Reservationsstatus per `data-status="geplant|bestätigt"` am `.ri`-Element.
