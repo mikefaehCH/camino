@@ -10,6 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGIyNTQwIi8+PHBhdGggZD0iTTUwIDE1IFE2NSAyNSA3MiA0MCBRNzggNTUgNzAgNjggUTYyIDgwIDUwIDg1IFEzOCA4MCAzMCA2OCBRMjIgNTUgMjggNDAgUTM1IDI1IDUwIDE1WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThkNWE4IiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNNTAgMTUgTDUwIDg1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zMCA2OCBRNDAgNjAgNTAgNTUgUTYwIDYwIDcwIDY4IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0yOCA0MCBRMzggNDggNTAgNTAgUTYyIDQ4IDcyIDQwIiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zNSAyNSBRNDIgMzggNTAgNDIgUTU4IDM4IDY1IDI1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNSIvPjwvc3ZnPg==">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGIyNTQwIi8+PHBhdGggZD0iTTUwIDE1IFE2NSAyNSA3MiA0MCBRNzggNTUgNzAgNjggUTYyIDgwIDUwIDg1IFEzOCA4MCAzMCA2OCBRMjIgNTUgMjggNDAgUTM1IDI1IDUwIDE1WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThkNWE4IiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNNTAgMTUgTDUwIDg1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zMCA2OCBRNDAgNjAgNTAgNTUgUTYwIDYwIDcwIDY4IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0yOCA0MCBRMzggNDggNTAgNTAgUTYyIDQ4IDcyIDQwIiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zNSAyNSBRNDIgMzggNTAgNDIgUTU4IDM4IDY1IDI1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNSIvPjwvc3ZnPg==">
+<link rel="preload" as="image" href="images/start/pilger-nebelwald-800.webp" imagesrcset="images/start/pilger-nebelwald-800.webp 800w, images/start/pilger-nebelwald-1600.webp 1600w, images/start/pilger-nebelwald-2000.webp 2000w" imagesizes="100vw">
 <link rel="preload" href="vendor/fonts/dm-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face{font-family:'Manrope';font-style:normal;font-weight:500;font-display:swap;src:url(vendor/fonts/manrope-latin-500-normal.woff2) format('woff2');}
@@ -616,6 +617,11 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
 .morning ul{list-style:none;margin:0;padding:0;display:grid;gap:.35rem;}
 .morning li{display:grid;grid-template-columns:1.4rem 1fr;font-size:.82rem;line-height:1.45;color:var(--ink);}
 .boat-box p{font-size:.82rem;line-height:1.5;color:var(--ink);margin:.2rem 0 .4rem;}
+#hero{min-height:88svh;}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 40%;}
+@media(min-width:760px){.hero-photo{object-position:50% 40%;} #hero .hero-h1{font-size:clamp(3.2rem,7vw,4.8rem);} .hero-content{max-width:560px;}}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,26,22,.35) 0%,rgba(11,26,22,.05) 30%,rgba(11,26,22,.45) 60%,rgba(11,26,22,.88) 100%);}
+.hero-content{text-shadow:0 1px 12px rgba(0,0,0,.35);}
 #compostela a,.loc-out a{color:var(--link);}
 .kasse{margin-top:1.1rem;}
 .kasse .btn{margin-top:.4rem;}
@@ -657,6 +663,8 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
 <!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
+  <img class="hero-photo" src="images/start/pilger-nebelwald-800.webp" srcset="images/start/pilger-nebelwald-800.webp 800w, images/start/pilger-nebelwald-1600.webp 1600w, images/start/pilger-nebelwald-2000.webp 2000w" sizes="100vw" alt="Pilgerin mit Stock auf einem Waldweg im Nebel zwischen Eukalyptusbäumen" fetchpriority="high" decoding="async">
+  <div class="hero-shade"></div>
   <div class="hero-light"></div>
   <div class="hero-pat"></div>
   <svg class="hero-waves" viewBox="0 0 800 80" preserveAspectRatio="none">
