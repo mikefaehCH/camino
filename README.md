@@ -77,3 +77,12 @@ Aktuell eingesetzt: 35 Bilder (Unsplash und Wikimedia Commons). Ort jedes Unspla
 - Wetter mit AEMET-Normwerten (Santiago, 1981–2010). Compostela: Anrechnung der Bootsstrecke vor der Reise beim Pilgerbüro klären.
 - Planen: «Flüge & Unterkünfte bestätigt», Notfall oben, Aufgaben nach «Später / Vor der Abreise / Optional», Kosten gebucht/offen/geschätzt mit nachvollziehbarer Summe.
 - Restaurants: eine Quelle (Abschnitt «Wo ihr esst»); Reservationsstatus per `data-status="geplant|bestätigt"` am `.ri`-Element.
+
+## v18 – Erlebnis
+
+- **Eine Etappenansicht:** Die Etappen hängen direkt unter den Bildkarten in «Zehn Tage, ein Weg»; Antippen klappt auf. Der frühere Abschnitt «Etappen im Detail» ist aufgelöst (`openStage(n)` öffnet die Karte).
+- **Bildkarte wird Etappe:** View Transitions API (`view-transition-name: st-img`); ohne Unterstützung normales Aufklappen.
+- **Der Weg als Faden:** Linie links der Karten füllt sich beim Scrollen; erledigte Tage dunkel, heute hervorgehoben.
+- **Digitaler Stempel:** Am Reisetag in der Nähe des Hotels (≤ 600 m, bei ungefähren Pins 1,5 km) setzt «Wo bin ich?» bzw. eine bereits erteilte Standortfreigabe einen Stempel; gespeichert lokal (`camino_stamps_v1`).
+- **Restaurants:** pro Ort zusammengeklappt.
+- **App-Kurzbefehle** (`manifest.webmanifest` → `shortcuts`): Heute, Hotel anrufen (`?aktion=anrufen`), Wo bin ich? (`?aktion=standort`). Nur Android/Chrome; iOS unterstützt das nicht.
