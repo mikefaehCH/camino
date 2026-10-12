@@ -24,7 +24,7 @@ pro Kapitel (`00-porto` … `09-a-coruna`) ein `hero` und eine `gallery` – ins
 2. Im passenden Platz `src`, `srcset`, `alt` und `credit` eintragen (Lizenzhinweis Pflicht bei CC BY-SA).
 3. Leere `src` = Platzhalter im Atlas-Stil, ohne Layout-Sprung.
 
-Aktuell eingesetzt: 4 Porto-Beispielbilder (Unsplash, Status `EXAMPLE_ONLY_PORTO`). Sie ersetzen nicht die finale Bildauswahl.
+Aktuell eingesetzt: 35 Bilder (Unsplash und Wikimedia Commons). Ort jedes Unsplash-Bilds auf der Unsplash-Seite geprüft. Wikimedia-Bilder haben Status `WIKIMEDIA_ATTRIBUTION_PENDING`: Urheber und Lizenz noch von der Commons-Seite (Link im Bildnachweis) ergänzen. Galerien zeigen nur vorhandene Bilder; Platzhalter erscheinen nur, solange ein Kapitel noch gar kein Bild hat. `pos` setzt den Bildausschnitt (CSS object-position).
 
 ## Unterwegs-Funktionen (v7)
 
