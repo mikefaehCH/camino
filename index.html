@@ -611,6 +611,10 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
 .det-fold summary::after{content:'▾';margin-left:auto;transition:transform .2s;}
 .det-fold[open] summary::after{transform:rotate(180deg);}
 .det-fold .det{margin:.5rem 0 0;}
+.morning{margin:.2rem 0 .8rem;border:1px solid var(--border);border-radius:.9rem;background:var(--card2);padding:.7rem .85rem;}
+.morning ul{list-style:none;margin:0;padding:0;display:grid;gap:.35rem;}
+.morning li{display:grid;grid-template-columns:1.4rem 1fr;font-size:.82rem;line-height:1.45;color:var(--ink);}
+.boat-box p{font-size:.82rem;line-height:1.5;color:var(--ink);margin:.2rem 0 .4rem;}
 #compostela a,.loc-out a{color:var(--link);}
 .kasse{margin-top:1.1rem;}
 .kasse .btn{margin-top:.4rem;}
@@ -1882,9 +1886,10 @@ loadWX().then(()=>{STAGES.forEach((s,i)=>{const sd=SDAYS[i];const w=s.querySelec
     combarro:[42.4310,-8.7060],armenteira:[42.4651,-8.74066],vilanova:[42.5640,-8.8270],cesures:[42.7210,-8.6550],arreten:[42.7457,-8.6468],santiago:[42.880569,-8.541572],coruna:[43.3712,-8.3960]};
   const style={walk:{color:'#216c53',weight:4},boat:{color:'#377e67',weight:3,dashArray:'8 8'},tr:{color:'#7f978c',weight:3,dashArray:'2 7'}};
   L.polyline([P.porto,P.valenca],style.tr).addTo(map);
-  L.polyline([P.valenca,P.tui,P.porrino,P.redondela,P.pontevedra,P.combarro,P.armenteira,P.vilanova],style.walk).addTo(map);
+  window.ROUTE_LINES=[];
+  window.ROUTE_LINES.push(L.polyline([P.valenca,P.tui,P.porrino,P.redondela,P.pontevedra,P.combarro,P.armenteira,P.vilanova],style.walk).addTo(map));
   L.polyline([P.vilanova,[42.60,-8.80],[42.66,-8.72],[42.70,-8.67],P.cesures],style.boat).addTo(map);
-  L.polyline([P.cesures,P.arreten,P.santiago],style.walk).addTo(map);
+  window.ROUTE_LINES.push(L.polyline([P.cesures,P.arreten,P.santiago],style.walk).addTo(map));
   L.polyline([P.santiago,P.coruna],style.tr).addTo(map);
   DAYS.filter(x=>x.hotel).forEach((x,i)=>{
     const cls=x.fin?' fin':(x.kind==='travel'||x.kind==='rest'?' tr':'');
@@ -2040,7 +2045,10 @@ function locate(){
     const dest=x.approx?encodeURIComponent(x.q):x.lat+','+x.lon;
     const nav=`https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=walking`;
     const kmT=km<10?km.toFixed(1).replace('.',','):Math.round(km).toLocaleString('de-CH');
-    out.innerHTML=km>250
+    const ar=(x.stage&&typeof alongRoute==='function')?alongRoute(x.stage,la,lo):null;
+    out.innerHTML=ar&&ar.off<1
+      ?`Noch <b>${ar.left.toFixed(1).replace('.',',')} km auf dem Weg</b> bis <b>${escH(x.hotel)}</b> · ${ar.done.toFixed(1).replace('.',',')} km geschafft${ar.off>0.15?` (${Math.round(ar.off*1000)} m neben der Route)`:''}.<br><a href="${nav}" target="_blank" rel="noopener">🧭 Zu Fuss dorthin navigieren ↗</a>`
+      :km>250
       ?`Du bist noch <b>${kmT} km</b> von ${escH(x.place)} entfernt.${TODAY<DAYS[1].d?' Buen Camino ab dem 12. Juni! 🐚':''}`
       :`Noch <b>${kmT} km Luftlinie</b> bis <b>${escH(x.hotel)}</b> (${fmt(x.d)}).<br><a href="${nav}" target="_blank" rel="noopener">🧭 Zu Fuss dorthin navigieren ↗</a>${x.approx?' <span style="color:var(--muted)">(Hotelposition ungefähr)</span>':''}`;
     if(window.CMAP&&typeof L!=='undefined'){
@@ -2110,6 +2118,7 @@ function buildBook(){
       ${x.cafe?`<p><b>Pause:</b> ${escH(x.cafe)}</p>`:''}
       <div class="pb-box"><div class="l">Zeiten</div><p>${p.start!=null?`Abmarsch <b>${hm(p.start)}</b> → Ankunft ca. ${hm(p.arrive)} · `:''}Sonnenaufgang ${hm(p.sr)}${p.srTag} · Sonnenuntergang ${hm(p.ss)}</p>${p.note?`<p style="font-size:9pt">${escH(p.note)}</p>`:''}</div>
       ${x.hotel?`<div class="pb-box"><div class="l">Unterkunft</div><p><b>${escH(x.hotel)}</b>${x.bf?' · mit Frühstück':''}<br>${escH(x.place)} · Check-in ${escH(x.ci)} · Check-out ${escH(x.co)}<br><span class="pb-tel">☎ ${x.tel?x.tel.replace(/^\+(351|34)/,'+$1 '):'–'}</span></p></div>`:''}
+      ${morningItems(i).length?`<div class="pb-box"><div class="l">Am Morgen</div><ul>${morningItems(i).map(([ic,t])=>`<li>${t}</li>`).join('')}</ul></div>`:''}
       ${DETOURS[x.d]?`<div class="pb-box"><div class="l">Abstecher</div><ul>${DETOURS[x.d].map(o=>`<li><b>${escH(o.n)}</b> (${escH(o.w)})</li>`).join('')}</ul></div>`:''}
       ${r.length?`<div class="pb-box"><div class="l">Abendessen</div><ul>${r.map(n=>`<li>${escH(n)}</li>`).join('')}</ul></div>`:''}
       <div class="pb-box"><div class="l">Notizen</div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div></section>`);
@@ -2171,6 +2180,103 @@ const _renderToday3=renderToday;
 renderToday=function(i){_renderToday3(i);const body=document.querySelector('#today-card .tc-body');const btns=body&&body.querySelector('.tc-btns');
   if(!btns)return;const box=document.createElement('div');const L=DETOURS[DAYS[i].d];if(!L)return;box.innerHTML=`<details class="det-fold"><summary>🔭 ${L.length} Abstecher &amp; Sehenswertes</summary>${detourHTML(DAYS[i].d,false)}</details>`;body.insertBefore(box.firstChild,btns);};
 (function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
+
+/* ===== v9: Abends schon den nächsten Tag zeigen ===== */
+(function(){
+  const h=new Date().getHours(),ri=realIdx();
+  let next=-1;
+  if(h>=18){
+    if(ri>=0&&ri<DAYS.length-1)next=ri+1;
+    else{const t=new Date();t.setDate(t.getDate()+1);if(t.toLocaleDateString('sv-SE')===DAYS[0].d)next=0;}
+  }
+  if(next<0)return;
+  window.EVENING_NEXT=next;
+  renderToday(next);
+  document.getElementById('heute-h2').innerHTML='Euer <em>morgiger Tag</em>';
+})();
+const _renderToday4=renderToday;
+renderToday=function(i){_renderToday4(i);
+  if(window.EVENING_NEXT===i){document.getElementById('heute-chip').textContent='Morgen';
+    const b=document.querySelector('#today-card .preview-badge');if(b)b.textContent='Morgen';}
+  const body=document.querySelector('#today-card .tc-body');const btns=body&&body.querySelector('.tc-btns');
+  const m=morningHTML(i);if(btns&&m){const d=document.createElement('div');d.innerHTML=m;body.insertBefore(d.firstChild,btns);}
+};
+
+/* ===== v9: Morgen-Hinweise ===== */
+const LUGGAGE_DAYS=['2027-06-12','2027-06-13','2027-06-14','2027-06-15','2027-06-16','2027-06-17','2027-06-18'];
+function morningItems(i){
+  const x=DAYS[i],prev=DAYS[i-1],p=dayPlan(i),L=[];
+  if(LUGGAGE_DAYS.includes(x.d))L.push(['🧳',`Koffer bis <b>8:00</b> beschriftet an die Rezeption – Gepäcktransport nach ${escH(x.place)} (sobald bestätigt).`]);
+  if(prev&&prev.hotel){
+    L.push(prev.bf?["☕",`Frühstück im Hotel (${escH(prev.hotel)}).`]:['☕',`Kein Frühstück gebucht${x.cafe?` – erste Pause: ${escH(x.cafe)}`:''}.`]);
+    L.push(['🔑',`Check-out ${escH(prev.hotel)} ${escH(prev.co||'')}.`]);
+  }
+  if(x.d==='2027-06-19')L.push(['🚆','Eigenes Gepäck im Zug nach A Coruña mitnehmen (~35 Min.).']);
+  if(p.arrive!=null&&x.ci){const mm=x.ci.match(/(\d{1,2}):(\d{2})/);const ci=mm?+mm[1]+mm[2]/60:null;
+    if(ci!=null&&p.arrive<ci)L.push(['🏨',`Ankunft ca. ${hm(p.arrive)}, Check-in erst ab ${hm(ci)} – Gepäck abgeben und einkehren.`]);}
+  if(x.boat)L.push(['🚤','Abfahrtszeit am Vortag beim Bootsbetreiber bestätigen (siehe Etappe).']);
+  return L;
+}
+function morningHTML(i){const L=morningItems(i);if(!L.length)return '';
+  return `<div class="morning"><div class="det-h">🌄 Am Morgen</div><ul>${L.map(([ic,t])=>`<li><span>${ic}</span><span>${t}</span></li>`).join('')}</ul></div>`;}
+(function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
+
+/* ===== v9: Bootstag – Betreiber & Gezeiten ===== */
+(function(){
+  const k=SDAYS.findIndex(x=>x.boat);if(k<0)return;const s=STAGES[k];const anchor=s&&s.querySelector('.stage-share');if(!anchor)return;
+  const d=document.createElement('div');d.className='det boat-box';
+  d.innerHTML=`<div class="det-h">🌊 Boot & Gezeiten</div>
+  <p>Die Abfahrt richtet sich nach der Flut (der Ulla ist nur bei genug Wasser befahrbar). Fahrzeit und Abfahrt bestimmt der Betreiber – <b>am Vortag nochmals bestätigen</b>, Fahrten werden manchmal kurzfristig verschoben.</p>
+  <ul>
+    <li><a href="tel:+34650410322">AMare Turismo Náutico</a><span class="det-w">+34 650 410 322</span><div class="det-t">Geführte Fahrt, ca. 30 € p. P.</div></li>
+    <li><a href="https://labarcadelperegrino.com" target="_blank" rel="noopener">La Barca del Peregrino</a><span class="det-w">ca. 25 €</span><div class="det-t">Grösseres Boot, 28 Plätze.</div></li>
+    <li><a href="https://rutasjuanallo.es" target="_blank" rel="noopener">Rutas Juan Allo</a><span class="det-w">ca. 25 €</span><div class="det-t">Kleingruppe, 7–13 Personen.</div></li>
+  </ul>
+  <div class="tc-btns" style="margin-top:.6rem"><a class="btn" href="https://tablademareas.com/es/pontevedra/villagarcia-de-arousa" target="_blank" rel="noopener">🌊 Gezeitentabelle Vilagarcía ↗</a></div>
+  <p class="det-t" style="margin-top:.5rem">Plan B ohne Boot: knapp 8 km zu Fuss nach Vilagarcía de Arousa, dann Zug nach Pontecesures (ca. 2–3 €). Preise laut Pilgerforum, vor Buchung prüfen.</p>`;
+  anchor.after(d);
+})();
+
+/* ===== v9: GPX-Routen (optional) ===== */
+/* Dateien in routes/ ablegen und hier eintragen, z. B. {1:'routes/etappe-1.gpx'} */
+const GPX_FILES={};
+const GPX={};
+function parseGPX(txt){
+  const doc=new DOMParser().parseFromString(txt,'application/xml');
+  const pts=[...doc.querySelectorAll('trkpt,rtept')].map(n=>[+n.getAttribute('lat'),+n.getAttribute('lon'),n.querySelector('ele')?+n.querySelector('ele').textContent:null]);
+  const cum=[0];for(let i=1;i<pts.length;i++)cum.push(cum[i-1]+distKm(pts[i-1][0],pts[i-1][1],pts[i][0],pts[i][1]));
+  return {pts,cum,km:cum[cum.length-1]};
+}
+function profileSVG(g,id){
+  const W=700,H=110,x0=46,x1=688,y0=18,y1=86;const els=g.pts.map(p=>p[2]).filter(e=>e!=null);if(els.length<2)return null;
+  const mn=Math.min(...els),mx=Math.max(...els),rg=Math.max(mx-mn,50);
+  let up=0,dn=0;for(let i=1;i<els.length;i++){const d=els[i]-els[i-1];if(d>0)up+=d;else dn-=d;}
+  const step=Math.max(1,Math.floor(g.pts.length/220));const xy=[];
+  for(let i=0;i<g.pts.length;i+=step){const e=g.pts[i][2];if(e==null)continue;xy.push([x0+(x1-x0)*g.cum[i]/g.km,y1-(y1-y0)*(e-mn)/rg]);}
+  const line=xy.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  return {up:Math.round(up),dn:Math.round(dn),svg:`<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#216c53" stop-opacity=".45"/><stop offset="100%" stop-color="#216c53" stop-opacity=".04"/></linearGradient></defs>
+   <text x="4" y="${y0+4}" font-size="9" fill="#50665d">${Math.round(mx)} m</text><text x="4" y="${y1}" font-size="9" fill="#50665d">${Math.round(mn)} m</text>
+   <path d="${line} L ${x1} ${y1+6} L ${x0} ${y1+6} Z" fill="url(#${id})"/><path d="${line}" fill="none" stroke="#216c53" stroke-width="2.5" stroke-linejoin="round"/>
+   <text x="${x1}" y="${y0-4}" text-anchor="end" font-size="9" font-weight="600" fill="#173c33">${g.km.toFixed(1).replace('.',',')} km · ↑${Math.round(up)} m ↓${Math.round(dn)} m</text>`};
+}
+async function loadGPX(){
+  const keys=Object.keys(GPX_FILES);if(!keys.length)return;
+  for(const n of keys){
+    try{const r=await fetch(GPX_FILES[n]);if(!r.ok)continue;const g=parseGPX(await r.text());if(g.pts.length<2)continue;GPX[n]=g;
+      if(window.CMAP&&typeof L!=='undefined')L.polyline(g.pts.map(p=>[p[0],p[1]]),{color:'#216c53',weight:4,opacity:.95}).addTo(window.CMAP).bindPopup(`Etappe ${n} · ${g.km.toFixed(1).replace('.',',')} km (GPX)`);
+      const s=STAGES[n-1];const svg=s&&s.querySelector('.elev-svg');const pr=profileSVG(g,'gpx'+n);
+      if(svg&&pr){svg.setAttribute('viewBox','0 0 700 110');svg.innerHTML=pr.svg;const lb=s.querySelector('.elev-lbl');if(lb)lb.textContent='Höhenprofil (GPX)';}
+    }catch(e){}
+  }
+  if(Object.keys(GPX).length&&window.ROUTE_LINES)window.ROUTE_LINES.forEach(l=>l.setStyle({opacity:.3}));
+}
+loadGPX();
+/* «Wo bin ich?» entlang der Route */
+function alongRoute(stage,la,lo){
+  const g=GPX[stage];if(!g)return null;let bi=0,bd=1e9;
+  g.pts.forEach((p,i)=>{const d=distKm(la,lo,p[0],p[1]);if(d<bd){bd=d;bi=i;}});
+  return {off:bd,left:g.km-g.cum[bi],done:g.cum[bi]};
+}
 
 /* ===== OFFLINE ===== */
 if('serviceWorker' in navigator && location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}

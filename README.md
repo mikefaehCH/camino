@@ -31,6 +31,9 @@ Aktuell eingesetzt: 4 Porto-Beispielbilder (Unsplash, Status `EXAMPLE_ONLY_PORTO
 - **Wo bin ich?** (Karte und Heute-Karte): GPS-Standort auf der Karte, Luftlinie zum Hotel des gewählten Tags, Link zur Fussnavigation in Google Maps.
 - **Start-Tipp** pro Etappe: Sonnenauf-/-untergang (offline berechnet), Gehzeit (km/4,3 + 1,8 h pro 1000 Hm, plus Pausen) und Abmarsch standardmässig 8:00 (bei ≥ 28° Hinweis auf 7:30). Sonderfälle Tag 1 (Transfer) und Bootstag in `PLAN_FIX`.
 - **Abstecher** pro Tag in `DETOURS` (Name, Aufwand, Text, Google-Maps-Suche).
+- **Abends (ab 18 Uhr)** zeigt die Heute-Ansicht den nächsten Tag, mit «Am Morgen»-Hinweisen (Koffer bis 8:00, Frühstück, Check-out, Ankunft vor Check-in).
+- **Bootstag**: Betreiber, Preise (Pilgerforum), Gezeitenlink, Plan B.
+- **GPX**: Dateien in `routes/` ablegen und in `GPX_FILES` eintragen (z. B. `{1:'routes/etappe-1.gpx'}`) – zeichnet die echte Route, ersetzt das geschätzte Höhenprofil und «Wo bin ich?» rechnet die Kilometer entlang des Wegs.
 - **Teilen**: Tagesinfos als Text über das Teilen-Menü des Handys bzw. WhatsApp.
 - **Splitwise**: Einladungslink in `SPLITWISE_URL` (oben im Script-Teil «v7: Konfiguration») eintragen.
 - **Compostela & Pilgermesse**: eigener Abschnitt unter «Infos» (Stand Oktober 2026, vor der Reise prüfen).
