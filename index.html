@@ -848,6 +848,39 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 .img-credit a:hover,.gallery figcaption .cr a:hover,.img-credit a:focus-visible,.gallery figcaption .cr a:focus-visible{text-decoration:underline!important;opacity:1;}
 .gallery figcaption{font-size:.8rem!important;color:var(--ink);}
 .gallery figcaption .cr{display:block;margin-top:.1rem;}
+
+/* ===== v14 ===== */
+.s-lead{padding:1.1rem 1.25rem .2rem;font-family:var(--serif);font-size:1.15rem;line-height:1.5;color:var(--ink);max-width:38rem;}
+.more{margin:.2rem 1.25rem .4rem;}
+.more summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--forest);font-weight:500;font-size:.9rem;list-style:none;}
+.more summary::-webkit-details-marker{display:none;}
+.more summary::after{content:'+';margin-left:.4rem;}
+.more[open] summary::after{content:'–';}
+.more .s-prose{padding:0 0 .6rem!important;font-size:.95rem;color:var(--muted);}
+.elev-svg:not(.gpx) text{display:none;}
+.elev-svg rect{fill:transparent!important;}
+.elev-svg line{stroke:var(--border)!important;}
+.elev-svg path[stroke]{stroke:var(--forest)!important;}
+.elev-svg stop{stop-color:var(--forest)!important;}
+.st{display:inline-block;margin-left:.45rem;font:500 .72rem var(--sans);color:var(--muted);border:1px solid var(--border);border-radius:99px;padding:.02rem .45rem;vertical-align:1px;white-space:nowrap;}
+.st.ok{color:var(--forest);border-color:color-mix(in srgb,var(--forest) 35%,transparent);}
+.tasks{display:grid;gap:1.1rem;margin:.6rem 0 1.5rem;}
+@media(min-width:760px){.tasks{grid-template-columns:repeat(3,1fr);gap:1.5rem;}}
+.tg-h{font:500 .82rem var(--sans);color:var(--horizon);margin-bottom:.35rem;}
+.tgroup ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--border);}
+.tgroup li{padding:.65rem 0;border-bottom:1px solid var(--border);font-size:.92rem;line-height:1.45;}
+.tgroup li b{font-weight:500;}
+.due{display:block;font-size:.8rem;color:var(--muted);}
+.open-list{display:none;}
+.ctbl{width:100%;border-collapse:collapse;margin:.6rem 0 .4rem;font-size:.92rem;}
+.ctbl td{padding:.6rem 0;border-bottom:1px solid var(--border);vertical-align:top;}
+.ctbl td:nth-child(2){padding:.6rem .6rem;white-space:nowrap;}
+.ctbl td:last-child{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.ctbl .cg td{text-align:left!important;font:500 .82rem var(--sans);color:var(--horizon);padding-top:1.1rem;border-bottom:0;}
+.ctbl .tot td{border-bottom:0;padding-top:.9rem;font-size:1rem;}
+@media(max-width:480px){.ctbl td:nth-child(2){display:none;}}
+.ri .st{margin-left:.5rem;}
+.bk,.stage,.today-card,.map-card,.j-img,.det,.morning,.plan-box,.stage-wx,.tc,.lcard,.cp-step,.cp-fact,.btn,.mbtn{border-radius:6px!important;}
 </style>
 </head>
 <body>
@@ -939,12 +972,13 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="intro" class="sec story">
   <p class="story-quote">«Manchmal geht es beim Reisen nicht darum, möglichst viel zu sehen. Sondern darum, gemeinsam unterwegs zu sein.»</p>
   <h2>Warum der <em>Camino Portugués</em></h2>
-  <p class="prose">Der zweitbeliebteste Jakobsweg der Welt: durch das grüne Galicien, über alte Steinbrücken und entlang der Rías Baixas. Ab Pontevedra nehmen wir die <strong>Variante Espiritual</strong> mit Combarro, dem Kloster Armenteira und der Bootsfahrt <em>Translatio</em> den Ulla hinauf. Ab Valença zählt der Weg für die <strong>Compostela</strong>.</p>
+  <p class="prose">Der zweitbeliebteste Jakobsweg der Welt: durch das grüne Galicien, über alte Steinbrücken und entlang der Rías Baixas. Ab Pontevedra nehmen wir die <strong>Variante Espiritual</strong> mit Combarro, dem Kloster Armenteira und der Bootsfahrt <em>Translatio</em> den Ulla hinauf.</p>
   <dl class="facts">
     <div><dt>Distanz</dt><dd>~140 km</dd></div>
     <div><dt>Aufstieg</dt><dd>~1900 m</dd></div>
     <div><dt>Reisezeit</dt><dd>11.–20. Juni</dd></div>
   </dl>
+  <p class="fn">Gesamtdistanz vorläufig; sie hängt von der endgültigen Routenführung ab.</p>
 </section>
 
 <hr class="rule">
@@ -1010,14 +1044,14 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <path d="M 46 85 L 82 82 L 121 76 L 163 64 L 206 58 L 249 61 L 292 67 L 335 61 L 378 55 L 421 49 L 464 36 L 507 28 L 543 32 L 586 41 L 628 50 L 671 53 L 688 56" fill="none" stroke="#2171a8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
       <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑150m ↓150m</text>
     </svg></div>
-    <p class="s-prose"><strong>Fortaleza de Valença</strong> direkt am Weg — von den Mauern auf den Minho schauen. Dann die <em>Ponte Internacional 1885</em> überqueren: Portugal nach Spanien. <strong>Tui:</strong> Kathedrale 12. Jh., Iglesia de San Francisco 14. Jh. <em>Nach Ribadelouro auf der Hauptroute entlang des Río Louro bleiben, nicht ins Industriegebiet As Gándaras abbiegen.</em></p>
+    <div class="ibox"><strong>Tipp:</strong> Ab Orbenlle der ausgeschilderten Variante am Río Louro folgen statt durchs Industriegebiet.</div>
+    <p class="s-lead">Von den Mauern der Festung Valença über die alte Eisenbrücke nach Tui – der erste Grenzübertritt zu Fuss. Danach wird es grün und ruhig entlang des Río Louro.</p>
+    <p class="s-prose"><strong>Fortaleza de Valença</strong> direkt am Weg. Über die <em>Ponte Internacional (1885)</em> nach Spanien. <strong>Tui:</strong> Kathedrale aus dem 12. Jh., Iglesia de San Francisco.</p>
     <hr class="card-hr">
     <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/1626454112" target="_blank" rel="noopener">Komoot (ab Tui)</a><a class="mbtn g" href="https://www.google.com/maps/dir/Valen%C3%A7a+Portugal/O+Porri%C3%B1o+Spain/@42.04,-8.63,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd25c1c4b56b25b1:0x500ef6143a2dc5!2m2!1d-8.634!2d41.934!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!3e2" target="_blank">Google Maps</a></div>
-    <div class="tags"><span class="tag">Fortaleza de Valença</span><span class="tag">Ponte Internacional 1885</span><span class="tag">Kathedrale Tui 12. Jh.</span><span class="tag">Iglesia San Francisco 14. Jh.</span><span class="tag">Río Louro Flussweg</span></div>
     <hr class="card-hr">
     <div class="day-cards">
       <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Apartamentos+Tarela+O+Porriño" target="_blank" style="color:#fff;text-decoration:none;">Apartamentos Tarela ↗</a></div><div class="dc-sub-note">✓ gebucht · Check-in 15–22 Uhr</div></div>
-      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">Restaurante Paso a Nivel</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">Cólleo Con Pinzas Cervecería</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">Restaurante Nómadas World Food</a></div></div></div>
     </div>
   </div>
 
@@ -1039,14 +1073,13 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <path d="M 46 69 L 89 68 L 135 63 L 181 54 L 228 43 L 274 30 L 321 19 L 368 21 L 414 28 L 461 38 L 507 50 L 554 63 L 600 70 L 647 72 L 688 71" fill="none" stroke="#2171a8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
       <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑250m ↓280m</text>
     </svg></div>
+    <p class="s-lead">Auf der alten Römerstrasse hinauf nach Mos und zur Kapelle Santiaguiño de Antas. Oben öffnet sich zum ersten Mal der Blick auf die Ría de Vigo.</p>
     <p class="s-prose"><strong>Pazo de Mos</strong> direkt am Weg. Anstieg zu Santa María de Guizán — erster echter Blick auf die <em>Ría de Vigo</em>. Abstieg auf Granitplatten (Stöcke hilfreich). <strong>Redondela:</strong> Iglesia de Santiago 16. Jh., zwei <em>Eisenbahnviadukte</em> mitten im Ort.</p>
     <hr class="card-hr">
     <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/1628537182" target="_blank" rel="noopener">Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/O+Porri%C3%B1o+Spain/Redondela+Spain/@42.22,-8.61,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!3e2" target="_blank">Google Maps</a></div>
-    <div class="tags"><span class="tag">Pazo de Mos</span><span class="tag">Santa María de Guizán</span><span class="tag">Erster Ría de Vigo Blick</span><span class="tag">Viadukte Redondela</span><span class="tag">Iglesia de Santiago 16. Jh.</span></div>
     <hr class="card-hr">
     <div class="day-cards">
       <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pazo+Santa+Teresa+Redondela" target="_blank" style="color:#fff;text-decoration:none;">Pazo Santa Teresa ↗</a></div><div class="dc-sub-note">✓ gebucht · Frühstück inkl.</div></div>
-      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">A Coté Redondela</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">Taberna O' Tranquilo</a></div></div></div>
     </div>
   </div>
 
@@ -1068,15 +1101,14 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <path d="M 46 71 L 88 60 L 130 43 L 172 28 L 214 23 L 257 28 L 299 34 L 341 38 L 383 31 L 425 26 L 467 29 L 509 34 L 551 42 L 594 55 L 636 66 L 688 71" fill="none" stroke="#2171a8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
       <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑400m ↓380m</text>
     </svg></div>
-    <p class="s-prose"><strong>Verea Vella da Canicouva</strong> — alter Pilgerpfad aus Granitplatten. <strong>Kirche Santa Marta de Ribarteme (13. Jh.)</strong> mit Panoramablick. <strong>Brücke Pontesampaio</strong> — Napoleon 1809. <strong>Pontevedra:</strong> autofrei, <em>Iglesia La Peregrina</em> (Grundriss = Jakobsmuschel), Ruinas de Santo Domingo.</p>
+    <p class="s-lead">Austern in Arcade, die Steinbrücke von Ponte Sampaio und alte Granitpfade. Am Abend wartet die autofreie Altstadt von Pontevedra.</p>
+    <p class="s-prose"><strong>Verea Vella da Canicouva</strong> – alter Pilgerpfad aus Granitplatten. <strong>Brücke Ponte Sampaio</strong> – Schlacht gegen Napoleons Truppen 1809. <strong>Capela de Santa Marta</strong> (1617) kurz vor Pontevedra. <strong>Pontevedra:</strong> autofreie Altstadt, <em>Santuario da Peregrina</em> mit Grundriss in Muschelform, Ruinas de Santo Domingo.</p>
     <div class="ibox"><strong>Tipp:</strong> Nach der Capela de Santa Marta (Ganderón) links in die <em>Senda fluvial do río Gafos</em> – schöner Flussweg statt Strasse.</div>
     <hr class="card-hr">
     <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Redondela+Spain/Pontevedra+Spain/@42.36,-8.62,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!1m5!1m1!1s0xd254e16a17ef631:0x6a00d3b37bcf700!2m2!1d-8.645!2d42.431!3e2" target="_blank">Google Maps</a></div>
-    <div class="tags"><span class="tag">Verea Vella Steinpfad</span><span class="tag">Santa Marta de Ribarteme 13. Jh.</span><span class="tag">Brücke Pontesampaio</span><span class="tag">La Peregrina (Muschelgrundriss)</span><span class="tag">Ruinas de Santo Domingo</span></div>
     <hr class="card-hr">
     <div class="day-cards">
       <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Parador+de+Pontevedra" target="_blank" style="color:#fff;text-decoration:none;">Parador de Pontevedra ↗</a></div><div class="dc-sub-note">✓ gebucht · Check-in ab 15 Uhr</div></div>
-      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Loaira+Xantar+Pontevedra" target="_blank" rel="noopener">Loaira Xantar (Michelin-Empfehlung)</a></div><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=La+Ultramar+Pontevedra" target="_blank" rel="noopener">La Ultramar (Michelin-Empfehlung)</a></div></div></div>
     </div>
   </div>
 
@@ -1099,14 +1131,13 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑~500m ↓~270m</text>
     </svg></div>
     <div class="ibox"><strong>Anstrengendster Tag:</strong> Proviant ab Combarro mitnehmen – in Armenteira gibt es keinen Laden.</div>
-    <p class="s-prose"><strong>Kloster Poio</strong> mit Kreuzgang und dem grössten Hórreo Galiciens. <strong>Combarro</strong> – Fischerdorf mit Hórreos direkt am Wasser und Steinkreuzen: Kaffee- und Mittagshalt. Danach der steilste Aufstieg der Reise durch Wald zum <strong>Kloster Armenteira</strong> (12. Jh.), Abendgebet der Zisterzienserinnen.</p>
+    <p class="s-lead">Hinaus ans Meer: Kloster Poio und die Hórreos von Combarro. Dann der steilste Aufstieg der Reise durch den Wald zum Kloster Armenteira.</p>
+    <p class="s-prose"><strong>Kloster Poio</strong> mit Kreuzgang und einem der längsten Hórreos Galiciens. <strong>Combarro</strong> – Fischerdorf mit Hórreos direkt am Wasser und Steinkreuzen: Kaffee- und Mittagshalt. Danach der steilste Aufstieg der Reise durch Wald zum <strong>Kloster Armenteira</strong> (12. Jh.), Abendgebet der Zisterzienserinnen.</p>
     <hr class="card-hr">
     <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Pontevedra+Spain/Mosteiro+de+Armenteira/data=!4m2!4m1!3e2" target="_blank">Google Maps</a></div>
-    <div class="tags"><span class="tag">Mosteiro de Poio</span><span class="tag">Combarro Hórreos</span><span class="tag">Monte Castrove</span><span class="tag">Mosteiro de Armenteira 12. Jh.</span><span class="tag">Blick auf die Ría de Pontevedra</span></div>
     <hr class="card-hr">
     <div class="day-cards">
       <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Armenteira" target="_blank" style="color:#fff;text-decoration:none;">Pousada Armenteira ↗</a></div><div class="dc-sub-note">✓ gebucht · 400 m vom Kloster · Frühstück inkl.</div></div>
-      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Bar+Comercio+Armenteira" target="_blank">Bar Comercio (Pilgermenü)</a></div></div></div>
     </div>
   </div>
 
@@ -1128,14 +1159,13 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <path d="M 46 46.2 L 104 52.3 L 163 61.3 L 221 70.4 L 279 76.4 L 338 79.5 L 396 80.2 L 455 81.0 L 513 79.5 L 571 81.0 L 630 82.5 L 688 83.2" fill="none" stroke="#5aabcf" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
       <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑~150m ↓~400m</text>
     </svg></div>
-    <p class="s-prose">Gleich beim Kloster beginnt die <strong>Ruta da Pedra e da Auga</strong>: kilometerlang abwärts entlang des Río Armenteira, vorbei an Wasserfällen und Dutzenden alten <em>Muíños</em> (Wassermühlen). Wohl die schönste Wanderstrecke des ganzen Camino Portugués. Danach durch Weinberge des Albariño-Gebiets bis an die Ría de Arousa.</p>
+    <p class="s-lead">Vom Kloster aus dem Bach entlang, vorbei an Wasserfällen und alten Mühlen. Danach durch Albariño-Weinberge bis an die Ría de Arousa.</p>
+    <p class="s-prose">Gleich beim Kloster beginnt die <strong>Ruta da Pedra e da Auga</strong>: kilometerlang abwärts entlang des Río Armenteira, vorbei an Wasserfällen und Dutzenden alten <em>Muíños</em> (Wassermühlen). Danach durch Weinberge des Albariño-Gebiets bis an die Ría de Arousa.</p>
     <hr class="card-hr">
     <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Mosteiro+de+Armenteira/Vilanova+de+Arousa/data=!4m2!4m1!3e2" target="_blank">Google Maps</a></div>
-    <div class="tags"><span class="tag">Ruta da Pedra e da Auga</span><span class="tag">Wassermühlen & Wasserfälle</span><span class="tag">Albariño-Weinberge</span><span class="tag">Ría de Arousa</span></div>
     <hr class="card-hr">
     <div class="day-cards">
       <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank" style="color:#fff;text-decoration:none;">Hotel Leal – La Sirena ↗</a></div><div class="dc-sub-note">✓ gebucht · Check-in 15–21 Uhr</div></div>
-      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank">Restaurant im Hotel Leal</a></div></div></div>
     </div>
   </div>
 
@@ -1146,15 +1176,14 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <div><div class="stitle">Translatio: Vilanova → Padrón</div><div class="ssub">Do 17. Jun · Bootsfahrt den Ulla hinauf</div></div>
       <div><span class="skm">~4 km</span><span class="sele">+ Boot</span></div>
     </div></div>
-    <div class="wbox">Boot ab Hafen Vilanova de Arousa nach Pontecesures, gut 1 Std. Abfahrtszeit hängt von den Gezeiten ab – Reservation bei <strong>AMare</strong> nötig. Danach ~2,5 km zu Fuss nach Padrón und ~1,5 km weiter zum Pazo Arretén.</div>
+    <div class="ibox">Nach dem Boot ca. 2,5 km zu Fuss nach Padrón und ca. 1,5 km weiter zum Pazo Arretén.</div>
+    <p class="s-lead">Mit dem Boot durch die Ría de Arousa und den Ulla hinauf – auf der Route, auf der der Legende nach Jakobus nach Galicien kam. Der Nachmittag gehört Padrón.</p>
     <p class="s-prose">Auf dieser Route soll der Leichnam des Apostels nach Galicien gebracht worden sein. Am Ufer der Ría de Arousa und des Ulla stehen <strong>17 Steinkreuze</strong> – der einzige maritime Kreuzweg der Welt. Nachmittag frei in <strong>Padrón</strong>: Iglesia de Santiago mit dem <em>Pedrón</em>, Treppe zum <strong>Santiaguiño do Monte</strong>, abends <em>Pimientos de Padrón – «uns pican, outros non»</em>.</p>
     <hr class="card-hr">
     <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Pontecesures/Pazo+Arretén+Padrón/data=!4m2!4m1!3e2" target="_blank">Pontecesures → Hotel</a></div>
-    <div class="tags"><span class="tag">Translatio</span><span class="tag">17 Steinkreuze</span><span class="tag">Iglesia de Santiago (Pedrón)</span><span class="tag">Santiaguiño do Monte</span><span class="tag">Pimientos de Padrón</span></div>
     <hr class="card-hr">
     <div class="day-cards">
       <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pazo+Arretén+Padrón" target="_blank" style="color:#fff;text-decoration:none;">Pazo Arretén ↗</a></div><div class="dc-sub-note">✓ gebucht · bei Iria Flavia · Frühstück inkl.</div></div>
-      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">Pulpería Rial</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">O Alpendre</a></div></div></div>
     </div>
   </div>
 
@@ -1176,15 +1205,13 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <path d="M 46 74 L 75 73 L 104 70 L 133 65 L 163 57 L 192 47 L 221 36 L 251 26 L 280 19 L 309 17 L 338 16 L 367 18 L 397 21 L 426 24 L 455 27 L 484 30 L 513 31 L 543 29 L 572 27 L 601 26 L 630 26 L 659 26 L 688 26" fill="none" stroke="#d4603a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
       <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑405m ↓150m</text>
     </svg></div>
-    <div class="ibox"><strong>Früh starten (ca. 8 Uhr)</strong> — längster Tag, Ankunft am Obradoiro am Nachmittag. Pilgermesse am Samstag 12 Uhr.</div>
-    <p class="s-prose"><strong>Colexiata de Iria Flavia</strong> gleich beim Hotel – Galiciens erste Kathedrale. <strong>Santuario da Escravitude</strong>, Waldwege und Weinlauben bei Teo. Über die <em>Ponte Vella</em> am Río Sar in die Stadt. <strong>Santiago:</strong> Pórtico de la Gloria (12. Jh.), <em>Praza do Obradoiro</em>. Compostela: Rúa das Carretas 33, 9–21 Uhr.</p>
+    <p class="s-lead">Der letzte Tag zu Fuss: Iria Flavia, A Escravitude und die Wälder von Teo. Über die Ponte Vella in die Stadt und auf die Praza do Obradoiro.</p>
+    <p class="s-prose"><strong>Colexiata de Iria Flavia</strong> gleich beim Hotel – Galiciens erste Kathedrale. <strong>Santuario da Escravitude</strong>, Waldwege und Weinlauben bei Teo. Über die <em>Ponte Vella</em> am Río Sar in die Stadt. <strong>Santiago:</strong> Pórtico de la Gloria (12. Jh.), <em>Praza do Obradoiro</em>.</p>
     <hr class="card-hr">
     <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Padr%C3%B3n+Spain/Santiago+de+Compostela+Spain/@42.80,-8.60,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2559d5e4e3e14d:0x200ef8143a2dc5!2m2!1d-8.657!2d42.738!1m5!1m1!1s0xd2ef47a96cfd2fd:0x100ef8143a29c1!2m2!1d-8.545!2d42.880!3e2" target="_blank">Google Maps</a></div>
-    <div class="tags"><span class="tag">Colexiata Iria Flavia</span><span class="tag">A Escravitude</span><span class="tag">Pórtico de la Gloria 12. Jh.</span><span class="tag">Praza do Obradoiro</span><span class="tag">Compostela-Urkunde</span><span class="tag">Botafumeiro 12 Uhr</span></div>
     <hr class="card-hr">
     <div class="day-cards">
       <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Pazo+de+Altamira+Santiago+de+Compostela" target="_blank" style="color:#fff;text-decoration:none;">Hotel Pazo de Altamira ↗</a></div><div class="dc-sub-note">✓ gebucht · Altstadt · Check-in ab 16 Uhr</div></div>
-      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Café+de+Altamira+Santiago+de+Compostela" target="_blank" rel="noopener">Café de Altamira (Bib Gourmand)</a></div><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Abastos+2.0+Santiago+de+Compostela" target="_blank" rel="noopener">Abastos 2.0 (Bib Gourmand)</a></div></div></div>
     </div>
   </div>
 
@@ -1196,11 +1223,9 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <div><span class="skm">—</span><span class="sele">Ruhetag</span></div>
     </div></div>
     <p class="s-prose" style="padding-top:.9rem;"><strong>Compostela</strong> im Pilgerbüro abholen (Rúa das Carretas 33). <strong>Pilgermesse 12 Uhr</strong> in der Kathedrale — früh da sein. <strong>Mercado de Abastos</strong> zum Mittag. Nachmittags Zug nach <strong>A Coruña</strong> (~35 Min.), Abend an der Marina und beim Torre de Hércules.</p>
-    <div class="tags"><span class="tag">Compostela</span><span class="tag">Pilgermesse 12 Uhr</span><span class="tag">Mercado de Abastos</span><span class="tag">Pulpo a feira</span><span class="tag">Tarta de Santiago</span><span class="tag">Torre de Hércules</span></div>
     <hr class="card-hr">
     <div class="day-cards">
       <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Meliá+Maria+Pita+A+Coruña" target="_blank" style="color:#fff;text-decoration:none;">Meliá Maria Pita ↗</a></div><div class="dc-sub-note">✓ gebucht · Frühstück inkl.</div></div>
-      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=El+de+Alberto+A+Coruña" target="_blank" rel="noopener">El de Alberto (Bib Gourmand)</a></div><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Artabria+A+Coruña" target="_blank" rel="noopener">Artabria (Bib Gourmand)</a></div></div></div>
     </div>
   </div>
 </section>
@@ -1212,37 +1237,66 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <p class="eyebrow">Reise organisieren</p>
   <h2>Alles, was ihr <em>unterwegs braucht</em></h2>
   <div class="plan-links">
-    <a href="#buchungen"><b>Unterkünfte &amp; Flüge</b><span>Alle Buchungen, Telefon, Notfall</span></a>
+    <a href="#buchungen"><b>Buchungen &amp; Kosten</b><span>Flüge, Unterkünfte, Notfall, offene Aufgaben</span></a>
     <a href="#anreise"><b>An- und Heimreise</b><span>Porto, Valença, Rückflug</span></a>
     <a href="#restaurants"><b>Restaurants</b><span>Pro Abend, mit Karte</span></a>
-    <a href="#infos"><b>Praktisches</b><span>Compostela, Kosten, Tipps, Links</span></a>
+    <a href="#infos"><b>Praktisches</b><span>Compostela, Vorbereitung, Wetter, Links</span></a>
   </div>
 </section>
 
 <!-- BUCHUNGEN -->
 <section id="buchungen" class="sec">
   <div class="chip"><div class="chip-dot"></div>Buchungen</div>
-  <h2>Alles <em>gebucht</em></h2>
+  <h2>Flüge &amp; Unterkünfte <em>bestätigt</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">✓</span><div class="sec-rule-line"></div></div>
   <p class="prose">Flüge und alle neun Unterkünfte. Buchungsnummern stehen bewusst nicht auf der öffentlichen Seite.</p>
-  <div class="bk-list" id="bk-list"></div>
   <h3 class="sub-h">Notfall</h3>
   <div class="bk-btns" style="margin-top:.5rem;">
     <a class="btn pri" href="tel:112"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> 112 – Notruf (Spanien &amp; Portugal)</a>
     <a class="btn" href="tel:+41800247365"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> EDA Helpline +41 800 24 7 365</a>
     <a class="btn" href="tel:+41584653333"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> EDA aus dem Ausland +41 58 465 33 33</a>
   </div>
-  <p class="prose" style="font-size:.8rem;margin-top:.5rem;">Hotelnummern stehen oben bei jeder Unterkunft. EU-Krankenversicherungskarte (EHIC) und Reiseversicherung mitnehmen.</p>
+  <p class="prose" style="font-size:.8rem;margin-top:.5rem;">Hotelnummern stehen unten bei jeder Unterkunft. EU-Krankenversicherungskarte (EHIC) und Reiseversicherung mitnehmen.</p>
+  <div class="bk-list" id="bk-list"></div>
+  
   <h3 class="sub-h">Noch offen</h3>
-  <ul class="open-list">
-    <li><b>Transfer Porto → Valença + Gepäcktransport</b> bestätigen · Januar 2027 (Offerte ~380 €)</li>
-    <li><b>Boot Translatio</b> Vilanova → Pontecesures reservieren · Zeit nach Gezeiten</li>
-    <li><b>Pilgerpass (Credencial)</b> besorgen – vor der Reise oder in Valença</li>
-    <li><b>Restaurants</b> für die Abende reservieren (4 Personen)</li>
-    <li><b>Fotoalbum</b> für die Gruppe anlegen und hier verlinken</li>
-    <li><b>Splitwise-Gruppe</b> «Camino 2027» anlegen und Einladungslink hier eintragen</li>
-    <li><b>Compostela</b> online vorregistrieren (jeder einzeln, kurz vor der Reise)</li>
-  </ul>
+  <div class="tasks">
+    <div class="tgroup"><div class="tg-h">Später erledigen</div><ul>
+      <li><b>Transfer Porto → Valença + Gepäcktransport</b> bestätigen<span class="due">Januar 2027 · Offerte ~380 €</span></li>
+      <li><b>Boot Translatio</b> reservieren<span class="due">Abfahrt nach Gezeiten</span></li>
+    </ul></div>
+    <div class="tgroup"><div class="tg-h">Vor der Abreise</div><ul>
+      <li><b>Credencial</b> besorgen<span class="due">oder in Valença</span></li>
+      <li><b>Compostela</b> online vorregistrieren und Bootsstrecke klären<span class="due">jeder einzeln</span></li>
+      <li><b>Restaurants</b> für die Abende reservieren<span class="due">4 Personen</span></li>
+    </ul></div>
+    <div class="tgroup"><div class="tg-h">Optional</div><ul>
+      <li><b>Splitwise-Gruppe</b> anlegen und Link hier eintragen</li>
+      <li><b>Fotoalbum</b> anlegen und hier verlinken</li>
+    </ul></div>
+  </div>
+<h3 class="sub-h" id="kosten">Kosten pro Person</h3>
+  <table class="ctbl">
+    <tr class="cg"><td colspan="3">Gebucht</td></tr>
+    <tr><td>Flüge ZRH → Porto · A Coruña → ZRH, inkl. Koffer &amp; Sitzplatz</td><td><span class="st ok">gebucht</span></td><td>CHF 444</td></tr>
+    <tr><td>Unterkünfte, 9 Nächte</td><td><span class="st ok">gebucht</span></td><td>~CHF 1'350</td></tr>
+    <tr class="cg"><td colspan="3">Noch offen</td></tr>
+    <tr><td>Transfer Porto → Valença + Gepäcktransport</td><td><span class="st">Offerte</span></td><td>~CHF 90</td></tr>
+    <tr><td>Boot Translatio Vilanova → Pontecesures</td><td><span class="st">offen</span></td><td>noch unbekannt</td></tr>
+    <tr class="cg"><td colspan="3">Geschätzt</td></tr>
+    <tr><td>Essen &amp; Trinken, 10 Tage</td><td><span class="st">Schätzung</span></td><td>CHF 260–370</td></tr>
+    <tr><td>Lokale Fahrten (Zug A Coruña, Taxi)</td><td><span class="st">Schätzung</span></td><td>CHF 30–50</td></tr>
+    <tr><td>Eintritte &amp; Diverses</td><td><span class="st">Schätzung</span></td><td>CHF 30–50</td></tr>
+    <tr class="tot"><td colspan="2"><strong>Total</strong> ohne Boot</td><td><strong>CHF 2'204–2'354</strong></td></tr>
+  </table>
+  <p class="fn">Total = Summe der Positionen oben (gebucht CHF 1'794 + Offerte CHF 90 + Schätzungen CHF 320–470).</p>
+  <div class="kasse">
+    <h3 class="sub-h">Gemeinsame Kasse</h3>
+    <p class="prose">Ausgaben unterwegs (Essen, Taxi, Boot, Eintritte) gleich nach dem Bezahlen in Splitwise eintragen, Währung EUR. Am Schluss zeigt Splitwise, wer wem wie viel schuldet – einmal ausgleichen, fertig.</p>
+    <a class="btn pri" id="splitwise-btn" href="https://www.splitwise.com/" target="_blank" rel="noopener">Splitwise öffnen ↗</a>
+    <div class="kasse-note" id="splitwise-note">Gruppenlink folgt.</div>
+  </div>
+
 </section>
 
 <hr class="rule">
@@ -1266,7 +1320,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="chip"><div class="chip-dot"></div>Gastronomie</div>
   <h2>Wo ihr <em>esst</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
-  <p class="prose">Abendessen ab ca. 20:30 – für vier reservieren. Michelin-Angaben Stand 2022/2024, vor der Reise prüfen.</p>
+  <p class="prose">Empfehlungen pro Abend – noch keine Reservation bestätigt. Abendessen ab ca. 20:30, für vier reservieren. Michelin-Angaben Stand 2022/2024.</p>
   <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">O Porriño</div><div class="rest-city-day">Tag 1</div></div><div class="ri"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">Restaurante Paso a Nivel</a></div><div class="ri"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">Cólleo Con Pinzas Cervecería</a></div><div class="ri"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">Restaurante Nómadas World Food</a></div></div>
   <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Redondela</div><div class="rest-city-day">Tag 2</div></div><div class="ri"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">A Coté Redondela</a></div><div class="ri"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">Taberna O' Tranquilo</a></div></div>
   <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Pontevedra</div><div class="rest-city-day">Tag 3</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Loaira+Xantar+Pontevedra" target="_blank" rel="noopener">Loaira Xantar (Michelin-Empfehlung)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=La+Ultramar+Pontevedra" target="_blank" rel="noopener">La Ultramar (Michelin-Empfehlung)</a></div></div>
@@ -1295,7 +1349,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="chip"><div class="chip-dot"></div>Pilgerstempel</div>
   <h2>Dein <em>Kredential</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
-  <p class="prose">Mindestens <strong>2 Stempel pro Tag</strong> sammeln für die Compostela-Urkunde. Die wichtigsten Stempelorte:</p>
+  <p class="prose">Auf den letzten 100 km mindestens <strong>2 Stempel pro Tag</strong> – am einfachsten jeden Tag sammeln.</p>
   <div class="stempel-list"><div class="stempel-item">
   <div class="stempel-circle"><span class="stempel-num">1</span></div>
   <div class="stempel-info"><div class="stempel-city">Valença</div><div class="stempel-where">Touristinfo / Albergue</div></div>
@@ -1341,7 +1395,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="stempel-info"><div class="stempel-city">Santiago de Compostela</div><div class="stempel-where">Kathedrale · Pilgerbüro</div></div>
   <div class="stempel-check"></div>
 </div></div>
-  <div class="wbox"><strong>Pilgerkredential</strong> kaufen ab dem ersten Albergue in Valença (~2 €). Sellos gibt es in Albergues, Kirchen, Bars und Touristinfos.</div>
+  <div class="wbox"><strong>Credencial</strong> vor der Reise besorgen oder in Valença kaufen. Stempel gibt es in Albergues, Kirchen, Bars und Unterkünften.</div>
 </section>
 
 <hr class="rule">
@@ -1352,14 +1406,15 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <h2>Compostela &amp; <em>Pilgermesse</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="cp-facts">
-    <div class="cp-fact"><div class="k">Bedingung</div><div class="v">≥ 100 km zu Fuss</div>ihr geht ~140 km ab Valença</div>
+    <div class="cp-fact"><div class="k">Bedingung</div><div class="v">≥ 100 km zu Fuss</div>die letzten 100 km vor Santiago</div>
     <div class="cp-fact"><div class="k">Stempel</div><div class="v">2 pro Tag</div>Pflicht auf den letzten 100 km – einfach jeden Tag sammeln</div>
     <div class="cp-fact"><div class="k">Kosten</div><div class="v">Compostela gratis</div>Distanz-Zertifikat 3 €</div>
   </div>
   <ol class="cp-steps">
     <li><b>Vorab online registrieren</b> – Pflicht, sonst kein Einlass ins Pilgerbüro. Geht jederzeit vorher, auch unterwegs auf dem Handy, auf <a href="https://oficinadelperegrino.com/en/" target="_blank" rel="noopener">oficinadelperegrino.com</a>. Jeder einzeln registrieren (Gruppenformular nicht nötig).</li>
     <li><b>Code aufbewahren</b> – nach der Registrierung kommt ein Code per Mail. In die Credencial schreiben oder als Screenshot speichern.</li>
-    <li><b>Credencial vollstempeln</b> – ab Valença täglich mindestens 2 Stempel (Bar, Kirche, Hotel). Auf dem Boot Translatio bzw. in Pontecesures einen Stempel holen.</li>
+    <li><b>Bootsstrecke klären</b> – Quellen sind sich uneinig, ob das Pilgerbüro die Variante Espiritual mit Boot voll anrechnet. Vor der Reise beim Pilgerbüro nachfragen. Auf dem Boot gibt es einen eigenen Stempel.</li>
+    <li><b>Credencial vollstempeln</b> – ab Valença täglich mindestens 2 Stempel (Bar, Kirche, Hotel).</li>
     <li><b>Pilgerbüro</b> Rúa das Carretas 33, 3 Gehminuten von der Kathedrale. Am Eingang gibt es eine Nummer mit QR-Code – damit lässt sich die Wartezeit am Handy verfolgen, ihr müsst nicht in der Schlange stehen.</li>
     <li><b>Wann?</b> Am besten Fr 18.06. gleich nach der Ankunft, sonst Sa 19.06. früh vor der Messe. Pass oder ID mitnehmen.</li>
   </ol>
@@ -1371,46 +1426,18 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 
 <hr class="rule">
 
-<!-- FITNESS -->
-<section id="fitness" class="sec fold">
-  <div class="chip"><div class="chip-dot"></div>Fitness</div>
-  <h2>Was der Körper <em>leistet</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
-  <p class="prose" style="font-size:.8rem;font-style:italic;">95 kg + 8 kg Rucksack · MET-Methode · ±15% individuelle Abweichung</p>
-  <table class="fitness-table">
-    <thead><tr><td>Etappe</td><td>km</td><td>↑ Hm</td><td>Zeit</td><td>kcal</td></tr></thead>
-    <tbody>
-      <tr><td>Tag 1 · Valença → O Porriño</td><td>19,5</td><td>150m</td><td>~4,8h</td><td class="kcal">~2'800</td></tr>
-      <tr><td>Tag 2 · O Porriño → Redondela</td><td>16</td><td>250m</td><td>~4h</td><td class="kcal">~2'450</td></tr>
-      <tr><td>Tag 3 · Redondela → Pontevedra</td><td>20</td><td>400m</td><td>~5,3h</td><td class="kcal">~3'200</td></tr>
-      <tr><td>Tag 4 · Pontevedra → Armenteira</td><td>20,5</td><td>~500m</td><td>~5,5h</td><td class="kcal">~3'350</td></tr>
-      <tr><td>Tag 5 · Armenteira → Vilanova</td><td>23,5</td><td>~150m</td><td>~5,5h</td><td class="kcal">~3'350</td></tr>
-      <tr><td>Tag 6 · Boot + Padrón</td><td>4</td><td>—</td><td>~1h</td><td class="kcal">~800</td></tr>
-      <tr><td>Tag 7 · Padrón → Santiago</td><td>24,5</td><td>405m</td><td>~6h</td><td class="kcal">~3'800</td></tr>
-      <tr class="total-row"><td><strong>Total</strong></td><td><strong>~140*</strong></td><td><strong>~1900m</strong></td><td>~32h</td><td class="kcal"><strong>~19'750</strong></td></tr>
-    </tbody>
-  </table>
-  <p class="fn">* ~140 km ist ein vorläufiger Planungswert.</p>
-  <div class="fstats"><div class="fstat"><span class="n">~19'750</span><div class="u">kcal total</div></div><div class="fstat"><span class="n">~2'820</span><div class="u">kcal/Tag</div></div><div class="fstat"><span class="n">~155</span><div class="u">kcal/km</div></div></div>
-  <div class="feq-item"><div class="feq-icon"></div><div class="feq-text"><strong>~59 Pizzen</strong> — sehr verdient</div></div>
-  <div class="feq-item"><div class="feq-icon"></div><div class="feq-text"><strong>~150 Bier</strong> (0.3L) — extrem verdient</div></div>
-  <div class="feq-item"><div class="feq-icon"></div><div class="feq-text"><strong>~2.6 kg Fett</strong> theoretisch abgebaut</div></div>
-</section>
-
-<hr class="rule">
-
 <!-- TIPPS -->
 <section id="tipps" class="sec fold">
   <div class="chip"><div class="chip-dot"></div>Vorbereitung</div>
-  <h2>Was ihr <em>wissen müsst</em></h2>
+  <h2>Vor<em>bereitung</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="tgrid">
     <div class="tc"><h3>Schuhe</h3><ul><li>Nie neue Schuhe starten</li><li>100 km einlaufen ab Herbst 2026</li><li>Trailrunner > Wanderstiefel</li><li>Merino-Socken, nie Baumwolle</li><li>Sandalen für Abende</li></ul></div>
-    <div class="tc"><h3>Gepäck</h3><ul><li>Max. 8–9 kg am Rücken</li><li>Koffer max. 15 kg für Gepäcktransport</li><li>3 Wanderoutfits reichen</li><li>Waschen überall ~5 €</li><li>Kopflampe mitnehmen</li></ul></div>
-    <div class="tc"><h3>Blasen</h3><ul><li>Leukotape, kein Pflaster</li><li>Problemstellen vorkleben</li><li>Blase stechen, flach lassen</li><li>Farmacia überall vorhanden</li></ul></div>
-    <div class="tc"><h3>Navigation</h3><ul><li>Buen Camino App (Offline!)</li><li>Maps.me als Backup</li><li>Pilgerkredential ab Valença</li><li>Sellos täglich sammeln</li><li>100 km = Compostela</li></ul></div>
-    <div class="tc"><h3>Unterwegs</h3><ul><li>Menú del Peregrino ~11 €</li><li>Albariño & Ribeiro trinken</li><li>Fuente-Wasser kostenlos</li><li>Alle 1,5h essen</li><li>Bocadillo morgens</li></ul></div>
-    <div class="tc"><h3>Gesundheit</h3><ul><li>Sonnencreme SPF50 täglich</li><li>Elektrolyte für heiße Tage</li><li>Ibuprofen + Paracetamol</li><li>Trekkingstöcke sehr empfohlen</li><li>EHIC-Karte mitnehmen</li></ul></div>
+    <div class="tc"><h3>Gepäck</h3><ul><li>Max. 8–9 kg am Rücken</li><li>Koffer max. 15 kg für Gepäcktransport</li><li>3 Wanderoutfits reichen</li><li>Waschmöglichkeit in vielen Unterkünften</li><li>Kopflampe mitnehmen</li></ul></div>
+    <div class="tc"><h3>Füsse</h3><ul><li>Druckstellen früh abkleben</li><li>Tape und Blasenpflaster dabei</li><li>Apotheken (Farmacia) in jedem Etappenort</li></ul></div>
+    <div class="tc"><h3>Navigation</h3><ul><li>Buen Camino App (Offline!)</li><li>Maps.me als Backup</li><li>Credencial: täglich 2 Stempel</li></ul></div>
+    <div class="tc"><h3>Unterwegs</h3><ul><li>Menú del Peregrino am Mittag</li><li>Albariño & Ribeiro probieren</li><li>Genug Wasser mitnehmen</li></ul></div>
+    <div class="tc"><h3>Gesundheit</h3><ul><li>Sonnencreme SPF50 täglich</li><li>Elektrolyte für heiße Tage</li><li>Persönliche Medikamente</li><li>Trekkingstöcke sehr empfohlen</li><li>EHIC-Karte mitnehmen</li></ul></div>
   </div>
 </section>
 
@@ -1422,37 +1449,11 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <h2>Mitte Juni in <em>Galicien</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="wrow">
-    <div class="wc"><div class="icon"></div><span class="val">20–25°C</span><div class="lbl">Temperatur</div></div>
-    <div class="wc"><div class="icon"></div><span class="val">~9 h</span><div class="lbl">Sonne/Tag</div></div>
-    <div class="wc"><div class="icon"></div><span class="val">selten</span><div class="lbl">Regen</div></div>
+    <div class="wc"><div class="icon"></div><span class="val">22° / 11°</span><div class="lbl">Ø Max / Min</div></div>
+    <div class="wc"><div class="icon"></div><span class="val">~7,5 h</span><div class="lbl">Sonne pro Tag</div></div>
+    <div class="wc"><div class="icon"></div><span class="val">7–8</span><div class="lbl">Regentage im Juni</div></div>
   </div>
-  <div class="wbox"><strong>Immer eine Regenjacke dabei</strong> — Galicien ist grün aus gutem Grund. Der Juni ist meist trocken, kurze Schauer sind aber möglich. Sonnenuntergang ~22 Uhr.</div>
-</section>
-
-<hr class="rule">
-
-<!-- BUDGET -->
-<section id="budget" class="sec fold">
-  <div class="chip"><div class="chip-dot"></div>Kosten</div>
-  <h2>Was die Reise <em>kostet</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
-  <table class="btbl">
-    <tr><td>Flüge ZRH → Porto · A Coruña → ZRH (inkl. Koffer &amp; Sitzplatz)</td><td>CHF 444</td></tr>
-    <tr><td>Unterkünfte 9 Nächte (gebucht)</td><td>~CHF 1'350</td></tr>
-    <tr><td>Transfer Porto → Valença + Gepäcktransport</td><td>~CHF 90</td></tr>
-    <tr><td>Boot Translatio Vilanova → Pontecesures</td><td>offen</td></tr>
-    <tr><td>Essen &amp; Trinken 10 Tage</td><td>CHF 260–370</td></tr>
-    <tr><td>Lokale Fahrten (Zug A Coruña, Taxi)</td><td>CHF 30–50</td></tr>
-    <tr><td>Eintritte &amp; Diverses</td><td>CHF 30–50</td></tr>
-    <tr class="tot"><td><strong>Total pro Person</strong></td><td><strong>~CHF 2'200–2'400</strong></td></tr>
-  </table>
-  <div class="wbox">Flüge und Hotels sind gebucht; Transfer, Gepäck und Boot werden im Frühling 2027 bestätigt.</div>
-  <div class="kasse">
-    <h3 class="sub-h">Gemeinsame Kasse</h3>
-    <p class="prose">Ausgaben unterwegs (Essen, Taxi, Boot, Eintritte) gleich nach dem Bezahlen in Splitwise eintragen, Währung EUR. Am Schluss zeigt Splitwise, wer wem wie viel schuldet – einmal ausgleichen, fertig.</p>
-    <a class="btn pri" id="splitwise-btn" href="https://www.splitwise.com/" target="_blank" rel="noopener">Splitwise öffnen ↗</a>
-    <div class="kasse-note" id="splitwise-note">Gruppenlink folgt.</div>
-  </div>
+  <div class="wbox"><strong>Regenjacke immer dabei.</strong> Juni-Mittel in Santiago 1981–2010: 72 mm Regen an rund 7–8 Tagen. Sonnenuntergang gegen 22 Uhr. <a href="https://www.aemet.es/es/serviciosclimaticos/datosclimatologicos/valoresclimatologicos?l=1428" target="_blank" rel="noopener">Quelle: AEMET</a></div>
 </section>
 
 <hr class="rule">
@@ -2626,7 +2627,7 @@ async function loadGPX(){
     try{const r=await fetch(GPX_FILES[n]);if(!r.ok)continue;const g=parseGPX(await r.text());if(g.pts.length<2)continue;GPX[n]=g;
       if(window.CMAP&&typeof L!=='undefined')L.polyline(g.pts.map(p=>[p[0],p[1]]),{color:'#216c53',weight:4,opacity:.95}).addTo(window.CMAP).bindPopup(`Etappe ${n} · ${g.km.toFixed(1).replace('.',',')} km (GPX)`);
       const s=STAGES[n-1];const svg=s&&s.querySelector('.elev-svg');const pr=profileSVG(g,'gpx'+n);
-      if(svg&&pr){svg.setAttribute('viewBox','0 0 700 110');svg.innerHTML=pr.svg;const lb=s.querySelector('.elev-lbl');if(lb)lb.textContent='Höhenprofil (GPX)';}
+      if(svg&&pr){svg.setAttribute('viewBox','0 0 700 110');svg.classList.add('gpx');svg.innerHTML=pr.svg;const lb=s.querySelector('.elev-lbl');if(lb)lb.textContent='Höhenprofil (GPX)';}
     }catch(e){}
   }
   if(Object.keys(GPX).length&&window.ROUTE_LINES)window.ROUTE_LINES.forEach(l=>l.setStyle({opacity:.3}));
@@ -2689,7 +2690,7 @@ STAGES.forEach((s,k)=>{
   const h=t=>{const d=document.createElement('div');d.className='st-h';d.textContent=t;return d;};
   const order=[];
   if(hero)order.push(hero);
-  order.push(...pick('.s-prose'),...pick('.ibox, .wbox'));
+  order.push(...pick('.s-lead'),...pick('.s-prose'));
   order.push(...pick('.pills'),...pick('.stage-wx'),...pick('.stage-plan'));
   const maps=pick('.map-row'),elev=pick('.elev-wrap');
   if(maps.length||elev.length)order.push(h('Route & Höhenprofil'),...maps,...elev);
@@ -2699,7 +2700,7 @@ STAGES.forEach((s,k)=>{
   const R=REST_LINKS['s'+(k+1)];
   if(R&&R.length){const rb=document.createElement('div');rb.className='rest-box';rb.innerHTML=R.map(r=>`<a href="${escH(r.href)}" target="_blank" rel="noopener">${escH(r.name)} ↗</a>`).join('');order.push(h('Essen am Abend'),rb);}
   const hotel=pick('.day-cards');if(hotel.length)order.push(h('Unterkunft'),...hotel);
-  const prac=[...pick('.boat-box'),...pick('.stage-share')];
+  const prac=[...pick('.ibox, .wbox'),...pick('.boat-box'),...pick('.stage-share')];
   if(prac.length)order.push(h('Praktisch'),...prac);
   const used=new Set(order);
   kids.forEach(c=>{if(c.tagName==='HR')c.remove();else if(!used.has(c)&&c!==imgBox)order.push(c);});
@@ -2717,6 +2718,15 @@ document.querySelectorAll('.ri a, .stitle, .kday-right h4').forEach(e=>{const t=
   const h=document.getElementById('heute'),nav=document.getElementById('nav');
   if(h&&nav){nav.after(h);}
 })();
+
+
+/* v14: lange Beschreibung in «Mehr zur Etappe», Höhenmeter nur im Kopf */
+STAGES.forEach(s=>{const body=s.querySelector('.stage-body');if(!body)return;
+  const pr=body.querySelector(':scope > .s-prose');if(pr){const d=document.createElement('details');d.className='more';d.innerHTML='<summary>Mehr zur Etappe</summary>';pr.before(d);d.appendChild(pr);}
+  body.querySelectorAll('.st-h').forEach(h=>{if(h.textContent==='Unterwegs sehenswert')h.textContent='Highlights';});
+});
+/* Reservationsstatus: <div class="ri" data-status="geplant|bestätigt"> setzen, sonst gilt «Empfehlung» (siehe Einleitung) */
+document.querySelectorAll('#restaurants .ri[data-status]').forEach(r=>r.insertAdjacentHTML('beforeend',`<span class="st${r.dataset.status==='bestätigt'?' ok':''}">Reservation ${r.dataset.status}</span>`));
 
 /* ===== OFFLINE ===== */
 if('serviceWorker' in navigator && location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}
