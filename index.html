@@ -849,6 +849,56 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 .gallery figcaption{font-size:.8rem!important;color:var(--ink);}
 .gallery figcaption .cr{display:block;margin-top:.1rem;}
 
+/* ===== v18 ===== */
+.journey{position:relative;padding-left:26px;}
+.thread{position:absolute;left:6px;top:8px;bottom:8px;width:2px;pointer-events:none;}
+.thread-track{position:absolute;inset:0;background:var(--border);border-radius:2px;}
+.thread-fill{position:absolute;inset:0;background:var(--forest);border-radius:2px;transform-origin:top;transform:scaleY(0);transition:transform .15s linear;}
+.j-item{position:relative;}
+.j-item::before{content:'';position:absolute;left:-25px;top:10px;width:10px;height:10px;border-radius:50%;background:var(--sand-pale);border:2px solid var(--border);transition:background .3s,border-color .3s;z-index:1;}
+.j-item.passed::before,.j-item.done::before{background:var(--forest);border-color:var(--forest);}
+.j-item.today::before{background:var(--sandstone);border-color:var(--sandstone);box-shadow:0 0 0 4px color-mix(in srgb,var(--sandstone) 30%,transparent);}
+.stage.merged{border:0!important;background:none!important;margin:0!important;box-shadow:none!important;outline:0!important;}
+.stage.merged .stage-head{display:none;}
+.stage.merged .stage-body{padding-top:0;}
+.stage.merged .stage-body > *{margin-left:0!important;margin-right:0!important;}
+.stage.merged .stage-body .s-lead,.stage.merged .stage-body .s-prose{padding-left:0!important;padding-right:0!important;}
+.stage.merged .stage-body .img-credit{margin-left:0;}
+.stage.merged .stage-body .gallery{padding-left:0;padding-right:0;}
+.j-item.open .j-card .j-img{display:none;}
+.j-item.open .j-card{grid-template-columns:1fr!important;margin-bottom:.4rem;}
+.j-item.open{padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.j-item.open .ph-fig .img-hero,.j-item.open .ph-fig .img-ph{border-radius:6px;}
+.j-card .j-more-ic{display:inline-block;margin-left:.4rem;color:var(--forest);transition:transform .25s;}
+.j-card{position:relative;}
+.j-item[data-stage] .j-title::after{content:'';display:inline-block;width:.45em;height:.45em;margin-left:.45em;border-right:1.5px solid var(--horizon);border-bottom:1.5px solid var(--horizon);transform:rotate(45deg) translateY(-.2em);transition:transform .25s;}
+.j-item.open .j-title::after{transform:rotate(-135deg) translateY(-.05em);}
+::view-transition-group(st-img){animation-duration:.45s;animation-timing-function:cubic-bezier(.2,.7,.2,1);}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.2s;}
+.j-item.open .j-line{display:none;}
+.stage.merged .plan-box,.stage.merged .stage-wx{margin-left:0!important;margin-right:0!important;}
+.ph-fig{position:relative;}
+.ph-fig .stamp-wrap{width:26%;}
+.stage.merged .stage-body > :not(.det):not(.morning):not(.boat-box):not(.ibox):not(.wbox):not(.stage-wx){padding-left:0!important;padding-right:0!important;}
+.rc-count,.rest-city-day{white-space:nowrap;}
+/* Stempel */
+.j-img{position:relative;}
+.stamp-wrap{position:absolute;right:6%;bottom:6%;width:34%;max-width:120px;color:#7a3f22;transform:rotate(var(--rot,-10deg));opacity:.92;pointer-events:none;border-radius:50%;background:rgba(247,245,239,.62);}
+.stamp-wrap .stamp{width:100%;height:auto;display:block;filter:drop-shadow(0 0 .5px rgba(122,63,34,.5));}
+.j-small .stamp-wrap{width:70%;right:4%;bottom:4%;}
+.just-stamped .stamp-wrap{animation:stampIn .55s cubic-bezier(.2,1.4,.4,1) both;}
+@keyframes stampIn{0%{transform:rotate(var(--rot)) scale(2.2);opacity:0}100%{transform:rotate(var(--rot)) scale(1);opacity:.9}}
+:root[data-theme="dark"] .stamp-wrap{color:#7a3f22;}
+
+/* Restaurants */
+.rest-city-hd{cursor:pointer;min-height:44px;align-items:center!important;}
+.rc-count{margin-left:auto;font-size:.82rem;color:var(--muted);}
+.rest-city-hd::after{content:'';width:.45em;height:.45em;margin-left:.6rem;border-right:1.5px solid var(--horizon);border-bottom:1.5px solid var(--horizon);transform:rotate(45deg);transition:transform .25s;flex:0 0 auto;}
+.rest-city.open .rest-city-hd::after{transform:rotate(-135deg);}
+.rest-city:not(.open) .rc-body{display:none;}
+.rest-city{margin-bottom:.4rem!important;}
+.pulse{animation:pulse 1.2s ease-in-out 3;}
+@keyframes pulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--forest) 25%,transparent);}}
 /* ===== v15 ===== */
 #map{isolation:isolate;position:relative;z-index:0;}
 .theme-btn{z-index:1200!important;}
@@ -969,7 +1019,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <nav id="nav" aria-label="Hauptnavigation">
   <a href="#heute">Heute</a>
   <a href="#reise">Reise</a>
-  <a href="#etappen">Etappen</a>
+  <a href="#karte">Karte</a>
   <a href="#planen">Planen</a>
   <a href="#infos">Infos</a>
 </nav>
@@ -2426,7 +2476,7 @@ function locate(){
   if(!navigator.geolocation){out.textContent='Standort wird von diesem Browser nicht unterstützt.';return;}
   out.textContent='Standort wird gesucht…';
   navigator.geolocation.getCurrentPosition(pos=>{
-    const {latitude:la,longitude:lo,accuracy:acc}=pos.coords;
+    const {latitude:la,longitude:lo,accuracy:acc}=pos.coords;if(window.tryStamp)window.tryStamp(la,lo);
     const km=distKm(la,lo,x.lat,x.lon);
     const dest=x.approx?encodeURIComponent(x.q):x.lat+','+x.lon;
     const nav=`https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=walking`;
@@ -2750,6 +2800,139 @@ STAGES.forEach(s=>{const body=s.querySelector('.stage-body');if(!body)return;
 });
 /* Reservationsstatus: <div class="ri" data-status="geplant|bestätigt"> setzen, sonst gilt «Empfehlung» (siehe Einleitung) */
 document.querySelectorAll('#restaurants .ri[data-status]').forEach(r=>r.insertAdjacentHTML('beforeend',`<span class="st${r.dataset.status==='bestätigt'?' ok':''}">Reservation ${r.dataset.status}</span>`));
+
+/* ===== v18: eine Etappenansicht, Faden, Übergang, Stempel, Kurzbefehle ===== */
+(function(){
+  const journey=document.getElementById('journey');if(!journey)return;
+  const reise=document.getElementById('reise'),etappen=document.getElementById('etappen');
+  /* Routenbalken in «Reise» übernehmen, alten Abschnitt auflösen */
+  const rb=document.getElementById('route-bar');if(rb)journey.before(rb);
+  /* Karten in Einträge mit darunterliegender Etappe umbauen */
+  [...journey.querySelectorAll('.j-card')].forEach(card=>{
+    const fresh=card.cloneNode(true);card.replaceWith(fresh);
+    const item=document.createElement('div');item.className='j-item';fresh.before(item);item.appendChild(fresh);
+    const t=fresh.dataset.go2||'';
+    if(t.startsWith('stage:')){const n=+t.slice(6),st=STAGES[n-1];
+      if(st){st.classList.add('merged');item.appendChild(st);item.dataset.stage=n;
+        if(st.classList.contains('today-stage'))item.classList.add('today');
+        fresh.setAttribute('aria-expanded',st.classList.contains('open'));
+        if(st.classList.contains('open'))item.classList.add('open');}}
+    else{fresh.addEventListener('click',()=>{});}
+  });
+  if(etappen){etappen.style.display='none';const hr=etappen.nextElementSibling;if(hr&&hr.tagName==='HR')hr.style.display='none';}
+  /* Öffnen / Schliessen mit Bild-Übergang */
+  const itemOf=n=>journey.querySelector(`.j-item[data-stage="${n}"]`);
+  function setOpen(n,open){
+    const it=itemOf(n),st=STAGES[n-1];if(!it||!st)return;
+    st.classList.toggle('open',open);it.classList.toggle('open',open);
+    const c=it.querySelector('.j-card');if(c)c.setAttribute('aria-expanded',open);
+    st.querySelector('.stage-head').setAttribute('aria-expanded',open);
+  }
+  function transition(n,open,scroll){
+    const it=itemOf(n);if(!it)return;
+    const cardImg=it.querySelector('.j-card .j-img img, .j-card .j-img .img-ph');
+    const doIt=()=>{setOpen(n,open);};
+    const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(document.startViewTransition&&!reduce&&cardImg){
+      const heroOf=()=>it.querySelector('.stage-body .ph-fig .img-hero, .stage-body .ph-fig .img-ph');
+      if(open){cardImg.style.viewTransitionName='st-img';}
+      else{const h=heroOf();if(h)h.style.viewTransitionName='st-img';}
+      const vt=document.startViewTransition(()=>{
+        if(open)cardImg.style.viewTransitionName='';else{const h=heroOf();if(h)h.style.viewTransitionName='';}
+        doIt();
+        if(open){const h=heroOf();if(h)h.style.viewTransitionName='st-img';}else cardImg.style.viewTransitionName='st-img';
+      });
+      vt.finished.finally(()=>{cardImg.style.viewTransitionName='';const h=heroOf();if(h)h.style.viewTransitionName='';});
+    }else doIt();
+    if(scroll&&open)setTimeout(()=>it.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}),reduce?0:260);
+  }
+  journey.addEventListener('click',e=>{
+    const card=e.target.closest('.j-card');if(!card)return;const it=card.parentElement;
+    if(it.dataset.stage){e.preventDefault();const n=+it.dataset.stage;transition(n,!it.classList.contains('open'),true);}
+  });
+  /* bestehende Aufrufe (Heute → «Zur Etappe») auf die neue Ansicht umlenken */
+  openStage=function(n,scroll){transition(n,true,scroll);};
+
+  /* ===== Der Weg als Faden ===== */
+  const thread=document.createElement('div');thread.className='thread';thread.setAttribute('aria-hidden','true');
+  thread.innerHTML='<div class="thread-track"></div><div class="thread-fill"></div>';journey.prepend(thread);
+  const fill=thread.querySelector('.thread-fill');let ticking=false;
+  function upd(){ticking=false;
+    const r=journey.getBoundingClientRect(),mid=innerHeight*0.55;
+    const p=Math.max(0,Math.min(1,(mid-r.top)/Math.max(1,r.height)));
+    fill.style.transform=`scaleY(${p})`;
+    journey.querySelectorAll(':scope > .j-item').forEach(it=>{const top=it.getBoundingClientRect().top+40;it.classList.toggle('passed',top<mid);});
+  }
+  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(upd);}},{passive:true});
+  addEventListener('resize',upd);upd();
+  /* Reisestand: erledigte Tage markieren */
+  journey.querySelectorAll(':scope > .j-item').forEach((it,i)=>{const d=DAYS[i]&&DAYS[i].d;if(!d)return;it.dataset.date=d;if(d<TODAY)it.classList.add('done');if(d===TODAY)it.classList.add('today');});
+})();
+
+/* ===== Digitaler Stempel ===== */
+const STAMP_KEY='camino_stamps_v1';
+const getStamps=()=>{try{return JSON.parse(localStorage.getItem(STAMP_KEY)||'{}');}catch(e){return {};}};
+const ROM=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+function stampSVG(x){
+  const d=dt(x.d),date=`${d.getDate()} · ${ROM[d.getMonth()]} · ${d.getFullYear()}`;
+  const place=escH(x.place.toUpperCase());
+  return `<svg class="stamp" viewBox="0 0 120 120" role="img" aria-label="Gestempelt: ${escH(x.place)}, ${fmt(x.d)}">
+    <circle cx="60" cy="60" r="55" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <circle cx="60" cy="60" r="47" fill="none" stroke="currentColor" stroke-width="1"/>
+    <path id="sa-${x.d}" d="M60 60 m-38 0 a38 38 0 1 1 76 0" fill="none"/>
+    <text font-size="10.5" letter-spacing="2.2" fill="currentColor" font-family="Fraunces,Georgia,serif"><textPath href="#sa-${x.d}" startOffset="50%" text-anchor="middle">CAMINO 2027</textPath></text>
+    <g transform="translate(60 62)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M-12 6 Q0 -16 12 6 M-6 6 Q0 -8 6 6 M0 6 L0 -10"/></g>
+    <text x="60" y="84" text-anchor="middle" font-size="${place.length>12?7.5:9}" letter-spacing="1" fill="currentColor" font-family="DM Sans,system-ui,sans-serif" font-weight="600">${place}</text>
+    <text x="60" y="96" text-anchor="middle" font-size="7.5" letter-spacing="1" fill="currentColor" font-family="DM Sans,system-ui,sans-serif">${date}</text>
+  </svg>`;
+}
+function renderStamps(){
+  const S=getStamps();
+  document.querySelectorAll('#journey .j-item').forEach(it=>{
+    const x=DAYS.find(y=>y.d===it.dataset.date);const has=x&&S[x.d];
+    let el=it.querySelector(':scope > .j-card .stamp-wrap');
+    const rot=x?(x.d.slice(-1)%2?-1:1)*(8+ +x.d.slice(-1)):0;
+    if(has&&!el){const img=it.querySelector('.j-card .j-img');if(img){img.insertAdjacentHTML('beforeend',`<div class="stamp-wrap" style="--rot:${rot}deg">${stampSVG(x)}</div>`);}}
+    const fig=it.querySelector('.stage-body .ph-fig');
+    if(has&&fig&&!fig.querySelector('.stamp-wrap'))fig.insertAdjacentHTML('beforeend',`<div class="stamp-wrap" style="--rot:${rot}deg">${stampSVG(Object.assign({},x,{d:x.d}))}</div>`.replace(/sa-/g,'sb-'));
+    if(!has){if(el)el.remove();const f2=fig&&fig.querySelector('.stamp-wrap');if(f2)f2.remove();}
+  });
+}
+function tryStamp(la,lo){
+  const x=DAYS.find(y=>y.d===TODAY&&y.hotel);if(!x)return false;
+  const km=distKm(la,lo,x.lat,x.lon);if(km>(x.approx?1.5:0.6))return false;
+  const S=getStamps();if(S[x.d])return false;
+  S[x.d]=new Date().toISOString();try{localStorage.setItem(STAMP_KEY,JSON.stringify(S));}catch(e){}
+  renderStamps();
+  const it=document.querySelector(`#journey .j-item[data-date="${x.d}"]`);if(it)it.classList.add('just-stamped');
+  return true;
+}
+window.tryStamp=tryStamp;
+renderStamps();
+/* Stempel still setzen, wenn der Standort bereits freigegeben ist (keine Nachfrage) */
+(function(){
+  if(!(TODAY>=DAYS[0].d&&TODAY<=DAYS[DAYS.length-1].d)||!navigator.permissions||!navigator.geolocation)return;
+  navigator.permissions.query({name:'geolocation'}).then(r=>{if(r.state==='granted')navigator.geolocation.getCurrentPosition(p=>tryStamp(p.coords.latitude,p.coords.longitude),()=>{},{maximumAge:300000,timeout:15000});}).catch(()=>{});
+})();
+
+/* ===== Restaurants zusammenklappen ===== */
+document.querySelectorAll('#restaurants .rest-city').forEach(c=>{
+  const hd=c.querySelector('.rest-city-hd');const items=[...c.querySelectorAll('.ri')];if(!hd||!items.length)return;
+  const body=document.createElement('div');body.className='rc-body';items.forEach(i=>body.appendChild(i));c.appendChild(body);
+  const n=document.createElement('span');n.className='rc-count';n.textContent=items.length===1?'1 Empfehlung':items.length+' Empfehlungen';hd.appendChild(n);
+  hd.setAttribute('role','button');hd.setAttribute('tabindex','0');hd.setAttribute('aria-expanded','false');
+  const tog=()=>{const o=!c.classList.contains('open');c.classList.toggle('open',o);hd.setAttribute('aria-expanded',o);};
+  hd.addEventListener('click',tog);hd.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog();}});
+});
+
+/* ===== App-Kurzbefehle (Startbildschirm-Symbol, Android) ===== */
+(function(){
+  const a=new URLSearchParams(location.search).get('aktion');if(!a)return;
+  history.replaceState(null,'',location.pathname+location.hash);
+  if(a==='standort'){document.getElementById('karte').scrollIntoView();locate();}
+  if(a==='anrufen'){const x=DAYS.find(y=>y.d===TODAY&&y.tel)||DAYS[CUR];if(x&&x.tel){document.getElementById('heute').scrollIntoView();
+    const b=document.querySelector('#today-card a[href^="tel:"]');if(b){b.classList.add('pulse');b.focus();}}}
+})();
 
 /* ===== OFFLINE ===== */
 if('serviceWorker' in navigator && location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}
