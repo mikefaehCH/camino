@@ -4,7 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Camino Portugués 2027</title>
-<meta name="description" content="Camino Portugués 2027 — Ante, Kevin, Mike & Luis. Porto · Valença · Variante Espiritual · Santiago · ~128 km · 11.–20. Juni.">
+<meta name="description" content="Unser Camino Portugués im Juni 2027: Porto, Valença, Variante Espiritual, Santiago und A Coruña – Reisejournal und Reisebegleiter für vier Freunde.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nach Santiago. Zu viert. – Camino Portugués 2027">
+<meta property="og:description" content="Sechs Etappen zu Fuss, eine übers Wasser: unser Camino Portugués im Juni 2027.">
+<meta property="og:image" content="https://mikefaehch.github.io/camino/images/start/og-image.jpg">
+<meta property="og:url" content="https://mikefaehch.github.io/camino/">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:title" content="Camino Portugués 2027 🐚">
 <meta property="og:description" content="Der Weg nach Santiago — Valença · Variante Espiritual · ~128 km · 11.–20. Juni 2027">
 <meta property="og:type" content="website">
@@ -13,16 +19,17 @@
 <link rel="preload" as="image" href="images/start/pilger-nebelwald-800.webp" imagesrcset="images/start/pilger-nebelwald-800.webp 800w, images/start/pilger-nebelwald-1600.webp 1600w, images/start/pilger-nebelwald-2000.webp 2000w" imagesizes="100vw">
 <link rel="preload" href="vendor/fonts/dm-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:'Manrope';font-style:normal;font-weight:500;font-display:swap;src:url(vendor/fonts/manrope-latin-500-normal.woff2) format('woff2');}
-@font-face{font-family:'Manrope';font-style:normal;font-weight:600 700;font-display:swap;src:url(vendor/fonts/manrope-latin-700-normal.woff2) format('woff2');}
-@font-face{font-family:'Manrope';font-style:normal;font-weight:800;font-display:swap;src:url(vendor/fonts/manrope-latin-800-normal.woff2) format('woff2');}
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:400;font-display:swap;src:url(vendor/fonts/fraunces-latin-400-normal.woff2) format('woff2');}
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:500;font-display:swap;src:url(vendor/fonts/fraunces-latin-500-normal.woff2) format('woff2');}
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:600 800;font-display:swap;src:url(vendor/fonts/fraunces-latin-600-normal.woff2) format('woff2');}
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:400 600;font-display:swap;src:url(vendor/fonts/fraunces-latin-400-italic.woff2) format('woff2');}
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:400;font-display:swap;src:url(vendor/fonts/dm-sans-latin-400-normal.woff2) format('woff2');}
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:swap;src:url(vendor/fonts/dm-sans-latin-500-normal.woff2) format('woff2');}
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:600 700;font-display:swap;src:url(vendor/fonts/dm-sans-latin-700-normal.woff2) format('woff2');}
 </style>
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#173c33">
+<meta name="theme-color" content="#344D41">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Camino 2027">
@@ -644,18 +651,178 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
   .pb-page{break-after:page;page-break-after:always;}
   .pb-page:last-child{break-after:auto;page-break-after:auto;}
   .pb-cover{text-align:center;padding-top:30mm;}
-  .pb-cover h1{font:800 24pt/1.1 'Manrope',sans-serif;margin:0 0 4mm;color:#173c33;}
+  .pb-cover h1{font:800 24pt/1.1 'Fraunces',Georgia,serif;margin:0 0 4mm;color:#173c33;}
   .pb-cover .pb-sub{font-size:11pt;color:#444;}
-  .pb-kicker{font:700 8pt 'Manrope',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#216c53;}
-  .pb-h{font:800 16pt/1.15 'Manrope',sans-serif;margin:1mm 0 2mm;color:#173c33;}
-  .pb-stats{font:700 10pt 'Manrope',sans-serif;color:#216c53;margin-bottom:3mm;}
+  .pb-kicker{font:700 8pt 'Fraunces',Georgia,serif;letter-spacing:.12em;text-transform:uppercase;color:#216c53;}
+  .pb-h{font:800 16pt/1.15 'Fraunces',Georgia,serif;margin:1mm 0 2mm;color:#173c33;}
+  .pb-stats{font:700 10pt 'Fraunces',Georgia,serif;color:#216c53;margin-bottom:3mm;}
   .pb-box{border:0.3mm solid #b9c9c0;border-radius:2mm;padding:2.5mm 3mm;margin:2.5mm 0;break-inside:avoid;}
-  .pb-box .l{font:700 7pt 'Manrope',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#50665d;}
+  .pb-box .l{font:700 7pt 'Fraunces',Georgia,serif;letter-spacing:.1em;text-transform:uppercase;color:#50665d;}
   .pb-page p{margin:0 0 2mm;}
   .pb-page ul{margin:0;padding-left:4.5mm;}
   .pb-foot{font-size:8pt;color:#666;margin-top:4mm;}
   .pb-tel{white-space:nowrap;}
 }
+
+/* ===== v12 DESIGN «CAMINO JOURNAL» ===== */
+:root{
+  --ivory:#F7F5EF;--stone:#ECE9E1;--charcoal:#252923;--forest:#344D41;--sage:#9CA99A;--sandstone:#C5A789;
+  --deep:#22332B;--ocean:#344D41;--wave:#344D41;--horizon:#5E7468;--foam:#ECE9E1;
+  --sand:#E3D2BD;--sand-lt:#ECE9E1;--sand-pale:#F7F5EF;--shell:#6B7166;--coral:#A9764F;--coral-lt:#C5A789;
+  --muted:#5F655B;--ink:#252923;--border:#E0DCD1;--border-s:#E0DCD1;
+  --card:#FCFBF7;--card2:#F2EFE7;--link:#344D41;--navbg:rgba(247,245,239,.94);--dnbg:#F3E6DA;--dntx:#7A4A2A;--spt:#5F655B;
+  --serif:'Fraunces',Georgia,serif;--head:'Fraunces',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;
+  --s1:.5rem;--s2:1rem;--s3:1.5rem;--s4:2.5rem;--s5:4rem;--measure:38rem;
+}
+:root[data-theme="dark"]{
+  --ivory:#141714;--stone:#1E231E;--charcoal:#E9E6DD;--forest:#A9C3B2;--sage:#7F8D7E;
+  --deep:#0E120F;--ocean:#A9C3B2;--wave:#A9C3B2;--horizon:#86A08F;--foam:#1E241F;
+  --sand:#E3D2BD;--sand-lt:#1E231E;--sand-pale:#141714;--shell:#A6ACA1;--coral:#D3A27C;
+  --muted:#A6ACA1;--ink:#E9E6DD;--border:#2C322C;--border-s:#2C322C;
+  --card:#1A1E1A;--card2:#202520;--link:#B9D2C1;--navbg:rgba(20,23,20,.93);--dnbg:#3A2A1F;--dntx:#E8B994;--spt:#C3C8BE;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ivory:#141714;--stone:#1E231E;--charcoal:#E9E6DD;--forest:#A9C3B2;--sage:#7F8D7E;
+  --deep:#0E120F;--ocean:#A9C3B2;--wave:#A9C3B2;--horizon:#86A08F;--foam:#1E241F;
+  --sand:#E3D2BD;--sand-lt:#1E231E;--sand-pale:#141714;--shell:#A6ACA1;--coral:#D3A27C;
+  --muted:#A6ACA1;--ink:#E9E6DD;--border:#2C322C;--border-s:#2C322C;
+  --card:#1A1E1A;--card2:#202520;--link:#B9D2C1;--navbg:rgba(20,23,20,.93);--dnbg:#3A2A1F;--dntx:#E8B994;--spt:#C3C8BE;
+}}
+body{background:var(--sand-pale);color:var(--ink);font-size:16px;}
+h2,.hero-h1,.tc-title,.stitle,.skm,.sstat .n,.fstat .n,.wc .val,.kday-dn,.rest-city-name,.bk-date b,.tp b,.cname,.fw,.snum,.hstat .n,.cd-num,.sub-h,.j-title,.facts dd,.story-quote,.plan-links b{font-family:var(--serif);letter-spacing:-.01em;}
+h2{font-weight:400;font-size:clamp(2rem,7vw,3rem);line-height:1.08;margin:0 0 var(--s2);color:var(--ink);}
+h2 em,.hero-h1 em{font-style:italic;font-weight:400;color:var(--forest);}
+.sec{padding:var(--s5) 1.25rem;max-width:760px;margin:0 auto;}
+.prose,.s-prose{max-width:var(--measure);line-height:1.7;}
+.prose.lead{font-size:1.05rem;color:var(--muted);}
+/* Deko reduzieren */
+.sec-rule,.chip-dot,.hero-horizon,.hero-light,.hero-pat,.hero-waves,.hero-beach{display:none!important;}
+.chip,.eyebrow{display:block;background:none!important;padding:0;margin:0 0 .6rem;border-radius:0;font:500 .82rem var(--sans);letter-spacing:.02em;text-transform:none;color:var(--horizon)!important;}
+hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760px;}
+/* kleine Labels lesbarer, weniger Versalien */
+.tc-lbl,.elev-lbl,.dc-lbl,.det-h,.cd-u,.cd-label,.bk-date span,.kday-dd,.rest-city-day,.hstat .u,.cp-fact .k,.pb-kicker{text-transform:none!important;letter-spacing:.01em!important;font-size:.78rem!important;}
+.sp,.tag,.det-w,.ssub,.sele,.bk-meta,.gallery figcaption,.img-credit,.plan-sub,.map-note{font-size:.78rem!important;}
+.tc-info,.bk-name,.ri a,.det li,.morning li{font-size:.92rem;}
+/* HERO */
+#hero{min-height:92svh;padding:0 1.25rem;}
+.hero-content{max-width:760px;margin:0 auto;width:100%;padding-bottom:var(--s5);}
+.hero-eyebrow{display:block;background:none!important;border:0!important;backdrop-filter:none!important;padding:0;margin:0 0 1.25rem;font:500 .85rem var(--sans);letter-spacing:.02em;text-transform:none;color:rgba(255,255,255,.85);}
+#hero .hero-h1{font-family:var(--serif);font-weight:400;letter-spacing:-.02em;line-height:1;font-size:clamp(3rem,13vw,5.6rem);margin:0 0 1.25rem;color:#fff;}
+#hero .hero-h1 em{color:#E3D2BD;}
+.hero-sub{font-size:1.05rem!important;line-height:1.55;color:rgba(255,255,255,.9)!important;max-width:30rem;margin:0 0 2rem!important;letter-spacing:0!important;}
+.hero-scroll{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;color:#fff;text-decoration:none;font-weight:500;font-size:.92rem;border-bottom:1px solid rgba(255,255,255,.45);}
+.hero-scroll span{display:inline-block;animation:nudge 2.4s ease-in-out infinite;}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+@media(min-width:760px){#hero .hero-h1{font-size:clamp(3.4rem,7.5vw,5.6rem);} .hero-content{max-width:760px;}}
+/* COUNTDOWN schlank */
+#countdown{background:var(--sand-pale);border-bottom:1px solid var(--border);padding:.9rem 1.25rem;}
+.cd-label{color:var(--muted)!important;}
+.cd-num{color:var(--forest)!important;font-weight:500;}
+.cd-u{color:var(--muted)!important;}
+.cd-sep{color:var(--border)!important;}
+/* NAV */
+#nav{background:var(--navbg);border-color:var(--border);}
+#nav a{font-weight:500;font-size:.9rem;color:var(--muted);text-transform:none;letter-spacing:0;}
+#nav a.on{color:var(--forest);}
+/* STORY / INTRO */
+.story{padding-top:var(--s5);}
+.story-quote{font-style:italic;font-weight:400;font-size:clamp(1.45rem,5.2vw,2.1rem);line-height:1.3;color:var(--forest);max-width:34rem;margin:0 0 var(--s4);}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem 1.5rem;margin:var(--s4) 0 0;padding-top:var(--s3);border-top:1px solid var(--border);}
+@media(min-width:620px){.facts{grid-template-columns:repeat(4,1fr);}}
+.facts dt{font-size:.82rem;color:var(--muted);margin-bottom:.2rem;}
+.facts dd{margin:0;font-size:1.65rem;font-weight:400;color:var(--ink);}
+/* REISE – Bildkarten */
+.journey{display:grid;gap:var(--s4);margin-top:var(--s4);}
+.j-card{display:grid;gap:.9rem;cursor:pointer;text-decoration:none;color:inherit;border:0;background:none;padding:0;text-align:left;font:inherit;width:100%;}
+.j-img{position:relative;border-radius:6px;overflow:hidden;background:var(--stone);aspect-ratio:3/2;}
+.j-img img,.j-img .img-ph{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:auto;border-radius:0;transition:transform .6s ease;}
+.j-card:hover .j-img img{transform:scale(1.025);}
+.j-meta{font-size:.85rem;color:var(--muted);}
+.j-title{font-size:clamp(1.5rem,5.5vw,2rem);line-height:1.15;font-weight:400;color:var(--ink);margin:.15rem 0 .35rem;}
+.j-line{color:var(--ink);opacity:.85;max-width:34rem;line-height:1.6;margin:0 0 .55rem;}
+.j-facts{font-size:.9rem;color:var(--forest);font-weight:500;}
+.j-more{display:inline-flex;align-items:center;min-height:44px;font-weight:500;color:var(--forest);font-size:.92rem;}
+.j-small{display:grid;grid-template-columns:96px 1fr;gap:1rem;align-items:center;}
+.j-small .j-img{aspect-ratio:1/1;}
+.j-small .j-title{font-size:1.3rem;}
+@media(min-width:900px){
+  .sec#reise{max-width:1080px;}
+  .j-card:not(.j-small){grid-template-columns:1.25fr 1fr;gap:2.5rem;align-items:center;}
+  .j-card:not(.j-small):nth-child(even) .j-img{order:2;}
+  .j-small{grid-template-columns:140px 1fr;max-width:760px;}
+}
+/* KARTE */
+.map-card{border-radius:6px;box-shadow:none;border:1px solid var(--border);}
+/* HEUTE */
+.today-card{border-radius:8px;box-shadow:none;background:var(--card);}
+.tc-head{background:var(--forest);}
+:root[data-theme="dark"] .tc-head{background:#22332B;}
+.tc-title{font-weight:400;}
+.tp{border-radius:6px;}
+.tp.on{background:var(--forest);border-color:var(--forest);color:#fff;}
+.tp.on b{color:#fff;}
+/* ETAPPEN-DETAIL */
+.stage{border-radius:8px;box-shadow:none;background:var(--card);margin-bottom:.75rem;}
+.stage-head{background:var(--card)!important;border-bottom:1px solid transparent;}
+.stage.open .stage-head{border-bottom-color:var(--border);}
+.stage-head::before{display:none;}
+.snum{background:none!important;border:1px solid var(--border)!important;color:var(--forest)!important;border-radius:50%;font-weight:400;}
+.stitle{color:var(--ink)!important;font-family:var(--serif);font-size:1.12rem!important;font-weight:400;}
+.ssub,.sele{color:var(--muted)!important;}
+.skm{color:var(--forest)!important;font-weight:400;}
+.chev{background:var(--card2)!important;color:var(--muted)!important;}
+.stage.today-stage{outline:2px solid var(--sandstone);}
+.stage-body{padding-bottom:.5rem;}
+.stage-body .ph-fig{margin:0;}
+.stage-body .s-prose{padding:1.1rem 1.25rem .4rem;font-size:1rem;}
+.stage-body .ibox,.stage-body .wbox{margin:.4rem 1.25rem;}
+.st-h{font:500 .82rem var(--sans);color:var(--horizon);margin:1.2rem 1.25rem .5rem;}
+.pills{padding:.5rem 1.25rem .4rem;}
+.sp{background:var(--card2)!important;color:var(--ink)!important;}
+.sp.dn{background:var(--dnbg)!important;color:var(--dntx)!important;}
+.mbtn.k,.mbtn.g{background:var(--card)!important;color:var(--forest)!important;border:1px solid var(--border)!important;}
+.tag{background:var(--card2);color:var(--ink);}
+.day-cards{padding:.6rem 1.25rem 1rem;}
+.dc-ocean{background:var(--forest)!important;}
+.dc-sand{background:var(--card2)!important;}
+.stage-body .gal-title{margin:1rem 1.25rem .2rem;}
+.rest-box{margin:.4rem 1.25rem .6rem;}
+.rest-box a{display:flex;align-items:center;min-height:44px;border-bottom:1px solid var(--border);color:var(--forest);text-decoration:none;font-weight:500;}
+.rest-box a:last-child{border-bottom:0;}
+.det,.morning,.plan-box,.stage-wx{border-radius:6px;}
+.stage-wx{background:var(--card2);color:var(--ink);}
+/* PLANEN */
+.planen{padding-bottom:var(--s3);}
+.plan-links{display:grid;gap:0;margin-top:var(--s3);border-top:1px solid var(--border);}
+@media(min-width:620px){.plan-links{grid-template-columns:1fr 1fr;column-gap:2rem;}}
+.plan-links a{display:block;padding:1rem 0;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;}
+.plan-links b{display:block;font-weight:400;font-size:1.3rem;color:var(--ink);}
+.plan-links span{font-size:.88rem;color:var(--muted);}
+.plan-links a:hover b{color:var(--forest);}
+/* Karten & Listen ruhiger */
+.bk,.lcard,.tc,.stat-strip,.btbl,.kalender,.cp-steps li,.cp-fact,.det,.boat-box{box-shadow:none!important;border-radius:6px;}
+.bk-date b{font-weight:400;}
+.ri a{font-size:.95rem;}
+.rest-city-name{font-weight:400;font-size:1.4rem;}
+.btn{border-radius:6px;}
+.btn.pri{background:var(--forest);border-color:var(--forest);color:#fff;}
+:root[data-theme="dark"] .btn.pri{color:#141714;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.pri{color:#141714;}}
+.fold-head h2{font-size:clamp(1.5rem,5vw,2rem);margin:0;}
+.wbox{border-left-color:var(--sandstone);background:var(--card2);}
+/* CREW + FOOTER */
+#crew{background:var(--deep);}
+.cav{font-family:var(--serif);}
+#foot .fw{font-family:var(--serif);font-style:italic;font-weight:400;color:#E3D2BD;}
+.tc-head,:root[data-theme="dark"] .tc-head{background:#344D41!important;}
+.dc-ocean{background:#344D41!important;}
+.tp.on,.tp.on b{color:#fff!important;}
+.tp.on{background:#344D41!important;border-color:#344D41!important;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tc-head{background:#2A3D33!important;} :root:not([data-theme="light"]) .dc-ocean{background:#2A3D33!important;}}
+:root[data-theme="dark"] .tc-head,:root[data-theme="dark"] .dc-ocean{background:#2A3D33!important;}
+.stitle{font-size:1.02rem!important;line-height:1.25;}
+/* Bewegung reduzieren */
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
 </style>
 </head>
 <body>
@@ -673,19 +840,10 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
   </svg>
   <div class="hero-beach"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow"><div class="eyebrow-dot"></div>Camino Portugués · 2027</div>
-    <h1 class="hero-h1">Nach Santiago,<br><em>zu viert.</em></h1>
-    <div class="hero-horizon"><div class="hl"></div><span style="font-size:.85rem;opacity:.5;">🐚</span><div class="hl r"></div></div>
-    <p class="hero-sub">Porto · Valença · Variante Espiritual · Santiago · 11.–20. Juni</p>
-    <div class="hero-stats">
-      <div class="hstat"><span class="n">~128</span><span class="u">km</span></div>
-      <div class="hstat"><span class="n">6+1</span><span class="u">Wandertage + Boot</span></div>
-      <div class="hstat"><span class="n">Jun</span><span class="u">2027</span></div>
-    </div>
-    <div class="hero-pills">
-      <span class="pill">Ante</span><span class="pill">Kevin</span><span class="pill">Mike</span><span class="pill">Luis</span>
-      <span class="pill q">Simon?</span>
-    </div>
+    <div class="hero-eyebrow">Camino Portugués · Juni 2027 · Valença → Santiago de Compostela</div>
+    <h1 class="hero-h1">Nach Santiago.<br><em>Zu viert.</em></h1>
+    <p class="hero-sub">Sechs Etappen zu Fuss, eine übers Wasser. Ein gemeinsamer Weg – und unzählige Geschichten dazwischen.</p>
+    <a class="hero-scroll" href="#intro">Die Reise entdecken <span aria-hidden="true">↓</span></a>
   </div>
 </section>
 <div class="beach-trans"></div>
@@ -705,59 +863,36 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
 </div>
 
 <!-- NAV -->
-<nav id="nav">
+<nav id="nav" aria-label="Hauptnavigation">
   <a href="#heute">Heute</a>
-  <a href="#kalender">Route</a>
-  <a href="#buchungen">Buchungen</a>
-  <a href="#restaurants">Essen</a>
+  <a href="#reise">Reise</a>
+  <a href="#etappen">Etappen</a>
+  <a href="#planen">Planen</a>
   <a href="#infos">Infos</a>
 </nav>
 
-<!-- HEUTE -->
-<section id="heute" class="sec">
-  <div class="chip"><div class="chip-dot"></div><span id="heute-chip">Heute</span></div>
-  <h2 id="heute-h2">Euer <em>Tag</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">☀️</span><div class="sec-rule-line"></div></div>
-  <div class="today-picker" id="today-picker" role="tablist" aria-label="Tag wählen"></div>
-  <div class="today-card" id="today-card"></div>
-  <div class="wbox">📲 <strong>Tipp:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen – dann funktioniert sie auch ohne Netz.</div>
-</section>
-
-<hr class="rule">
-
 <!-- INTRO -->
-<section id="intro" class="sec">
-  <div class="chip"><div class="chip-dot"></div>Der Plan</div>
-  <h2>Warum der <em>Camino Portugués</em>?</h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">⚓</span><div class="sec-rule-line"></div></div>
-  <p class="prose">Der Camino Portugués ist der zweitbeliebteste Jakobsweg der Welt. Er führt durch das tiefgrüne Galicien, über mittelalterliche Steinbrücken, durch autofreie Altstädte und entlang der <strong>Rías Baixas</strong> — dem Atlantik so nah, dass man das Salz riecht.</p>
-  <p class="prose">Euer Abschnitt ab Valença qualifiziert für die <strong>Compostela-Urkunde</strong>. Ab Pontevedra nehmen wir die <strong>Variante Espiritual</strong>: Combarro, Kloster Armenteira, die Ruta da Pedra e da Auga und die Bootsfahrt <em>Translatio</em> den Ulla hinauf. Mitte Juni: Sonnenuntergang gegen 22 Uhr, 20–25°C.</p>
-  <div class="stat-strip">
-    <div class="sstat"><span class="n">~128</span><div class="l">km gesamt</div></div>
-    <div class="sstat"><span class="n">6+1</span><div class="l">Wandertage + Boot</div></div>
-    <div class="sstat"><span class="n">↑~1900m</span><div class="l">Höhenmeter</div></div>
-  </div>
+<section id="intro" class="sec story">
+  <p class="story-quote">«Manchmal geht es beim Reisen nicht darum, möglichst viel zu sehen. Sondern darum, gemeinsam unterwegs zu sein.»</p>
+  <h2>Warum der <em>Camino Portugués</em></h2>
+  <p class="prose">Der Camino Portugués ist der zweitbeliebteste Jakobsweg der Welt. Er führt durch das tiefgrüne Galicien, über mittelalterliche Steinbrücken, durch autofreie Altstädte und entlang der <strong>Rías Baixas</strong> – dem Atlantik so nah, dass man das Salz riecht.</p>
+  <p class="prose">Euer Abschnitt ab Valença qualifiziert für die <strong>Compostela-Urkunde</strong>. Ab Pontevedra nehmen wir die <strong>Variante Espiritual</strong>: Combarro, Kloster Armenteira, die Ruta da Pedra e da Auga und die Bootsfahrt <em>Translatio</em> den Ulla hinauf. Mitte Juni: Sonnenuntergang gegen 22 Uhr, 20–25 °C.</p>
+  <dl class="facts">
+    <div><dt>Distanz</dt><dd>~128 km</dd></div>
+    <div><dt>Etappen</dt><dd>6 + Boot</dd></div>
+    <div><dt>Aufstieg</dt><dd>~1900 m</dd></div>
+    <div><dt>Reisezeit</dt><dd>11.–20. Juni</dd></div>
+  </dl>
 </section>
 
 <hr class="rule">
 
-<!-- KALENDER -->
-<section id="kalender" class="sec">
-  <div class="chip"><div class="chip-dot"></div>Übersicht</div>
-  <h2>10 Tage auf <em>einen Blick</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">〜</span><div class="sec-rule-line"></div></div>
-  <div class="kalender">
-    <div class="kday"><div class="kday-left"><span class="kday-dn">Fr</span><span class="kday-dd">11. Jun</span></div><div class="kday-right"><h4><span class="kdot t"></span>✈️ Anreise Porto</h4><p>Chair CS176 · ZRH 15:35 → OPO 17:15 · Axis Porto Club Aliados</p></div></div>
-    <div class="kday"><div class="kday-left"><span class="kday-dn">Sa</span><span class="kday-dd">12. Jun</span></div><div class="kday-right"><h4><span class="kdot w"></span>Tag 1 · Valença → O Porriño</h4><p>Transfer/Zug nach Valença · ~19,5 km · Grenzübertritt 🇵🇹→🇪🇸</p></div></div>
-    <div class="kday"><div class="kday-left"><span class="kday-dn">So</span><span class="kday-dd">13. Jun</span></div><div class="kday-right"><h4><span class="kdot w"></span>Tag 2 · O Porriño → Redondela</h4><p>~16 km · Erster Blick auf die Ría de Vigo</p></div></div>
-    <div class="kday"><div class="kday-left"><span class="kday-dn">Mo</span><span class="kday-dd">14. Jun</span></div><div class="kday-right"><h4><span class="kdot w"></span>Tag 3 · Redondela → Pontevedra</h4><p>~20 km · Ponte Sampaio · Flussweg am Gafos</p></div></div>
-    <div class="kday"><div class="kday-left"><span class="kday-dn">Di</span><span class="kday-dd">15. Jun</span></div><div class="kday-right"><h4><span class="kdot w"></span>Tag 4 · Pontevedra → Armenteira</h4><p>~20,5 km · Variante Espiritual · Combarro · Kloster</p></div></div>
-    <div class="kday"><div class="kday-left"><span class="kday-dn">Mi</span><span class="kday-dd">16. Jun</span></div><div class="kday-right"><h4><span class="kdot w"></span>Tag 5 · Armenteira → Vilanova de Arousa</h4><p>~23,5 km · Ruta da Pedra e da Auga · Wasserfälle</p></div></div>
-    <div class="kday"><div class="kday-left"><span class="kday-dn">Do</span><span class="kday-dd">17. Jun</span></div><div class="kday-right"><h4><span class="kdot r"></span>Tag 6 · 🚤 Translatio nach Padrón</h4><p>Boot Vilanova → Pontecesures · ~4 km zu Fuss · halber Ruhetag</p></div></div>
-    <div class="kday"><div class="kday-left"><span class="kday-dn">Fr</span><span class="kday-dd">18. Jun</span></div><div class="kday-right"><h4><span class="kdot f"></span>Tag 7 · Padrón → Santiago 🎉</h4><p>~24,5 km · früh starten · Ankunft Obradoiro</p></div></div>
-    <div class="kday"><div class="kday-left"><span class="kday-dn">Sa</span><span class="kday-dd">19. Jun</span></div><div class="kday-right"><h4><span class="kdot d"></span>Santiago → A Coruña</h4><p>Compostela · Pilgermesse 12 Uhr · Zug nach A Coruña</p></div></div>
-    <div class="kday"><div class="kday-left"><span class="kday-dn">So</span><span class="kday-dd">20. Jun</span></div><div class="kday-right"><h4><span class="kdot t"></span>✈️ Heimreise</h4><p>Air Europa · LCG 12:35 → MAD → ZRH 17:30</p></div></div>
-  </div>
+<!-- REISE -->
+<section id="reise" class="sec">
+  <p class="eyebrow">Die Reise</p>
+  <h2>Zehn Tage, <em>ein Weg</em></h2>
+  <p class="prose lead">Von Porto über die Grenze nach Galicien, ans Meer, übers Wasser und zu Fuss bis nach Santiago. Antippen für alle Details der Etappe.</p>
+  <div class="journey" id="journey"></div>
 </section>
 
 <hr class="rule">
@@ -776,10 +911,22 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
 
 <hr class="rule">
 
+<!-- HEUTE -->
+<section id="heute" class="sec">
+  <div class="chip"><div class="chip-dot"></div><span id="heute-chip">Heute</span></div>
+  <h2 id="heute-h2">Euer <em>Tag</em></h2>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">☀️</span><div class="sec-rule-line"></div></div>
+  <div class="today-picker" id="today-picker" role="tablist" aria-label="Tag wählen"></div>
+  <div class="today-card" id="today-card"></div>
+  <div class="wbox">📲 <strong>Tipp:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen – dann funktioniert sie auch ohne Netz.</div>
+</section>
+
+<hr class="rule">
+
 <!-- ETAPPEN -->
 <section id="etappen" class="sec">
   <div class="chip"><div class="chip-dot"></div>Die Route</div>
-  <h2>Acht Tage <em>Galicien</em></h2>
+  <h2>Etappen <em>im Detail</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">〜</span><div class="sec-rule-line"></div></div>
   <p class="prose">Jede Etappe mit Höhenprofil, Wetter, gebuchter Unterkunft und Links. Antippen zum Aufklappen.</p>
   <div class="route-bar" id="route-bar"></div>
@@ -999,6 +1146,18 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
 </section>
 
 <hr class="rule">
+
+<!-- PLANEN -->
+<section id="planen" class="sec planen">
+  <p class="eyebrow">Reise organisieren</p>
+  <h2>Alles, was ihr <em>unterwegs braucht</em></h2>
+  <div class="plan-links">
+    <a href="#buchungen"><b>Unterkünfte &amp; Flüge</b><span>Alle Buchungen, Telefon, Notfall</span></a>
+    <a href="#anreise"><b>An- und Heimreise</b><span>Porto, Valença, Rückflug</span></a>
+    <a href="#restaurants"><b>Restaurants</b><span>Pro Abend, mit Karte</span></a>
+    <a href="#infos"><b>Praktisches</b><span>Compostela, Kosten, Tipps, Links</span></a>
+  </div>
+</section>
 
 <!-- BUCHUNGEN -->
 <section id="buchungen" class="sec">
@@ -1602,14 +1761,14 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
    "title": "Armenteira → Vilanova",
    "hero": {
     "id": "06",
-    "motif": "Ruta da Pedra e da Auga",
-    "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
-    "src": "images/05-armenteira-vilanova/ruta-pedra-auga-800.webp",
-    "srcset": "images/05-armenteira-vilanova/ruta-pedra-auga-800.webp 800w, images/05-armenteira-vilanova/ruta-pedra-auga-1600.webp 960w",
-    "alt": "Kleiner Wasserfall zwischen Farnen auf der Ruta da Pedra e da Auga",
-    "credit": "Foto: Wikimedia Commons",
-    "creditUrl": "https://commons.wikimedia.org/wiki/File:Ruta_Da_Pedra_E_Da_Auga_(34194882).jpeg",
-    "pos": "center 40%"
+    "motif": "Boote am Strand, Ría de Arousa",
+    "status": "UNSPLASH_VERIFIED",
+    "src": "images/05-armenteira-vilanova/arousa-boote-strand-800.webp",
+    "srcset": "images/05-armenteira-vilanova/arousa-boote-strand-800.webp 800w, images/05-armenteira-vilanova/arousa-boote-strand-1600.webp 1600w",
+    "alt": "Rote Fischerboote am Strand der Illa de Arousa",
+    "credit": "Foto: Antoni Estapé / Unsplash",
+    "creditUrl": "https://unsplash.com/photos/nNQ48gqv6ts",
+    "pos": "center 60%"
    },
    "gallery": [
     {
@@ -1629,14 +1788,15 @@ nav a.on::before{content:'';position:absolute;top:8px;left:50%;width:5px;height:
      "src": null
     },
     {
-     "id": "05",
-     "motif": "Boote am Strand, Ría de Arousa",
-     "status": "UNSPLASH_VERIFIED",
-     "src": "images/05-armenteira-vilanova/arousa-boote-strand-800.webp",
-     "srcset": "images/05-armenteira-vilanova/arousa-boote-strand-800.webp 800w, images/05-armenteira-vilanova/arousa-boote-strand-1600.webp 1600w",
-     "alt": "Rote Fischerboote am Strand der Illa de Arousa",
-     "credit": "Foto: Antoni Estapé / Unsplash",
-     "creditUrl": "https://unsplash.com/photos/nNQ48gqv6ts"
+     "id": "07",
+     "motif": "Ruta da Pedra e da Auga",
+     "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+     "src": "images/05-armenteira-vilanova/ruta-pedra-auga-800.webp",
+     "srcset": "images/05-armenteira-vilanova/ruta-pedra-auga-800.webp 800w, images/05-armenteira-vilanova/ruta-pedra-auga-1600.webp 960w",
+     "alt": "Kleiner Wasserfall zwischen Farnen auf der Ruta da Pedra e da Auga",
+     "credit": "Foto: Wikimedia Commons",
+     "creditUrl": "https://commons.wikimedia.org/wiki/File:Ruta_Da_Pedra_E_Da_Auga_(34194882).jpeg",
+     "pos": "center 40%"
     }
    ]
   },
@@ -1886,8 +2046,8 @@ const DAYS=[
  {d:'2027-06-14',hl:['Austern in Arcade','Ponte Sampaio','Flussweg am Gafos'],cafe:'Cesantes · Mittag in Arcade',stage:3,title:'Redondela → Pontevedra',km:20,up:400,info:'Arcade (Austern!), Ponte Sampaio, Pflasterweg Canicouva, Flussweg am Gafos.',hotel:'Parador de Pontevedra',q:'Parador de Pontevedra',tel:'+34986855800',ci:'ab 15:00',co:'bis 12:00',bf:false,place:'Pontevedra',lat:42.43402,lon:-8.64590},
  {d:'2027-06-15',hl:['Kloster Poio','Combarro','Kloster Armenteira'],cafe:'Combarro (Proviant kaufen!)',stage:4,title:'Pontevedra → Armenteira',km:20.5,up:500,info:'Variante Espiritual: Kloster Poio, Combarro, steiler Aufstieg zum Kloster Armenteira. Proviant ab Combarro.',hotel:'Pousada Armenteira',q:'Pousada Armenteira',tel:'+34986716372',ci:'15:00–23:00',co:'bis 12:00',bf:true,place:'Armenteira',lat:42.4651,lon:-8.74066},
  {d:'2027-06-16',hl:['Ruta da Pedra e da Auga','Wassermühlen','Albariño-Weinberge'],cafe:'Bar Comercio Armenteira (ab 08:00)',approx:true,stage:5,title:'Armenteira → Vilanova de Arousa',km:23.5,up:150,info:'Ruta da Pedra e da Auga: Wasserfälle und Mühlen, dann Weinberge bis an die Ría de Arousa.',hotel:'Hotel Leal – La Sirena',q:'Hotel Leal La Sirena Vilanova de Arousa',tel:'+34986554112',ci:'15:00–21:00',co:'bis 12:00',bf:false,place:'Vilanova de Arousa',lat:42.5640,lon:-8.8270},
- {d:'2027-06-17',hl:['Translatio-Boot','17 Steinkreuze','Santiaguiño do Monte'],cafe:'Hafen Vilanova vor der Abfahrt',stage:6,boat:true,title:'🚤 Translatio nach Padrón',km:4,up:0,info:'Boot ab Hafen Vilanova nach Pontecesures (Zeit nach Gezeiten), dann zu Fuss nach Padrón und zum Hotel.',hotel:'Pazo Arretén',q:'Pazo Arretén Padrón',tel:'+34647726395',ci:'15:00–23:00',co:'bis 12:00',bf:true,place:'Padrón',lat:42.7457,lon:-8.6468},
- {d:'2027-06-18',hl:['Iria Flavia','A Escravitude','Praza do Obradoiro'],cafe:'A Escravitude',stage:7,fin:true,title:'Padrón → Santiago 🎉',km:24.5,up:405,info:'Iria Flavia, A Escravitude, Wälder von Teo, Ponte Vella – Ankunft auf der Praza do Obradoiro.',hotel:'Hotel Pazo de Altamira',q:'Hotel Pazo de Altamira Santiago de Compostela',tel:'+34981558542',ci:'16:00–23:30',co:'bis 12:00',bf:false,place:'Santiago',lat:42.880569,lon:-8.541572},
+ {d:'2027-06-17',hl:['Translatio-Boot','17 Steinkreuze','Santiaguiño do Monte'],cafe:'Hafen Vilanova vor der Abfahrt',stage:6,boat:true,title:'Translatio nach Padrón',km:4,up:0,info:'Boot ab Hafen Vilanova nach Pontecesures (Zeit nach Gezeiten), dann zu Fuss nach Padrón und zum Hotel.',hotel:'Pazo Arretén',q:'Pazo Arretén Padrón',tel:'+34647726395',ci:'15:00–23:00',co:'bis 12:00',bf:true,place:'Padrón',lat:42.7457,lon:-8.6468},
+ {d:'2027-06-18',hl:['Iria Flavia','A Escravitude','Praza do Obradoiro'],cafe:'A Escravitude',stage:7,fin:true,title:'Padrón → Santiago',km:24.5,up:405,info:'Iria Flavia, A Escravitude, Wälder von Teo, Ponte Vella – Ankunft auf der Praza do Obradoiro.',hotel:'Hotel Pazo de Altamira',q:'Hotel Pazo de Altamira Santiago de Compostela',tel:'+34981558542',ci:'16:00–23:30',co:'bis 12:00',bf:false,place:'Santiago',lat:42.880569,lon:-8.541572},
  {d:'2027-06-19',hl:['Compostela abholen','Pilgermesse 12 Uhr','Mercado de Abastos'],cafe:'Mercado de Abastos',approx:true,stage:8,kind:'rest',title:'Santiago → A Coruña',info:'Compostela abholen, Pilgermesse 12 Uhr, Mercado de Abastos. Nachmittags Zug nach A Coruña (~35 Min.).',hotel:'Meliá Maria Pita',q:'Meliá Maria Pita A Coruña',tel:'+34981205000',ci:'15:00–23:30',co:'bis 12:00',bf:true,place:'A Coruña',lat:43.3712,lon:-8.3960},
  {d:'2027-06-20',hl:['Frühstück im Meliá','Abflug 12:35'],cafe:'Frühstück im Hotel',kind:'travel',title:'A Coruña → Zürich',info:'Air Europa UX7234 LCG 12:35 → MAD 13:45 · UX1671 MAD 15:10 → ZRH 17:30. Koffer durchgecheckt.',place:'A Coruña',lat:43.3712,lon:-8.3960}
 ];
@@ -2043,6 +2203,8 @@ loadWX().then(()=>{STAGES.forEach((s,i)=>{const sd=SDAYS[i];const w=s.querySelec
 
 /* ===== v6: Bilder aus IMAGE_MAP ===== */
 const IMAGE_MAP=(()=>{try{return JSON.parse(document.getElementById('image-map').textContent);}catch(e){return {chapters:{},dayChapters:{}};}})();
+/* Bilder mit ungeklärter Lizenz nicht anzeigen, bis Urheber und Lizenz eingetragen sind */
+Object.values(IMAGE_MAP.chapters||{}).forEach(c=>[c.hero,...(c.gallery||[])].forEach(g=>{if(g&&g.status==='WIKIMEDIA_ATTRIBUTION_PENDING'&&g.src){g._src=g.src;g._srcset=g.srcset;delete g.src;delete g.srcset;}}));
 const escH=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function imgHTML(slot,cls,ctxTitle,eager){
   if(slot&&slot.src){
@@ -2059,7 +2221,7 @@ function heroBlock(ch,eager){
 }
 function galleryBlock(ch,title){
   const c=IMAGE_MAP.chapters[ch];if(!c||!c.gallery.length)return '';
-  const real=c.gallery.filter(g=>g.src);const list=real.length?real:c.gallery;
+  const real=c.gallery.filter(g=>g.src);if(!real.length)return '';const list=real;
   return (title?`<div class="gal-title">${escH(title)}</div>`:'')+`<div class="gallery">${list.map(g=>`<figure>${imgHTML(g,'img-g','',false)}${g.src?`<figcaption>${escH(g.motif||'')}${g.credit?` · ${creditHTML(g)}`:''}</figcaption>`:''}</figure>`).join('')}</div>`;
 }
 /* Etappen: Hero + Galerie */
@@ -2419,6 +2581,87 @@ function alongRoute(stage,la,lo){
   g.pts.forEach((p,i)=>{const d=distKm(la,lo,p[0],p[1]);if(d<bd){bd=d;bi=i;}});
   return {off:bd,left:g.km-g.cum[bi],done:g.cum[bi]};
 }
+
+/* ===== v12: Camino Journal ===== */
+/* Reise-Bildkarten */
+const JLINES={
+ '2027-06-11':'Ankunft in Porto, Abend in der Ribeira.',
+ '2027-06-12':'Über die alte Grenzbrücke von Portugal nach Spanien – die ersten Schritte in Galicien.',
+ '2027-06-13':'Auf der Römerstrasse hinauf nach Mos, dann der erste Blick auf die Ría de Vigo.',
+ '2027-06-14':'Austern in Arcade, die Steinbrücke von Ponte Sampaio und ein Flussweg bis in die Altstadt.',
+ '2027-06-15':'Hinaus ans Meer zu den Hórreos von Combarro, dann durch den Wald hinauf zum Kloster.',
+ '2027-06-16':'Dem Bach entlang an alten Mühlen vorbei, bis sich die Ría de Arousa öffnet.',
+ '2027-06-17':'Übers Wasser wie Jakobus selbst: mit dem Boot den Ulla hinauf nach Padrón.',
+ '2027-06-18':'Der letzte Tag zu Fuss: durch die Wälder von Teo bis auf die Praza do Obradoiro.',
+ '2027-06-19':'Compostela und Pilgermesse, dann weiter ans Meer nach A Coruña.',
+ '2027-06-20':'Heimflug über Madrid nach Zürich.'
+};
+(function(){
+  const box=document.getElementById('journey');if(!box)return;
+  box.innerHTML=DAYS.map((x,i)=>{
+    const ch=((IMAGE_MAP.dayChapters||{})[x.d]||[])[0];const c=ch&&IMAGE_MAP.chapters[ch];
+    const hero=c&&c.hero&&c.hero.src?c.hero:null;
+    const img=hero?`<img src="${escH(hero.src)}" ${hero.srcset?`srcset="${escH(hero.srcset)}" sizes="(min-width:900px) 560px, 100vw"`:''} alt="${escH(hero.alt||x.title)}" loading="lazy" decoding="async" width="1600" height="1067"${hero.pos?` style="object-position:${escH(hero.pos)}"`:''}>`:`<div class="img-ph" aria-hidden="true"></div>`;
+    const walk=x.stage&&x.stage<8;
+    const meta=walk?`Tag ${x.stage} · ${fmt(x.d)}`:fmt(x.d);
+    const facts=x.boat?`Boot · ~${String(x.km).replace('.',',')} km zu Fuss`:(x.km?`${String(x.km).replace('.',',')} km · ↑ ${x.up} m`:'');
+    const target=x.stage?`stage:${x.stage}`:'anreise';
+    return `<a class="j-card${walk?'':' j-small'}" href="#${x.stage?'etappen':'anreise'}" data-go2="${target}">
+      <div class="j-img">${img}</div>
+      <div class="j-text"><div class="j-meta">${meta}</div><div class="j-title">${escH(x.title)}</div>
+      ${walk?`<p class="j-line">${escH(JLINES[x.d]||x.info)}</p>`:`<p class="j-line">${escH(JLINES[x.d]||'')}</p>`}
+      ${facts?`<div class="j-facts">${facts}</div>`:''}${walk?'<span class="j-more">Zur Etappe →</span>':''}</div></a>`;
+  }).join('');
+  box.querySelectorAll('[data-go2]').forEach(a=>a.addEventListener('click',e=>{
+    const t=a.dataset.go2;if(t.startsWith('stage:')){e.preventDefault();openStage(+t.slice(6),true);}
+  }));
+})();
+
+/* Etappen-Detail: klare Reihenfolge */
+const REST_LINKS={};
+document.querySelectorAll('#restaurants .rest-city').forEach(c=>{
+  const lbl=(c.querySelector('.rest-city-day')||{}).textContent||'';const m=lbl.match(/Tag (\d)/);
+  const key=m?'s'+m[1]:(/19\.06/.test(lbl)?'s8':null);if(!key)return;
+  REST_LINKS[key]=[...c.querySelectorAll('.ri a')].map(a=>({href:a.href,name:a.textContent.replace(/^🍽️\s*/,'').trim()}));
+});
+STAGES.forEach((s,k)=>{
+  const body=s.querySelector('.stage-body');if(!body)return;
+  const kids=[...body.children];
+  const imgBox=kids.find(c=>c.querySelector&&c.querySelector(':scope > .ph-fig, :scope > .gallery'));
+  const pick=sel=>kids.filter(c=>c.matches&&c.matches(sel));
+  const hero=imgBox?imgBox.querySelector(':scope > .ph-fig'):null;
+  const galParts=imgBox?[...imgBox.children].filter(c=>c!==hero):[];
+  const h=t=>{const d=document.createElement('div');d.className='st-h';d.textContent=t;return d;};
+  const order=[];
+  if(hero)order.push(hero);
+  order.push(...pick('.s-prose'),...pick('.ibox, .wbox'));
+  order.push(...pick('.pills'),...pick('.stage-wx'),...pick('.stage-plan'));
+  const maps=pick('.map-row'),elev=pick('.elev-wrap');
+  if(maps.length||elev.length)order.push(h('Route & Höhenprofil'),...maps,...elev);
+  const hl=[...pick('.det:not(.boat-box)'),...pick('.tags')];
+  if(hl.length)order.push(h('Unterwegs sehenswert'),...hl);
+  if(galParts.length)order.push(...galParts);
+  const R=REST_LINKS['s'+(k+1)];
+  if(R&&R.length){const rb=document.createElement('div');rb.className='rest-box';rb.innerHTML=R.map(r=>`<a href="${escH(r.href)}" target="_blank" rel="noopener">${escH(r.name)} ↗</a>`).join('');order.push(h('Essen am Abend'),rb);}
+  const hotel=pick('.day-cards');if(hotel.length)order.push(h('Unterkunft'),...hotel);
+  const prac=[...pick('.boat-box'),...pick('.stage-share')];
+  if(prac.length)order.push(h('Praktisch'),...prac);
+  const used=new Set(order);
+  kids.forEach(c=>{if(c.tagName==='HR')c.remove();else if(!used.has(c)&&c!==imgBox)order.push(c);});
+  if(imgBox&&!galParts.length)imgBox.remove();
+  order.forEach(c=>body.appendChild(c));
+  if(imgBox&&imgBox.parentNode&&!imgBox.children.length)imgBox.remove();
+});
+
+/* Deko-Emojis vor Listeneinträgen und Titeln entfernen */
+document.querySelectorAll('.ri a, .stitle, .kday-right h4').forEach(e=>{const t=e.firstChild;if(t&&t.nodeType===3)t.textContent=t.textContent.replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u,'').replace(/\s*[\p{Extended_Pictographic}\uFE0F]+\s*$/u,'');});
+/* Unterwegs: «Heute» nach oben holen */
+(function(){
+  const inTrip=TODAY>=DAYS[0].d&&TODAY<=DAYS[DAYS.length-1].d;
+  if(!(inTrip||window.EVENING_NEXT!=null))return;
+  const h=document.getElementById('heute'),nav=document.getElementById('nav');
+  if(h&&nav){nav.after(h);}
+})();
 
 /* ===== OFFLINE ===== */
 if('serviceWorker' in navigator && location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}
