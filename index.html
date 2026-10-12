@@ -12,7 +12,7 @@
 <meta property="og:url" content="https://mikefaehch.github.io/camino/">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:title" content="Camino Portugués 2027 🐚">
-<meta property="og:description" content="Der Weg nach Santiago — Valença · Variante Espiritual · ~128 km · 11.–20. Juni 2027">
+<meta property="og:description" content="Der Weg nach Santiago — Valença · Variante Espiritual · ~140 km · 11.–20. Juni 2027">
 <meta property="og:type" content="website">
 <meta property="og:image" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGIyNTQwIi8+PHBhdGggZD0iTTUwIDE1IFE2NSAyNSA3MiA0MCBRNzggNTUgNzAgNjggUTYyIDgwIDUwIDg1IFEzOCA4MCAzMCA2OCBRMjIgNTUgMjggNDAgUTM1IDI1IDUwIDE1WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThkNWE4IiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNNTAgMTUgTDUwIDg1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zMCA2OCBRNDAgNjAgNTAgNTUgUTYwIDYwIDcwIDY4IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0yOCA0MCBRMzggNDggNTAgNTAgUTYyIDQ4IDcyIDQwIiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zNSAyNSBRNDIgMzggNTAgNDIgUTU4IDM4IDY1IDI1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNSIvPjwvc3ZnPg==">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGIyNTQwIi8+PHBhdGggZD0iTTUwIDE1IFE2NSAyNSA3MiA0MCBRNzggNTUgNzAgNjggUTYyIDgwIDUwIDg1IFEzOCA4MCAzMCA2OCBRMjIgNTUgMjggNDAgUTM1IDI1IDUwIDE1WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThkNWE4IiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNNTAgMTUgTDUwIDg1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zMCA2OCBRNDAgNjAgNTAgNTUgUTYwIDYwIDcwIDY4IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0yOCA0MCBRMzggNDggNTAgNTAgUTYyIDQ4IDcyIDQwIiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zNSAyNSBRNDIgMzggNTAgNDIgUTU4IDM4IDY1IDI1IiBzdHJva2U9IiNlOGQ1YTgiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNSIvPjwvc3ZnPg==">
@@ -823,9 +823,73 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 .stitle{font-size:1.02rem!important;line-height:1.25;}
 /* Bewegung reduzieren */
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
+
+/* ===== v13 Reduktion ===== */
+.ic{width:18px;height:18px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;}
+.btn .ic,.theme-btn .ic{width:18px;height:18px;}
+.theme-btn{display:flex;align-items:center;justify-content:center;color:var(--forest);}
+.dc-icon,.lcard-icon,.feq-icon,.wc .icon,.tc-hl{display:none!important;}
+.tags,.sp.up,.sp.dn,.sp.t{display:none!important;}
+.dc-sand{display:none!important;}
+.day-cards{grid-template-columns:1fr!important;}
+.ccards-4{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-top:1.75rem;}
+@media(min-width:620px){.ccards-4{grid-template-columns:repeat(4,1fr);}}
+.facts{grid-template-columns:repeat(3,1fr)!important;}
+.facts dd{font-size:clamp(1.25rem,5vw,1.65rem);}
+.fn{font-size:.8rem;color:var(--muted);margin:.5rem 0 1rem;}
+.morning li{display:list-item;margin-left:1rem;}
+.facts dd{white-space:nowrap;font-size:clamp(1.1rem,4.6vw,1.65rem)!important;}
+.crole{display:none!important;}
+.stage-body .det:not(.boat-box)>.det-h{display:none;}
+/* Bildquellen als Fussnote */
+.img-credit,.gallery figcaption .cr,.img-credit a,.gallery figcaption .cr a{font-size:10.5px!important;line-height:1.4;color:var(--muted)!important;opacity:.75;text-decoration:none!important;letter-spacing:.01em;}
+.img-credit{display:block;margin:.3rem 1.25rem 0;background:none!important;padding:0!important;}
+#anreise .img-credit{margin-left:0;}
+.img-credit a:hover,.gallery figcaption .cr a:hover,.img-credit a:focus-visible,.gallery figcaption .cr a:focus-visible{text-decoration:underline!important;opacity:1;}
+.gallery figcaption{font-size:.8rem!important;color:var(--ink);}
+.gallery figcaption .cr{display:block;margin-top:.1rem;}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-phone" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></symbol><symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+  <circle cx="12" cy="10" r="3" /></symbol><symbol id="i-share-2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3" />
+  <circle cx="6" cy="12" r="3" />
+  <circle cx="18" cy="19" r="3" />
+  <line x1="8.59" x2="15.42" y1="13.51" y2="17.49" />
+  <line x1="15.41" x2="8.59" y1="6.51" y2="10.49" /></symbol><symbol id="i-locate-fixed" viewBox="0 0 24 24"><line x1="2" x2="5" y1="12" y2="12" />
+  <line x1="19" x2="22" y1="12" y2="12" />
+  <line x1="12" x2="12" y1="2" y2="5" />
+  <line x1="12" x2="12" y1="19" y2="22" />
+  <circle cx="12" cy="12" r="7" />
+  <circle cx="12" cy="12" r="3" /></symbol><symbol id="i-navigation" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11" /></symbol><symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+  <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
+  <rect x="6" y="14" width="12" height="8" rx="1" /></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" /></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></symbol><symbol id="i-cloud-sun" viewBox="0 0 24 24"><path d="M12 2v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="M20 12h2" />
+  <path d="m19.07 4.93-1.41 1.41" />
+  <path d="M15.947 12.65a4 4 0 0 0-5.925-4.128" />
+  <path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z" /></symbol><symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /></symbol><symbol id="i-cloud-fog" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+  <path d="M16 17H7" />
+  <path d="M17 21H9" /></symbol><symbol id="i-cloud-drizzle" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+  <path d="M8 19v1" />
+  <path d="M8 14v1" />
+  <path d="M16 19v1" />
+  <path d="M16 14v1" />
+  <path d="M12 21v1" />
+  <path d="M12 16v1" /></symbol><symbol id="i-cloud-rain" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+  <path d="M16 14v6" />
+  <path d="M8 14v6" />
+  <path d="M12 16v6" /></symbol><symbol id="i-cloud-lightning" viewBox="0 0 24 24"><path d="M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973" />
+  <path d="m13 12-3 5h4l-3 5" /></symbol><symbol id="i-thermometer" viewBox="0 0 24 24"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" /></symbol></svg>
+
 
 <!-- HERO -->
 <section id="hero">
@@ -875,11 +939,9 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="intro" class="sec story">
   <p class="story-quote">«Manchmal geht es beim Reisen nicht darum, möglichst viel zu sehen. Sondern darum, gemeinsam unterwegs zu sein.»</p>
   <h2>Warum der <em>Camino Portugués</em></h2>
-  <p class="prose">Der Camino Portugués ist der zweitbeliebteste Jakobsweg der Welt. Er führt durch das tiefgrüne Galicien, über mittelalterliche Steinbrücken, durch autofreie Altstädte und entlang der <strong>Rías Baixas</strong> – dem Atlantik so nah, dass man das Salz riecht.</p>
-  <p class="prose">Euer Abschnitt ab Valença qualifiziert für die <strong>Compostela-Urkunde</strong>. Ab Pontevedra nehmen wir die <strong>Variante Espiritual</strong>: Combarro, Kloster Armenteira, die Ruta da Pedra e da Auga und die Bootsfahrt <em>Translatio</em> den Ulla hinauf. Mitte Juni: Sonnenuntergang gegen 22 Uhr, 20–25 °C.</p>
+  <p class="prose">Der zweitbeliebteste Jakobsweg der Welt: durch das grüne Galicien, über alte Steinbrücken und entlang der Rías Baixas. Ab Pontevedra nehmen wir die <strong>Variante Espiritual</strong> mit Combarro, dem Kloster Armenteira und der Bootsfahrt <em>Translatio</em> den Ulla hinauf. Ab Valença zählt der Weg für die <strong>Compostela</strong>.</p>
   <dl class="facts">
-    <div><dt>Distanz</dt><dd>~128 km</dd></div>
-    <div><dt>Etappen</dt><dd>6 + Boot</dd></div>
+    <div><dt>Distanz</dt><dd>~140 km</dd></div>
     <div><dt>Aufstieg</dt><dd>~1900 m</dd></div>
     <div><dt>Reisezeit</dt><dd>11.–20. Juni</dd></div>
   </dl>
@@ -891,7 +953,6 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="reise" class="sec">
   <p class="eyebrow">Die Reise</p>
   <h2>Zehn Tage, <em>ein Weg</em></h2>
-  <p class="prose lead">Von Porto über die Grenze nach Galicien, ans Meer, übers Wasser und zu Fuss bis nach Santiago. Antippen für alle Details der Etappe.</p>
   <div class="journey" id="journey"></div>
 </section>
 
@@ -901,11 +962,11 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="karte" class="sec">
   <div class="chip"><div class="chip-dot"></div>Karte</div>
   <h2>Die Route <em>auf der Karte</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">🧭</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="map-card">
     <div id="map" role="region" aria-label="Karte der Route"></div>
-    <div class="map-note">Übersicht: Linien verbinden die Etappenorte direkt und sind keine Wanderroute. Durchgezogen = zu Fuss, gestrichelt = Boot, gepunktet = Transfer/Zug. Hotelpins teils ungefähr (im Popup markiert).</div>
-    <div class="map-tools"><button class="btn pri" type="button" id="locate-btn">📍 Wo bin ich?</button><div class="loc-out" id="loc-out" aria-live="polite"></div></div>
+    <div class="map-note">Linien = Luftlinie zwischen den Etappenorten (gestrichelt: Boot, gepunktet: Zug/Transfer). Hotelpins teils ungefähr.</div>
+    <div class="map-tools"><button class="btn pri" type="button" id="locate-btn"><svg class="ic" aria-hidden="true"><use href="#i-locate-fixed"/></svg> Wo bin ich?</button><div class="loc-out" id="loc-out" aria-live="polite"></div></div>
   </div>
 </section>
 
@@ -915,10 +976,10 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="heute" class="sec">
   <div class="chip"><div class="chip-dot"></div><span id="heute-chip">Heute</span></div>
   <h2 id="heute-h2">Euer <em>Tag</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">☀️</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="today-picker" id="today-picker" role="tablist" aria-label="Tag wählen"></div>
   <div class="today-card" id="today-card"></div>
-  <div class="wbox">📲 <strong>Tipp:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen – dann funktioniert sie auch ohne Netz.</div>
+  <div class="wbox"><strong>Tipp:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen – dann funktioniert sie auch ohne Netz.</div>
 </section>
 
 <hr class="rule">
@@ -928,7 +989,6 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="chip"><div class="chip-dot"></div>Die Route</div>
   <h2>Etappen <em>im Detail</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">〜</span><div class="sec-rule-line"></div></div>
-  <p class="prose">Jede Etappe mit Höhenprofil, Wetter, gebuchter Unterkunft und Links. Antippen zum Aufklappen.</p>
   <div class="route-bar" id="route-bar"></div>
   <div class="stage-tools"><button class="ghost-btn" id="open-all" type="button">Alle aufklappen</button></div>
 
@@ -936,7 +996,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="stage">
     <div class="stage-head"><div class="sh-grid">
       <div class="snum">1</div>
-      <div><div class="stitle">Valença → O Porriño</div><div class="ssub">Sa 12. Jun · Grenzübertritt 🇵🇹→🇪🇸</div></div>
+      <div><div class="stitle">Valença → O Porriño</div><div class="ssub">Sa 12. Jun · Portugal → Spanien</div></div>
       <div><span class="skm">~19,5 km</span><span class="sele">↑150m · ↓150m</span></div>
     </div></div>
     <div class="pills"><span class="sp up">↑ 150m</span><span class="sp dn">↓ 150m</span><span class="sp t">4,5–5 Std.</span><span class="sp n">Leicht</span></div>
@@ -952,12 +1012,12 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     </svg></div>
     <p class="s-prose"><strong>Fortaleza de Valença</strong> direkt am Weg — von den Mauern auf den Minho schauen. Dann die <em>Ponte Internacional 1885</em> überqueren: Portugal nach Spanien. <strong>Tui:</strong> Kathedrale 12. Jh., Iglesia de San Francisco 14. Jh. <em>Nach Ribadelouro auf der Hauptroute entlang des Río Louro bleiben, nicht ins Industriegebiet As Gándaras abbiegen.</em></p>
     <hr class="card-hr">
-    <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/1626454112" target="_blank" rel="noopener">🗺️ Komoot (ab Tui)</a><a class="mbtn g" href="https://www.google.com/maps/dir/Valen%C3%A7a+Portugal/O+Porri%C3%B1o+Spain/@42.04,-8.63,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd25c1c4b56b25b1:0x500ef6143a2dc5!2m2!1d-8.634!2d41.934!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!3e2" target="_blank">📍 Google Maps</a></div>
+    <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/1626454112" target="_blank" rel="noopener">Komoot (ab Tui)</a><a class="mbtn g" href="https://www.google.com/maps/dir/Valen%C3%A7a+Portugal/O+Porri%C3%B1o+Spain/@42.04,-8.63,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd25c1c4b56b25b1:0x500ef6143a2dc5!2m2!1d-8.634!2d41.934!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!3e2" target="_blank">Google Maps</a></div>
     <div class="tags"><span class="tag">Fortaleza de Valença</span><span class="tag">Ponte Internacional 1885</span><span class="tag">Kathedrale Tui 12. Jh.</span><span class="tag">Iglesia San Francisco 14. Jh.</span><span class="tag">Río Louro Flussweg</span></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Apartamentos+Tarela+O+Porriño" target="_blank" style="color:#fff;text-decoration:none;">Apartamentos Tarela ↗</a></div><div class="dc-sub-note">✓ gebucht · Check-in 15–22 Uhr</div></div>
-      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">🍽️ Restaurante Paso a Nivel</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">🍽️ Cólleo Con Pinzas Cervecería</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">🍽️ Restaurante Nómadas World Food</a></div></div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Apartamentos+Tarela+O+Porriño" target="_blank" style="color:#fff;text-decoration:none;">Apartamentos Tarela ↗</a></div><div class="dc-sub-note">✓ gebucht · Check-in 15–22 Uhr</div></div>
+      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">Restaurante Paso a Nivel</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">Cólleo Con Pinzas Cervecería</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">Restaurante Nómadas World Food</a></div></div></div>
     </div>
   </div>
 
@@ -981,12 +1041,12 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     </svg></div>
     <p class="s-prose"><strong>Pazo de Mos</strong> direkt am Weg. Anstieg zu Santa María de Guizán — erster echter Blick auf die <em>Ría de Vigo</em>. Abstieg auf Granitplatten (Stöcke hilfreich). <strong>Redondela:</strong> Iglesia de Santiago 16. Jh., zwei <em>Eisenbahnviadukte</em> mitten im Ort.</p>
     <hr class="card-hr">
-    <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/1628537182" target="_blank" rel="noopener">🗺️ Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/O+Porri%C3%B1o+Spain/Redondela+Spain/@42.22,-8.61,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!3e2" target="_blank">📍 Google Maps</a></div>
+    <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/tour/1628537182" target="_blank" rel="noopener">Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/O+Porri%C3%B1o+Spain/Redondela+Spain/@42.22,-8.61,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!3e2" target="_blank">Google Maps</a></div>
     <div class="tags"><span class="tag">Pazo de Mos</span><span class="tag">Santa María de Guizán</span><span class="tag">Erster Ría de Vigo Blick</span><span class="tag">Viadukte Redondela</span><span class="tag">Iglesia de Santiago 16. Jh.</span></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pazo+Santa+Teresa+Redondela" target="_blank" style="color:#fff;text-decoration:none;">Pazo Santa Teresa ↗</a></div><div class="dc-sub-note">✓ gebucht · Frühstück inkl.</div></div>
-      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">🍽️ A Coté Redondela</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">🍽️ Taberna O' Tranquilo</a></div></div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pazo+Santa+Teresa+Redondela" target="_blank" style="color:#fff;text-decoration:none;">Pazo Santa Teresa ↗</a></div><div class="dc-sub-note">✓ gebucht · Frühstück inkl.</div></div>
+      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">A Coté Redondela</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">Taberna O' Tranquilo</a></div></div></div>
     </div>
   </div>
 
@@ -1011,12 +1071,12 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <p class="s-prose"><strong>Verea Vella da Canicouva</strong> — alter Pilgerpfad aus Granitplatten. <strong>Kirche Santa Marta de Ribarteme (13. Jh.)</strong> mit Panoramablick. <strong>Brücke Pontesampaio</strong> — Napoleon 1809. <strong>Pontevedra:</strong> autofrei, <em>Iglesia La Peregrina</em> (Grundriss = Jakobsmuschel), Ruinas de Santo Domingo.</p>
     <div class="ibox"><strong>Tipp:</strong> Nach der Capela de Santa Marta (Ganderón) links in die <em>Senda fluvial do río Gafos</em> – schöner Flussweg statt Strasse.</div>
     <hr class="card-hr">
-    <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Redondela+Spain/Pontevedra+Spain/@42.36,-8.62,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!1m5!1m1!1s0xd254e16a17ef631:0x6a00d3b37bcf700!2m2!1d-8.645!2d42.431!3e2" target="_blank">📍 Google Maps</a></div>
+    <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Redondela+Spain/Pontevedra+Spain/@42.36,-8.62,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!1m5!1m1!1s0xd254e16a17ef631:0x6a00d3b37bcf700!2m2!1d-8.645!2d42.431!3e2" target="_blank">Google Maps</a></div>
     <div class="tags"><span class="tag">Verea Vella Steinpfad</span><span class="tag">Santa Marta de Ribarteme 13. Jh.</span><span class="tag">Brücke Pontesampaio</span><span class="tag">La Peregrina (Muschelgrundriss)</span><span class="tag">Ruinas de Santo Domingo</span></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Parador+de+Pontevedra" target="_blank" style="color:#fff;text-decoration:none;">Parador de Pontevedra ↗</a></div><div class="dc-sub-note">✓ gebucht · Check-in ab 15 Uhr</div></div>
-      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Loaira+Xantar+Pontevedra" target="_blank" rel="noopener">🍽️ Loaira Xantar (Michelin-Empfehlung)</a></div><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=La+Ultramar+Pontevedra" target="_blank" rel="noopener">🍽️ La Ultramar (Michelin-Empfehlung)</a></div></div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Parador+de+Pontevedra" target="_blank" style="color:#fff;text-decoration:none;">Parador de Pontevedra ↗</a></div><div class="dc-sub-note">✓ gebucht · Check-in ab 15 Uhr</div></div>
+      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Loaira+Xantar+Pontevedra" target="_blank" rel="noopener">Loaira Xantar (Michelin-Empfehlung)</a></div><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=La+Ultramar+Pontevedra" target="_blank" rel="noopener">La Ultramar (Michelin-Empfehlung)</a></div></div></div>
     </div>
   </div>
 
@@ -1041,12 +1101,12 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <div class="ibox"><strong>Anstrengendster Tag:</strong> Proviant ab Combarro mitnehmen – in Armenteira gibt es keinen Laden.</div>
     <p class="s-prose"><strong>Kloster Poio</strong> mit Kreuzgang und dem grössten Hórreo Galiciens. <strong>Combarro</strong> – Fischerdorf mit Hórreos direkt am Wasser und Steinkreuzen: Kaffee- und Mittagshalt. Danach der steilste Aufstieg der Reise durch Wald zum <strong>Kloster Armenteira</strong> (12. Jh.), Abendgebet der Zisterzienserinnen.</p>
     <hr class="card-hr">
-    <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Pontevedra+Spain/Mosteiro+de+Armenteira/data=!4m2!4m1!3e2" target="_blank">📍 Google Maps</a></div>
-    <div class="tags"><span class="tag">Mosteiro de Poio</span><span class="tag">Combarro Hórreos</span><span class="tag">Monte Castrove</span><span class="tag">Mosteiro de Armenteira 12. Jh.</span><span class="tag">🌅 Blick auf die Ría de Pontevedra</span></div>
+    <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Pontevedra+Spain/Mosteiro+de+Armenteira/data=!4m2!4m1!3e2" target="_blank">Google Maps</a></div>
+    <div class="tags"><span class="tag">Mosteiro de Poio</span><span class="tag">Combarro Hórreos</span><span class="tag">Monte Castrove</span><span class="tag">Mosteiro de Armenteira 12. Jh.</span><span class="tag">Blick auf die Ría de Pontevedra</span></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Armenteira" target="_blank" style="color:#fff;text-decoration:none;">Pousada Armenteira ↗</a></div><div class="dc-sub-note">✓ gebucht · 400 m vom Kloster · Frühstück inkl.</div></div>
-      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Bar+Comercio+Armenteira" target="_blank">🍽️ Bar Comercio (Pilgermenü)</a></div></div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Armenteira" target="_blank" style="color:#fff;text-decoration:none;">Pousada Armenteira ↗</a></div><div class="dc-sub-note">✓ gebucht · 400 m vom Kloster · Frühstück inkl.</div></div>
+      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Bar+Comercio+Armenteira" target="_blank">Bar Comercio (Pilgermenü)</a></div></div></div>
     </div>
   </div>
 
@@ -1070,12 +1130,12 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     </svg></div>
     <p class="s-prose">Gleich beim Kloster beginnt die <strong>Ruta da Pedra e da Auga</strong>: kilometerlang abwärts entlang des Río Armenteira, vorbei an Wasserfällen und Dutzenden alten <em>Muíños</em> (Wassermühlen). Wohl die schönste Wanderstrecke des ganzen Camino Portugués. Danach durch Weinberge des Albariño-Gebiets bis an die Ría de Arousa.</p>
     <hr class="card-hr">
-    <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Mosteiro+de+Armenteira/Vilanova+de+Arousa/data=!4m2!4m1!3e2" target="_blank">📍 Google Maps</a></div>
-    <div class="tags"><span class="tag">💧 Ruta da Pedra e da Auga</span><span class="tag">Wassermühlen & Wasserfälle</span><span class="tag">🍇 Albariño-Weinberge</span><span class="tag">Ría de Arousa</span></div>
+    <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Mosteiro+de+Armenteira/Vilanova+de+Arousa/data=!4m2!4m1!3e2" target="_blank">Google Maps</a></div>
+    <div class="tags"><span class="tag">Ruta da Pedra e da Auga</span><span class="tag">Wassermühlen & Wasserfälle</span><span class="tag">Albariño-Weinberge</span><span class="tag">Ría de Arousa</span></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank" style="color:#fff;text-decoration:none;">Hotel Leal – La Sirena ↗</a></div><div class="dc-sub-note">✓ gebucht · Check-in 15–21 Uhr</div></div>
-      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank">🍽️ Restaurant im Hotel Leal</a></div></div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank" style="color:#fff;text-decoration:none;">Hotel Leal – La Sirena ↗</a></div><div class="dc-sub-note">✓ gebucht · Check-in 15–21 Uhr</div></div>
+      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank">Restaurant im Hotel Leal</a></div></div></div>
     </div>
   </div>
 
@@ -1083,18 +1143,18 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="stage">
     <div class="stage-head"><div class="sh-grid">
       <div class="snum rest">6</div>
-      <div><div class="stitle">🚤 Translatio: Vilanova → Padrón</div><div class="ssub">Do 17. Jun · Bootsfahrt den Ulla hinauf</div></div>
+      <div><div class="stitle">Translatio: Vilanova → Padrón</div><div class="ssub">Do 17. Jun · Bootsfahrt den Ulla hinauf</div></div>
       <div><span class="skm">~4 km</span><span class="sele">+ Boot</span></div>
     </div></div>
-    <div class="wbox">🚤 Boot ab Hafen Vilanova de Arousa nach Pontecesures, gut 1 Std. Abfahrtszeit hängt von den Gezeiten ab – Reservation bei <strong>AMare</strong> nötig. Danach ~2,5 km zu Fuss nach Padrón und ~1,5 km weiter zum Pazo Arretén.</div>
+    <div class="wbox">Boot ab Hafen Vilanova de Arousa nach Pontecesures, gut 1 Std. Abfahrtszeit hängt von den Gezeiten ab – Reservation bei <strong>AMare</strong> nötig. Danach ~2,5 km zu Fuss nach Padrón und ~1,5 km weiter zum Pazo Arretén.</div>
     <p class="s-prose">Auf dieser Route soll der Leichnam des Apostels nach Galicien gebracht worden sein. Am Ufer der Ría de Arousa und des Ulla stehen <strong>17 Steinkreuze</strong> – der einzige maritime Kreuzweg der Welt. Nachmittag frei in <strong>Padrón</strong>: Iglesia de Santiago mit dem <em>Pedrón</em>, Treppe zum <strong>Santiaguiño do Monte</strong>, abends <em>Pimientos de Padrón – «uns pican, outros non»</em>.</p>
     <hr class="card-hr">
-    <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Pontecesures/Pazo+Arretén+Padrón/data=!4m2!4m1!3e2" target="_blank">📍 Pontecesures → Hotel</a></div>
-    <div class="tags"><span class="tag">🚤 Translatio</span><span class="tag">17 Steinkreuze</span><span class="tag">Iglesia de Santiago (Pedrón)</span><span class="tag">Santiaguiño do Monte</span><span class="tag">🫑 Pimientos de Padrón</span></div>
+    <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Pontecesures/Pazo+Arretén+Padrón/data=!4m2!4m1!3e2" target="_blank">Pontecesures → Hotel</a></div>
+    <div class="tags"><span class="tag">Translatio</span><span class="tag">17 Steinkreuze</span><span class="tag">Iglesia de Santiago (Pedrón)</span><span class="tag">Santiaguiño do Monte</span><span class="tag">Pimientos de Padrón</span></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pazo+Arretén+Padrón" target="_blank" style="color:#fff;text-decoration:none;">Pazo Arretén ↗</a></div><div class="dc-sub-note">✓ gebucht · bei Iria Flavia · Frühstück inkl.</div></div>
-      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">🍽️ Pulpería Rial</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">🍽️ O Alpendre</a></div></div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pazo+Arretén+Padrón" target="_blank" style="color:#fff;text-decoration:none;">Pazo Arretén ↗</a></div><div class="dc-sub-note">✓ gebucht · bei Iria Flavia · Frühstück inkl.</div></div>
+      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">Pulpería Rial</a></div><div class="rest-entry"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">O Alpendre</a></div></div></div>
     </div>
   </div>
 
@@ -1102,7 +1162,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="stage">
     <div class="stage-head"><div class="sh-grid">
       <div class="snum fin">7</div>
-      <div><div class="stitle">Padrón → Santiago de Compostela</div><div class="ssub">Fr 18. Jun · Das Finale 🎉</div></div>
+      <div><div class="stitle">Padrón → Santiago de Compostela</div><div class="ssub">Fr 18. Jun · Das Finale </div></div>
       <div><span class="skm">~24,5 km</span><span class="sele">↑405m · ↓150m</span></div>
     </div></div>
     <div class="pills"><span class="sp up">↑ 405m</span><span class="sp dn">↓ 150m</span><span class="sp t">5–6,5 Std.</span><span class="sp n">Mittel–Schwer</span></div>
@@ -1119,12 +1179,12 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <div class="ibox"><strong>Früh starten (ca. 8 Uhr)</strong> — längster Tag, Ankunft am Obradoiro am Nachmittag. Pilgermesse am Samstag 12 Uhr.</div>
     <p class="s-prose"><strong>Colexiata de Iria Flavia</strong> gleich beim Hotel – Galiciens erste Kathedrale. <strong>Santuario da Escravitude</strong>, Waldwege und Weinlauben bei Teo. Über die <em>Ponte Vella</em> am Río Sar in die Stadt. <strong>Santiago:</strong> Pórtico de la Gloria (12. Jh.), <em>Praza do Obradoiro</em>. Compostela: Rúa das Carretas 33, 9–21 Uhr.</p>
     <hr class="card-hr">
-    <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Padr%C3%B3n+Spain/Santiago+de+Compostela+Spain/@42.80,-8.60,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2559d5e4e3e14d:0x200ef8143a2dc5!2m2!1d-8.657!2d42.738!1m5!1m1!1s0xd2ef47a96cfd2fd:0x100ef8143a29c1!2m2!1d-8.545!2d42.880!3e2" target="_blank">📍 Google Maps</a></div>
-    <div class="tags"><span class="tag">Colexiata Iria Flavia</span><span class="tag">A Escravitude</span><span class="tag">Pórtico de la Gloria 12. Jh.</span><span class="tag">⛪ Praza do Obradoiro</span><span class="tag">Compostela-Urkunde</span><span class="tag">Botafumeiro 12 Uhr</span></div>
+    <div class="map-row"><a class="mbtn g" href="https://www.google.com/maps/dir/Padr%C3%B3n+Spain/Santiago+de+Compostela+Spain/@42.80,-8.60,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2559d5e4e3e14d:0x200ef8143a2dc5!2m2!1d-8.657!2d42.738!1m5!1m1!1s0xd2ef47a96cfd2fd:0x100ef8143a29c1!2m2!1d-8.545!2d42.880!3e2" target="_blank">Google Maps</a></div>
+    <div class="tags"><span class="tag">Colexiata Iria Flavia</span><span class="tag">A Escravitude</span><span class="tag">Pórtico de la Gloria 12. Jh.</span><span class="tag">Praza do Obradoiro</span><span class="tag">Compostela-Urkunde</span><span class="tag">Botafumeiro 12 Uhr</span></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Pazo+de+Altamira+Santiago+de+Compostela" target="_blank" style="color:#fff;text-decoration:none;">Hotel Pazo de Altamira ↗</a></div><div class="dc-sub-note">✓ gebucht · Altstadt · Check-in ab 16 Uhr</div></div>
-      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Café+de+Altamira+Santiago+de+Compostela" target="_blank" rel="noopener">🍽️ Café de Altamira (Bib Gourmand)</a></div><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Abastos+2.0+Santiago+de+Compostela" target="_blank" rel="noopener">🍽️ Abastos 2.0 (Bib Gourmand)</a></div></div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Pazo+de+Altamira+Santiago+de+Compostela" target="_blank" style="color:#fff;text-decoration:none;">Hotel Pazo de Altamira ↗</a></div><div class="dc-sub-note">✓ gebucht · Altstadt · Check-in ab 16 Uhr</div></div>
+      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Café+de+Altamira+Santiago+de+Compostela" target="_blank" rel="noopener">Café de Altamira (Bib Gourmand)</a></div><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Abastos+2.0+Santiago+de+Compostela" target="_blank" rel="noopener">Abastos 2.0 (Bib Gourmand)</a></div></div></div>
     </div>
   </div>
 
@@ -1136,11 +1196,11 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <div><span class="skm">—</span><span class="sele">Ruhetag</span></div>
     </div></div>
     <p class="s-prose" style="padding-top:.9rem;"><strong>Compostela</strong> im Pilgerbüro abholen (Rúa das Carretas 33). <strong>Pilgermesse 12 Uhr</strong> in der Kathedrale — früh da sein. <strong>Mercado de Abastos</strong> zum Mittag. Nachmittags Zug nach <strong>A Coruña</strong> (~35 Min.), Abend an der Marina und beim Torre de Hércules.</p>
-    <div class="tags"><span class="tag">📜 Compostela</span><span class="tag">Pilgermesse 12 Uhr</span><span class="tag">Mercado de Abastos</span><span class="tag">🐙 Pulpo a feira</span><span class="tag">🎂 Tarta de Santiago</span><span class="tag">Torre de Hércules</span></div>
+    <div class="tags"><span class="tag">Compostela</span><span class="tag">Pilgermesse 12 Uhr</span><span class="tag">Mercado de Abastos</span><span class="tag">Pulpo a feira</span><span class="tag">Tarta de Santiago</span><span class="tag">Torre de Hércules</span></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon">🏨</div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Meliá+Maria+Pita+A+Coruña" target="_blank" style="color:#fff;text-decoration:none;">Meliá Maria Pita ↗</a></div><div class="dc-sub-note">✓ gebucht · Frühstück inkl.</div></div>
-      <div class="dc dc-sand"><div class="dc-icon">🍽️</div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=El+de+Alberto+A+Coruña" target="_blank" rel="noopener">🍽️ El de Alberto (Bib Gourmand)</a></div><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Artabria+A+Coruña" target="_blank" rel="noopener">🍽️ Artabria (Bib Gourmand)</a></div></div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Meliá+Maria+Pita+A+Coruña" target="_blank" style="color:#fff;text-decoration:none;">Meliá Maria Pita ↗</a></div><div class="dc-sub-note">✓ gebucht · Frühstück inkl.</div></div>
+      <div class="dc dc-sand"><div class="dc-icon"></div><div class="dc-lbl">Restaurant</div><div class="rest-list"><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=El+de+Alberto+A+Coruña" target="_blank" rel="noopener">El de Alberto (Bib Gourmand)</a></div><div class="rest-entry"><a href="https://www.google.com/maps/search/?api=1&query=Artabria+A+Coruña" target="_blank" rel="noopener">Artabria (Bib Gourmand)</a></div></div></div>
     </div>
   </div>
 </section>
@@ -1164,16 +1224,16 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="chip"><div class="chip-dot"></div>Buchungen</div>
   <h2>Alles <em>gebucht</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">✓</span><div class="sec-rule-line"></div></div>
-  <p class="prose">Flüge und alle 9 Unterkünfte auf einen Blick, mit Telefonnummer und Karte. Buchungsnummern bewusst nicht auf der öffentlichen Seite.</p>
+  <p class="prose">Flüge und alle neun Unterkünfte. Buchungsnummern stehen bewusst nicht auf der öffentlichen Seite.</p>
   <div class="bk-list" id="bk-list"></div>
-  <h3 class="sub-h">🆘 Notfall</h3>
+  <h3 class="sub-h">Notfall</h3>
   <div class="bk-btns" style="margin-top:.5rem;">
-    <a class="btn pri" href="tel:112">📞 112 – Notruf (Spanien &amp; Portugal)</a>
-    <a class="btn" href="tel:+41800247365">📞 EDA Helpline +41 800 24 7 365</a>
-    <a class="btn" href="tel:+41584653333">📞 EDA aus dem Ausland +41 58 465 33 33</a>
+    <a class="btn pri" href="tel:112"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> 112 – Notruf (Spanien &amp; Portugal)</a>
+    <a class="btn" href="tel:+41800247365"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> EDA Helpline +41 800 24 7 365</a>
+    <a class="btn" href="tel:+41584653333"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> EDA aus dem Ausland +41 58 465 33 33</a>
   </div>
   <p class="prose" style="font-size:.8rem;margin-top:.5rem;">Hotelnummern stehen oben bei jeder Unterkunft. EU-Krankenversicherungskarte (EHIC) und Reiseversicherung mitnehmen.</p>
-  <h3 class="sub-h">⏳ Noch offen</h3>
+  <h3 class="sub-h">Noch offen</h3>
   <ul class="open-list">
     <li><b>Transfer Porto → Valença + Gepäcktransport</b> bestätigen · Januar 2027 (Offerte ~380 €)</li>
     <li><b>Boot Translatio</b> Vilanova → Pontecesures reservieren · Zeit nach Gezeiten</li>
@@ -1191,12 +1251,12 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="anreise" class="sec">
   <div class="chip"><div class="chip-dot"></div>Anreise &amp; Heimreise</div>
   <h2>Freitag Porto,<br>Samstag <em>Valença</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">⚓</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <p class="prose"><strong>Fr 11. Juni:</strong> Chair Airlines CS176, Zürich 15:35 → Porto 17:15, Direktflug. Check-in ab 13:05, 1 Koffer à 23 kg + Handgepäck 8 kg inklusive. Sitzplätze sind reserviert. Übernachtung im <strong>Axis Porto Club Aliados</strong>, Abend in der Ribeira.</p>
   <p class="prose"><strong>Sa 12. Juni:</strong> Privattransfer mit Gepäckservice nach Valença (Offerte ~380 € inkl. Gepäck bis Santiago, Bestätigung im Januar 2027). Alternative: Zug Celta ab Porto Campanhã 08:10, Ankunft Valença ca. 10:00, ~12 € pro Person.</p>
   <p class="prose"><strong>So 20. Juni:</strong> Air Europa UX7234 A Coruña 12:35 → Madrid 13:45, UX1671 Madrid 15:10 → Zürich 17:30. 1 Koffer à 23 kg inklusive, durchgecheckt.</p>
   <div id="porto-images"></div>
-  <div class="wbox">⏰ Portugal liegt eine Stunde hinter Spanien: Auf der Brücke Valença–Tui die Uhr vorstellen.</div>
+  <div class="wbox">Portugal liegt eine Stunde hinter Spanien: Auf der Brücke Valença–Tui die Uhr vorstellen.</div>
 </section>
 
 <hr class="rule">
@@ -1205,17 +1265,17 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="restaurants" class="sec">
   <div class="chip"><div class="chip-dot"></div>Gastronomie</div>
   <h2>Wo ihr <em>esst</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">🍷</span><div class="sec-rule-line"></div></div>
-  <p class="prose">Bestätigte Restaurants mit direktem Link. Abendessen in Spanien ab ca. 20:30 Uhr — für vier Personen reservieren. Michelin-Angaben Stand 2022/2024, vor der Reise prüfen.</p>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">O Porriño</div><div class="rest-city-day">Tag 1</div></div><div class="ri"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">🍽️ Restaurante Paso a Nivel</a></div><div class="ri"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">🍽️ Cólleo Con Pinzas Cervecería</a></div><div class="ri"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">🍽️ Restaurante Nómadas World Food</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Redondela</div><div class="rest-city-day">Tag 2</div></div><div class="ri"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">🍽️ A Coté Redondela</a></div><div class="ri"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">🍽️ Taberna O' Tranquilo</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Pontevedra</div><div class="rest-city-day">Tag 3</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Loaira+Xantar+Pontevedra" target="_blank" rel="noopener">🍽️ Loaira Xantar (Michelin-Empfehlung)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=La+Ultramar+Pontevedra" target="_blank" rel="noopener">🍽️ La Ultramar (Michelin-Empfehlung)</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Armenteira</div><div class="rest-city-day">Tag 4</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Bar+Comercio+Armenteira" target="_blank">🍽️ Bar Comercio — Pilgermenü</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Vilanova de Arousa</div><div class="rest-city-day">Tag 5</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank">🍽️ Restaurant im Hotel Leal</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Padrón</div><div class="rest-city-day">Tag 6 · nach dem Boot</div></div><div class="ri"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">🍽️ Pulpería Rial</a></div><div class="ri"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">🍽️ O Alpendre</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Santiago de Compostela</div><div class="rest-city-day">Tag 7</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Café+de+Altamira+Santiago+de+Compostela" target="_blank" rel="noopener">🍽️ Café de Altamira (Bib Gourmand)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Abastos+2.0+Santiago+de+Compostela" target="_blank" rel="noopener">🍽️ Abastos 2.0 (Bib Gourmand)</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">A Coruña</div><div class="rest-city-day">Sa 19.06.</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=El+de+Alberto+A+Coruña" target="_blank" rel="noopener">🍽️ El de Alberto (Bib Gourmand)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Artabria+A+Coruña" target="_blank" rel="noopener">🍽️ Artabria (Bib Gourmand)</a></div></div>
-  <div class="wbox">🍷 <strong>Wein:</strong> <em>Albariño</em> (Weißwein, perfekt zu Meeresfrüchten) oder <em>Ribeiro tinto</em> (leichter Rotwein, oft vom Fass). Beide D.O. aus Galicien.</div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
+  <p class="prose">Abendessen ab ca. 20:30 – für vier reservieren. Michelin-Angaben Stand 2022/2024, vor der Reise prüfen.</p>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">O Porriño</div><div class="rest-city-day">Tag 1</div></div><div class="ri"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">Restaurante Paso a Nivel</a></div><div class="ri"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">Cólleo Con Pinzas Cervecería</a></div><div class="ri"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">Restaurante Nómadas World Food</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Redondela</div><div class="rest-city-day">Tag 2</div></div><div class="ri"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">A Coté Redondela</a></div><div class="ri"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">Taberna O' Tranquilo</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Pontevedra</div><div class="rest-city-day">Tag 3</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Loaira+Xantar+Pontevedra" target="_blank" rel="noopener">Loaira Xantar (Michelin-Empfehlung)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=La+Ultramar+Pontevedra" target="_blank" rel="noopener">La Ultramar (Michelin-Empfehlung)</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Armenteira</div><div class="rest-city-day">Tag 4</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Bar+Comercio+Armenteira" target="_blank">Bar Comercio — Pilgermenü</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Vilanova de Arousa</div><div class="rest-city-day">Tag 5</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank">Restaurant im Hotel Leal</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Padrón</div><div class="rest-city-day">Tag 6 · nach dem Boot</div></div><div class="ri"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">Pulpería Rial</a></div><div class="ri"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">O Alpendre</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Santiago de Compostela</div><div class="rest-city-day">Tag 7</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Café+de+Altamira+Santiago+de+Compostela" target="_blank" rel="noopener">Café de Altamira (Bib Gourmand)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Abastos+2.0+Santiago+de+Compostela" target="_blank" rel="noopener">Abastos 2.0 (Bib Gourmand)</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">A Coruña</div><div class="rest-city-day">Sa 19.06.</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=El+de+Alberto+A+Coruña" target="_blank" rel="noopener">El de Alberto (Bib Gourmand)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Artabria+A+Coruña" target="_blank" rel="noopener">Artabria (Bib Gourmand)</a></div></div>
+  <div class="wbox"><strong>Wein:</strong> <em>Albariño</em> (Weißwein, perfekt zu Meeresfrüchten) oder <em>Ribeiro tinto</em> (leichter Rotwein, oft vom Fass). Beide D.O. aus Galicien.</div>
 </section>
 
 <hr class="rule">
@@ -1225,8 +1285,8 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="chip"><div class="chip-dot"></div>Infos</div>
   <h2>Gut zu <em>wissen</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">ℹ️</span><div class="sec-rule-line"></div></div>
-  <p class="prose">Stempel, Compostela, Fitness, Tipps, Wetter, Budget und Links – zum Aufklappen antippen.</p>
-  <div class="print-row"><button class="btn" type="button" id="print-btn">🖨️ Reisebuch drucken / als PDF</button></div>
+  
+  <div class="print-row"><button class="btn" type="button" id="print-btn"><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg> Reisebuch drucken / als PDF</button></div>
   <p class="prose" style="font-size:.78rem;margin-top:.4rem;">A5-Heft mit allen Tagen, Hotels, Telefonnummern und Startzeiten – als Notlösung ohne Handy-Akku. Im Druckdialog «Als PDF sichern» wählen.</p>
 </section>
 
@@ -1234,7 +1294,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="stempel" class="sec fold">
   <div class="chip"><div class="chip-dot"></div>Pilgerstempel</div>
   <h2>Dein <em>Kredential</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">📋</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <p class="prose">Mindestens <strong>2 Stempel pro Tag</strong> sammeln für die Compostela-Urkunde. Die wichtigsten Stempelorte:</p>
   <div class="stempel-list"><div class="stempel-item">
   <div class="stempel-circle"><span class="stempel-num">1</span></div>
@@ -1281,7 +1341,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="stempel-info"><div class="stempel-city">Santiago de Compostela</div><div class="stempel-where">Kathedrale · Pilgerbüro</div></div>
   <div class="stempel-check"></div>
 </div></div>
-  <div class="wbox">📋 <strong>Pilgerkredential</strong> kaufen ab dem ersten Albergue in Valença (~2 €). Sellos gibt es in Albergues, Kirchen, Bars und Touristinfos.</div>
+  <div class="wbox"><strong>Pilgerkredential</strong> kaufen ab dem ersten Albergue in Valença (~2 €). Sellos gibt es in Albergues, Kirchen, Bars und Touristinfos.</div>
 </section>
 
 <hr class="rule">
@@ -1290,9 +1350,9 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="compostela" class="sec fold">
   <div class="chip"><div class="chip-dot"></div>Santiago</div>
   <h2>Compostela &amp; <em>Pilgermesse</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">📜</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="cp-facts">
-    <div class="cp-fact"><div class="k">Bedingung</div><div class="v">≥ 100 km zu Fuss</div>ihr geht ~128 km ab Valença</div>
+    <div class="cp-fact"><div class="k">Bedingung</div><div class="v">≥ 100 km zu Fuss</div>ihr geht ~140 km ab Valença</div>
     <div class="cp-fact"><div class="k">Stempel</div><div class="v">2 pro Tag</div>Pflicht auf den letzten 100 km – einfach jeden Tag sammeln</div>
     <div class="cp-fact"><div class="k">Kosten</div><div class="v">Compostela gratis</div>Distanz-Zertifikat 3 €</div>
   </div>
@@ -1303,10 +1363,10 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <li><b>Pilgerbüro</b> Rúa das Carretas 33, 3 Gehminuten von der Kathedrale. Am Eingang gibt es eine Nummer mit QR-Code – damit lässt sich die Wartezeit am Handy verfolgen, ihr müsst nicht in der Schlange stehen.</li>
     <li><b>Wann?</b> Am besten Fr 18.06. gleich nach der Ankunft, sonst Sa 19.06. früh vor der Messe. Pass oder ID mitnehmen.</li>
   </ol>
-  <h3 class="sub-h">⛪ Pilgermesse</h3>
+  <h3 class="sub-h">Pilgermesse</h3>
   <p class="prose">Messen in der Kathedrale um <strong>7:30, 9:30, 12:00 und 19:30 Uhr</strong>; die Pilgermesse um <strong>12 Uhr</strong> ist die bekannteste. 30–45 Minuten vorher dort sein, <strong>keine Rucksäcke</strong> (vorher ins Hotel). Wegen Bauarbeiten in der Hauptkapelle finden die Messen seit Oktober 2026 teilweise in der Kirche San Agustín statt – vor der Reise auf <a href="https://catedraldesantiago.es/liturgia/" target="_blank" rel="noopener">catedraldesantiago.es</a> prüfen.</p>
-  <div class="wbox">🔥 <strong>Botafumeiro</strong> schwingt nur an Festtagen oder auf Anfrage von Pilgergruppen – nicht garantiert (Stand Herbst 2026 zudem in Restaurierung).</div>
-  <div class="wbox">✨ <strong>2027 ist ein Heiliges Jahr (Xacobeo):</strong> Die Heilige Pforte der Kathedrale ist offen – Durchgang nicht verpassen. Dafür mehr Andrang als sonst, gerade im Juni.</div>
+  <div class="wbox"><strong>Botafumeiro</strong> schwingt nur an Festtagen oder auf Anfrage von Pilgergruppen – nicht garantiert (Stand Herbst 2026 zudem in Restaurierung).</div>
+  <div class="wbox"><strong>2027 ist ein Heiliges Jahr (Xacobeo):</strong> Die Heilige Pforte der Kathedrale ist offen – Durchgang nicht verpassen. Dafür mehr Andrang als sonst, gerade im Juni.</div>
 </section>
 
 <hr class="rule">
@@ -1315,7 +1375,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="fitness" class="sec fold">
   <div class="chip"><div class="chip-dot"></div>Fitness</div>
   <h2>Was der Körper <em>leistet</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">💪</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <p class="prose" style="font-size:.8rem;font-style:italic;">95 kg + 8 kg Rucksack · MET-Methode · ±15% individuelle Abweichung</p>
   <table class="fitness-table">
     <thead><tr><td>Etappe</td><td>km</td><td>↑ Hm</td><td>Zeit</td><td>kcal</td></tr></thead>
@@ -1325,15 +1385,16 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <tr><td>Tag 3 · Redondela → Pontevedra</td><td>20</td><td>400m</td><td>~5,3h</td><td class="kcal">~3'200</td></tr>
       <tr><td>Tag 4 · Pontevedra → Armenteira</td><td>20,5</td><td>~500m</td><td>~5,5h</td><td class="kcal">~3'350</td></tr>
       <tr><td>Tag 5 · Armenteira → Vilanova</td><td>23,5</td><td>~150m</td><td>~5,5h</td><td class="kcal">~3'350</td></tr>
-      <tr><td>Tag 6 · 🚤 Boot + Padrón</td><td>4</td><td>—</td><td>~1h</td><td class="kcal">~800</td></tr>
+      <tr><td>Tag 6 · Boot + Padrón</td><td>4</td><td>—</td><td>~1h</td><td class="kcal">~800</td></tr>
       <tr><td>Tag 7 · Padrón → Santiago</td><td>24,5</td><td>405m</td><td>~6h</td><td class="kcal">~3'800</td></tr>
-      <tr class="total-row"><td><strong>Total</strong></td><td><strong>~128</strong></td><td><strong>~1900m</strong></td><td>~32h</td><td class="kcal"><strong>~19'750</strong></td></tr>
+      <tr class="total-row"><td><strong>Total</strong></td><td><strong>~140*</strong></td><td><strong>~1900m</strong></td><td>~32h</td><td class="kcal"><strong>~19'750</strong></td></tr>
     </tbody>
   </table>
+  <p class="fn">* ~140 km ist ein vorläufiger Planungswert.</p>
   <div class="fstats"><div class="fstat"><span class="n">~19'750</span><div class="u">kcal total</div></div><div class="fstat"><span class="n">~2'820</span><div class="u">kcal/Tag</div></div><div class="fstat"><span class="n">~155</span><div class="u">kcal/km</div></div></div>
-  <div class="feq-item"><div class="feq-icon">🍕</div><div class="feq-text"><strong>~59 Pizzen</strong> — sehr verdient</div></div>
-  <div class="feq-item"><div class="feq-icon">🍺</div><div class="feq-text"><strong>~150 Bier</strong> (0.3L) — extrem verdient</div></div>
-  <div class="feq-item"><div class="feq-icon">⚖️</div><div class="feq-text"><strong>~2.6 kg Fett</strong> theoretisch abgebaut</div></div>
+  <div class="feq-item"><div class="feq-icon"></div><div class="feq-text"><strong>~59 Pizzen</strong> — sehr verdient</div></div>
+  <div class="feq-item"><div class="feq-icon"></div><div class="feq-text"><strong>~150 Bier</strong> (0.3L) — extrem verdient</div></div>
+  <div class="feq-item"><div class="feq-icon"></div><div class="feq-text"><strong>~2.6 kg Fett</strong> theoretisch abgebaut</div></div>
 </section>
 
 <hr class="rule">
@@ -1342,14 +1403,14 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="tipps" class="sec fold">
   <div class="chip"><div class="chip-dot"></div>Vorbereitung</div>
   <h2>Was ihr <em>wissen müsst</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">📋</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="tgrid">
-    <div class="tc"><h3>👟 Schuhe</h3><ul><li>Nie neue Schuhe starten</li><li>100 km einlaufen ab Herbst 2026</li><li>Trailrunner > Wanderstiefel</li><li>Merino-Socken, nie Baumwolle</li><li>Sandalen für Abende</li></ul></div>
-    <div class="tc"><h3>🎒 Gepäck</h3><ul><li>Max. 8–9 kg am Rücken</li><li>Koffer max. 15 kg für Gepäcktransport</li><li>3 Wanderoutfits reichen</li><li>Waschen überall ~5 €</li><li>Kopflampe mitnehmen</li></ul></div>
-    <div class="tc"><h3>🩹 Blasen</h3><ul><li>Leukotape, kein Pflaster</li><li>Problemstellen vorkleben</li><li>Blase stechen, flach lassen</li><li>Farmacia überall vorhanden</li><li>Simon fragen — er weiß's</li></ul></div>
-    <div class="tc"><h3>📱 Navigation</h3><ul><li>Buen Camino App (Offline!)</li><li>Maps.me als Backup</li><li>Pilgerkredential ab Valença</li><li>Sellos täglich sammeln</li><li>100 km = Compostela</li></ul></div>
-    <div class="tc"><h3>🍽️ Unterwegs</h3><ul><li>Menú del Peregrino ~11 €</li><li>Albariño & Ribeiro trinken</li><li>Fuente-Wasser kostenlos</li><li>Alle 1,5h essen</li><li>Bocadillo morgens</li></ul></div>
-    <div class="tc"><h3>💊 Gesundheit</h3><ul><li>Sonnencreme SPF50 täglich</li><li>Elektrolyte für heiße Tage</li><li>Ibuprofen + Paracetamol</li><li>Trekkingstöcke sehr empfohlen</li><li>EHIC-Karte mitnehmen</li></ul></div>
+    <div class="tc"><h3>Schuhe</h3><ul><li>Nie neue Schuhe starten</li><li>100 km einlaufen ab Herbst 2026</li><li>Trailrunner > Wanderstiefel</li><li>Merino-Socken, nie Baumwolle</li><li>Sandalen für Abende</li></ul></div>
+    <div class="tc"><h3>Gepäck</h3><ul><li>Max. 8–9 kg am Rücken</li><li>Koffer max. 15 kg für Gepäcktransport</li><li>3 Wanderoutfits reichen</li><li>Waschen überall ~5 €</li><li>Kopflampe mitnehmen</li></ul></div>
+    <div class="tc"><h3>Blasen</h3><ul><li>Leukotape, kein Pflaster</li><li>Problemstellen vorkleben</li><li>Blase stechen, flach lassen</li><li>Farmacia überall vorhanden</li></ul></div>
+    <div class="tc"><h3>Navigation</h3><ul><li>Buen Camino App (Offline!)</li><li>Maps.me als Backup</li><li>Pilgerkredential ab Valença</li><li>Sellos täglich sammeln</li><li>100 km = Compostela</li></ul></div>
+    <div class="tc"><h3>Unterwegs</h3><ul><li>Menú del Peregrino ~11 €</li><li>Albariño & Ribeiro trinken</li><li>Fuente-Wasser kostenlos</li><li>Alle 1,5h essen</li><li>Bocadillo morgens</li></ul></div>
+    <div class="tc"><h3>Gesundheit</h3><ul><li>Sonnencreme SPF50 täglich</li><li>Elektrolyte für heiße Tage</li><li>Ibuprofen + Paracetamol</li><li>Trekkingstöcke sehr empfohlen</li><li>EHIC-Karte mitnehmen</li></ul></div>
   </div>
 </section>
 
@@ -1359,11 +1420,11 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="wetter" class="sec fold">
   <div class="chip"><div class="chip-dot"></div>Klima</div>
   <h2>Mitte Juni in <em>Galicien</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">🌊</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="wrow">
-    <div class="wc"><div class="icon">🌡️</div><span class="val">20–25°C</span><div class="lbl">Temperatur</div></div>
-    <div class="wc"><div class="icon">☀️</div><span class="val">~9 h</span><div class="lbl">Sonne/Tag</div></div>
-    <div class="wc"><div class="icon">🌧️</div><span class="val">selten</span><div class="lbl">Regen</div></div>
+    <div class="wc"><div class="icon"></div><span class="val">20–25°C</span><div class="lbl">Temperatur</div></div>
+    <div class="wc"><div class="icon"></div><span class="val">~9 h</span><div class="lbl">Sonne/Tag</div></div>
+    <div class="wc"><div class="icon"></div><span class="val">selten</span><div class="lbl">Regen</div></div>
   </div>
   <div class="wbox"><strong>Immer eine Regenjacke dabei</strong> — Galicien ist grün aus gutem Grund. Der Juni ist meist trocken, kurze Schauer sind aber möglich. Sonnenuntergang ~22 Uhr.</div>
 </section>
@@ -1374,7 +1435,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="budget" class="sec fold">
   <div class="chip"><div class="chip-dot"></div>Kosten</div>
   <h2>Was die Reise <em>kostet</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">💰</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <table class="btbl">
     <tr><td>Flüge ZRH → Porto · A Coruña → ZRH (inkl. Koffer &amp; Sitzplatz)</td><td>CHF 444</td></tr>
     <tr><td>Unterkünfte 9 Nächte (gebucht)</td><td>~CHF 1'350</td></tr>
@@ -1385,11 +1446,11 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <tr><td>Eintritte &amp; Diverses</td><td>CHF 30–50</td></tr>
     <tr class="tot"><td><strong>Total pro Person</strong></td><td><strong>~CHF 2'200–2'400</strong></td></tr>
   </table>
-  <div class="wbox">💡 Flüge und Hotels sind gebucht; Transfer, Gepäck und Boot werden im Frühling 2027 bestätigt.</div>
+  <div class="wbox">Flüge und Hotels sind gebucht; Transfer, Gepäck und Boot werden im Frühling 2027 bestätigt.</div>
   <div class="kasse">
-    <h3 class="sub-h">💸 Gemeinsame Kasse</h3>
+    <h3 class="sub-h">Gemeinsame Kasse</h3>
     <p class="prose">Ausgaben unterwegs (Essen, Taxi, Boot, Eintritte) gleich nach dem Bezahlen in Splitwise eintragen, Währung EUR. Am Schluss zeigt Splitwise, wer wem wie viel schuldet – einmal ausgleichen, fertig.</p>
-    <a class="btn pri" id="splitwise-btn" href="https://www.splitwise.com/" target="_blank" rel="noopener">💸 Splitwise öffnen ↗</a>
+    <a class="btn pri" id="splitwise-btn" href="https://www.splitwise.com/" target="_blank" rel="noopener">Splitwise öffnen ↗</a>
     <div class="kasse-note" id="splitwise-note">Gruppenlink folgt.</div>
   </div>
 </section>
@@ -1400,14 +1461,14 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="links" class="sec fold">
   <div class="chip"><div class="chip-dot"></div>Nützliche Links</div>
   <h2>Alles was ihr <em>braucht</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">🔗</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="link-grid">
-    <a class="lcard" href="https://www.cp.pt/passageiros/pt" target="_blank"><div class="lcard-icon">🚂</div><div class="lcard-name">CP Züge Portugal</div><div class="lcard-desc">Plan B: Porto → Valença</div><div class="lcard-url">cp.pt ↗</div></a>
-    <a class="lcard" href="https://www.meteogalicia.gal" target="_blank" rel="noopener"><div class="lcard-icon">🌦️</div><div class="lcard-name">MeteoGalicia</div><div class="lcard-desc">Offizielles Wetter Galicien</div><div class="lcard-url">meteogalicia.gal ↗</div></a>
-    <a class="lcard" href="https://www.gronze.com/camino-portugues" target="_blank"><div class="lcard-icon">🧭</div><div class="lcard-name">Gronze Etappen</div><div class="lcard-desc">Inkl. Variante Espiritual</div><div class="lcard-url">gronze.com ↗</div></a>
-    <a class="lcard" href="https://www.elcaminoconcorreos.com/es/transporte-mochilas" target="_blank"><div class="lcard-icon">🧳</div><div class="lcard-name">Gepäcktransport</div><div class="lcard-desc">Correos Paq Mochila</div><div class="lcard-url">elcaminoconcorreos.com ↗</div></a>
-    <a class="lcard" href="https://www.google.com/search?q=AMare+Traslatio+Vilanova+de+Arousa+Pontecesures" target="_blank"><div class="lcard-icon">🚤</div><div class="lcard-name">Boot Translatio</div><div class="lcard-desc">AMare · Vilanova → Pontecesures</div><div class="lcard-url">Suche ↗</div></a>
-    <a class="lcard" href="https://oficinadelperegrino.com/en/" target="_blank"><div class="lcard-icon">📜</div><div class="lcard-name">Pilgerbüro Santiago</div><div class="lcard-desc">Compostela-Urkunde &amp; Infos</div><div class="lcard-url">oficinadelperegrino.com ↗</div></a>
+    <a class="lcard" href="https://www.cp.pt/passageiros/pt" target="_blank"><div class="lcard-icon"></div><div class="lcard-name">CP Züge Portugal</div><div class="lcard-desc">Plan B: Porto → Valença</div><div class="lcard-url">cp.pt ↗</div></a>
+    <a class="lcard" href="https://www.meteogalicia.gal" target="_blank" rel="noopener"><div class="lcard-icon"></div><div class="lcard-name">MeteoGalicia</div><div class="lcard-desc">Offizielles Wetter Galicien</div><div class="lcard-url">meteogalicia.gal ↗</div></a>
+    <a class="lcard" href="https://www.gronze.com/camino-portugues" target="_blank"><div class="lcard-icon"></div><div class="lcard-name">Gronze Etappen</div><div class="lcard-desc">Inkl. Variante Espiritual</div><div class="lcard-url">gronze.com ↗</div></a>
+    <a class="lcard" href="https://www.elcaminoconcorreos.com/es/transporte-mochilas" target="_blank"><div class="lcard-icon"></div><div class="lcard-name">Gepäcktransport</div><div class="lcard-desc">Correos Paq Mochila</div><div class="lcard-url">elcaminoconcorreos.com ↗</div></a>
+    <a class="lcard" href="https://www.google.com/search?q=AMare+Traslatio+Vilanova+de+Arousa+Pontecesures" target="_blank"><div class="lcard-icon"></div><div class="lcard-name">Boot Translatio</div><div class="lcard-desc">AMare · Vilanova → Pontecesures</div><div class="lcard-url">Suche ↗</div></a>
+    <a class="lcard" href="https://oficinadelperegrino.com/en/" target="_blank"><div class="lcard-icon"></div><div class="lcard-name">Pilgerbüro Santiago</div><div class="lcard-desc">Compostela-Urkunde &amp; Infos</div><div class="lcard-url">oficinadelperegrino.com ↗</div></a>
   </div>
 </section>
 
@@ -1418,26 +1479,24 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="crew-in">
     <div class="chip" style="background:rgba(255,255,255,.08);color:var(--sand);"><div class="chip-dot"></div>Die Gruppe</div>
     <h2>Wer macht <em>den Weg?</em></h2>
-    <div class="sec-rule"><div class="sec-rule-line" style="background:linear-gradient(to right,rgba(255,255,255,.15),transparent);"></div><span style="color:rgba(255,255,255,.2);font-size:.75rem;">⚓</span><div class="sec-rule-line" style="background:linear-gradient(to right,rgba(255,255,255,.15),transparent);"></div></div>
-    <div class="ccards-5">
-      <div class="cc"><div class="cav">A</div><div class="cname">Ante</div><div class="crole">Fest dabei ✓</div></div>
-      <div class="cc"><div class="cav">K</div><div class="cname">Kevin</div><div class="crole">Fest dabei ✓</div></div>
-      <div class="cc"><div class="cav">M</div><div class="cname">Mike</div><div class="crole">Fest dabei ✓</div></div>
-      <div class="cc"><div class="cav">L</div><div class="cname">Luis</div><div class="crole">Fest dabei ✓</div></div>
-      <div class="cc q"><div class="cav">S</div><div class="cname">Simon</div><div class="crole">Vielleicht · Camino-Erfahrung ★</div></div>
+    <div class="sec-rule"><div class="sec-rule-line" style="background:linear-gradient(to right,rgba(255,255,255,.15),transparent);"></div><span style="color:rgba(255,255,255,.2);font-size:.75rem;"></span><div class="sec-rule-line" style="background:linear-gradient(to right,rgba(255,255,255,.15),transparent);"></div></div>
+    <div class="ccards-4">
+      <div class="cc"><div class="cav">A</div><div class="cname">Ante</div><div class="crole">Fest dabei</div></div>
+      <div class="cc"><div class="cav">K</div><div class="cname">Kevin</div><div class="crole">Fest dabei</div></div>
+      <div class="cc"><div class="cav">M</div><div class="cname">Mike</div><div class="crole">Fest dabei</div></div>
+      <div class="cc"><div class="cav">L</div><div class="cname">Luis</div><div class="crole">Fest dabei</div></div>
     </div>
-    <p class="cnote">Simon bis <strong>Anfang 2027</strong> zusagen.</p>
   </div>
 </section>
 
 <div id="printbook" aria-hidden="true"></div>
-<button class="theme-btn" id="theme-btn" type="button" aria-label="Hell/Dunkel umschalten">🌙</button>
+<button class="theme-btn" id="theme-btn" type="button" aria-label="Hell/Dunkel umschalten"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
 
 <!-- FOOTER -->
 <footer id="foot">
   <span class="fw">Buen Camino.</span>
   <div class="fs">Porto · Valença · Variante Espiritual · Santiago · 11.–20. Juni 2027</div>
-  <div class="fc"><span class="nm">Ante</span><span>·</span><span class="nm">Kevin</span><span>·</span><span class="nm">Mike</span><span>·</span><span class="nm">Luis</span><span>·</span><span class="nm">Simon?</span></div>
+  <div class="fc"><span class="nm">Ante</span><span>·</span><span class="nm">Kevin</span><span>·</span><span class="nm">Mike</span><span>·</span><span class="nm">Luis</span></div>
 </footer>
 
 <script type="application/json" id="image-map">{
@@ -2058,13 +2117,15 @@ const dt=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);};
 const fmt=s=>{const x=dt(s);return WD[x.getDay()]+', '+x.getDate()+'. '+MON[x.getMonth()];};
 const TODAY=new Date().toLocaleDateString('sv-SE');
 const store={get(k){try{return localStorage.getItem(k);}catch(e){return null;}},set(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
-const WXI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+const WXI_OLD={0:'',1:'',2:'',3:'',45:'',48:'',51:'',53:'',55:'',61:'',63:'',65:'',80:'',81:'',82:'',95:'',96:'',99:''};
 
+const ICON=n=>`<svg class="ic" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+const WXI={0:'sun',1:'cloud-sun',2:'cloud-sun',3:'cloud',45:'cloud-fog',48:'cloud-fog',51:'cloud-drizzle',53:'cloud-drizzle',55:'cloud-rain',61:'cloud-rain',63:'cloud-rain',65:'cloud-rain',80:'cloud-drizzle',81:'cloud-rain',82:'cloud-lightning',95:'cloud-lightning',96:'cloud-lightning',99:'cloud-lightning'};
 /* ===== THEME ===== */
 (function(){
   const btn=document.getElementById('theme-btn');
   const apply=t=>{if(t){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.removeAttribute('data-theme');}
-    const dark=t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches;btn.textContent=dark?'☀️':'🌙';};
+    const dark=t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches;btn.innerHTML=dark?ICON('sun'):ICON('moon');};
   apply(store.get('camino_theme'));
   btn.addEventListener('click',()=>{const cur=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
     const nx=cur==='dark'?'light':'dark';store.set('camino_theme',nx);apply(nx);});
@@ -2084,13 +2145,15 @@ async function loadWX(){
 function wxFor(place,date){
   const w=WX&&WX[place];if(!w)return null;
   const i=w.daily?w.daily.time.indexOf(date):-1;
-  if(i>=0)return {fc:true,ic:WXI[w.daily.weathercode[i]]||'🌡️',max:Math.round(w.daily.temperature_2m_max[i]),min:Math.round(w.daily.temperature_2m_min[i]),rain:w.daily.precipitation_probability_max[i]};
-  if(w.current)return {fc:false,ic:WXI[w.current.weathercode]||'🌡️',now:Math.round(w.current.temperature_2m)};
+  if(i>=0)return {fc:true,ic:WXI[w.daily.weathercode[i]]||'thermometer',max:Math.round(w.daily.temperature_2m_max[i]),min:Math.round(w.daily.temperature_2m_min[i]),rain:w.daily.precipitation_probability_max[i]};
+  if(w.current)return {fc:false,ic:WXI[w.current.weathercode]||'thermometer',now:Math.round(w.current.temperature_2m)};
   return null;
 }
 function wxText(x){
   if(!x)return 'Wetter nicht verfügbar';
-  return x.fc?`${x.ic} ${x.max}° / ${x.min}° · ${x.rain??'–'}% Regen`:`${x.ic} jetzt ${x.now}° · Prognose ab ca. 16 Tage vorher`;
+  return x.fc?`${x.max}° / ${x.min}° · ${x.rain??'–'}% Regen`:`jetzt ${x.now}° · Prognose ab ca. 16 Tage vorher`;
+}
+function wxHTML(x){return x&&x.fc?`${ICON(x.ic)} ${wxText(x)}`:'';
 }
 
 /* ===== HEUTE ===== */
@@ -2102,24 +2165,24 @@ function renderToday(i){
   const stats=[];
   if(x.km)stats.push(`<span><b>${String(x.km).replace('.',',')}</b>km</span>`);
   if(x.up)stats.push(`<span><b>↑${x.up}</b>m</span>`);
-  if(x.boat)stats.push('<span><b>🚤</b>Boot</span>');
-  if(x.kind==='travel')stats.push('<span><b>✈️</b>Reisetag</span>');
-  const tel=x.tel?`<a class="btn" href="tel:${x.tel}">📞 Anrufen</a>`:'';
-  const maps=x.q?`<a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">📍 Hotel auf Karte</a>`:'';
+  if(x.boat)stats.push('<span><b>Boot</b></span>');
+  if(x.kind==='travel')stats.push('<span><b>Reisetag</b></span>');
+  const tel=x.tel?`<a class="btn" href="tel:${x.tel}">${ICON('phone')} Anrufen</a>`:'';
+  const maps=x.q?`<a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">${ICON('map-pin')} Hotel auf Karte</a>`:'';
   const stageBtn=x.stage?`<button class="btn pri" type="button" data-go="${x.stage}">Zur Etappe ↓</button>`:'';
   document.getElementById('today-card').innerHTML=`
    ${x.img?`<img class="tc-img" src="${x.img.src}" alt="${x.title}" loading="lazy">`:''}
    <div class="tc-head"><div class="tc-date">${fmt(x.d)}${real?'':'<span class="preview-badge">Vorschau</span>'}</div>
      <div class="tc-title">${x.title}</div><div class="tc-stats">${stats.join('')}</div></div>
    <div class="tc-body"><div class="tc-info">${x.info}</div>
-     ${x.hl?`<div class="tc-hl">⭐ ${x.hl.map(s=>`<span>${s}</span>`).join('')}</div>`:''}
-     ${x.cafe?`<div class="tc-info">☕ <b style="color:var(--ink);font-weight:500">${x.cafe}</b></div>`:''}
+     
+     ${x.cafe?`<div class="tc-info">Erste Pause: <b style="color:var(--ink);font-weight:500">${x.cafe}</b></div>`:''}
      <div class="tc-row">
-       ${x.hotel?`<div class="tc-box"><div class="tc-lbl">Unterkunft</div><div class="tc-val">${x.hotel}${x.bf?'<span class="badge">Frühstück</span>':''}</div><div class="tc-sub">Check-in ${x.ci} · Check-out ${x.co}</div></div>`:`<div class="tc-box"><div class="tc-lbl">Heimreise</div><div class="tc-val">Buen Camino! 🐚</div></div>`}
+       ${x.hotel?`<div class="tc-box"><div class="tc-lbl">Unterkunft</div><div class="tc-val">${x.hotel}${x.bf?'<span class="badge">Frühstück</span>':''}</div><div class="tc-sub">Check-in ${x.ci} · Check-out ${x.co}</div></div>`:`<div class="tc-box"><div class="tc-lbl">Heimreise</div><div class="tc-val">Buen Camino! </div></div>`}
        <div class="tc-box"><div class="tc-lbl">Wetter ${x.place}</div><div class="tc-val" id="tc-wx">lädt…</div></div>
      </div>
      <div class="tc-btns">${stageBtn}${tel}${maps}</div></div>`;
-  loadWX().then(()=>{const el=document.getElementById('tc-wx');if(el)el.textContent=wxText(wxFor(x.place,x.d));});
+  loadWX().then(()=>{const el=document.getElementById('tc-wx');if(el){const h=wxHTML(wxFor(x.place,x.d));if(h)el.innerHTML=h;else{const b=el.closest('.tc-box');if(b)b.remove();}}});
   const g=document.querySelector('[data-go]');if(g)g.addEventListener('click',()=>openStage(+g.dataset.go,true));
 }
 (function(){
@@ -2152,26 +2215,26 @@ const ti=SDAYS.findIndex(x=>x.d===TODAY);if(ti>=0)openStage(ti+1,false);
 document.getElementById('open-all').addEventListener('click',e=>{const allOpen=STAGES.every(s=>s.classList.contains('open'));
   STAGES.forEach(s=>{s.classList.toggle('open',!allOpen);s.querySelector('.stage-head').setAttribute('aria-expanded',!allOpen);});
   e.target.textContent=allOpen?'Alle aufklappen':'Alle zuklappen';});
-loadWX().then(()=>{STAGES.forEach((s,i)=>{const sd=SDAYS[i];const w=s.querySelector('.stage-wx');if(sd&&w)w.textContent=wxText(wxFor(sd.place,sd.d));});});
+loadWX().then(()=>{STAGES.forEach((s,i)=>{const sd=SDAYS[i];const w=s.querySelector('.stage-wx');if(sd&&w){const h=wxHTML(wxFor(sd.place,sd.d));if(h)w.innerHTML=h;else w.remove();}});});
 (function(){
   const walk=SDAYS.filter(x=>x.km);const tot=walk.reduce((a,x)=>a+x.km,0);
   const done=x=>x.d<TODAY;
   const segs=walk.map(x=>`<div class="rb-seg${x.boat?' boat':''}${x.fin?' fin':''}${done(x)?' done':''}${x.d===TODAY?' now':''}" style="flex:${Math.max(x.km,6)}" title="${x.title} · ${x.km} km"></div>`).join('');
-  const labels=walk.map(x=>`<span style="flex:${Math.max(x.km,6)}">${x.boat?'🚤':x.place}</span>`).join('');
+  const labels=walk.map(x=>`<span style="flex:${Math.max(x.km,6)}">${x.boat?'Boot':x.place}</span>`).join('');
   const kmDone=walk.filter(done).reduce((a,x)=>a+x.km,0);
-  const leg=TODAY<DAYS[0].d?`~${Math.round(tot)} km in ${walk.length} Etappen · Start am ${fmt(DAYS[1].d)}`:`${Math.round(kmDone)} von ~${Math.round(tot)} km geschafft`;
+  const leg=TODAY<DAYS[0].d?`~140 km · Start am ${fmt(DAYS[1].d)}`:`${Math.round(kmDone)} km geschafft`;
   document.getElementById('route-bar').innerHTML=`<div class="rb-track">${segs}</div><div class="rb-labels">${labels}</div><div class="rb-legend">${leg}</div>`;
 })();
 
 /* ===== BUCHUNGEN ===== */
 (function(){
-  const fl=(d,name,meta)=>{const y=dt(d);return `<div class="bk flight"><div class="bk-date"><b>${y.getDate()}.</b><span>${WD[y.getDay()]} · Jun</span></div><div><div class="bk-name">✈️ ${name}</div><div class="bk-meta">${meta}</div></div></div>`;};
+  const fl=(d,name,meta)=>{const y=dt(d);return `<div class="bk flight"><div class="bk-date"><b>${y.getDate()}.</b><span>${WD[y.getDay()]} · Jun</span></div><div><div class="bk-name">${name}</div><div class="bk-meta">${meta}</div></div></div>`;};
   let html=fl('2027-06-11','Chair Airlines CS176','Zürich 15:35 → Porto 17:15 · Koffer 23 kg + Handgepäck 8 kg · Sitzplätze reserviert');
   DAYS.filter(x=>x.hotel).forEach((x,i,a)=>{const y=dt(x.d);const out=a[i+1]?a[i+1].d:'2027-06-20';const o=dt(out);
     html+=`<div class="bk"><div class="bk-date"><b>${y.getDate()}.</b><span>${WD[y.getDay()]} → ${WD[o.getDay()]}</span></div><div>
       <div class="bk-name">${x.hotel}${x.bf?'<span class="badge">Frühstück</span>':''}</div>
       <div class="bk-meta">${x.place} · Check-in ${x.ci} · Check-out ${x.co}</div>
-      <div class="bk-btns">${x.tel?`<a class="btn" href="tel:${x.tel}">📞 ${x.tel.replace(/^\+(351|34)/,'+$1 ')}</a>`:''}<a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">📍 Karte</a></div></div></div>`;});
+      <div class="bk-btns">${x.tel?`<a class="btn" href="tel:${x.tel}">${ICON('phone')} ${x.tel.replace(/^\+(351|34)/,'+$1 ')}</a>`:''}<a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">${ICON('map-pin')} Karte</a></div></div></div>`;});
   html+=fl('2027-06-20','Air Europa UX7234 + UX1671','A Coruña 12:35 → Madrid 13:45 · Madrid 15:10 → Zürich 17:30 · Koffer 23 kg durchgecheckt');
   document.getElementById('bk-list').innerHTML=html;
 })();
@@ -2194,7 +2257,7 @@ loadWX().then(()=>{STAGES.forEach((s,i)=>{const sd=SDAYS[i];const w=s.querySelec
   DAYS.filter(x=>x.hotel).forEach((x,i)=>{
     const cls=x.fin?' fin':(x.kind==='travel'||x.kind==='rest'?' tr':'');
     const ic=L.divIcon({className:'',html:`<div class="pin-hit"><div class="map-pin${cls}">${i+1}</div></div>`,iconSize:[44,44],iconAnchor:[22,22]});
-    L.marker([x.lat,x.lon],{icon:ic}).addTo(map).bindPopup(`<b>${fmt(x.d)}</b><br>${x.title}<br>🏨 ${x.hotel}${x.approx?' <i>(Position ungefähr)</i>':''}<br><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">In Google Maps öffnen</a>`);
+    L.marker([x.lat,x.lon],{icon:ic}).addTo(map).bindPopup(`<b>${fmt(x.d)}</b><br>${x.title}<br>${x.hotel}${x.approx?' <i>(Position ungefähr)</i>':''}<br><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">In Google Maps öffnen</a>`);
   });
   map.fitBounds(L.latLngBounds(Object.values(P)),{padding:[20,20]});
 })();
@@ -2222,7 +2285,7 @@ function heroBlock(ch,eager){
 function galleryBlock(ch,title){
   const c=IMAGE_MAP.chapters[ch];if(!c||!c.gallery.length)return '';
   const real=c.gallery.filter(g=>g.src);if(!real.length)return '';const list=real;
-  return (title?`<div class="gal-title">${escH(title)}</div>`:'')+`<div class="gallery">${list.map(g=>`<figure>${imgHTML(g,'img-g','',false)}${g.src?`<figcaption>${escH(g.motif||'')}${g.credit?` · ${creditHTML(g)}`:''}</figcaption>`:''}</figure>`).join('')}</div>`;
+  return (title?`<div class="gal-title">${escH(title)}</div>`:'')+`<div class="gallery">${list.map(g=>`<figure>${imgHTML(g,'img-g','',false)}${g.src?`<figcaption>${escH(g.motif||'')}${g.credit?`<span class="cr">${creditHTML(g)}</span>`:''}</figcaption>`:''}</figure>`).join('')}</div>`;
 }
 /* Etappen: Hero + Galerie */
 STAGES.forEach((s,i)=>{
@@ -2276,8 +2339,8 @@ const tzOf=place=>/Porto|Valença/.test(place)?1:2; /* Portugal UTC+1, Spanien U
 const hm=h=>{h=((h%24)+24)%24;let H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H++;M=0;}return H+':'+String(M).padStart(2,'0');};
 const q15=h=>Math.round(h*4)/4;
 const PLAN_FIX={
-  '2027-06-12':{start:10,tz:1,note:'Start nach Transfer/Zug in Valença (portugiesische Zeit). Ab der Brücke nach Tui gilt spanische Zeit, +1 h.'},
-  '2027-06-17':{boat:true,note:'Abfahrt nach Bootsfahrplan (Gezeiten) – danach ~1 h zu Fuss nach Padrón.'}
+  '2027-06-12':{start:10,tz:1,note:'Start in Valença nach Transfer oder Zug. Ab der Brücke nach Tui gilt spanische Zeit (+1 h).'},
+  '2027-06-17':{boat:true,note:'Abfahrt nach Gezeiten – danach ca. 1 h zu Fuss nach Padrón.'}
 };
 function dayPlan(i){
   const x=DAYS[i],prev=DAYS[i-1]||x,fix=PLAN_FIX[x.d]||{};
@@ -2295,15 +2358,11 @@ function dayPlan(i){
 }
 const fH=h=>String(Math.round(h*2)/2).replace('.',',');
 function planHTML(i){
-  const p=dayPlan(i);
-  const sun=`🌅 Sonnenaufgang ${hm(p.sr)}${p.srTag} · 🌇 Untergang ${hm(p.ss)}`;
-  if(p.start==null)return `<div class="plan-box"><div class="plan-main">${sun}</div>${p.note?`<div class="plan-sub">${p.note}</div>`:''}</div>`;
-  const why=p.tmaxFc?`Prognose ${p.tmax}°`:'Juni-Mittel ~23°';
-  const hot=p.early?' – heiss: lieber 7:30 los':'';
-  return `<div class="plan-box"><div class="plan-main">⏰ Abmarsch <b>${hm(p.start)}</b> → Ankunft ca. <b>${hm(p.arrive)}</b></div>
-    <div class="plan-sub">Gehzeit ~${fH(p.walk)} h, mit Pausen ~${fH(p.total)} h · ${why}${hot}</div>
-    <div class="plan-sub">${sun}</div>
-    ${p.note?`<div class="plan-sub">${p.note}</div>`:''}</div>`;
+  const p=dayPlan(i),parts=[];
+  if(p.walk)parts.push(`<div class="plan-main">Gehzeit ca. ${fH(p.walk)} h, mit Pausen ca. ${fH(p.total)} h</div>`);
+  if(p.early)parts.push(`<div class="plan-sub">Heiss angesagt (${p.tmax}°): früher losgehen.</div>`);
+  if(p.note)parts.push(`<div class="plan-sub">${p.note}</div>`);
+  return parts.length?`<div class="plan-box">${parts.join('')}</div>`:'';
 }
 
 /* ===== Restaurants pro Tag (aus dem Abschnitt «Wo ihr esst») ===== */
@@ -2311,21 +2370,21 @@ const RESTS={};
 document.querySelectorAll('#restaurants .rest-city').forEach(c=>{
   const lbl=(c.querySelector('.rest-city-day')||{}).textContent||'';const m=lbl.match(/Tag (\d)/);
   const key=m?'s'+m[1]:(/19\.06/.test(lbl)?'2027-06-19':null);if(!key)return;
-  RESTS[key]=[...c.querySelectorAll('.ri a')].map(a=>a.textContent.replace(/^🍽️\s*/,'').trim());
+  RESTS[key]=[...c.querySelectorAll('.ri a')].map(a=>a.textContent.replace(/^\s*/,'').trim());
 });
 const restFor=x=>RESTS[x.d]||(x.stage?RESTS['s'+x.stage]:null)||[];
 
 /* ===== Etappe teilen ===== */
 function shareText(i){
   const x=DAYS[i],p=dayPlan(i),L=[];
-  L.push(`🐚 Camino · ${fmt(x.d)}${x.stage&&x.stage<8?` · Tag ${x.stage}`:''}`);
-  L.push(`*${x.title.replace(/[🎉🚤]\s*/g,'').trim()}*${x.km?` · ${String(x.km).replace('.',',')} km`:''}${x.up?` · ↑${x.up} m`:''}`);
-  if(p.start!=null)L.push(`⏰ Abmarsch ${hm(p.start)} → Ankunft ca. ${hm(p.arrive)}`);
-  if(x.hl)L.push('⭐ '+x.hl.join(', '));
-  if(x.cafe)L.push('☕ '+x.cafe);
-  if(x.hotel)L.push(`🏨 ${x.hotel} · Check-in ${x.ci}${x.tel?` · ${x.tel}`:''}\n📍 https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}`);
-  const r=restFor(x);if(r.length)L.push('🍽️ '+r.join(' / '));
-  const w=wxFor(x.place,x.d);if(w&&w.fc)L.push(`🌦️ ${w.max}° / ${w.min}° · ${w.rain??'–'}% Regen`);
+  L.push(`Camino · ${fmt(x.d)}${x.stage&&x.stage<8?` · Tag ${x.stage}`:''}`);
+  L.push(`*${x.title.replace(/[]\s*/g,'').trim()}*${x.km?` · ${String(x.km).replace('.',',')} km`:''}${x.up?` · ↑${x.up} m`:''}`);
+  if(p.start!=null)
+  if(x.hl)L.push('Highlights: '+x.hl.join(', '));
+  if(x.cafe)L.push('Erste Pause: '+x.cafe);
+  if(x.hotel)L.push(`Hotel: ${x.hotel} · Check-in ${x.ci}${x.tel?` · ${x.tel}`:''}\nKarte: https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}`);
+  const r=restFor(x);if(r.length)L.push('Abendessen: '+r.join(' / '));
+  const w=wxFor(x.place,x.d);if(w&&w.fc)L.push(`Wetter: ${w.max}° / ${w.min}° · ${w.rain??'–'}% Regen`);
   L.push(SITE_URL+'#heute');
   return L.join('\n');
 }
@@ -2351,10 +2410,10 @@ function locate(){
     const kmT=km<10?km.toFixed(1).replace('.',','):Math.round(km).toLocaleString('de-CH');
     const ar=(x.stage&&typeof alongRoute==='function')?alongRoute(x.stage,la,lo):null;
     out.innerHTML=ar&&ar.off<1
-      ?`Noch <b>${ar.left.toFixed(1).replace('.',',')} km auf dem Weg</b> bis <b>${escH(x.hotel)}</b> · ${ar.done.toFixed(1).replace('.',',')} km geschafft${ar.off>0.15?` (${Math.round(ar.off*1000)} m neben der Route)`:''}.<br><a href="${nav}" target="_blank" rel="noopener">🧭 Zu Fuss dorthin navigieren ↗</a>`
+      ?`Noch <b>${ar.left.toFixed(1).replace('.',',')} km auf dem Weg</b> bis <b>${escH(x.hotel)}</b> · ${ar.done.toFixed(1).replace('.',',')} km geschafft${ar.off>0.15?` (${Math.round(ar.off*1000)} m neben der Route)`:''}.<br><a href="${nav}" target="_blank" rel="noopener">${ICON('navigation')} Zu Fuss dorthin navigieren</a>`
       :km>250
-      ?`Du bist noch <b>${kmT} km</b> von ${escH(x.place)} entfernt.${TODAY<DAYS[1].d?' Buen Camino ab dem 12. Juni! 🐚':''}`
-      :`Noch <b>${kmT} km Luftlinie</b> bis <b>${escH(x.hotel)}</b> (${fmt(x.d)}).<br><a href="${nav}" target="_blank" rel="noopener">🧭 Zu Fuss dorthin navigieren ↗</a>${x.approx?' <span style="color:var(--muted)">(Hotelposition ungefähr)</span>':''}`;
+      ?`Du bist noch <b>${kmT} km</b> von ${escH(x.place)} entfernt.${TODAY<DAYS[1].d?' Buen Camino ab dem 12. Juni! ':''}`
+      :`Noch <b>${kmT} km Luftlinie</b> bis <b>${escH(x.hotel)}</b> (${fmt(x.d)}).<br><a href="${nav}" target="_blank" rel="noopener">${ICON('navigation')} Zu Fuss dorthin navigieren</a>${x.approx?' <span style="color:var(--muted)">(Hotelposition ungefähr)</span>':''}`;
     if(window.CMAP&&typeof L!=='undefined'){
       if(YOU){YOU.forEach(l=>window.CMAP.removeLayer(l));}
       YOU=[L.circle([la,lo],{radius:Math.min(acc,2000),color:'#2a7de1',weight:1,fillOpacity:.12}),
@@ -2376,8 +2435,8 @@ renderToday=function(i){
   const btns=body.querySelector('.tc-btns');
   const pb=document.createElement('div');pb.className='tc-plan';pb.innerHTML=planHTML(i);body.insertBefore(pb,btns);
   loadWX().then(()=>{if(CUR===i)pb.innerHTML=planHTML(i);});
-  const sh=document.createElement('button');sh.type='button';sh.className='btn';sh.textContent='💬 Teilen';sh.addEventListener('click',()=>shareDay(i));
-  const lo=document.createElement('button');lo.type='button';lo.className='btn';lo.textContent='🧭 Wo bin ich?';
+  const sh=document.createElement('button');sh.type='button';sh.className='btn';sh.innerHTML=ICON('share-2')+' Teilen';sh.addEventListener('click',()=>shareDay(i));
+  const lo=document.createElement('button');lo.type='button';lo.className='btn';lo.innerHTML=ICON('locate-fixed')+' Wo bin ich?';
   lo.addEventListener('click',()=>{document.getElementById('karte').scrollIntoView({behavior:'smooth',block:'start'});locate();});
   btns.appendChild(sh);btns.appendChild(lo);
 };
@@ -2389,7 +2448,7 @@ STAGES.forEach((s,k)=>{
   const w=s.querySelector('.stage-wx');if(!w)return;
   const pb=document.createElement('div');pb.className='stage-plan';pb.innerHTML=planHTML(i);w.after(pb);
   const row=document.createElement('div');row.className='stage-share';
-  const b=document.createElement('button');b.type='button';b.className='btn';b.textContent='💬 Etappe teilen';b.addEventListener('click',()=>shareDay(i));
+  const b=document.createElement('button');b.type='button';b.className='btn';b.innerHTML=ICON('share-2')+' Etappe teilen';b.addEventListener('click',()=>shareDay(i));
   row.appendChild(b);pb.after(row);
   loadWX().then(()=>{pb.innerHTML=planHTML(i);});
 });
@@ -2397,7 +2456,7 @@ STAGES.forEach((s,k)=>{
 /* ===== Splitwise ===== */
 (function(){
   if(!SPLITWISE_URL)return;
-  const b=document.getElementById('splitwise-btn');b.href=SPLITWISE_URL;b.textContent='💸 Zur Gruppe «Camino 2027» ↗';
+  const b=document.getElementById('splitwise-btn');b.href=SPLITWISE_URL;b.textContent='Zur Gruppe «Camino 2027» ↗';
   const n=document.getElementById('splitwise-note');if(n)n.remove();
 })();
 
@@ -2406,7 +2465,7 @@ function buildBook(){
   const el=document.getElementById('printbook');
   const pages=[];
   pages.push(`<section class="pb-page pb-cover"><div class="pb-kicker">Reisebuch</div><h1>Camino Portugués 2027</h1>
-    <div class="pb-sub">Porto · Valença · Variante Espiritual · Santiago · A Coruña<br>Fr 11. – So 20. Juni 2027 · ~128 km</div>
+    <div class="pb-sub">Porto · Valença · Variante Espiritual · Santiago · A Coruña<br>Fr 11. – So 20. Juni 2027 · ~140 km</div>
     <div class="pb-box" style="text-align:left;margin-top:12mm"><div class="l">Notfall</div>
       <p><b>112</b> Notruf Spanien &amp; Portugal</p><p><b>+41 800 24 7 365</b> EDA Helpline · <b>+41 58 465 33 33</b> EDA aus dem Ausland</p>
       <p style="font-size:9pt">EHIC-Karte und Reiseversicherung mitnehmen.</p></div>
@@ -2420,8 +2479,8 @@ function buildBook(){
       <p>${escH(x.info)}</p>
       ${x.hl?`<p><b>Highlights:</b> ${x.hl.map(escH).join(' · ')}</p>`:''}
       ${x.cafe?`<p><b>Pause:</b> ${escH(x.cafe)}</p>`:''}
-      <div class="pb-box"><div class="l">Zeiten</div><p>${p.start!=null?`Abmarsch <b>${hm(p.start)}</b> → Ankunft ca. ${hm(p.arrive)} · `:''}Sonnenaufgang ${hm(p.sr)}${p.srTag} · Sonnenuntergang ${hm(p.ss)}</p>${p.note?`<p style="font-size:9pt">${escH(p.note)}</p>`:''}</div>
-      ${x.hotel?`<div class="pb-box"><div class="l">Unterkunft</div><p><b>${escH(x.hotel)}</b>${x.bf?' · mit Frühstück':''}<br>${escH(x.place)} · Check-in ${escH(x.ci)} · Check-out ${escH(x.co)}<br><span class="pb-tel">☎ ${x.tel?x.tel.replace(/^\+(351|34)/,'+$1 '):'–'}</span></p></div>`:''}
+      <div class="pb-box"><div class="l">Zeiten</div><p>${p.walk?`Gehzeit ca. ${fH(p.walk)} h, mit Pausen ca. ${fH(p.total)} h`:''}${p.walk?' · ':''}Sonnenuntergang ${hm(p.ss)}</p>${p.note?`<p style="font-size:9pt">${escH(p.note)}</p>`:''}</div>
+      ${x.hotel?`<div class="pb-box"><div class="l">Unterkunft</div><p><b>${escH(x.hotel)}</b>${x.bf?' · mit Frühstück':''}<br>${escH(x.place)} · Check-in ${escH(x.ci)} · Check-out ${escH(x.co)}<br><span class="pb-tel">Tel. ${x.tel?x.tel.replace(/^\+(351|34)/,'+$1 '):'–'}</span></p></div>`:''}
       ${morningItems(i).length?`<div class="pb-box"><div class="l">Am Morgen</div><ul>${morningItems(i).map(([ic,t])=>`<li>${t}</li>`).join('')}</ul></div>`:''}
       ${DETOURS[x.d]?`<div class="pb-box"><div class="l">Abstecher</div><ul>${DETOURS[x.d].map(o=>`<li><b>${escH(o.n)}</b> (${escH(o.w)})</li>`).join('')}</ul></div>`:''}
       ${r.length?`<div class="pb-box"><div class="l">Abendessen</div><ul>${r.map(n=>`<li>${escH(n)}</li>`).join('')}</ul></div>`:''}
@@ -2476,13 +2535,13 @@ const DETOURS={
 };
 function detourHTML(d,compact){
   const L=DETOURS[d];if(!L)return '';
-  return `<div class="det"><div class="det-h">🔭 Abstecher &amp; Sehenswertes</div><ul>${L.map(x=>`<li><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">${escH(x.n)}</a><span class="det-w">${escH(x.w)}</span>${compact?'':`<div class="det-t">${escH(x.t)}</div>`}</li>`).join('')}</ul></div>`;
+  return `<div class="det"><div class="det-h">Abstecher &amp; Sehenswertes</div><ul>${L.map(x=>`<li><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">${escH(x.n)}</a><span class="det-w">${escH(x.w)}</span>${compact?'':`<div class="det-t">${escH(x.t)}</div>`}</li>`).join('')}</ul></div>`;
 }
 STAGES.forEach((s,k)=>{const sd=SDAYS[k];if(!sd)return;const sh=s.querySelector('.stage-share');if(!sh)return;
   const box=document.createElement('div');box.innerHTML=detourHTML(sd.d,false);if(box.firstChild)sh.after(box.firstChild);});
 const _renderToday3=renderToday;
 renderToday=function(i){_renderToday3(i);const body=document.querySelector('#today-card .tc-body');const btns=body&&body.querySelector('.tc-btns');
-  if(!btns)return;const box=document.createElement('div');const L=DETOURS[DAYS[i].d];if(!L)return;box.innerHTML=`<details class="det-fold"><summary>🔭 ${L.length} Abstecher &amp; Sehenswertes</summary>${detourHTML(DAYS[i].d,false)}</details>`;body.insertBefore(box.firstChild,btns);};
+  if(!btns)return;const box=document.createElement('div');const L=DETOURS[DAYS[i].d];if(!L)return;box.innerHTML=`<details class="det-fold"><summary>${L.length} Abstecher &amp; Sehenswertes</summary>${detourHTML(DAYS[i].d,false)}</details>`;body.insertBefore(box.firstChild,btns);};
 (function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
 
 /* ===== v9: Abends schon den nächsten Tag zeigen ===== */
@@ -2510,33 +2569,31 @@ renderToday=function(i){_renderToday4(i);
 const LUGGAGE_DAYS=['2027-06-12','2027-06-13','2027-06-14','2027-06-15','2027-06-16','2027-06-17','2027-06-18'];
 function morningItems(i){
   const x=DAYS[i],prev=DAYS[i-1],p=dayPlan(i),L=[];
-  if(LUGGAGE_DAYS.includes(x.d))L.push(['🧳',`Koffer bis <b>8:00</b> beschriftet an die Rezeption – Gepäcktransport nach ${escH(x.place)} (sobald bestätigt).`]);
   if(prev&&prev.hotel){
-    L.push(prev.bf?["☕",`Frühstück im Hotel (${escH(prev.hotel)}).`]:['☕',`Kein Frühstück gebucht${x.cafe?` – erste Pause: ${escH(x.cafe)}`:''}.`]);
-    L.push(['🔑',`Check-out ${escH(prev.hotel)} ${escH(prev.co||'')}.`]);
+    L.push(prev.bf?['',`Frühstück im Hotel (${escH(prev.hotel)}).`]:['',`Kein Frühstück gebucht${x.cafe?` – erste Pause: ${escH(x.cafe)}`:''}.`]);
   }
-  if(x.d==='2027-06-19')L.push(['🚆','Eigenes Gepäck im Zug nach A Coruña mitnehmen (~35 Min.).']);
+  if(x.d==='2027-06-19')L.push(['','Eigenes Gepäck im Zug nach A Coruña mitnehmen (~35 Min.).']);
   if(p.arrive!=null&&x.ci){const mm=x.ci.match(/(\d{1,2}):(\d{2})/);const ci=mm?+mm[1]+mm[2]/60:null;
-    if(ci!=null&&p.arrive<ci)L.push(['🏨',`Ankunft ca. ${hm(p.arrive)}, Check-in erst ab ${hm(ci)} – Gepäck abgeben und einkehren.`]);}
-  if(x.boat)L.push(['🚤','Abfahrtszeit am Vortag beim Bootsbetreiber bestätigen (siehe Etappe).']);
+    if(ci!=null&&p.arrive<ci)L.push(['',`Check-in erst ab ${hm(ci)} – bei früher Ankunft Gepäck abgeben und einkehren.`]);}
+  if(x.boat)L.push(['','Abfahrtszeit am Vortag beim Bootsbetreiber bestätigen (siehe Etappe).']);
   return L;
 }
 function morningHTML(i){const L=morningItems(i);if(!L.length)return '';
-  return `<div class="morning"><div class="det-h">🌄 Am Morgen</div><ul>${L.map(([ic,t])=>`<li><span>${ic}</span><span>${t}</span></li>`).join('')}</ul></div>`;}
+  return `<div class="morning"><div class="det-h">Am Morgen</div><ul>${L.map(([ic,t])=>`<li>${t}</li>`).join('')}</ul></div>`;}
 (function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
 
 /* ===== v9: Bootstag – Betreiber & Gezeiten ===== */
 (function(){
   const k=SDAYS.findIndex(x=>x.boat);if(k<0)return;const s=STAGES[k];const anchor=s&&s.querySelector('.stage-share');if(!anchor)return;
   const d=document.createElement('div');d.className='det boat-box';
-  d.innerHTML=`<div class="det-h">🌊 Boot & Gezeiten</div>
+  d.innerHTML=`<div class="det-h">Boot &amp; Gezeiten</div>
   <p>Die Abfahrt richtet sich nach der Flut (der Ulla ist nur bei genug Wasser befahrbar). Fahrzeit und Abfahrt bestimmt der Betreiber – <b>am Vortag nochmals bestätigen</b>, Fahrten werden manchmal kurzfristig verschoben.</p>
   <ul>
     <li><a href="tel:+34650410322">AMare Turismo Náutico</a><span class="det-w">+34 650 410 322</span><div class="det-t">Geführte Fahrt, ca. 30 € p. P.</div></li>
     <li><a href="https://labarcadelperegrino.com" target="_blank" rel="noopener">La Barca del Peregrino</a><span class="det-w">ca. 25 €</span><div class="det-t">Grösseres Boot, 28 Plätze.</div></li>
     <li><a href="https://rutasjuanallo.es" target="_blank" rel="noopener">Rutas Juan Allo</a><span class="det-w">ca. 25 €</span><div class="det-t">Kleingruppe, 7–13 Personen.</div></li>
   </ul>
-  <div class="tc-btns" style="margin-top:.6rem"><a class="btn" href="https://tablademareas.com/es/pontevedra/villagarcia-de-arousa" target="_blank" rel="noopener">🌊 Gezeitentabelle Vilagarcía ↗</a></div>
+  <div class="tc-btns" style="margin-top:.6rem"><a class="btn" href="https://tablademareas.com/es/pontevedra/villagarcia-de-arousa" target="_blank" rel="noopener">Gezeitentabelle Vilagarcía ↗</a></div>
   <p class="det-t" style="margin-top:.5rem">Plan B ohne Boot: knapp 8 km zu Fuss nach Vilagarcía de Arousa, dann Zug nach Pontecesures (ca. 2–3 €). Preise laut Pilgerforum, vor Buchung prüfen.</p>`;
   anchor.after(d);
 })();
@@ -2585,16 +2642,14 @@ function alongRoute(stage,la,lo){
 /* ===== v12: Camino Journal ===== */
 /* Reise-Bildkarten */
 const JLINES={
- '2027-06-11':'Ankunft in Porto, Abend in der Ribeira.',
- '2027-06-12':'Über die alte Grenzbrücke von Portugal nach Spanien – die ersten Schritte in Galicien.',
- '2027-06-13':'Auf der Römerstrasse hinauf nach Mos, dann der erste Blick auf die Ría de Vigo.',
- '2027-06-14':'Austern in Arcade, die Steinbrücke von Ponte Sampaio und ein Flussweg bis in die Altstadt.',
- '2027-06-15':'Hinaus ans Meer zu den Hórreos von Combarro, dann durch den Wald hinauf zum Kloster.',
- '2027-06-16':'Dem Bach entlang an alten Mühlen vorbei, bis sich die Ría de Arousa öffnet.',
- '2027-06-17':'Übers Wasser wie Jakobus selbst: mit dem Boot den Ulla hinauf nach Padrón.',
- '2027-06-18':'Der letzte Tag zu Fuss: durch die Wälder von Teo bis auf die Praza do Obradoiro.',
- '2027-06-19':'Compostela und Pilgermesse, dann weiter ans Meer nach A Coruña.',
- '2027-06-20':'Heimflug über Madrid nach Zürich.'
+ '2027-06-12':'Über die Grenzbrücke nach Galicien.',
+ '2027-06-13':'Römerstrasse, Mos und der erste Blick auf die Ría de Vigo.',
+ '2027-06-14':'Austern in Arcade, die Steinbrücke von Ponte Sampaio.',
+ '2027-06-15':'Hórreos in Combarro, Aufstieg zum Kloster.',
+ '2027-06-16':'Mühlen, Wasserfälle und die Ría de Arousa.',
+ '2027-06-17':'Mit dem Boot den Ulla hinauf – wie Jakobus selbst.',
+ '2027-06-18':'Durch die Wälder von Teo bis zum Obradoiro.',
+ '2027-06-19':'Compostela, dann weiter nach A Coruña.'
 };
 (function(){
   const box=document.getElementById('journey');if(!box)return;
@@ -2609,8 +2664,8 @@ const JLINES={
     return `<a class="j-card${walk?'':' j-small'}" href="#${x.stage?'etappen':'anreise'}" data-go2="${target}">
       <div class="j-img">${img}</div>
       <div class="j-text"><div class="j-meta">${meta}</div><div class="j-title">${escH(x.title)}</div>
-      ${walk?`<p class="j-line">${escH(JLINES[x.d]||x.info)}</p>`:`<p class="j-line">${escH(JLINES[x.d]||'')}</p>`}
-      ${facts?`<div class="j-facts">${facts}</div>`:''}${walk?'<span class="j-more">Zur Etappe →</span>':''}</div></a>`;
+      ${JLINES[x.d]?`<p class="j-line">${escH(JLINES[x.d])}</p>`:''}
+      ${facts?`<div class="j-facts">${facts}</div>`:''}${walk?'':''}</div></a>`;
   }).join('');
   box.querySelectorAll('[data-go2]').forEach(a=>a.addEventListener('click',e=>{
     const t=a.dataset.go2;if(t.startsWith('stage:')){e.preventDefault();openStage(+t.slice(6),true);}
@@ -2622,7 +2677,7 @@ const REST_LINKS={};
 document.querySelectorAll('#restaurants .rest-city').forEach(c=>{
   const lbl=(c.querySelector('.rest-city-day')||{}).textContent||'';const m=lbl.match(/Tag (\d)/);
   const key=m?'s'+m[1]:(/19\.06/.test(lbl)?'s8':null);if(!key)return;
-  REST_LINKS[key]=[...c.querySelectorAll('.ri a')].map(a=>({href:a.href,name:a.textContent.replace(/^🍽️\s*/,'').trim()}));
+  REST_LINKS[key]=[...c.querySelectorAll('.ri a')].map(a=>({href:a.href,name:a.textContent.replace(/^\s*/,'').trim()}));
 });
 STAGES.forEach((s,k)=>{
   const body=s.querySelector('.stage-body');if(!body)return;

@@ -29,7 +29,7 @@ Aktuell eingesetzt: 35 Bilder (Unsplash und Wikimedia Commons). Ort jedes Unspla
 ## Unterwegs-Funktionen (v7)
 
 - **Wo bin ich?** (Karte und Heute-Karte): GPS-Standort auf der Karte, Luftlinie zum Hotel des gewählten Tags, Link zur Fussnavigation in Google Maps.
-- **Start-Tipp** pro Etappe: Sonnenauf-/-untergang (offline berechnet), Gehzeit (km/4,3 + 1,8 h pro 1000 Hm, plus Pausen) und Abmarsch standardmässig 8:00 (bei ≥ 28° Hinweis auf 7:30). Sonderfälle Tag 1 (Transfer) und Bootstag in `PLAN_FIX`.
+- **Start-Tipp** pro Etappe: Sonnenauf-/-untergang (offline berechnet), Gehzeit (km/4,3 + 1,8 h pro 1000 Hm, plus Pausen) und nur noch Gehzeit, Hitzehinweis ab 28° und Sonderfälle (keine tägliche Abmarschzeit). Sonderfälle Tag 1 (Transfer) und Bootstag in `PLAN_FIX`.
 - **Abstecher** pro Tag in `DETOURS` (Name, Aufwand, Text, Google-Maps-Suche).
 - **Abends (ab 18 Uhr)** zeigt die Heute-Ansicht den nächsten Tag, mit «Am Morgen»-Hinweisen (Koffer bis 8:00, Frühstück, Check-out, Ankunft vor Check-in).
 - **Bootstag**: Betreiber, Preise (Pilgerforum), Gezeitenlink, Plan B.
@@ -61,3 +61,11 @@ Aktuell eingesetzt: 35 Bilder (Unsplash und Wikimedia Commons). Ort jedes Unspla
 - Während der Reise (oder abends davor) rückt «Heute» direkt unter die Navigation.
 - Etappendetail-Reihenfolge per JS: Bild, Einführung, Fakten, Route & Höhenprofil, Sehenswertes, Galerie, Essen, Unterkunft, Praktisch.
 - Bilder mit Status `WIKIMEDIA_ATTRIBUTION_PENDING` werden nicht angezeigt, bis Urheber und Lizenz eingetragen sind (Status dann auf `WIKIMEDIA_OK` setzen und `credit` ergänzen).
+
+## Feinschliff (v13)
+
+- Gesamtdistanz ~140 km (vorläufiger Planungswert); Etappendistanzen unverändert.
+- Kennzahl «6 + Boot» entfernt, Simon entfernt (Crew, Footer, Tipps).
+- Keine Standard-Emojis mehr; funktionale Symbole als Lucide-Icons (Sprite `#i-…`, Funktion `ICON(name)`).
+- Bildquellen als Fussnote (10,5 px, gedämpft, Unterstreichung nur bei Hover/Fokus).
+- Redundanzen entfernt: tägliche Abmarschzeit, Check-out- und Gepäckzeilen im Morgenblock, Höhen-/Zeit-Pills, Tags, doppelte Restaurantbox, Fülltexte.
