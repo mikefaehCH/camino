@@ -1,5 +1,5 @@
 /* Camino 2027 – Offline-Cache */
-const CACHE = 'camino-v23';
+const CACHE = 'camino-v24';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png',
   './images/start/pilger-nebelwald-800.webp', './images/porto/porto-douro-sonnenuntergang-800.webp', './images/porto/porto-ponte-luis-blaue-stunde-800.webp',
   './images/porto/porto-ribeira-800.webp', './images/porto/porto-pasteis-de-nata-800.webp',
