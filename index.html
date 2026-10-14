@@ -2571,9 +2571,16 @@ STAGES.forEach((s,i)=>{
 (function(){const el=document.getElementById('porto-images');if(el)el.innerHTML=heroBlock('00-porto',false)+galleryBlock('00-porto','Porto');})();
 /* Heute-Karte: Titelbild des Tages */
 const _renderToday=renderToday;
+/* Tage ohne eigenes Kapitel: Bild aus einer Galerie (Kapitel, Bild-ID) */
+const TODAY_OVR={'2027-06-20':['09-a-coruna','C03']};
 renderToday=function(i){_renderToday(i);const x=DAYS[i];const chs=(IMAGE_MAP.dayChapters||{})[x.d]||[];
-  const card=document.getElementById('today-card');if(!chs.length||!card)return;
-  const w=document.createElement('div');w.className='tc-img-wrap';w.innerHTML=heroBlock(chs[0],true);card.insertBefore(w,card.firstChild);};
+  const card=document.getElementById('today-card');if(!card)return;
+  const ov=TODAY_OVR[x.d];let html='';
+  if(ov){const c=IMAGE_MAP.chapters[ov[0]];const g=c&&(c.gallery||[]).find(g=>g.id===ov[1]&&g.src);
+    if(g)html=`<figure class="ph-fig">${imgHTML(g,'img-hero',g.motif||x.title,true)}${g.credit?`<figcaption class="img-credit">${creditHTML(g)}</figcaption>`:''}</figure>`;}
+  else if(chs.length)html=heroBlock(chs[0],true);
+  if(!html)return;
+  const w=document.createElement('div');w.className='tc-img-wrap';w.innerHTML=html;card.insertBefore(w,card.firstChild);};
 (function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
 
 /* ===== v4: aufklappbare Info-Abschnitte ===== */
