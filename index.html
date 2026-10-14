@@ -883,6 +883,20 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 .stage.merged .stage-body .img-credit{margin-left:0;}
 .stage.merged .stage-body .gallery{padding-left:0;padding-right:0;}
 .map-legend{display:flex;flex-wrap:wrap;gap:.35rem 1rem;}.map-legend span{display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;}.lg{display:inline-block;width:22px;height:0;border-top:3px solid #216c53;}.lg.boat{border-top-style:dashed;border-color:#377e67;}.lg.tr{border-top:3px dotted #7f978c;}.lg.todo{border-top:3px dotted #8a8f86;opacity:.8;}
+.wx-hist{margin:var(--s3,1.5rem) 0 0;padding:1.1rem 1.1rem .9rem;border:1px solid var(--border);border-radius:1rem;background:var(--card);}
+.wxh-t{font-family:Fraunces,Georgia,serif;font-size:1.15rem;color:var(--ink);}
+.wxh-s{font-size:.85rem;color:var(--muted);margin:.2rem 0 .6rem;}
+.wxh-h{font-size:.75rem;color:var(--muted);margin:.8rem 0 .2rem;}
+.wxh-chart svg{display:block;width:100%;height:auto;overflow:visible;}
+.wxh-chart .ax{font:9px var(--sans,system-ui);fill:var(--muted);}
+.wxh-chart .gl{stroke:var(--border);stroke-width:1;}
+.wxh-chart .mk{fill:var(--forest,#344D41);}
+.wxh-chart .rg{stroke:var(--forest,#344D41);stroke-width:4;stroke-linecap:round;}
+.wxh-chart .hit{fill:transparent;cursor:default;}
+.wxh-chart g.y:hover .mk,.wxh-chart g.y:hover .rg{opacity:.75;}
+.wxh-tbl{margin-top:.6rem;font-size:.82rem;}.wxh-tbl summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--link);}
+.wxh-tbl table{border-collapse:collapse;width:100%;}.wxh-tbl td,.wxh-tbl th{padding:.25rem .4rem;text-align:right;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums;}.wxh-tbl th:first-child,.wxh-tbl td:first-child{text-align:left;}
+.wxh-src{font-size:.7rem;color:var(--muted);margin-top:.5rem;}.wxh-src a,#wetter .wbox a{color:var(--link);}
 .tc-addr{font-size:.78rem;color:var(--muted);margin-top:.15rem;}
 .mbtn.gpx{gap:.35rem;}
 #journey,.j-item,.j-item>*,.stage-body,.stage-body>*{min-width:0;}.gallery{max-width:100%;}
@@ -1311,6 +1325,9 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <hr class="rule">
 
 <!-- PLANEN -->
+
+
+<!-- BUCHUNGEN -->
 <section id="planen" class="sec planen">
   <p class="eyebrow">Reise organisieren</p>
   <h2>Alles, was ihr <em>unterwegs braucht</em></h2>
@@ -1318,7 +1335,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <a href="#buchungen"><b>Buchungen &amp; Kosten</b><span>Flüge, Unterkünfte, Notfall, offene Aufgaben</span></a>
     <a href="#anreise"><b>An- und Heimreise</b><span>Porto, Valença, Rückflug</span></a>
     <a href="#restaurants"><b>Restaurants</b><span>Pro Abend, mit Karte</span></a>
-    <a href="#infos"><b>Praktisches</b><span>Compostela, Vorbereitung, Wetter, Links</span></a>
+    <a href="#infos"><b>Praktisches</b><span>Pilgerpass, Compostela, Wetter</span></a>
   </div>
 </section>
 
@@ -1413,7 +1430,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <section id="infos" class="sec">
   <div class="chip"><div class="chip-dot"></div>Infos</div>
   <h2>Gut zu <em>wissen</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;">ℹ️</span><div class="sec-rule-line"></div></div>
+  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   
   <div class="print-row"><button class="btn" type="button" id="print-btn"><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg> Reisebuch drucken / als PDF</button></div>
   <p class="prose" style="font-size:.78rem;margin-top:.4rem;">A5-Heft mit allen Tagen, Hotels, Telefonnummern und Startzeiten – als Notlösung ohne Handy-Akku. Im Druckdialog «Als PDF sichern» wählen.</p>
@@ -1502,21 +1519,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <hr class="rule">
 
 <!-- TIPPS -->
-<section id="tipps" class="sec fold">
-  <div class="chip"><div class="chip-dot"></div>Vorbereitung</div>
-  <h2>Vor<em>bereitung</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
-  <div class="tgrid">
-    <div class="tc"><h3>Schuhe</h3><ul><li>Nie neue Schuhe starten</li><li>100 km einlaufen ab Herbst 2026</li><li>Trailrunner > Wanderstiefel</li><li>Merino-Socken, nie Baumwolle</li><li>Sandalen für Abende</li></ul></div>
-    <div class="tc"><h3>Gepäck</h3><ul><li>Max. 8–9 kg am Rücken</li><li>Koffer max. 15 kg für Gepäcktransport</li><li>3 Wanderoutfits reichen</li><li>Waschmöglichkeit in vielen Unterkünften</li><li>Kopflampe mitnehmen</li></ul></div>
-    <div class="tc"><h3>Füsse</h3><ul><li>Druckstellen früh abkleben</li><li>Tape und Blasenpflaster dabei</li><li>Apotheken (Farmacia) in jedem Etappenort</li></ul></div>
-    <div class="tc"><h3>Navigation</h3><ul><li>Buen Camino App (Offline!)</li><li>Maps.me als Backup</li><li>Credencial: täglich 2 Stempel</li></ul></div>
-    <div class="tc"><h3>Unterwegs</h3><ul><li>Menú del Peregrino am Mittag</li><li>Albariño & Ribeiro probieren</li><li>Genug Wasser mitnehmen</li></ul></div>
-    <div class="tc"><h3>Gesundheit</h3><ul><li>Sonnencreme SPF50 täglich</li><li>Elektrolyte für heiße Tage</li><li>Persönliche Medikamente</li><li>Trekkingstöcke sehr empfohlen</li><li>EHIC-Karte mitnehmen</li></ul></div>
-  </div>
-</section>
 
-<hr class="rule">
 
 <!-- WETTER -->
 <section id="wetter" class="sec fold">
@@ -1529,26 +1532,19 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <div class="wc"><div class="icon"></div><span class="val">7–8</span><div class="lbl">Regentage im Juni</div></div>
   </div>
   <div class="wbox"><strong>Regenjacke immer dabei.</strong> Juni-Mittel in Santiago 1981–2010: 72 mm Regen an rund 7–8 Tagen. Sonnenuntergang gegen 22 Uhr. <a href="https://www.aemet.es/es/serviciosclimaticos/datosclimatologicos/valoresclimatologicos?l=1428" target="_blank" rel="noopener">Quelle: AEMET</a></div>
+  <figure class="wx-hist" id="wx-hist" aria-labelledby="wxh-t">
+    <figcaption><div class="wxh-t" id="wxh-t">Juni in Santiago, 2010–2025</div><div class="wxh-s">Jedes Jahr anders: Ø 22,6° / 11,6°, Regen zwischen 5 und 118 mm (Mittel 59 mm).</div></figcaption>
+    <div class="wxh-h">Ø Tiefst- bis Höchsttemperatur, °C</div><div class="wxh-chart" id="wxh-temp"></div>
+    <div class="wxh-h">Regen im Juni, mm</div><div class="wxh-chart" id="wxh-rain"></div>
+    <details class="wxh-tbl"><summary>Tabelle</summary><table><thead><tr><th>Jahr</th><th>Ø Max</th><th>Ø Min</th><th>Regen</th></tr></thead><tbody id="wxh-body"></tbody></table></details>
+    <div class="wxh-src">Messstation Santiago-Lavacolla (Flughafen), Monatswerte via <a href="https://en.tutiempo.net/climate/ws-80420.html" target="_blank" rel="noopener">tutiempo.net</a>. Juni 2026 dort noch nicht verfügbar; Juni 2023 mit 2 fehlenden Regentagen.</div>
+  </figure>
 </section>
 
 <hr class="rule">
 
 <!-- LINKS -->
-<section id="links" class="sec fold">
-  <div class="chip"><div class="chip-dot"></div>Nützliche Links</div>
-  <h2>Alles was ihr <em>braucht</em></h2>
-  <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
-  <div class="link-grid">
-    <a class="lcard" href="https://www.cp.pt/passageiros/pt" target="_blank"><div class="lcard-icon"></div><div class="lcard-name">CP Züge Portugal</div><div class="lcard-desc">Plan B: Porto → Valença</div><div class="lcard-url">cp.pt ↗</div></a>
-    <a class="lcard" href="https://www.meteogalicia.gal" target="_blank" rel="noopener"><div class="lcard-icon"></div><div class="lcard-name">MeteoGalicia</div><div class="lcard-desc">Offizielles Wetter Galicien</div><div class="lcard-url">meteogalicia.gal ↗</div></a>
-    <a class="lcard" href="https://www.gronze.com/camino-portugues" target="_blank"><div class="lcard-icon"></div><div class="lcard-name">Gronze Etappen</div><div class="lcard-desc">Inkl. Variante Espiritual</div><div class="lcard-url">gronze.com ↗</div></a>
-    <a class="lcard" href="https://www.elcaminoconcorreos.com/es/transporte-mochilas" target="_blank"><div class="lcard-icon"></div><div class="lcard-name">Gepäcktransport</div><div class="lcard-desc">Correos Paq Mochila</div><div class="lcard-url">elcaminoconcorreos.com ↗</div></a>
-    <a class="lcard" href="https://www.google.com/search?q=AMare+Traslatio+Vilanova+de+Arousa+Pontecesures" target="_blank"><div class="lcard-icon"></div><div class="lcard-name">Boot Translatio</div><div class="lcard-desc">AMare · Vilanova → Pontecesures</div><div class="lcard-url">Suche ↗</div></a>
-    <a class="lcard" href="https://oficinadelperegrino.com/en/" target="_blank"><div class="lcard-icon"></div><div class="lcard-name">Pilgerbüro Santiago</div><div class="lcard-desc">Compostela-Urkunde &amp; Infos</div><div class="lcard-url">oficinadelperegrino.com ↗</div></a>
-  </div>
-</section>
 
-<hr class="rule">
 
 <!-- CREW -->
 <section id="crew">
@@ -3201,6 +3197,27 @@ renderToday=function(i){_renderToday24(i);const x=DAYS[i];const card=document.ge
 };
 (function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
 (function(){if(TODAY>DAYS[DAYS.length-1].d){const h=document.getElementById('heute-h2');if(h)h.innerHTML='Euer <em>Camino</em> im Rückblick';}})();
+
+/* ===== Klima Juni 2010–2025 (Santiago-Lavacolla, tutiempo.net) ===== */
+(function(){
+  const D=[[2010,22.2,10.8,85.3],[2011,22.1,10.7,5.6],[2012,21.1,11.6,78.0],[2013,22.1,9.7,80.8],[2014,24.5,11.3,74.4],[2015,26.9,11.7,4.8],[2016,23.2,11.5,44.5],[2017,24.0,12.8,29.7],[2018,21.1,12.3,60.7],[2019,19.1,10.0,57.9],[2020,21.0,11.2,42.2],[2021,21.7,10.9,79.8],[2022,20.9,12.0,117.9],[2023,24.2,13.6,110.2],[2024,21.4,12.1,47.0],[2025,25.4,13.9,24.1]];
+  const t=document.getElementById('wxh-temp'),r=document.getElementById('wxh-rain'),b=document.getElementById('wxh-body');if(!t||!r)return;
+  const n1=v=>String(v).replace('.',',');
+  const W=360,L=26,R=4,n=D.length,cw=(W-L-R)/n,cx=i=>L+cw*(i+.5);
+  const xl=(H)=>D.map((d,i)=>(i%3===0||i===n-1)?`<text class="ax" x="${cx(i)}" y="${H}" text-anchor="middle">${d[0]}</text>`:'').join('');
+  /* Temperatur: Spanne Min–Max */
+  {const H=120,y0=8,y1=96,lo=8,hi=28,y=v=>y1-(y1-y0)*(v-lo)/(hi-lo);
+   let g='';[10,15,20,25].forEach(v=>g+=`<line class="gl" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="ax" x="${L-6}" y="${y(v)+3}" text-anchor="end">${v}°</text>`);
+   g+=D.map((d,i)=>`<g class="y"><title>Juni ${d[0]}: Ø ${n1(d[2])}° bis ${n1(d[1])}°</title><rect class="hit" x="${cx(i)-cw/2}" y="${y0}" width="${cw}" height="${y1-y0}"/><line class="rg" x1="${cx(i)}" x2="${cx(i)}" y1="${y(d[2])}" y2="${y(d[1])}"/><circle class="mk" cx="${cx(i)}" cy="${y(d[1])}" r="4"/><circle class="mk" cx="${cx(i)}" cy="${y(d[2])}" r="4"/></g>`).join('');
+   t.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Juni-Temperaturen Santiago 2010 bis 2025">${g}${xl(H-6)}</svg>`;}
+  /* Regen */
+  {const H=110,y0=6,y1=86,hi=120,y=v=>y1-(y1-y0)*v/hi,bw=Math.min(14,cw-4);
+   let g='';[0,40,80,120].forEach(v=>g+=`<line class="gl" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="ax" x="${L-6}" y="${y(v)+3}" text-anchor="end">${v}</text>`);
+   g+=D.map((d,i)=>{const h=Math.max(2,y1-y(d[3])),x=cx(i)-bw/2,top=y1-h,rr=Math.min(4,h/2);
+     return `<g class="y"><title>Juni ${d[0]}: ${n1(d[3])} mm Regen</title><rect class="hit" x="${cx(i)-cw/2}" y="${y0}" width="${cw}" height="${y1-y0}"/><path class="mk" d="M${x} ${y1}V${top+rr}Q${x} ${top} ${x+rr} ${top}H${x+bw-rr}Q${x+bw} ${top} ${x+bw} ${top+rr}V${y1}Z"/></g>`;}).join('');
+   r.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Juni-Regen Santiago 2010 bis 2025 in Millimetern">${g}${xl(H-6)}</svg>`;}
+  if(b)b.innerHTML=D.slice().reverse().map(d=>`<tr><td>${d[0]}</td><td>${n1(d[1])}°</td><td>${n1(d[2])}°</td><td>${n1(d[3])} mm</td></tr>`).join('');
+})();
 </script>
 </body>
 </html>
