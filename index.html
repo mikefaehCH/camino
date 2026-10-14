@@ -882,6 +882,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 .stage.merged .stage-body .s-lead,.stage.merged .stage-body .s-prose{padding-left:0!important;padding-right:0!important;}
 .stage.merged .stage-body .img-credit{margin-left:0;}
 .stage.merged .stage-body .gallery{padding-left:0;padding-right:0;}
+#journey,.j-item,.j-item>*,.stage-body,.stage-body>*{min-width:0;}.gallery{max-width:100%;}
 .j-item.open .j-card .j-img{display:none;}
 .j-item.open .j-card{grid-template-columns:1fr!important;margin-bottom:.4rem;}
 .j-item.open{padding-bottom:1rem;border-bottom:1px solid var(--border);}
@@ -1577,7 +1578,8 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="fc"><span class="nm">Ante</span><span>·</span><span class="nm">Kevin</span><span>·</span><span class="nm">Mike</span><span>·</span><span class="nm">Luis</span></div>
 </footer>
 
-<script type="application/json" id="image-map">{
+<script type="application/json" id="image-map">
+{
  "_info": "Zentrale Bildkonfiguration. Pro Kapitel: hero + gallery. Bild einsetzen: src (800 px) und srcset (800w/1600w) unter images/<kapitel>/ ablegen, alt und credit ergänzen. Leere src = eleganter Platzhalter.",
  "dayChapters": {
   "2027-06-11": [
@@ -1722,6 +1724,26 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
      "motif": "Flussweg am Río Louro",
      "status": "ORIGINAL_NOT_IDENTIFIED",
      "src": null
+    },
+    {
+     "id": "T1",
+     "motif": "Internationale Brücke Valença–Tui",
+     "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+     "src": "images/01-valenca-porrino/tui-valenca-bruecke-800.webp",
+     "srcset": "images/01-valenca-porrino/tui-valenca-bruecke-800.webp 800w, images/01-valenca-porrino/tui-valenca-bruecke-1600.webp 1600w",
+     "alt": "Eiserne Fachwerkbrücke über den Minho zwischen Valença und Tui",
+     "credit": "Foto: Wikimedia Commons",
+     "creditUrl": "https://commons.wikimedia.org/wiki/File:Puente_Internacional_Tuy-Valença.jpg"
+    },
+    {
+     "id": "T2",
+     "motif": "Tui mit Kathedrale",
+     "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+     "src": "images/01-valenca-porrino/tui-panorama-800.webp",
+     "srcset": "images/01-valenca-porrino/tui-panorama-800.webp 800w, images/01-valenca-porrino/tui-panorama-1600.webp 960w",
+     "alt": "Altstadt von Tui mit der Kathedrale auf dem Hügel",
+     "credit": "Foto: Wikimedia Commons",
+     "creditUrl": "https://commons.wikimedia.org/wiki/File:Tui_Miño_060415.jpg"
     }
    ]
   },
@@ -1760,8 +1782,29 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
      "alt": "Kirche Santa Eulalia und Pazo de Mos vom Camino aus",
      "credit": "Foto: Wikimedia Commons",
      "creditUrl": "https://commons.wikimedia.org/wiki/File:Igrexa_parroquial_de_Santa_Eulalia_de_Mos_e_Pazo_de_Mos_dende_a_vía.JPG"
+    },
+    {
+     "id": "R1",
+     "motif": "Eisenbahnviadukt Redondela",
+     "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+     "src": "images/02-porrino-redondela/redondela-viadukt-800.webp",
+     "srcset": "images/02-porrino-redondela/redondela-viadukt-800.webp 800w, images/02-porrino-redondela/redondela-viadukt-1600.webp 900w",
+     "alt": "Eisenbahnviadukt über den Strassen von Redondela",
+     "credit": "Foto: Wikimedia Commons",
+     "creditUrl": "https://commons.wikimedia.org/wiki/File:Redondela,_Viaducto_de_Pontevedra_08-1.jpg"
     }
-   ]
+   ],
+   "heroNext": {
+    "id": "H2",
+    "motif": "Ría de Vigo mit Rande-Brücke",
+    "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+    "src": "images/02-porrino-redondela/ria-vigo-rande-800.webp",
+    "srcset": "images/02-porrino-redondela/ria-vigo-rande-800.webp 800w, images/02-porrino-redondela/ria-vigo-rande-1600.webp 1600w",
+    "alt": "Blick über die Ría de Vigo mit der Rande-Brücke und den Muschelflössen",
+    "credit": "Foto: Wikimedia Commons",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Puente_de_Rande_en_la_Ria_de_Vigo.jpeg",
+    "pos": "center 55%"
+   }
   },
   "03-redondela-pontevedra": {
    "title": "Redondela → Pontevedra",
@@ -1901,6 +1944,17 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
      "alt": "Kreuzgang des Klosters Santa María de Armenteira",
      "credit": "Foto: Wikimedia Commons",
      "creditUrl": "https://commons.wikimedia.org/wiki/File:Mosteiro_de_Santa_María_de_Armenteira,_Meis,_Galicia.jpg"
+    },
+    {
+     "id": "K1",
+     "motif": "Kloster Armenteira",
+     "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+     "src": "images/04-pontevedra-armenteira/armenteira-kloster-800.webp",
+     "srcset": "images/04-pontevedra-armenteira/armenteira-kloster-800.webp 800w, images/04-pontevedra-armenteira/armenteira-kloster-1600.webp 960w",
+     "alt": "Romanische Klosterkirche Santa María de Armenteira",
+     "credit": "Foto: Wikimedia Commons",
+     "creditUrl": "https://commons.wikimedia.org/wiki/File:Mosteiro_de_Armenteira._Galiza._Galicia_03.jpg",
+     "replaces": "04"
     }
    ]
   },
@@ -1945,7 +1999,18 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
      "creditUrl": "https://commons.wikimedia.org/wiki/File:Ruta_Da_Pedra_E_Da_Auga_(34194882).jpeg",
      "pos": "center 40%"
     }
-   ]
+   ],
+   "heroNext": {
+    "id": "H5",
+    "motif": "Ruta da Pedra e da Auga",
+    "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+    "src": "images/05-armenteira-vilanova/ruta-pedra-auga-wasserfall-800.webp",
+    "srcset": "images/05-armenteira-vilanova/ruta-pedra-auga-wasserfall-800.webp 800w, images/05-armenteira-vilanova/ruta-pedra-auga-wasserfall-1600.webp 1392w",
+    "alt": "Wasserfall zwischen Farnen und Moos auf der Ruta da Pedra e da Auga",
+    "credit": "Foto: Wikimedia Commons",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Ruta_da_Pedra_e_da_Auga.jpg",
+    "pos": "center 50%"
+   }
   },
   "06-translatio-padron": {
    "title": "Translatio → Padrón",
@@ -1988,8 +2053,49 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
      "alt": "Pimientos de Padrón mit Pommes in der Pfanne",
      "credit": "Foto: tommao wang / Unsplash",
      "creditUrl": "https://unsplash.com/photos/0fKt2ufCINw"
+    },
+    {
+     "id": "B1",
+     "motif": "Torres de Oeste, Catoira",
+     "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+     "src": "images/06-translatio-padron/catoira-torres-do-oeste-800.webp",
+     "srcset": "images/06-translatio-padron/catoira-torres-do-oeste-800.webp 640w",
+     "alt": "Ruine der Torres de Oeste am Ufer des Ulla bei Catoira",
+     "credit": "Foto: Wikimedia Commons",
+     "creditUrl": "https://commons.wikimedia.org/wiki/File:Torres_de_Oeste_Catoira.jpg"
+    },
+    {
+     "id": "P1",
+     "motif": "Kirche Santiago in Padrón",
+     "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+     "src": "images/06-translatio-padron/padron-igrexa-santiago-800.webp",
+     "srcset": "images/06-translatio-padron/padron-igrexa-santiago-800.webp 800w, images/06-translatio-padron/padron-igrexa-santiago-1600.webp 960w",
+     "alt": "Fassade der Kirche Santiago in Padrón",
+     "credit": "Foto: Wikimedia Commons",
+     "creditUrl": "https://commons.wikimedia.org/wiki/File:Igrexa_de_Santiago_de_Padrón.jpg"
+    },
+    {
+     "id": "P2",
+     "motif": "O Pedrón",
+     "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+     "src": "images/06-translatio-padron/padron-pedron-800.webp",
+     "srcset": "images/06-translatio-padron/padron-pedron-800.webp 800w, images/06-translatio-padron/padron-pedron-1600.webp 960w",
+     "alt": "Der Pedrón: römischer Stein unter dem Altar, an dem das Boot des Apostels festgemacht haben soll",
+     "credit": "Foto: Wikimedia Commons",
+     "creditUrl": "https://commons.wikimedia.org/wiki/File:NO_ORI_ESES_D_S_P.jpg"
     }
-   ]
+   ],
+   "heroNext": {
+    "id": "H6",
+    "motif": "Steinbrücke über den Sar in Padrón",
+    "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+    "src": "images/06-translatio-padron/padron-bruecke-sar-800.webp",
+    "srcset": "images/06-translatio-padron/padron-bruecke-sar-800.webp 800w, images/06-translatio-padron/padron-bruecke-sar-1600.webp 1280w",
+    "alt": "Alte Steinbrücke über den Río Sar in Padrón",
+    "credit": "Foto: Wikimedia Commons",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Puente_sobre_el_río_Sar_en_Padrón.jpg",
+    "pos": "center 55%"
+   }
   },
   "07-padron-santiago": {
    "title": "Padrón → Santiago",
@@ -2078,6 +2184,26 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
      "alt": "Panorama der Praza do Obradoiro mit Kathedrale",
      "credit": "Foto: Wikimedia Commons",
      "creditUrl": "https://commons.wikimedia.org/wiki/File:Catedral_de_Santiago_de_Compostela_desde_la_Praza_do_Obradoiro.jpg"
+    },
+    {
+     "id": "S05",
+     "motif": "Kathedrale, Obradoiro-Fassade",
+     "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+     "src": "images/08-santiago-stadt/santiago-kathedrale-fassade-800.webp",
+     "srcset": "images/08-santiago-stadt/santiago-kathedrale-fassade-800.webp 800w, images/08-santiago-stadt/santiago-kathedrale-fassade-1600.webp 960w",
+     "alt": "Barocke Obradoiro-Fassade der Kathedrale von Santiago",
+     "credit": "Foto: Wikimedia Commons",
+     "creditUrl": "https://commons.wikimedia.org/wiki/File:Catedral_de_Santiago_de_Compostela_agosto_2018_(cropped).jpg"
+    },
+    {
+     "id": "S06",
+     "motif": "Hostal dos Reis Católicos",
+     "status": "WIKIMEDIA_ATTRIBUTION_PENDING",
+     "src": "images/08-santiago-stadt/santiago-hostal-reis-catolicos-800.webp",
+     "srcset": "images/08-santiago-stadt/santiago-hostal-reis-catolicos-800.webp 800w, images/08-santiago-stadt/santiago-hostal-reis-catolicos-1600.webp 960w",
+     "alt": "Hostal dos Reis Católicos an der Praza do Obradoiro",
+     "credit": "Foto: Wikimedia Commons",
+     "creditUrl": "https://commons.wikimedia.org/wiki/File:Hostal_dos_Reis_Católicos._Praza_do_obradoiro._Santiago_de_Compostela.jpg"
     }
    ]
   },
@@ -2138,7 +2264,8 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
    ]
   }
  }
-}</script>
+}
+</script>
 <script src="vendor/leaflet/leaflet.js"></script>
 <script>
 /* NAV */
@@ -2369,6 +2496,7 @@ function costLine(d){const c=STAY_COST[d];if(!c)return '';
 /* ===== v6: Bilder aus IMAGE_MAP ===== */
 const IMAGE_MAP=(()=>{try{return JSON.parse(document.getElementById('image-map').textContent);}catch(e){return {chapters:{},dayChapters:{}};}})();
 /* Bilder mit ungeklärter Lizenz nicht anzeigen, bis Urheber und Lizenz eingetragen sind */
+Object.values(IMAGE_MAP.chapters||{}).forEach(c=>{const ok=g=>g&&g.src&&g.status!=='WIKIMEDIA_ATTRIBUTION_PENDING';if(ok(c.heroNext))c.hero=c.heroNext;(c.gallery||[]).filter(g=>ok(g)&&g.replaces).forEach(g=>{c.gallery=c.gallery.filter(x=>x.id!==g.replaces);});});
 Object.values(IMAGE_MAP.chapters||{}).forEach(c=>[c.hero,...(c.gallery||[])].forEach(g=>{if(g&&g.status==='WIKIMEDIA_ATTRIBUTION_PENDING'&&g.src){g._src=g.src;g._srcset=g.srcset;delete g.src;delete g.srcset;}}));
 const escH=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function imgHTML(slot,cls,ctxTitle,eager){
