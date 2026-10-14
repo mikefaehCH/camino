@@ -1,5 +1,5 @@
 /* Camino 2027 – Offline-Cache */
-const CACHE = 'camino-v34';
+const CACHE = 'camino-v35';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png',
   './images/start/pilger-nebelwald-800.webp', './images/porto/porto-douro-sonnenuntergang-800.webp', './images/porto/porto-ponte-luis-blaue-stunde-800.webp',
   './images/porto/porto-ribeira-800.webp', './images/porto/porto-pasteis-de-nata-800.webp',
@@ -21,7 +21,7 @@ self.addEventListener('fetch', e => {
   // Seite & Wetter & Kartenkacheln: zuerst Netz, sonst Cache
   if (url.origin === location.origin || url.hostname.endsWith('open-meteo.com') || url.hostname.endsWith('tile.openstreetmap.org')) {
     // Netz zuerst, aber nach 3 s auf den Cache ausweichen (schwacher Empfang)
-    const net = fetch(req).then(put);
+    const net = (req.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname.endsWith('/') ? fetch(req, { cache: 'no-cache' }) : fetch(req)).then(put);
     const fallback = () => caches.match(req).then(r => r || (req.mode === 'navigate' ? caches.match('./index.html') : undefined));
     const timeout = new Promise(res => setTimeout(() => res(fallback()), 3000));
     e.respondWith(Promise.race([net.catch(fallback), timeout.then(r => r || net)]).then(r => r || Response.error()));
