@@ -905,6 +905,8 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 .elev-svg .cur-t{font:600 11px var(--sans,system-ui);fill:var(--ink,#252923);}
 .elev-svg .cur-d{fill:#216c53;stroke:#fff;stroke-width:2;}
 .wx-at{color:var(--muted);font-size:.85em;}
+.rest-city-hd{flex-wrap:wrap;row-gap:.2rem;}
+.dc-addr{display:block;margin-top:.15rem;opacity:.85;}
 .tc-addr{font-size:.78rem;color:var(--muted);margin-top:.15rem;}
 .mbtn.gpx{gap:.35rem;background:var(--card)!important;color:var(--forest)!important;border:1px solid var(--border)!important;}
 #journey,.j-item,.j-item>*,.stage-body,.stage-body>*{min-width:0;}.gallery{max-width:100%;}
@@ -1049,13 +1051,13 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 <!-- COUNTDOWN -->
 <div id="countdown">
   <div class="cd-inner">
-    <span class="cd-label">Abreise nach Porto in</span>
+    <span class="cd-label">Abflug nach Porto am 11. Juni 2027 – noch</span>
     <div class="cd-nums" id="cd-nums">
-      <div class="cd-unit"><span class="cd-num" id="cd-d">—</span><span class="cd-u">Tage</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-d">239</span><span class="cd-u">Tage</span></div>
       <span class="cd-sep">·</span>
-      <div class="cd-unit"><span class="cd-num" id="cd-h">—</span><span class="cd-u">Std</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-h">18</span><span class="cd-u">Std</span></div>
       <span class="cd-sep">·</span>
-      <div class="cd-unit"><span class="cd-num" id="cd-m">—</span><span class="cd-u">Min</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-m">5</span><span class="cd-u">Min</span></div>
     </div>
   </div>
 </div>
@@ -1076,10 +1078,10 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <p class="prose">Der zweitbeliebteste Jakobsweg der Welt: durch das grüne Galicien, über alte Steinbrücken und entlang der Rías Baixas. Ab Pontevedra nehmen wir die <strong>Variante Espiritual</strong> mit Combarro, dem Kloster Armenteira und der Bootsfahrt <em>Translatio</em> den Ulla hinauf.</p>
   <dl class="facts">
     <div><dt>Distanz</dt><dd>140 km</dd></div>
-    <div><dt>Aufstieg</dt><dd>~1900 m</dd></div>
+    <div><dt>Aufstieg</dt><dd>2220 m</dd></div>
     <div><dt>Reisezeit</dt><dd>11.–20. Juni</dd></div>
   </dl>
-  <p class="fn">Gesamtdistanz vorläufig; sie hängt von der endgültigen Routenführung ab.</p>
+  <p class="fn">Summe der sieben Etappen laut Komoot, zu Fuss, ohne Bootsstrecke.</p>
 </section>
 
 <hr class="rule">
@@ -1114,7 +1116,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="today-picker" id="today-picker" role="tablist" aria-label="Tag wählen"></div>
   <div class="today-card" id="today-card"></div>
-  <div class="wbox"><strong>Tipp:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen – dann funktioniert sie auch ohne Netz.</div>
+  <div class="wbox"><strong>Tipp:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen. Etappen, Hotels, Telefonnummern und GPX sind dann auch ohne Netz da – Karte und Wetter brauchen Empfang.</div>
 </section>
 
 <hr class="rule">
@@ -1135,23 +1137,14 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <div><span class="skm">20,8 km</span><span class="sele">↑210m · ↓240m</span></div>
     </div></div>
     <div class="pills"><span class="sp n">Leicht</span></div>
-    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-      <rect width="700" height="110" fill="#fdf8ee"/>
-      <defs><linearGradient id="eg250" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2171a8" stop-opacity=".5"/><stop offset="100%" stop-color="#2171a8" stop-opacity=".04"/></linearGradient></defs>
-      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <polygon points="46,85 82,82 121,76 163,64 206,58 249,61 292,67 335,61 378,55 421,49 464,36 507,28 543,32 586,41 628,50 671,53 688,56 688,84 46,84" fill="url(#eg250)"/>
-      <path d="M 46 85 L 82 82 L 121 76 L 163 64 L 206 58 L 249 61 L 292 67 L 335 61 L 378 55 L 421 49 L 464 36 L 507 28 L 543 32 L 586 41 L 628 50 L 671 53 L 688 56" fill="none" stroke="#2171a8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑150m ↓150m</text>
-    </svg></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Höhenprofil aus der GPX-Datei"></svg></div>
     <p class="s-lead">Der Tag beginnt auf den Mauern der Festung Valença und führt über die Eisenbrücke von 1885 nach Tui – ein Grenzübertritt zu Fuss, hoch über dem Minho. Hinter der Kathedrale wird es still: Waldwege, kleine Weiler, der Río Louro.</p>
     <p class="s-prose">In Tui gibt es den ersten Stempel auf spanischem Boden. Danach bleibt der Weg meist flach auf Wald- und Feldwegen. Vor O Porriño führt die Hauptroute durch ein Industriegebiet – die ausgeschilderte Variante am Fluss ist schöner und kaum länger.</p>
     <hr class="card-hr">
     <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/de-DE/tour/3344700198?share_token=a3oC4RcpeaRg6qSGkSq5L1xjX8YYzuVchtJq7CbhQtU60T3F2E" target="_blank" rel="noopener">Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/Valen%C3%A7a+Portugal/O+Porri%C3%B1o+Spain/@42.04,-8.63,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd25c1c4b56b25b1:0x500ef6143a2dc5!2m2!1d-8.634!2d41.934!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!3e2" target="_blank">Google Maps</a></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Apartamentos+Tarela+O+Porriño" target="_blank" style="color:#fff;text-decoration:none;">Apartamentos Tarela ↗</a></div><div class="dc-sub-note">gebucht · Check-in 15–22 Uhr</div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Apartamentos+Tarela+O+Porriño" target="_blank" style="color:#fff;text-decoration:none;">Apartamentos Tarela ↗</a></div><div class="dc-sub-note">gebucht · Check-in 15–22 Uhr<br><span class="dc-addr">Rúa Pérez Leirós 1, 36400 O Porriño</span></div></div>
     </div>
   </div>
 
@@ -1163,23 +1156,14 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <div><span class="skm">16,1 km</span><span class="sele">↑250m · ↓290m</span></div>
     </div></div>
     <div class="pills"><span class="sp n">Leicht–Mittel</span></div>
-    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-      <rect width="700" height="110" fill="#fdf8ee"/>
-      <defs><linearGradient id="eg300" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2171a8" stop-opacity=".5"/><stop offset="100%" stop-color="#2171a8" stop-opacity=".04"/></linearGradient></defs>
-      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <polygon points="46,69 89,68 135,63 181,54 228,43 274,30 321,19 368,21 414,28 461,38 507,50 554,63 600,70 647,72 688,71 688,84 46,84" fill="url(#eg300)"/>
-      <path d="M 46 69 L 89 68 L 135 63 L 181 54 L 228 43 L 274 30 L 321 19 L 368 21 L 414 28 L 461 38 L 507 50 L 554 63 L 600 70 L 647 72 L 688 71" fill="none" stroke="#2171a8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑250m ↓280m</text>
-    </svg></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Höhenprofil aus der GPX-Datei"></svg></div>
     <p class="s-lead">Ein kurzer Tag auf alten Spuren: Die römische Via XIX führt durch Mos hinauf zur Kapelle Santiaguiño de Antas. Oben liegt plötzlich die Ría de Vigo unter euch – zum ersten Mal Meer auf diesem Weg.</p>
     <p class="s-prose">Der Anstieg ist gleichmässig, der Abstieg nach Redondela steil und auf glatten Granitplatten – hier helfen Stöcke. Redondela ist klein und lebendig, zwei Eisenbahnviadukte spannen sich über den Ort. Mit gut vier Stunden Gehzeit bleibt der Nachmittag frei.</p>
     <hr class="card-hr">
     <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/de-de/tour/3346528899?share_token=ae3BU1WMYWzvYT3TaSGWqGG7jQyzGUEIY42l8nExCXG5p0euia" target="_blank" rel="noopener">Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/O+Porri%C3%B1o+Spain/Redondela+Spain/@42.22,-8.61,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2579d9c5ac5a45:0xa24b5f00d1c0a50!2m2!1d-8.619!2d42.161!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!3e2" target="_blank">Google Maps</a></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pazo+Santa+Teresa+Redondela" target="_blank" style="color:#fff;text-decoration:none;">Pazo Santa Teresa ↗</a></div><div class="dc-sub-note">gebucht · Frühstück inkl.</div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pazo+Santa+Teresa+Redondela" target="_blank" style="color:#fff;text-decoration:none;">Pazo Santa Teresa ↗</a></div><div class="dc-sub-note">gebucht · Frühstück inkl.<br><span class="dc-addr">Rúa Pai Crespo 23, 36800 Redondela</span></div></div>
     </div>
   </div>
 
@@ -1191,16 +1175,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <div><span class="skm">24,0 km</span><span class="sele">↑450m · ↓450m</span></div>
     </div></div>
     <div class="pills"><span class="sp n">Mittel</span></div>
-    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-      <rect width="700" height="110" fill="#fdf8ee"/>
-      <defs><linearGradient id="eg250" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2171a8" stop-opacity=".5"/><stop offset="100%" stop-color="#2171a8" stop-opacity=".04"/></linearGradient></defs>
-      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <polygon points="46,71 88,60 130,43 172,28 214,23 257,28 299,34 341,38 383,31 425,26 467,29 509,34 551,42 594,55 636,66 688,71 688,84 46,84" fill="url(#eg250)"/>
-      <path d="M 46 71 L 88 60 L 130 43 L 172 28 L 214 23 L 257 28 L 299 34 L 341 38 L 383 31 L 425 26 L 467 29 L 509 34 L 551 42 L 594 55 L 636 66 L 688 71" fill="none" stroke="#2171a8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑400m ↓380m</text>
-    </svg></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Höhenprofil aus der GPX-Datei"></svg></div>
     <div class="ibox"><strong>Tipp:</strong> Nach der Capela de Santa Marta (1617) links in die Senda fluvial do río Gafos – ein Flussweg statt der Strasse bis in die Stadt.</div>
     <p class="s-lead">Die abwechslungsreichste Etappe: der Ría entlang nach Arcade, wo es mittags Austern gibt, über die mittelalterliche Brücke von Ponte Sampaio und auf Granitplatten durch den Wald. Am Abend wartet Pontevedra mit seiner autofreien Altstadt.</p>
     <p class="s-prose">Hinter Ponte Sampaio steigt die Verea Vella da Canicouva an, ein alter Pilgerpfad aus Stein – der anstrengendste Abschnitt des Tages. An der Brücke wurden 1809 Napoleons Truppen zurückgeschlagen. In Pontevedra lohnt ein Abendspaziergang über die Plätze der Altstadt bis zur muschelförmigen Kirche der Peregrina.</p>
@@ -1208,7 +1183,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/de-de/tour/3346530367?share_token=aPWY8VCX3tKv5CxmmV8L7OSOTzmfkzFZdd3mJ9ZVHgrUgXTv70" target="_blank" rel="noopener">Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/Redondela+Spain/Pontevedra+Spain/@42.36,-8.62,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd254e044e51f12d:0x400ef8643a29c1!2m2!1d-8.607!2d42.288!1m5!1m1!1s0xd254e16a17ef631:0x6a00d3b37bcf700!2m2!1d-8.645!2d42.431!3e2" target="_blank">Google Maps</a></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Parador+de+Pontevedra" target="_blank" style="color:#fff;text-decoration:none;">Parador de Pontevedra ↗</a></div><div class="dc-sub-note">gebucht · Check-in ab 15 Uhr</div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Parador+de+Pontevedra" target="_blank" style="color:#fff;text-decoration:none;">Parador de Pontevedra ↗</a></div><div class="dc-sub-note">gebucht · Check-in ab 15 Uhr<br><span class="dc-addr">Rúa do Barón 19, 36002 Pontevedra</span></div></div>
     </div>
   </div>
 
@@ -1220,16 +1195,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <div><span class="skm">19,1 km</span><span class="sele">↑580m · ↓280m</span></div>
     </div></div>
     <div class="pills"><span class="sp n">Mittel–Schwer</span></div>
-    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil (geschätzt)</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-      <rect width="700" height="110" fill="#fdf8ee"/>
-      <defs><linearGradient id="egA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4603a" stop-opacity=".5"/><stop offset="100%" stop-color="#d4603a" stop-opacity=".04"/></linearGradient></defs>
-      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <polygon points="46,81.0 104,80.2 163,81.7 221,82.5 279,79.5 338,65.9 396,44.7 455,26.6 513,29.6 571,38.7 630,44.7 688,46.2 688,84 46,84" fill="url(#egA)"/>
-      <path d="M 46 81.0 L 104 80.2 L 163 81.7 L 221 82.5 L 279 79.5 L 338 65.9 L 396 44.7 L 455 26.6 L 513 29.6 L 571 38.7 L 630 44.7 L 688 46.2" fill="none" stroke="#d4603a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑~500m ↓~270m</text>
-    </svg></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Höhenprofil aus der GPX-Datei"></svg></div>
     <div class="ibox"><strong>Wichtig:</strong> In Combarro Proviant und Wasser kaufen – bis Armenteira gibt es unterwegs nichts mehr.</div>
     <p class="s-lead">Hier beginnt die Variante Espiritual. Vom Kloster Poio geht es hinunter nach Combarro, wo die Hórreos direkt über dem Wasser stehen – und dann durch den Wald hinauf zum Kloster Armenteira, still und abgelegen am Hang des Monte Castrove.</p>
     <p class="s-prose">Nach Combarro folgt der steilste Aufstieg der Reise: rund 400 Höhenmeter fast am Stück. Armenteira ist ein Weiler mit Kloster und zwei Lokalen, aber ohne Laden. Am Abend singen die Zisterzienserinnen das Abendgebet.</p>
@@ -1237,7 +1203,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/de-de/tour/3346531589?share_token=a0XfCWX7lmbhKtKDG3acWEk4UTAsiD46SeE1fOJa0MeJZlS0sS" target="_blank" rel="noopener">Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/Pontevedra+Spain/Mosteiro+de+Armenteira/data=!4m2!4m1!3e2" target="_blank">Google Maps</a></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Armenteira" target="_blank" style="color:#fff;text-decoration:none;">Pousada Armenteira ↗</a></div><div class="dc-sub-note">gebucht · 400 m vom Kloster · Frühstück inkl.</div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Armenteira" target="_blank" style="color:#fff;text-decoration:none;">Pousada Armenteira ↗</a></div><div class="dc-sub-note">gebucht · 400 m vom Kloster · Frühstück inkl.<br><span class="dc-addr">Armenteira, 36192 Caroi (Meis)</span></div></div>
     </div>
   </div>
 
@@ -1249,16 +1215,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <div><span class="skm">24,8 km</span><span class="sele">↑150m · ↓450m</span></div>
     </div></div>
     <div class="pills"><span class="sp n">Mittel</span></div>
-    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil (geschätzt)</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-      <rect width="700" height="110" fill="#fdf8ee"/>
-      <defs><linearGradient id="egV" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5aabcf" stop-opacity=".5"/><stop offset="100%" stop-color="#5aabcf" stop-opacity=".04"/></linearGradient></defs>
-      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <polygon points="46,46.2 104,52.3 163,61.3 221,70.4 279,76.4 338,79.5 396,80.2 455,81.0 513,79.5 571,81.0 630,82.5 688,83.2 688,84 46,84" fill="url(#egV)"/>
-      <path d="M 46 46.2 L 104 52.3 L 163 61.3 L 221 70.4 L 279 76.4 L 338 79.5 L 396 80.2 L 455 81.0 L 513 79.5 L 571 81.0 L 630 82.5 L 688 83.2" fill="none" stroke="#5aabcf" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑~150m ↓~400m</text>
-    </svg></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Höhenprofil aus der GPX-Datei"></svg></div>
     <div class="ibox"><strong>Heute Abend:</strong> Abfahrtszeit des Boots für morgen bestätigen – sie richtet sich nach den Gezeiten.</div>
     <p class="s-lead">Gleich hinter dem Kloster beginnt die Ruta da Pedra e da Auga: Der Weg folgt dem Río Armenteira abwärts, über Steinstufen, an Wasserfällen und Dutzenden alten Mühlen vorbei. Dann öffnet sich das Land – Albariño-Reben, Dörfer und am Ende die Ría de Arousa.</p>
     <p class="s-prose">Es geht fast nur bergab, unterschätzen sollte man den langen Tag trotzdem: Die Steinpfade am Bach sind bei Nässe rutschig. Ab dem Talboden wird es flach, teils auf Asphalt durch die Weinberge. Die letzten Kilometer führen an Stränden entlang nach Vilanova.</p>
@@ -1266,7 +1223,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/de-de/tour/3346536082?share_token=aRdlIl8FsNmTrLD6cgVnOAgI9u3rW1hK56lo1etHrssAsDsNXc" target="_blank" rel="noopener">Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/Mosteiro+de+Armenteira/Vilanova+de+Arousa/data=!4m2!4m1!3e2" target="_blank">Google Maps</a></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank" style="color:#fff;text-decoration:none;">Hotel Leal – La Sirena ↗</a></div><div class="dc-sub-note">Bestätigung ausstehend · Check-in 15–21 Uhr</div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank" style="color:#fff;text-decoration:none;">Hotel Leal – La Sirena ↗</a></div><div class="dc-sub-note">Bestätigung ausstehend · Check-in 15–21 Uhr<br><span class="dc-addr">Av. as Sinas 64, 36620 Vilanova de Arousa</span></div></div>
     </div>
   </div>
 
@@ -1275,7 +1232,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <div class="stage-head"><div class="sh-grid">
       <div class="snum rest">6</div>
       <div><div class="stitle">Translatio: Vilanova → Padrón</div><div class="ssub">Do 17. Jun · Mit dem Boot den Ulla hinauf</div></div>
-      <div><span class="skm">~4 km</span><span class="sele">+ Boot</span></div>
+      <div><span class="skm">10 km</span><span class="sele">+ Boot · ↑130m · ↓90m</span></div>
     </div></div>
     <div class="ibox"><strong>Treffpunkt:</strong> Estación Marítima Mar de Santiago in Vilanova. Die genaue Abfahrtszeit gibt der Bootsanbieter.</div>
     <p class="s-lead">Der besondere Tag: Ihr folgt per Boot der Legende – auf diesem Weg soll der Leichnam des Jakobus nach Galicien gekommen sein, durch die Ría de Arousa und den Ulla hinauf. Am Ufer stehen 17 Steinkreuze – ein Kreuzweg auf dem Wasser, wie es ihn sonst nirgends gibt.</p>
@@ -1284,7 +1241,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/de-de/tour/3346536721?share_token=aLOiYOCga7kEV3Js6T9IyOrcf5c3dlkmpW1B5QIlZaGSSYCJtq" target="_blank" rel="noopener">Komoot 6a</a><a class="mbtn k" href="https://www.komoot.com/de-de/tour/3347232180?share_token=agjNLi7n4IuhdC4IS5MAreKnzX76tY0YgxYMMdIyDHNVIyYwK8" target="_blank" rel="noopener">Komoot 6b</a><a class="mbtn g" href="https://www.google.com/maps/dir/Pontecesures/Pazo+Arretén+Padrón/data=!4m2!4m1!3e2" target="_blank">Pontecesures → Hotel</a></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pazo+Arretén+Padrón" target="_blank" style="color:#fff;text-decoration:none;">Pazo Arretén ↗</a></div><div class="dc-sub-note">gebucht · bei Iria Flavia · Frühstück inkl.</div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Pazo+Arretén+Padrón" target="_blank" style="color:#fff;text-decoration:none;">Pazo Arretén ↗</a></div><div class="dc-sub-note">gebucht · bei Iria Flavia · Frühstück inkl.<br><span class="dc-addr">Lugar Arretén, 15917 Iria Flavia (Padrón)</span></div></div>
     </div>
   </div>
 
@@ -1296,23 +1253,14 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
       <div><span class="skm">25,2 km</span><span class="sele">↑450m · ↓180m</span></div>
     </div></div>
     <div class="pills"><span class="sp n">Mittel–Schwer</span></div>
-    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
-      <rect width="700" height="110" fill="#fdf8ee"/>
-      <defs><linearGradient id="eg400" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4603a" stop-opacity=".5"/><stop offset="100%" stop-color="#d4603a" stop-opacity=".04"/></linearGradient></defs>
-      <line x1="46" y1="20" x2="688" y2="20" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="48" x2="688" y2="48" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <line x1="46" y1="72" x2="688" y2="72" stroke="#cde2f0" stroke-width="1" stroke-dasharray="3 4"/>
-      <polygon points="46,74 75,73 104,70 133,65 163,57 192,47 221,36 251,26 280,19 309,17 338,16 367,18 397,21 426,24 455,27 484,30 513,31 543,29 572,27 601,26 630,26 659,26 688,26 688,84 46,84" fill="url(#eg400)"/>
-      <path d="M 46 74 L 75 73 L 104 70 L 133 65 L 163 57 L 192 47 L 221 36 L 251 26 L 280 19 L 309 17 L 338 16 L 367 18 L 397 21 L 426 24 L 455 27 L 484 30 L 513 31 L 543 29 L 572 27 L 601 26 L 630 26 L 659 26 L 688 26" fill="none" stroke="#d4603a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-      <text x="688" y="20" text-anchor="end" fill="#1a4a6b" font-size="9" font-weight="600" font-family="Barlow,sans-serif">↑405m ↓150m</text>
-    </svg></div>
+    <div class="elev-wrap"><div class="elev-lbl">Höhenprofil</div><svg class="elev-svg" viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Höhenprofil aus der GPX-Datei"></svg></div>
     <p class="s-lead">Der letzte Tag zu Fuss und der längste: vom alten Bischofssitz Iria Flavia durch Dörfer und die Wälder von Teo. Irgendwann tauchen die Türme der Kathedrale auf – über die Ponte Vella geht es in die Stadt und hinauf auf die Praza do Obradoiro.</p>
     <p class="s-prose">Viele kurze Auf und Ab, gegen Ende zieht sich der Weg durch die Vororte. Früh starten lohnt sich: Wer am frühen Nachmittag ankommt, kann die Compostela noch am selben Tag im Pilgerbüro abholen.</p>
     <hr class="card-hr">
     <div class="map-row"><a class="mbtn k" href="https://www.komoot.com/de-de/tour/3346537805?share_token=aN3WYOGiou7GwJZ3Uuxp2fJXt6eoxo5o2AWN4L6MgIsin8O9NQ" target="_blank" rel="noopener">Komoot</a><a class="mbtn g" href="https://www.google.com/maps/dir/Padr%C3%B3n+Spain/Santiago+de+Compostela+Spain/@42.80,-8.60,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0xd2559d5e4e3e14d:0x200ef8143a2dc5!2m2!1d-8.657!2d42.738!1m5!1m1!1s0xd2ef47a96cfd2fd:0x100ef8143a29c1!2m2!1d-8.545!2d42.880!3e2" target="_blank">Google Maps</a></div>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Pazo+de+Altamira+Santiago+de+Compostela" target="_blank" style="color:#fff;text-decoration:none;">Hotel Pazo de Altamira ↗</a></div><div class="dc-sub-note">gebucht · Altstadt · Check-in ab 16 Uhr</div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Pazo+de+Altamira+Santiago+de+Compostela" target="_blank" style="color:#fff;text-decoration:none;">Hotel Pazo de Altamira ↗</a></div><div class="dc-sub-note">gebucht · Altstadt · Check-in ab 16 Uhr<br><span class="dc-addr">Rúa de Altamira 18, 15704 Santiago de Compostela</span></div></div>
     </div>
   </div>
 
@@ -1326,7 +1274,7 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
     <p class="s-prose">Compostela im Pilgerbüro abholen (Rúa das Carretas 33), um 12 Uhr Pilgermesse – früh da sein. Mittag im Mercado de Abastos, am Nachmittag mit dem Zug in gut einer halben Stunde nach A Coruña. Abends an der Marina oder hinaus zum Torre de Hércules.</p>
     <hr class="card-hr">
     <div class="day-cards">
-      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Meliá+Maria+Pita+A+Coruña" target="_blank" style="color:#fff;text-decoration:none;">Meliá Maria Pita ↗</a></div><div class="dc-sub-note">gebucht · Frühstück inkl.</div></div>
+      <div class="dc dc-ocean"><div class="dc-icon"></div><div class="dc-lbl">Unterkunft</div><div class="dc-name"><a href="https://www.google.com/maps/search/?api=1&query=Meliá+Maria+Pita+A+Coruña" target="_blank" style="color:#fff;text-decoration:none;">Meliá Maria Pita ↗</a></div><div class="dc-sub-note">gebucht · Frühstück inkl.<br><span class="dc-addr">Av. de Pedro Barrié de la Maza 3, 15003 A Coruña</span></div></div>
     </div>
   </div>
 </section>
@@ -1418,13 +1366,13 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <h2>Wo ihr <em>esst</em></h2>
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <p class="prose">Empfehlungen pro Abend – noch keine Reservation bestätigt. Abendessen ab ca. 20:30, für vier reservieren. Bib Gourmand: Guía Michelin 2026.</p>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">O Porriño</div><div class="rest-city-day">Tag 1</div></div><div class="ri"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">Restaurante Paso a Nivel</a></div><div class="ri"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">Cólleo Con Pinzas Cervecería</a></div><div class="ri"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">Restaurante Nómadas World Food</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Redondela</div><div class="rest-city-day">Tag 2</div></div><div class="ri"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">A Coté Redondela</a></div><div class="ri"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">Taberna O' Tranquilo</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Pontevedra</div><div class="rest-city-day">Tag 3</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Loaira+Xantar+Pontevedra" target="_blank" rel="noopener">Loaira Xantar</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=La+Ultramar+Pontevedra" target="_blank" rel="noopener">La Ultramar</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Trasmallo+Pontevedra" target="_blank" rel="noopener">Trasmallo (Bib Gourmand 2026)</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Armenteira</div><div class="rest-city-day">Tag 4</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Bar+Comercio+Armenteira" target="_blank">Bar Comercio — Pilgermenü</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Vilanova de Arousa</div><div class="rest-city-day">Tag 5</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank">Restaurant im Hotel Leal</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Padrón</div><div class="rest-city-day">Tag 6 · nach dem Boot</div></div><div class="ri"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">Pulpería Rial</a></div><div class="ri"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">O Alpendre</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Santiago de Compostela</div><div class="rest-city-day">Tag 7</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Café+de+Altamira+Santiago+de+Compostela" target="_blank" rel="noopener">Café de Altamira (Bib Gourmand 2026)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Abastos+2.0+Santiago+de+Compostela" target="_blank" rel="noopener">Abastos 2.0 – Mesas (Bib Gourmand 2026)</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">O Porriño</div><div class="rest-city-day">Etappe 1</div></div><div class="ri"><a href="https://maps.app.goo.gl/kBFh63b7ei7JKfdp9" target="_blank">Restaurante Paso a Nivel</a></div><div class="ri"><a href="https://maps.app.goo.gl/KYRfc75byRbWjFdbA" target="_blank">Cólleo Con Pinzas Cervecería</a></div><div class="ri"><a href="https://maps.app.goo.gl/4W8XqtDmDoZRHKps8" target="_blank">Restaurante Nómadas World Food</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Redondela</div><div class="rest-city-day">Etappe 2</div></div><div class="ri"><a href="https://maps.app.goo.gl/1v2qMAuehQCtFMpn8" target="_blank">A Coté Redondela</a></div><div class="ri"><a href="https://maps.app.goo.gl/opJ7T5MvvNoUsQ5b8" target="_blank">Taberna O' Tranquilo</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Pontevedra</div><div class="rest-city-day">Etappe 3</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Loaira+Xantar+Pontevedra" target="_blank" rel="noopener">Loaira Xantar</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=La+Ultramar+Pontevedra" target="_blank" rel="noopener">La Ultramar</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Trasmallo+Pontevedra" target="_blank" rel="noopener">Trasmallo (Bib Gourmand 2026)</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Armenteira</div><div class="rest-city-day">Etappe 4</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Bar+Comercio+Armenteira" target="_blank">Bar Comercio — Pilgermenü</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Vilanova de Arousa</div><div class="rest-city-day">Etappe 5</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank">Restaurant im Hotel Leal</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Padrón</div><div class="rest-city-day">Etappe 6</div></div><div class="ri"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">Pulpería Rial</a></div><div class="ri"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">O Alpendre</a></div></div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Santiago de Compostela</div><div class="rest-city-day">Etappe 7</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Café+de+Altamira+Santiago+de+Compostela" target="_blank" rel="noopener">Café de Altamira (Bib Gourmand 2026)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Abastos+2.0+Santiago+de+Compostela" target="_blank" rel="noopener">Abastos 2.0 – Mesas (Bib Gourmand 2026)</a></div></div>
   <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">A Coruña</div><div class="rest-city-day">Sa 19.06.</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=El+de+Alberto+A+Coruña" target="_blank" rel="noopener">El de Alberto (Bib Gourmand 2026)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Artabria+A+Coruña" target="_blank" rel="noopener">Artabria</a></div></div>
   <div class="wbox"><strong>Wein:</strong> <em>Albariño</em> (Weißwein, perfekt zu Meeresfrüchten) oder <em>Ribeiro tinto</em> (leichter Rotwein, oft vom Fass). Beide D.O. aus Galicien.</div>
 </section>
@@ -2648,7 +2596,7 @@ function planHTML(i){
 /* ===== Restaurants pro Tag (aus dem Abschnitt «Wo ihr esst») ===== */
 const RESTS={};
 document.querySelectorAll('#restaurants .rest-city').forEach(c=>{
-  const lbl=(c.querySelector('.rest-city-day')||{}).textContent||'';const m=lbl.match(/Tag (\d)/);
+  const lbl=(c.querySelector('.rest-city-day')||{}).textContent||'';const m=lbl.match(/(?:Tag|Etappe) (\d)/);
   const key=m?'s'+m[1]:(/19\.06/.test(lbl)?'2027-06-19':null);if(!key)return;
   RESTS[key]=[...c.querySelectorAll('.ri a')].map(a=>a.textContent.replace(/^\s*/,'').trim());
 });
@@ -2657,7 +2605,7 @@ const restFor=x=>RESTS[x.d]||(x.stage?RESTS['s'+x.stage]:null)||[];
 /* ===== Etappe teilen ===== */
 function shareText(i){
   const x=DAYS[i],p=dayPlan(i),L=[];
-  L.push(`Camino · ${fmt(x.d)}${x.stage&&x.stage<8?` · Tag ${x.stage}`:''}`);
+  L.push(`Camino · ${fmt(x.d)}${x.stage&&x.stage<8?` · Etappe ${x.stage}`:''}`);
   L.push(`*${x.title.replace(/[]\s*/g,'').trim()}*${x.km?` · ${String(x.km).replace('.',',')} km`:''}${x.up?` · ↑${x.up} m`:''}${x.dn?` · ↓${x.dn} m`:''}`);
   if(p.start!=null)
   if(x.hl)L.push('Highlights: '+x.hl.join(', '));
@@ -2754,7 +2702,7 @@ function buildBook(){
     <div class="pb-foot">Stand ${new Date().toLocaleDateString('de-CH')} · ${SITE_URL}</div></section>`);
   DAYS.forEach((x,i)=>{
     const p=dayPlan(i),r=restFor(x);
-    const kick=x.stage&&x.stage<8?`Tag ${x.stage} · ${fmt(x.d)}`:fmt(x.d);
+    const kick=x.stage&&x.stage<8?`Etappe ${x.stage} · ${fmt(x.d)}`:fmt(x.d);
     const stats=[x.km?`${String(x.km).replace('.',',')} km`:'',x.up?`↑ ${x.up} m`:'',p.walk?`~${fH(p.total)} h mit Pausen`:''].filter(Boolean).join(' · ');
     pages.push(`<section class="pb-page"><div class="pb-kicker">${kick}</div><div class="pb-h">${escH(x.title)}</div>${stats?`<div class="pb-stats">${stats}</div>`:''}
       <p>${escH(x.info)}</p>
@@ -2944,7 +2892,7 @@ const JLINES={
     const hero=ov?(IMAGE_MAP.chapters[ov[0]].gallery.find(g=>g.id===ov[1]&&g.src)||null):(c&&c.hero&&c.hero.src?c.hero:null);
     const img=hero?`<img src="${escH(hero.src)}" ${hero.srcset?`srcset="${escH(hero.srcset)}" sizes="(min-width:900px) 560px, 100vw"`:''} alt="${escH(hero.alt||x.title)}" loading="lazy" decoding="async" width="1600" height="1067"${hero.pos?` style="object-position:${escH(hero.pos)}"`:''}>`:`<div class="img-ph" aria-hidden="true"></div>`;
     const walk=x.stage&&x.stage<8;
-    const meta=walk?`Tag ${x.stage} · ${fmt(x.d)}`:fmt(x.d);
+    const meta=walk?`Etappe ${x.stage} · ${fmt(x.d)}`:fmt(x.d);
     const facts=x.boat?`Boot · ${String(x.km).replace('.',',')} km zu Fuss · ↑ ${x.up} m · ↓ ${x.dn} m`:(x.km?`${String(x.km).replace('.',',')} km · ↑ ${x.up} m${x.dn!=null?` · ↓ ${x.dn} m`:''}`:'');
     const target=x.stage?`stage:${x.stage}`:'anreise';
     return `<a class="j-card${walk?'':' j-small'}" href="#${x.stage?'etappen':'anreise'}" data-go2="${target}">
@@ -2961,7 +2909,7 @@ const JLINES={
 /* Etappen-Detail: klare Reihenfolge */
 const REST_LINKS={};
 document.querySelectorAll('#restaurants .rest-city').forEach(c=>{
-  const lbl=(c.querySelector('.rest-city-day')||{}).textContent||'';const m=lbl.match(/Tag (\d)/);
+  const lbl=(c.querySelector('.rest-city-day')||{}).textContent||'';const m=lbl.match(/(?:Tag|Etappe) (\d)/);
   const key=m?'s'+m[1]:(/19\.06/.test(lbl)?'s8':null);if(!key)return;
   REST_LINKS[key]=[...c.querySelectorAll('.ri a')].map(a=>({href:a.href,name:a.textContent.replace(/^\s*/,'').trim()}));
 });
