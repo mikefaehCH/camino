@@ -7,7 +7,7 @@
 <meta name="description" content="Unser Camino Portugués im Juni 2027: Porto, Valença, Variante Espiritual, Santiago und A Coruña – Reisejournal und Reisebegleiter für vier Freunde.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nach Santiago. Zu viert. – Camino Portugués 2027">
-<meta property="og:description" content="Sechs Etappen zu Fuss, eine übers Wasser: unser Camino Portugués im Juni 2027.">
+<meta property="og:description" content="Sechs Wandertage und eine Bootsetappe: unser Camino Portugués im Heiligen Jahr 2027.">
 <meta property="og:image" content="https://mikefaehch.github.io/camino/images/start/og-image.jpg">
 <meta property="og:url" content="https://mikefaehch.github.io/camino/">
 <meta name="twitter:card" content="summary_large_image">
@@ -897,6 +897,14 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 .wxh-tbl{margin-top:.6rem;font-size:.82rem;}.wxh-tbl summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--link);}
 .wxh-tbl table{border-collapse:collapse;width:100%;}.wxh-tbl td,.wxh-tbl th{padding:.25rem .4rem;text-align:right;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums;}.wxh-tbl th:first-child,.wxh-tbl td:first-child{text-align:left;}
 .wxh-src{font-size:.7rem;color:var(--muted);margin-top:.5rem;}.wxh-src a,#wetter .wbox a{color:var(--link);}
+.hero-holy{margin:.2rem 0 1.2rem;font:500 .8rem/1.4 var(--sans,system-ui);letter-spacing:.04em;color:rgba(255,255,255,.88);display:inline-block;border-top:1px solid rgba(255,255,255,.45);padding-top:.55rem;}
+.trk-note{font-size:.78rem;color:var(--muted);margin:.4rem 0 0;}
+.det-more{background:none;border:0;padding:0;min-height:44px;font:600 .82rem var(--sans,system-ui);color:var(--link);cursor:pointer;}
+.elev-svg.gpx{touch-action:pan-y;cursor:crosshair;max-width:560px;}
+.elev-svg .cur-l{stroke:var(--ink,#252923);stroke-width:1;stroke-dasharray:3 3;}
+.elev-svg .cur-t{font:600 11px var(--sans,system-ui);fill:var(--ink,#252923);}
+.elev-svg .cur-d{fill:#216c53;stroke:#fff;stroke-width:2;}
+.wx-at{color:var(--muted);font-size:.85em;}
 .tc-addr{font-size:.78rem;color:var(--muted);margin-top:.15rem;}
 .mbtn.gpx{gap:.35rem;}
 #journey,.j-item,.j-item>*,.stage-body,.stage-body>*{min-width:0;}.gallery{max-width:100%;}
@@ -1031,7 +1039,8 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="hero-content">
     <div class="hero-eyebrow">Camino Portugués · Juni 2027 · Valença → Santiago de Compostela</div>
     <h1 class="hero-h1">Nach Santiago.<br><em>Zu viert.</em></h1>
-    <p class="hero-sub">Sechs Etappen zu Fuss, eine übers Wasser. Ein gemeinsamer Weg – und unzählige Geschichten dazwischen.</p>
+    <p class="hero-sub">Sechs Wandertage und eine Bootsetappe. Ein gemeinsamer Weg – und unzählige Geschichten dazwischen.</p>
+    <p class="hero-holy">Heiliges Jahr 2027 · Die Heilige Pforte in Santiago ist offen</p>
     <a class="hero-scroll" href="#intro">Die Reise entdecken <span aria-hidden="true">↓</span></a>
   </div>
 </section>
@@ -2383,23 +2392,23 @@ async function loadWX(){
   if(WX)return WX;
   const pts=DAYS.filter((x,i,a)=>a.findIndex(y=>y.place===x.place)===i);
   const url='https://api.open-meteo.com/v1/forecast?latitude='+pts.map(p=>p.lat).join(',')+'&longitude='+pts.map(p=>p.lon).join(',')+
-    '&current=temperature_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=16&timezone=Europe/Madrid';
-  try{const r=await fetch(url);const j=await r.json();const arr=Array.isArray(j)?j:[j];WX={};pts.forEach((p,i)=>WX[p.place]=arr[i]);store.set('camino_wx',JSON.stringify(WX));}
+    '&current=temperature_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,wind_speed_10m_max&forecast_days=16&timezone=Europe/Madrid';
+  try{const r=await fetch(url);const j=await r.json();const arr=Array.isArray(j)?j:[j];WX={_at:Date.now()};pts.forEach((p,i)=>WX[p.place]=arr[i]);store.set('camino_wx',JSON.stringify(WX));}
   catch(e){try{WX=JSON.parse(store.get('camino_wx')||'null');}catch(_){WX=null;}}
   return WX;
 }
 function wxFor(place,date){
   const w=WX&&WX[place];if(!w)return null;
   const i=w.daily?w.daily.time.indexOf(date):-1;
-  if(i>=0)return {fc:true,ic:WXI[w.daily.weathercode[i]]||'thermometer',max:Math.round(w.daily.temperature_2m_max[i]),min:Math.round(w.daily.temperature_2m_min[i]),rain:w.daily.precipitation_probability_max[i]};
+  if(i>=0)return {fc:true,ic:WXI[w.daily.weathercode[i]]||'thermometer',max:Math.round(w.daily.temperature_2m_max[i]),min:Math.round(w.daily.temperature_2m_min[i]),rain:w.daily.precipitation_probability_max[i],mm:w.daily.precipitation_sum?w.daily.precipitation_sum[i]:null,wind:w.daily.wind_speed_10m_max?Math.round(w.daily.wind_speed_10m_max[i]):null};
   if(w.current)return {fc:false,ic:WXI[w.current.weathercode]||'thermometer',now:Math.round(w.current.temperature_2m)};
   return null;
 }
 function wxText(x){
   if(!x)return 'Wetter nicht verfügbar';
-  return x.fc?`${x.max}° / ${x.min}° · ${x.rain??'–'}% Regen`:`jetzt ${x.now}° · Prognose ab ca. 16 Tage vorher`;
+  return x.fc?`${x.max}° / ${x.min}° · ${x.rain??'–'}% Regen${x.mm>=0.5?` (${String(Math.round(x.mm*10)/10).replace('.',',')} mm)`:''}${x.wind!=null?` · Wind bis ${x.wind} km/h`:''}`:`jetzt ${x.now}° · Prognose ab ca. 16 Tage vorher`;
 }
-function wxHTML(x){return x&&x.fc?`${ICON(x.ic)} ${wxText(x)}`:'';
+function wxHTML(x){if(!(x&&x.fc))return '';const at=WX&&WX._at?new Date(WX._at):null;return `${ICON(x.ic)} ${wxText(x)}${at?`<span class="wx-at"> · Prognose Open-Meteo, Stand ${at.getDate()}.${at.getMonth()+1}. ${String(at.getHours()).padStart(2,'0')}:${String(at.getMinutes()).padStart(2,'0')}</span>`:''}`;
 }
 
 /* ===== HEUTE ===== */
@@ -2668,7 +2677,7 @@ function locate(){
   out.textContent='Standort wird gesucht…';
   navigator.geolocation.getCurrentPosition(pos=>{
     const {latitude:la,longitude:lo,accuracy:acc}=pos.coords;if(window.tryStamp)window.tryStamp(la,lo);
-    const km=distKm(la,lo,x.lat,x.lon);
+    const km=distKm(la,lo,x.lat,x.lon);const weak=acc>150;
     const dest=x.approx?encodeURIComponent(x.q):x.lat+','+x.lon;
     const nav=`https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=walking`;
     const kmT=km<10?km.toFixed(1).replace('.',','):Math.round(km).toLocaleString('de-CH');
@@ -2685,6 +2694,7 @@ function locate(){
       YOU.forEach(l=>l.addTo(window.CMAP));
       if(km<=250)window.CMAP.fitBounds(L.latLngBounds([[la,lo],[x.lat,x.lon]]),{padding:[40,40],maxZoom:15});
     }
+    if(weak)out.insertAdjacentHTML('beforeend',`<br><span style="color:var(--muted)">Standort ungenau (±${Math.round(acc)} m) – Angaben nur grob. Unter freiem Himmel nochmals versuchen.</span>`);
   },err=>{
     out.textContent=err.code===1?'Standortzugriff abgelehnt – in den Browser-Einstellungen für diese Seite erlauben.':'Standort nicht gefunden – draussen nochmals versuchen.';
   },{enableHighAccuracy:true,timeout:15000,maximumAge:60000});
@@ -2875,14 +2885,14 @@ function parseGPX(txt){
   return {pts,cum,km:cum[cum.length-1]};
 }
 function profileSVG(g,id){
-  const W=700,H=110,x0=46,x1=688,y0=18,y1=86;const els=g.pts.map(p=>p[2]).filter(e=>e!=null);if(els.length<2)return null;
+  const W=400,H=130,x0=40,x1=392,y0=18,y1=108;const els=g.pts.map(p=>p[2]).filter(e=>e!=null);if(els.length<2)return null;
   const mn=Math.min(...els),mx=Math.max(...els),rg=Math.max(mx-mn,50);
   let up=0,dn=0;for(let i=1;i<els.length;i++){const d=els[i]-els[i-1];if(d>0)up+=d;else dn-=d;}
   const step=Math.max(1,Math.floor(g.pts.length/220));const xy=[];
   for(let i=0;i<g.pts.length;i+=step){const e=g.pts[i][2];if(e==null)continue;xy.push([x0+(x1-x0)*g.cum[i]/g.km,y1-(y1-y0)*(e-mn)/rg]);}
   const line=xy.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
   return {up:Math.round(up),dn:Math.round(dn),svg:`<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#216c53" stop-opacity=".45"/><stop offset="100%" stop-color="#216c53" stop-opacity=".04"/></linearGradient></defs>
-   <text x="4" y="${y0+4}" font-size="9" fill="#50665d">${Math.round(mx)} m</text><text x="4" y="${y1}" font-size="9" fill="#50665d">${Math.round(mn)} m</text>
+   <text x="2" y="${y0+4}" font-size="10" fill="#50665d">${Math.round(mx)} m</text><text x="2" y="${y1}" font-size="10" fill="#50665d">${Math.round(mn)} m</text><text x="${x1}" y="${H-4}" font-size="10" fill="#50665d" text-anchor="end">${g.km.toFixed(1).replace('.',',')} km</text>
    <path d="${line} L ${x1} ${y1+6} L ${x0} ${y1+6} Z" fill="url(#${id})"/><path d="${line}" fill="none" stroke="#216c53" stroke-width="2.5" stroke-linejoin="round"/>
    `};
 }
@@ -2892,11 +2902,12 @@ async function loadGPX(){
     try{const r=await fetch(GPX_FILES[n]);if(!r.ok)continue;const g=parseGPX(await r.text());if(g.pts.length<2)continue;GPX[n]=g;
       if(window.CMAP&&typeof L!=='undefined')L.polyline(g.pts.map(p=>[p[0],p[1]]),{color:'#216c53',weight:4,opacity:.95}).addTo(window.CMAP).bindPopup(`Etappe ${n} · ${g.km.toFixed(1).replace('.',',')} km (GPX)`);
       const s=STAGES[n-1];const svg=s&&s.querySelector('.elev-svg');const pr=profileSVG(g,'gpx'+n);
-      if(svg&&pr){svg.setAttribute('viewBox','0 0 700 110');svg.classList.add('gpx');svg.innerHTML=pr.svg;const lb=s.querySelector('.elev-lbl');if(lb)lb.textContent='Höhenprofil (GPX)';}
+      if(svg&&pr){svg.setAttribute('viewBox','0 0 400 130');svg.classList.add('gpx');svg.innerHTML=pr.svg;const lb=s.querySelector('.elev-lbl');if(lb)lb.textContent='Höhenprofil (GPX)';}
     }catch(e){}
   }
-  for(const f of (typeof GPX_EXTRA!=='undefined'?GPX_EXTRA:[])){try{const r=await fetch(f);if(!r.ok)continue;const g=parseGPX(await r.text());if(window.CMAP&&typeof L!=='undefined')L.polyline(g.pts.map(p=>[p[0],p[1]]),{color:'#216c53',weight:4,opacity:.95}).addTo(window.CMAP).bindPopup(`Etappe 6a · ${g.km.toFixed(1).replace('.',',')} km (GPX)`);}catch(e){}}
+  for(const f of (typeof GPX_EXTRA!=='undefined'?GPX_EXTRA:[])){try{const r=await fetch(f);if(!r.ok)continue;const g=parseGPX(await r.text());window.GPX6A=g;if(window.CMAP&&typeof L!=='undefined')L.polyline(g.pts.map(p=>[p[0],p[1]]),{color:'#216c53',weight:4,opacity:.95}).addTo(window.CMAP).bindPopup(`Etappe 6a · ${g.km.toFixed(1).replace('.',',')} km (GPX)`);}catch(e){}}
   if(Object.keys(GPX).length&&window.ROUTE_LINES)window.ROUTE_LINES.forEach(l=>l.setStyle({opacity:.3}));
+  try{(window.AFTER_GPX||[]).forEach(f=>f());}catch(e){}
 }
 loadGPX();
 /* «Wo bin ich?» entlang der Route */
@@ -3238,6 +3249,46 @@ renderToday=function(i){_renderToday24(i);const x=DAYS[i];const card=document.ge
     const hero=s1.querySelector(':scope > .ph-fig');if(hero)hero.after(ib);else s1.prepend(ib);}
   const hr=box.nextElementSibling;if(hr&&hr.tagName==='HR')hr.remove();box.remove();
 })();
+
+/* ===== v26: Höhenprofil interaktiv, Track-Anschluss, max. 3 Highlights ===== */
+window.AFTER_GPX=window.AFTER_GPX||[];
+/* Höhenprofil: Finger/Maus zeigt km und Höhe, Punkt auf der Karte */
+(function(){
+  let mk=null;
+  function bind(n){const s=STAGES[n-1];const svg=s&&s.querySelector('.elev-svg.gpx');const g=GPX[n];if(!svg||!g||svg.dataset.ia)return;svg.dataset.ia='1';
+    const els=g.pts.map(p=>p[2]).filter(e=>e!=null);const mn=Math.min(...els),mx=Math.max(...els),rg=Math.max(mx-mn,50);
+    const x0=40,x1=392,y0=18,y1=108,NS='http://www.w3.org/2000/svg';
+    const grp=document.createElementNS(NS,'g');grp.style.display='none';
+    grp.innerHTML='<line class="cur-l" y1="12" y2="112"/><circle class="cur-d" r="5"/><text class="cur-t" y="11"></text>';svg.appendChild(grp);
+    const [ln,dot,tx]=grp.children;
+    function at(ev){const r=svg.getBoundingClientRect();const vx=(ev.clientX-r.left)/r.width*400;const f=Math.max(0,Math.min(1,(vx-x0)/(x1-x0)));
+      const km=f*g.km;let i=g.cum.findIndex(c=>c>=km);if(i<0)i=g.cum.length-1;const p=g.pts[i];if(p[2]==null)return;
+      const x=x0+(x1-x0)*f,y=y1-(y1-y0)*(p[2]-mn)/rg;grp.style.display='';
+      ln.setAttribute('x1',x);ln.setAttribute('x2',x);dot.setAttribute('cx',x);dot.setAttribute('cy',y);
+      tx.textContent=`${km.toFixed(1).replace('.',',')} km · ${Math.round(p[2])} m`;tx.setAttribute('x',Math.min(Math.max(x,60),345));tx.setAttribute('text-anchor','middle');
+      if(window.CMAP&&typeof L!=='undefined'){if(!mk)mk=L.circleMarker([p[0],p[1]],{radius:7,color:'#fff',weight:2,fillColor:'#216c53',fillOpacity:1});mk.setLatLng([p[0],p[1]]);if(!window.CMAP.hasLayer(mk))mk.addTo(window.CMAP);}}
+    svg.addEventListener('pointermove',at);svg.addEventListener('pointerdown',at);
+    svg.addEventListener('pointerleave',()=>{grp.style.display='none';});
+    svg.setAttribute('aria-label',`Höhenprofil Etappe ${n}: ${Math.round(mn)} bis ${Math.round(mx)} m, ${g.km.toFixed(1).replace('.',',')} km. Antippen zeigt Distanz und Höhe.`);
+  }
+  window.AFTER_GPX.push(()=>Object.keys(GPX).forEach(n=>bind(+n)));
+  Object.keys(GPX).forEach(n=>bind(+n));
+})();
+/* Schliesst der Track ans Hotel an? Abweichungen offen ausweisen */
+(function(){
+  function check(){STAGES.forEach((s,k)=>{const n=k+1,x=SDAYS[k],g=GPX[n];if(!x||!g||s.querySelector('.trk-note'))return;
+    const prev=DAYS[DAYS.indexOf(x)-1];const notes=[];
+    const first=(n===6&&window.GPX6A)?window.GPX6A.pts[0]:g.pts[0],last=g.pts[g.pts.length-1];
+    if(n>1&&prev&&prev.lat){const d=distKm(first[0],first[1],prev.lat,prev.lon);if(d>0.3)notes.push(`Der Track startet ca. ${Math.round(d*10)*100} m vom ${escH(prev.hotel)}`);}
+    if(x.lat){const d=distKm(last[0],last[1],x.lat,x.lon);if(d>0.3)notes.push(`endet ca. ${Math.round(d*10)*100} m vor dem ${escH(x.hotel)}`);}
+    if(!notes.length)return;const row=s.querySelector('.map-row');if(!row)return;
+    const p=document.createElement('p');p.className='trk-note';p.innerHTML=notes.join(' und ').replace(/^endet/,'Der Track endet')+'. Dieses Stück ist nicht im Track – dafür «Navigation zum Hotel» nutzen.';row.after(p);});}
+  window.AFTER_GPX.push(check);check();
+})();
+/* Unterwegs sehenswert: drei prominent, der Rest auf Wunsch */
+document.querySelectorAll('.stage-body .det ul').forEach(ul=>{const li=[...ul.children];if(li.length<=3)return;
+  li.slice(3).forEach(l=>l.hidden=true);const b=document.createElement('button');b.type='button';b.className='det-more';b.textContent=`${li.length-3} weitere anzeigen`;
+  b.addEventListener('click',()=>{li.forEach(l=>l.hidden=false);b.remove();});ul.after(b);});
 </script>
 </body>
 </html>
