@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Camino Portugués 2027</title>
 <meta name="description" content="Unser Camino Portugués im Juni 2027: Porto, Valença, Variante Espiritual, Santiago und A Coruña – Reisejournal und Reisebegleiter für vier Freunde.">
@@ -906,6 +907,12 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 .elev-svg .cur-d{fill:#216c53;stroke:#fff;stroke-width:2;}
 .wx-at{color:var(--muted);font-size:.85em;}
 .rest-city-hd{flex-wrap:wrap;row-gap:.2rem;}
+.rest-city-hd{display:grid!important;grid-template-columns:auto 1fr auto;grid-template-areas:"name name chev" "day count chev";column-gap:.3rem;row-gap:.1rem;align-items:center!important;padding:.45rem 0 .6rem;}
+.rest-city-hd .rest-city-name{grid-area:name;}
+.rest-city-hd .rest-city-day{grid-area:day;}
+.rest-city-hd .rc-count{grid-area:count;margin-left:0!important;justify-self:start;}
+.rest-city-hd .rc-count::before{content:'· ';}
+.rest-city-hd::after{grid-area:chev;margin-left:.6rem;}
 .dc-addr{display:block;margin-top:.15rem;opacity:.85;}
 .tc-addr{font-size:.78rem;color:var(--muted);margin-top:.15rem;}
 .mbtn.gpx{gap:.35rem;background:var(--card)!important;color:var(--forest)!important;border:1px solid var(--border)!important;}
@@ -1330,8 +1337,8 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
   <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Vilanova de Arousa</div><div class="rest-city-day">Etappe 5</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Hotel+Leal+La+Sirena+Vilanova+de+Arousa" target="_blank">Restaurant im Hotel Leal</a></div></div>
   <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Padrón</div><div class="rest-city-day">Etappe 6</div></div><div class="ri"><a href="https://maps.app.goo.gl/tmWYdGoyoK7CNJbNA" target="_blank">Pulpería Rial</a></div><div class="ri"><a href="https://maps.app.goo.gl/JHbiuFkiTUcV1AvH8" target="_blank">O Alpendre</a></div></div>
   <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">Santiago de Compostela</div><div class="rest-city-day">Etappe 7</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Café+de+Altamira+Santiago+de+Compostela" target="_blank" rel="noopener">Café de Altamira (Bib Gourmand 2026)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Abastos+2.0+Santiago+de+Compostela" target="_blank" rel="noopener">Abastos 2.0 – Mesas (Bib Gourmand 2026)</a></div></div>
-  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">A Coruña</div><div class="rest-city-day">Sa 19.06.</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=El+de+Alberto+A+Coruña" target="_blank" rel="noopener">El de Alberto (Bib Gourmand 2026)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Artabria+A+Coruña" target="_blank" rel="noopener">Artabria</a></div></div>
-  <div class="wbox"><strong>Wein:</strong> <em>Albariño</em> (Weißwein, perfekt zu Meeresfrüchten) oder <em>Ribeiro tinto</em> (leichter Rotwein, oft vom Fass). Beide D.O. aus Galicien.</div>
+  <div class="rest-city"><div class="rest-city-hd"><div class="rest-city-name">A Coruña</div><div class="rest-city-day">Sa, 19. Jun</div></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=El+de+Alberto+A+Coruña" target="_blank" rel="noopener">El de Alberto (Bib Gourmand 2026)</a></div><div class="ri"><a href="https://www.google.com/maps/search/?api=1&query=Artabria+A+Coruña" target="_blank" rel="noopener">Artabria</a></div></div>
+  <div class="wbox"><strong>Wein:</strong> <em>Albariño</em> (Weisswein, perfekt zu Meeresfrüchten) oder <em>Ribeiro tinto</em> (leichter Rotwein, oft vom Fass). Beide D.O. aus Galicien.</div>
 </section>
 
 <hr class="rule">
