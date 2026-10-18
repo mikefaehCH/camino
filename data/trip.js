@@ -3,7 +3,6 @@
    DAYS:      ein Eintrag pro Reisetag (d=Datum, stage=Etappe 1–7, 8=Santiago/A Coruña; km/up/dn/kt=Komoot-Werte; addr/tel/lat/lon=Hotel)
    JLINES:    Kurzsatz pro Tag für die Reise-Karten
    PLAN_FIX:  Sonderfälle für Gehzeit/Start (z. B. Boot)
-   STAY_COST: nur Zahlungsstatus (keine Preise!)
    DETOURS:   Umwege/Sehenswertes pro Tag (w = am Weg / +km / Taxi …)
    GPX_FILES: Etappe → GPX in routes/ ; GPX_EXTRA: zusätzliche Tracks (6a)
    IMAGE_DATA: Bilder pro Kapitel; status WIKIMEDIA_ATTRIBUTION_PENDING = ausgeblendet */
@@ -34,18 +33,6 @@ const JLINES={
 const PLAN_FIX={
   '2027-06-12':{start:10,tz:1,note:'Start in Valença nach Transfer oder Zug. Ab der Brücke nach Tui gilt spanische Zeit (+1 h).'},
   '2027-06-17':{boat:true,note:'Abfahrt nach Gezeiten. Zu Fuss: 6a 1,3 km zum Anleger (ca. 20 Min.), nach dem Boot 6b 8,7 km über Herbón nach Padrón (ca. 2:20 h, Komoot).'}
-};
-
-const STAY_COST={
- '2027-06-11':{pay:'Überweisung vor Anreise'},
- '2027-06-12':{pay:'wird belastet'},
- '2027-06-13':{pay:'bezahlt'},
- '2027-06-14':{pay:'Zahlung vor Ort'},
- '2027-06-15':{pay:'Zahlung vor Ort'},
- '2027-06-16':{pay:'Buchungsbestätigung fehlt noch'},
- '2027-06-17':{pay:'Zahlung vor Ort'},
- '2027-06-18':{pay:'teilweise bezahlt, Rest + Kurtaxe vor Ort'},
- '2027-06-19':{pay:'Zahlung vor Ort'}
 };
 
 const DETOURS={

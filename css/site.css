@@ -944,3 +944,21 @@ hr.rule{border:0;border-top:1px solid var(--border);margin:0 auto;max-width:760p
 
 .ri .st{margin-left:.5rem;}
 .bk,.stage,.today-card,.map-card,.j-img,.det,.morning,.plan-box,.stage-wx,.cp-fact,.btn,.mbtn{border-radius:6px!important;}
+
+/* ===== v28: Unterwegs-Modus, Knöpfe, Offline ===== */
+body.in-trip #hero{min-height:46svh;}
+body.in-trip #hero .hero-sub,body.in-trip #hero .hero-holy,body.in-trip #hero .hero-scroll,body.in-trip #countdown{display:none;}
+body.in-trip #hero .hero-h1{font-size:clamp(2.4rem,10vw,4rem);margin-bottom:.25rem;}
+#hero .theme-btn{position:absolute!important;top:calc(14px + env(safe-area-inset-top));right:14px;bottom:auto!important;z-index:5!important;}
+.tc-btns{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+.tc-btns .btn{justify-content:center;min-height:48px;text-align:center;}
+.tc-more{margin-top:.5rem;}
+.tc-more>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;min-height:44px;border:1.5px dashed var(--border);border-radius:6px;font:700 .8rem var(--sans);color:var(--link);}
+.tc-more>summary::-webkit-details-marker{display:none;}
+.tc-more[open]>summary{margin-bottom:.5rem;}
+.tc-more-btns{display:flex;flex-wrap:wrap;gap:.5rem;}
+.tc-more-btns .btn{min-height:44px;}
+.map-off{font-size:.72rem;color:var(--muted);margin:.25rem 0 .5rem;}
+#offline-tip .btn{margin-top:.6rem;min-height:44px;}
+.dc-name a{display:inline-block;padding:.75rem 0;margin:-.75rem 0;}
+.stage .day-cards .dc-lbl{display:none;}

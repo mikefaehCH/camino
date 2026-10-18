@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" />
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" />
   <path d="m6 6 12 12" /></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></symbol><symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
   <circle cx="12" cy="10" r="3" /></symbol><symbol id="i-share-2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3" />
   <circle cx="6" cy="12" r="3" />
@@ -151,6 +151,7 @@
   <div class="map-card">
     <div id="map" role="region" aria-label="Karte der Route"></div>
     <div class="map-note map-legend"><span><i class="lg walk"></i>Wanderweg (GPX)</span><span><i class="lg boat"></i>Boot, Verlauf schematisch</span><span><i class="lg tr"></i>Transfer, Zug</span></div>
+    <p class="map-note map-off">Ohne Netz zeigt die Karte nur Ausschnitte, die schon einmal geladen wurden. Für unterwegs in Komoot die Etappen offline speichern.</p>
     <div class="map-tools"><button class="btn pri" type="button" id="locate-btn"><svg class="ic" aria-hidden="true"><use href="#i-locate-fixed"/></svg> Wo bin ich?</button><a class="btn" id="komoot-coll" href="https://www.komoot.com/de-de/collection/4752367/-camino-2027?share_token=a3nLGr9KDnVUkS0eZ5RTtTRSVf5qvsIgjiNDl1CQ25gy0m1HUK" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg> Alle Etappen in Komoot</a><div class="loc-out" id="loc-out" aria-live="polite"></div></div>
   </div>
 </section>
@@ -164,7 +165,7 @@
   <div class="sec-rule"><div class="sec-rule-line"></div><span style="color:var(--shell);font-size:.75rem;"></span><div class="sec-rule-line"></div></div>
   <div class="today-picker" id="today-picker" role="tablist" aria-label="Tag wählen"></div>
   <div class="today-card" id="today-card"></div>
-  <div class="wbox"><strong>Tipp:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen. Etappen, Hotels, Telefonnummern und GPX sind dann auch ohne Netz da – Karte und Wetter brauchen Empfang.</div>
+  <div class="wbox" id="offline-tip"><strong>Offline:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen. Etappen, Hotels, Telefonnummern und GPX sind dann auch ohne Netz da. Fotos nur, wenn ihr sie unten speichert. Karte und Wetter brauchen Empfang.</div>
 </section>
 
 <hr class="rule">

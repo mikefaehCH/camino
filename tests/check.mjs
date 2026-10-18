@@ -126,6 +126,19 @@ for (const [w, h] of [[375, 812], [390, 844], [430, 932], [768, 1024], [1440, 90
   ok(r.anchors.length === 0, `${w}px: tote Sprunglinks ${r.anchors.join(',')}`);
   ok(r.broken.length === 0, `${w}px: kaputte Bilder ${r.broken.join(',')}`);
   ok(p.errs.length === 0, `${w}px: Script-Fehler ` + p.errs.join(' | '));
+  if (w === 390) {
+    const q = await p.evaluate(() => {
+      const c = {}; document.querySelectorAll('[id]').forEach(e => c[e.id] = (c[e.id] || 0) + 1);
+      const small = [...document.querySelectorAll('a,button,summary,[role=button]')].filter(e => { const b = e.getBoundingClientRect();
+        return e.offsetParent && b.width > 0 && b.height < 44 && !e.closest('.leaflet-control-attribution') && getComputedStyle(e).display !== 'inline' /* Links im Fliesstext sind nach WCAG 2.5.8 ausgenommen */; })
+        .map(e => e.textContent.trim().slice(0, 25));
+      const hotels = STAGES.map((s, k) => { const x = SDAYS[k], n = s.querySelector('.dc-name'); return x && n && x.hotel && !n.textContent.includes(x.hotel) ? `Etappe ${k + 1}: «${n.textContent.trim()}» ≠ «${x.hotel}»` : null; }).filter(Boolean);
+      return { dup: Object.keys(c).filter(k => c[k] > 1), small, hotels };
+    });
+    ok(q.dup.length === 0, 'Doppelte IDs: ' + q.dup.join(','));
+    ok(q.small.length === 0, 'Touch-Ziele unter 44 px: ' + q.small.join(' | '));
+    ok(q.hotels.length === 0, 'Hotel in Etappe ≠ DAYS: ' + q.hotels.join(' | '));
+  }
   await p.context().close();
 }
 
@@ -147,7 +160,13 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   const sw = await p.evaluate(() => navigator.serviceWorker.register('sw.js').then(() => Promise.race([navigator.serviceWorker.ready.then(() => 'ok'), new Promise(r => setTimeout(() => r('timeout'), 10000))])).catch(e => 'Fehler: ' + e.message));
   ok(sw === 'ok', 'Service Worker: ' + sw);
   await p.waitForTimeout(2500); await p.reload(); await p.waitForTimeout(1000);
+  const foto = await p.evaluate(async () => { const b = [...document.querySelectorAll('#offline-tip .btn')][0]; if (!b) return null; b.click();
+    for (let i = 0; i < 100 && !b.disabled; i++) await new Promise(r => setTimeout(r, 50));
+    for (let i = 0; i < 200 && !/gespeichert$/.test(b.textContent.trim()); i++) await new Promise(r => setTimeout(r, 100));
+    return { txt: b.textContent.trim(), src: Object.values(IMAGE_MAP.chapters).map(c => c.hero).find(g => g && g.src)?.src }; });
+  ok(foto && /offline gespeichert/.test(foto.txt), 'Fotos offline speichern: ' + (foto && foto.txt));
   await ctx.setOffline(true); await p.reload(); await p.waitForTimeout(1500);
+  if (foto && foto.src) { const st = await p.evaluate(s => fetch(s).then(r => r.status).catch(() => 0), foto.src); ok(st === 200, 'Offline: gespeichertes Foto fehlt'); }
   const o = await p.evaluate(async () => ({ title: document.querySelector('#today-card .tc-title')?.textContent, gpx: (await fetch('routes/etappe-7.gpx').then(r => r.status).catch(() => 0)) }));
   ok(o.title, 'Offline: Tagesansicht fehlt');
   ok(o.gpx === 200, 'Offline: GPX nicht im Cache');

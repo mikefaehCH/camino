@@ -15,7 +15,7 @@ Live: https://mikefaehch.github.io/camino/
 | `images/` | Bilder in 800/1600 px (WebP) |
 | `vendor/` | Leaflet und Schriften lokal (Lizenzen im Ordner) |
 | `sw.js`, `manifest.webmanifest` | Offline und «Zum Home-Bildschirm» |
-| `tests/check.mjs` | Prüfskript: `node tests/check.mjs` |
+| `tests/check.mjs` | Prüfskript: `npm run check` (ohne Installation, braucht Node + Playwright) |
 
 Details für die Weiterentwicklung: [`CLAUDE.md`](CLAUDE.md).
 

@@ -74,7 +74,7 @@ async function _loadWX(){
   const pts=DAYS.filter((x,i,a)=>a.findIndex(y=>y.place===x.place)===i);
   const url='https://api.open-meteo.com/v1/forecast?latitude='+pts.map(p=>p.lat).join(',')+'&longitude='+pts.map(p=>p.lon).join(',')+
     '&current=temperature_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,wind_speed_10m_max&forecast_days=16&timezone=Europe/Madrid';
-  try{const r=await fetch(url);const j=await r.json();const arr=Array.isArray(j)?j:[j];WX={_at:Date.now()};pts.forEach((p,i)=>WX[p.place]=arr[i]);store.set('camino_wx',JSON.stringify(WX));}
+  try{const r=await fetch(url);if(!r.ok)throw new Error('wx '+r.status);const j=await r.json();if(!j||j.error)throw new Error('wx');const arr=Array.isArray(j)?j:[j];WX={_at:Date.now()};pts.forEach((p,i)=>WX[p.place]=arr[i]);store.set('camino_wx',JSON.stringify(WX));}
   catch(e){try{WX=JSON.parse(store.get('camino_wx')||'null');}catch(_){WX=null;}}
   return WX;
 }
@@ -163,18 +163,15 @@ loadWX().then(()=>{STAGES.forEach((s,i)=>{const sd=SDAYS[i];const w=s.querySelec
 })();
 
 /* ===== BUCHUNGEN ===== */
-/* Zahlungsart pro Unterkunft */
-function costLine(d){const c=STAY_COST[d];if(!c)return '';
-  return `<div class="bk-cost">${c.pay}</div>`;}
 (function(){
   const fl=(d,name,meta)=>{const y=dt(d);return `<div class="bk flight"><div class="bk-date"><b>${y.getDate()}.</b><span>${WD[y.getDay()]} · Jun</span></div><div><div class="bk-name">${name}</div><div class="bk-meta">${meta}</div></div></div>`;};
   let html=fl('2027-06-11','Chair Airlines CS176','Zürich 15:35 → Porto 17:15 · Koffer 23 kg + Handgepäck 8 kg · Sitzplätze reserviert');
   DAYS.filter(x=>x.hotel).forEach((x,i,a)=>{const y=dt(x.d);const out=a[i+1]?a[i+1].d:'2027-06-20';const o=dt(out);
     html+=`<div class="bk"><div class="bk-date"><b>${y.getDate()}.</b><span>${WD[y.getDay()]} → ${WD[o.getDay()]}</span></div><div>
       <div class="bk-name">${x.hotel}${x.bf?'<span class="badge">Frühstück</span>':''}</div>
-      <div class="bk-meta">${x.place} · Check-in ${x.ci} · Check-out ${x.co}</div>${costLine(x.d)}
+      <div class="bk-meta">${x.place} · Check-in ${x.ci} · Check-out ${x.co}</div>
       <div class="bk-btns">${x.tel?`<a class="btn" href="tel:${x.tel}">${ICON('phone')} ${x.tel.replace(/^\+(351|34)/,'+$1 ')}</a>`:''}<a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}" target="_blank" rel="noopener">${ICON('map-pin')} Karte</a></div></div></div>`;});
-  html+=fl('2027-06-20','Air Europa UX7234 + UX1671','A Coruña 12:35 → Madrid 13:45 · Madrid 15:10 → Zürich 17:30 · Koffer 23 kg durchgecheckt<div class="bk-cost">nicht erstattbar</div>');
+  html+=fl('2027-06-20','Air Europa UX7234 + UX1671','A Coruña 12:35 → Madrid 13:45 · Madrid 15:10 → Zürich 17:30 · Koffer 23 kg durchgecheckt');
   document.getElementById('bk-list').innerHTML=html;
 })();
 
@@ -295,7 +292,7 @@ function dayPlan(i){
   if(!x.stage||!x.km||fix.boat)return out;
   const w=wxFor(x.place,x.d);
   const tmax=w&&w.fc?w.max:23;out.tmax=tmax;out.tmaxFc=!!(w&&w.fc);
-  out.walk=x.kt?x.kt/60:x.km/4.3+x.up*1.8/1000;out.src=x.kt?'Komoot':'geschätzt';out.total=out.walk+(x.km>=15?1:.5);
+  out.walk=x.kt?x.kt/60:x.km/4.3+x.up*1.8/1000;out.src=x.kt?'Komoot':'geschätzt';out.pause=out.walk/6+(x.km>=15?.5:.25);out.total=out.walk+out.pause;
   out.target=tmax>=30?13.5:tmax>=26?14:15;
   if(fix.start!=null){out.start=fix.start;out.arrive=fix.start+(tzOf(x.place)-tz)+out.total;}
   else{out.start=8;out.arrive=out.start+out.total;out.early=tmax>=28;}
@@ -304,7 +301,7 @@ function dayPlan(i){
 const fH=h=>String(Math.round(h*2)/2).replace('.',',');
 function planHTML(i){
   const p=dayPlan(i),parts=[];
-  if(p.walk)parts.push(`<div class="plan-main">Gehzeit ca. ${fH(p.walk)} h, mit Pausen ca. ${fH(p.total)} h</div><div class="plan-sub">${p.src==='Komoot'?'Gehzeit laut Komoot-Tour, Pausen +1 h':'Geschätzt: 4,3 km/h plus 18 Min. je 100 Hm, Pausen +1 h'}</div>`);
+  if(p.walk)parts.push(`<div class="plan-main">Gehzeit ca. ${fH(p.walk)} h, mit Pausen ca. ${fH(p.total)} h</div><div class="plan-sub">${p.src==='Komoot'?'Gehzeit laut Komoot-Tour':'Gehzeit geschätzt: 4,3 km/h plus 18 Min. je 100 Hm'} · Pausen geschätzt: 10 Min. pro Stunde plus Mittag</div>`);
   if(p.early)parts.push(`<div class="plan-sub">Heiss angesagt (${p.tmax}°): früher losgehen.</div>`);
   if(p.note)parts.push(`<div class="plan-sub">${p.note}</div>`);
   return parts.length?`<div class="plan-box">${parts.join('')}</div>`:'';
@@ -347,7 +344,7 @@ function locate(){
   const x=DAYS[CUR].hotel?DAYS[CUR]:DAYS[CUR-1]||DAYS[0];
   if(!navigator.geolocation){out.textContent='Standort wird von diesem Browser nicht unterstützt.';return;}
   out.textContent='Standort wird gesucht…';
-  navigator.geolocation.getCurrentPosition(pos=>{
+  navigator.geolocation.getCurrentPosition(pos=>loadGPX().catch(()=>{}).then(()=>{
     const {latitude:la,longitude:lo,accuracy:acc}=pos.coords;if(window.tryStamp)window.tryStamp(la,lo);
     const km=distKm(la,lo,x.lat,x.lon);const weak=acc>150;
     const dest=x.approx?encodeURIComponent(x.q):x.lat+','+x.lon;
@@ -367,7 +364,7 @@ function locate(){
       if(km<=250)window.CMAP.fitBounds(L.latLngBounds([[la,lo],[x.lat,x.lon]]),{padding:[40,40],maxZoom:15});
     }
     if(weak)out.insertAdjacentHTML('beforeend',`<br><span style="color:var(--muted)">Standort ungenau (±${Math.round(acc)} m) – Angaben nur grob. Unter freiem Himmel nochmals versuchen.</span>`);
-  },err=>{
+  }),err=>{
     out.textContent=err.code===1?'Standortzugriff abgelehnt – in den Browser-Einstellungen für diese Seite erlauben.':'Standort nicht gefunden – draussen nochmals versuchen.';
   },{enableHighAccuracy:true,timeout:15000,maximumAge:60000});
 }
@@ -470,7 +467,7 @@ const LUGGAGE_DAYS=['2027-06-12','2027-06-13','2027-06-14','2027-06-15','2027-06
 function morningItems(i){
   const x=DAYS[i],prev=DAYS[i-1],p=dayPlan(i),L=[];
   if(prev&&prev.hotel){
-    L.push(prev.bf?['',`Frühstück im Hotel (${escH(prev.hotel)}).`]:['',`Kein Frühstück gebucht${x.cafe?` – erste Pause: ${escH(x.cafe)}`:''}.`]);
+    L.push(prev.bf?['',`Frühstück inklusive: ${escH(prev.hotel)}, ${escH(prev.place)}.`]:['',`Kein Frühstück gebucht (${escH(prev.hotel)}, ${escH(prev.place)})${x.cafe?` – erste Pause: ${escH(x.cafe)}`:''}.`]);
   }
   if(x.d==='2027-06-19')L.push(['','Eigenes Gepäck im Zug nach A Coruña mitnehmen (~35 Min.).']);
   if(p.arrive!=null&&x.ci){const mm=x.ci.match(/(\d{1,2}):(\d{2})/);const ci=mm?+mm[1]+mm[2]/60:null;
@@ -519,10 +516,13 @@ function profileSVG(g,id){
    <path d="${line} L ${x1} ${y1+6} L ${x0} ${y1+6} Z" fill="url(#${id})"/><path d="${line}" fill="none" stroke="#216c53" stroke-width="2.5" stroke-linejoin="round"/>
    `};
 }
-async function loadGPX(){
+let GPXP=null;
+function loadGPX(){return GPXP||(GPXP=_loadGPX());}
+async function _loadGPX(){
   const keys=Object.keys(GPX_FILES);if(!keys.length)return;
-  for(const n of keys){
-    try{const r=await fetch(GPX_FILES[n]);if(!r.ok)continue;const g=parseGPX(await r.text());if(g.pts.length<2)continue;GPX[n]=g;
+  const texts=await Promise.all(keys.map(n=>fetch(GPX_FILES[n]).then(r=>r.ok?r.text():null).catch(()=>null)));
+  for(const [k,n] of keys.entries()){
+    try{if(!texts[k])continue;const g=parseGPX(texts[k]);if(g.pts.length<2)continue;GPX[n]=g;
       if(window.CMAP&&typeof L!=='undefined')L.polyline(g.pts.map(p=>[p[0],p[1]]),{color:'#216c53',weight:4,opacity:.95}).addTo(window.CMAP).bindPopup(`Etappe ${n} · ${g.km.toFixed(1).replace('.',',')} km (GPX)`);
       const s=STAGES[n-1];const svg=s&&s.querySelector('.elev-svg');const pr=profileSVG(g,'gpx'+n);
       if(svg&&pr){svg.setAttribute('viewBox','0 0 400 130');svg.classList.add('gpx');svg.innerHTML=pr.svg;const lb=s.querySelector('.elev-lbl');if(lb)lb.textContent='Höhenprofil (GPX)';}
@@ -532,7 +532,9 @@ async function loadGPX(){
   if(Object.keys(GPX).length&&window.ROUTE_LINES)window.ROUTE_LINES.forEach(l=>l.setStyle({opacity:.3}));
   try{(window.AFTER_GPX||[]).forEach(f=>f());}catch(e){}
 }
-loadGPX();
+/* GPX erst nach dem Laden der Seite holen (schnellerer Start) */
+(function(){const go=()=>('requestIdleCallback' in window?requestIdleCallback(()=>loadGPX(),{timeout:1500}):setTimeout(loadGPX,300));
+  if(document.readyState==='complete')go();else addEventListener('load',go,{once:true});})();
 /* «Wo bin ich?» entlang der Route */
 function alongRoute(stage,la,lo){
   const g=GPX[stage];if(!g)return null;let bi=0,bd=1e9;
@@ -903,3 +905,43 @@ document.querySelectorAll('.stage-body .det ul').forEach(ul=>{const li=[...ul.ch
 /* ===== v27: Tipp des Tages direkt unter die Beschreibung ===== */
 STAGES.forEach(s=>{const b=s.querySelector('.stage-body');if(!b)return;const anchor=b.querySelector(':scope > details.more')||b.querySelector(':scope > .s-lead');
   [...b.querySelectorAll(':scope > .ibox')].reverse().forEach(ib=>{if(anchor)anchor.after(ib);});});
+
+/* ===== v28: Unterwegs-Modus, klare Knöpfe, Karte auf heute, Offline-Fotos ===== */
+const IN_TRIP=TODAY>=DAYS[0].d&&TODAY<=DAYS[DAYS.length-1].d;
+if(IN_TRIP)document.body.classList.add('in-trip');
+/* Hell/Dunkel-Knopf ins Startbild, damit er keine Inhalte überdeckt */
+(function(){const b=document.getElementById('theme-btn'),h=document.getElementById('hero');if(b&&h)h.appendChild(b);})();
+/* Tageskarte: vier Hauptknöpfe, der Rest unter «Mehr» */
+const _renderToday28=renderToday;
+renderToday=function(i){_renderToday28(i);
+  const btns=document.querySelector('#today-card .tc-btns');if(!btns||btns.dataset.v28)return;btns.dataset.v28='1';
+  const all=[...btns.children],find=re=>all.find(b=>re.test(b.textContent));
+  const main=[find(/Zur Etappe/),find(/Wo bin ich/),find(/Navigation zum Hotel|Hotel auf Karte/),find(/Anrufen/)].filter(Boolean);
+  const rest=all.filter(b=>!main.includes(b));main.forEach(b=>btns.appendChild(b));
+  if(rest.length){const d=document.createElement('details');d.className='tc-more';d.innerHTML='<summary>Mehr: Teilen, GPX, Komoot</summary>';
+    const w=document.createElement('div');w.className='tc-more-btns';rest.forEach(b=>w.appendChild(b));d.appendChild(w);btns.after(d);}
+};
+(function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
+/* Karte: am Reisetag auf die heutige Etappe zoomen, Knopf für die ganze Route */
+window.AFTER_GPX.push(()=>{if(!IN_TRIP||!window.CMAP||typeof L==='undefined')return;const x=DAYS[realIdx()];const g=x&&x.stage&&GPX[x.stage];if(!g)return;
+  const pts=g.pts.map(p=>[p[0],p[1]]);if(x.stage===6&&window.GPX6A)pts.push(...window.GPX6A.pts.map(p=>[p[0],p[1]]));
+  const all=window.CMAP.getBounds(),tb=L.latLngBounds(pts);const fit=()=>{window.CMAP.invalidateSize();window.CMAP.fitBounds(tb,{padding:[24,24]});};fit();
+  const el=document.getElementById('map');if('IntersectionObserver' in window&&el){const io=new IntersectionObserver(e=>{if(e[0].isIntersecting){fit();io.disconnect();}});io.observe(el);}
+  const tools=document.querySelector('.map-tools');if(tools&&!document.getElementById('map-all')){const b=document.createElement('button');b.type='button';b.className='btn';b.id='map-all';
+    b.innerHTML=ICON('route')+' Ganze Route';b.addEventListener('click',()=>window.CMAP.fitBounds(all));tools.insertBefore(b,tools.children[1]||null);}});
+/* Hotel-Adressen in den Etappen aus den zentralen Daten */
+STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x.addr)a.textContent=x.addr;});
+/* Fotos auf Wunsch offline speichern (eigener Cache, bleibt über Updates erhalten) */
+(function(){const tip=document.getElementById('offline-tip');if(!tip||!('caches' in window))return;
+  const list=[...new Set(Object.values(IMAGE_MAP.chapters||{}).flatMap(c=>[c.hero,...(c.gallery||[])]).filter(g=>g&&g.src).map(g=>g.src))];
+  if(!list.length)return;const b=document.createElement('button');b.type='button';b.className='btn';
+  const idle=()=>{b.disabled=false;b.innerHTML=ICON('download')+` Alle ${list.length} Fotos offline speichern (ca. 3 MB)`;};
+  const done=()=>{b.disabled=true;b.innerHTML=ICON('check')+' Fotos offline gespeichert';};
+  idle();tip.appendChild(document.createElement('br'));tip.appendChild(b);
+  caches.open('camino-fotos').then(c=>c.keys()).then(k=>{if(k.length>=list.length)done();}).catch(()=>{});
+  b.addEventListener('click',async()=>{b.disabled=true;let n=0;
+    try{const c=await caches.open('camino-fotos');
+      for(const src of list){const u=new URL(src,location.href).href;if(!(await c.match(u))){const r=await fetch(u);if(r.ok)await c.put(u,r);}n++;b.textContent=`Fotos werden gespeichert … ${n}/${list.length}`;}
+      done();}
+    catch(e){idle();b.insertAdjacentHTML('afterend','<span class="map-off"> Nicht alle Fotos gespeichert – mit Netz nochmals versuchen.</span>');}});
+})();

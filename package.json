@@ -1,0 +1,9 @@
+{
+  "name": "camino-2027",
+  "private": true,
+  "description": "Statische Reise-Webseite, kein Build. Prüfen: npm run check",
+  "scripts": {
+    "check": "node tests/check.mjs",
+    "check:update": "node tests/check.mjs --update"
+  }
+}
