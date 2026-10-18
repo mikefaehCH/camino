@@ -1,1 +1,1 @@
-GPX-Dateien der Etappen hier ablegen (etappe-1.gpx … etappe-7.gpx) und in index.html bei GPX_FILES eintragen.
+GPX-Dateien der Etappen (Komoot-Export) hier ablegen und in data/trip.js bei GPX_FILES bzw. GPX_EXTRA eintragen.
