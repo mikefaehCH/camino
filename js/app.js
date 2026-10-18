@@ -158,7 +158,7 @@ loadWX().then(()=>{STAGES.forEach((s,i)=>{const sd=SDAYS[i];const w=s.querySelec
   const segs=walk.map(x=>`<div class="rb-seg${x.boat?' boat':''}${x.fin?' fin':''}${done(x)?' done':''}${x.d===TODAY?' now':''}" style="flex:${Math.max(x.km,6)}" title="${x.title} · ${x.km} km"></div>`).join('');
   const labels=walk.map(x=>`<span style="flex:${Math.max(x.km,6)}">${x.boat?'Boot':x.place}</span>`).join('');
   const kmDone=walk.filter(done).reduce((a,x)=>a+x.km,0);
-  const leg=TODAY<DAYS[0].d?`140 km · Start am ${fmt(DAYS[1].d)}`:`${Math.round(kmDone)} km geschafft`;
+  const leg=TODAY<DAYS[0].d?`143 km · Start am ${fmt(DAYS[1].d)}`:`${Math.round(kmDone)} km geschafft`;
   document.getElementById('route-bar').innerHTML=`<div class="rb-track">${segs}</div><div class="rb-labels">${labels}</div><div class="rb-legend">${leg}</div>`;
 })();
 
@@ -405,7 +405,7 @@ function buildBook(){
   const el=document.getElementById('printbook');
   const pages=[];
   pages.push(`<section class="pb-page pb-cover"><div class="pb-kicker">Reisebuch</div><h1>Camino Portugués 2027</h1>
-    <div class="pb-sub">Porto · Valença · Variante Espiritual · Santiago · A Coruña<br>Fr 11. – So 20. Juni 2027 · 140 km</div>
+    <div class="pb-sub">Porto · Valença · Variante Espiritual · Santiago · A Coruña<br>Fr 11. – So 20. Juni 2027 · 143 km</div>
     <div class="pb-box" style="text-align:left;margin-top:12mm"><div class="l">Notfall</div>
       <p><b>112</b> Notruf Spanien &amp; Portugal</p><p><b>+41 800 24 7 365</b> EDA Helpline · <b>+41 58 465 33 33</b> EDA aus dem Ausland</p>
       <p style="font-size:9pt">EHIC-Karte und Reiseversicherung mitnehmen.</p></div>

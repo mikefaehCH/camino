@@ -20,7 +20,7 @@ Nur die Datei lesen, die man braucht. `index.html` nicht komplett laden, wenn nu
 
 ## Datenmodell (`DAYS`)
 - `d` Datum, `stage` 1–7 Etappen, 8 = Santiago → A Coruña; Reisetage ohne `stage` (11.06., 20.06.).
-- `km`, `up`, `dn`, `kt` (Gehzeit Min.) = **Komoot-Werte** der Tour. Summe = Gesamtdistanz (`TOTAL_KM`, 140 km).
+- `km`, `up`, `dn`, `kt` (Gehzeit Min.) = **Komoot-Werte** der Tour. Summe = Gesamtdistanz (`TOTAL_KM`, 143 km).
 - `hotel`, `addr`, `tel`, `ci`/`co`, `bf` (Frühstück), `lat`/`lon` = Hotel (Koordinaten aus Google Places geprüft).
 - `boat:true` (Etappe 6): Boot ist keine Gehstrecke; `km` = 6a + 6b zu Fuss.
 - Distanz/Höhenmeter **nur in `DAYS` ändern**. Etappenköpfe, Reisekarten, Tagesansicht, Teilen-Text, Reisebuch lesen daraus.
