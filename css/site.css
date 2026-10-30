@@ -993,3 +993,14 @@ body.in-trip #hero .hero-h1{font-size:clamp(2.4rem,10vw,4rem);margin-bottom:.25r
 .stage-chapters a span{font-family:var(--serif);font-size:1.2rem;color:var(--wave);min-width:1.5rem;}
 .stage[id^="etappe-"]{scroll-margin-top:72px;}
 @media(max-width:540px){.stage-chapters{grid-template-columns:1fr;}}
+
+/* Camino 2.0 – editorial reading rhythm, without replacing the route engine. */
+.editorial-intro{max-width:59ch;margin:.85rem 0 1.5rem;font-size:1rem;line-height:1.8;}
+#etappen .stage{box-shadow:0 8px 30px rgba(11,37,64,.07);}
+#etappen .stage-head{min-height:92px;}
+#etappen .stage .s-lead{font-family:var(--serif);font-size:clamp(1.05rem,2.5vw,1.22rem);line-height:1.65;letter-spacing:-.01em;}
+#etappen .stage .s-prose{max-width:65ch;line-height:1.85;}
+#etappen .stage-head:focus-visible{outline:3px solid var(--wave);outline-offset:-3px;}
+#etappen .stage-chapters a{font-weight:500;}
+#etappen .stage-chapters a:hover span{color:var(--ocean);}
+@media(max-width:540px){#etappen .stage{border-radius:1rem;}#etappen .stage-head{min-height:100px;}.editorial-intro{font-size:.94rem;}}
