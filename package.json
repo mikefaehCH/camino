@@ -4,6 +4,7 @@
   "description": "Statische Reise-Webseite, kein Build. Prüfen: npm run check",
   "scripts": {
     "check": "node tests/check.mjs",
-    "check:update": "node tests/check.mjs --update"
+    "check:update": "node tests/check.mjs --update",
+    "test:auth": "node tests/auth-core.mjs"
   }
 }
