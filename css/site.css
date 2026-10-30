@@ -1016,3 +1016,16 @@ body.in-trip #hero .hero-h1{font-size:clamp(2.4rem,10vw,4rem);margin-bottom:.25r
 /* Camino 2.0 network status */
 .connection-status{margin:1rem 0 .75rem;padding:.8rem 1rem;border:1px solid var(--border);border-radius:.6rem;font-size:.82rem;line-height:1.55;background:var(--card);color:var(--ink);}
 .connection-status[data-connection="offline"]{border-style:dashed;font-weight:600;}
+
+/* Private expense handoff */
+.expense-handoff{margin-top:2rem;padding:clamp(1rem,3vw,1.6rem);border:1px solid var(--border);border-radius:.7rem;background:var(--white);}
+.expense-handoff h3{margin:0 0 .6rem;font-family:var(--serif,Georgia,serif);font-size:1.5rem;}
+.expense-handoff p{line-height:1.55;}
+#expense-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:1rem;align-items:end;}
+#expense-form label{display:grid;gap:.4rem;font-size:.85rem;}
+#expense-form input:not([type=checkbox]),#expense-form select{width:100%;min-height:44px;padding:.6rem;border:1px solid var(--border);border-radius:.35rem;background:var(--white);color:var(--ink);font:inherit;}
+#expense-form fieldset{grid-column:1/-1;border:1px solid var(--border);border-radius:.35rem;display:flex;flex-wrap:wrap;gap:1rem;}
+#expense-form fieldset label{display:flex;align-items:center;gap:.4rem;}
+#expense-form a{align-self:center;}
+#expense-feedback{grid-column:1/-1;min-height:1.4em;}
+#expense-feedback textarea{display:block;width:100%;min-height:8rem;margin-top:.5rem;}
