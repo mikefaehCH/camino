@@ -601,6 +601,14 @@
         <button type="submit" class="ghost-btn">Ausgabe speichern</button>
         <p id="expense-feedback" role="status" aria-live="polite"></p>
       </form>
+      <h4>Rückzahlung verbuchen</h4>
+      <form id="settlement-form">
+        <label>Von <select id="settlement-from"><option>Mike</option><option>Ante</option><option>Kevin</option><option>Luis</option></select></label>
+        <label>An <select id="settlement-to"><option>Ante</option><option>Mike</option><option>Kevin</option><option>Luis</option></select></label>
+        <label>Betrag <input id="settlement-amount" type="number" min="0.01" max="999999" step="0.01" inputmode="decimal" required></label>
+        <label>Währung <select id="settlement-currency"><option>EUR</option><option>CHF</option></select></label>
+        <button type="submit" class="ghost-btn">Rückzahlung speichern</button>
+      </form>
       <h4>Erfasste Ausgaben</h4>
       <div id="expense-list" aria-live="polite"></div>
       <h4>Salden und Ausgleich</h4>

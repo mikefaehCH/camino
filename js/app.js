@@ -994,7 +994,7 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
   const money=(c,cur)=>(c/100).toFixed(2)+' '+cur;
   let entries=[];
   try{const saved=JSON.parse(localStorage.getItem(KEY)||'[]');if(Array.isArray(saved))entries=saved.filter(valid).slice(0,1000);}catch{}
-  function valid(e){return e&&typeof e.id==='string'&&typeof e.description==='string'&&e.description.length<=120&&Number.isSafeInteger(e.cents)&&e.cents>0&&e.cents<=99999900&&['EUR','CHF'].includes(e.currency)&&people.includes(e.payer)&&Array.isArray(e.members)&&e.members.length>0&&e.members.every(m=>people.includes(m))&&new Set(e.members).size===e.members.length;}
+  function valid(e){if(!e||typeof e.id!=='string'||!Number.isSafeInteger(e.cents)||e.cents<=0||e.cents>99999900||!['EUR','CHF'].includes(e.currency))return false;if(e.kind==='settlement')return people.includes(e.from)&&people.includes(e.to)&&e.from!==e.to;return (e.kind===undefined||e.kind==='expense')&&typeof e.description==='string'&&e.description.length<=120&&people.includes(e.payer)&&Array.isArray(e.members)&&e.members.length>0&&e.members.every(m=>people.includes(m))&&new Set(e.members).size===e.members.length;}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(entries));return true;}catch{feedback.textContent='Speichern fehlgeschlagen. Bitte Backup exportieren und freien Speicher prüfen.';return false;}}
   function render(){
     const list=document.getElementById('expense-list'),balances=document.getElementById('expense-balances');
@@ -1004,9 +1004,9 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
     for(const e of ordered){
       const row=document.createElement('div');row.className='expense-entry';
       const info=document.createElement('span');
-      info.textContent=e.description+' · '+money(e.cents,e.currency)+' · bezahlt von '+e.payer+' · '+e.members.join(', ');
+      info.textContent=e.kind==='settlement'?'Rückzahlung: '+e.from+' an '+e.to+' · '+money(e.cents,e.currency):e.description+' · '+money(e.cents,e.currency)+' · bezahlt von '+e.payer+' · '+e.members.join(', ');
       const remove=document.createElement('button');remove.type='button';remove.textContent='Löschen';remove.className='ghost-btn';
-      remove.setAttribute('aria-label','Ausgabe löschen: '+e.description);
+      remove.setAttribute('aria-label','Eintrag löschen: '+(e.description||'Rückzahlung'));
       remove.addEventListener('click',()=>{if(!confirm('Diese Ausgabe wirklich löschen?'))return;entries=entries.filter(x=>x.id!==e.id);if(save())render();});
       row.append(info,remove);list.appendChild(row);
     }
@@ -1014,6 +1014,7 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
       const relevant=entries.filter(e=>e.currency===currency);if(!relevant.length)continue;
       const net=Object.fromEntries(people.map(p=>[p,0]));
       for(const e of relevant){
+        if(e.kind==='settlement'){net[e.from]+=e.cents;net[e.to]-=e.cents;continue;}
         net[e.payer]+=e.cents;
         const base=Math.floor(e.cents/e.members.length),rem=e.cents%e.members.length;
         e.members.forEach((p,i)=>net[p]-=base+(i<rem?1:0));
@@ -1039,6 +1040,14 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
     const e={id:typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+String(Math.random()).slice(2),description,cents:Math.round(amount*100),currency,payer,members};
     if(!description||!Number.isFinite(amount)||amount<=0||!valid(e)){feedback.textContent='Bitte gültigen Betrag, Beschreibung und Beteiligte angeben.';return;}
     entries.push(e);if(save()){form.reset();render();feedback.textContent='Ausgabe auf diesem Gerät gespeichert.';}else entries.pop();
+  });
+  document.getElementById('settlement-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    const from=document.getElementById('settlement-from').value,to=document.getElementById('settlement-to').value;
+    const amount=Number(document.getElementById('settlement-amount').value);
+    const e={kind:'settlement',id:typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+String(Math.random()).slice(2),from,to,cents:Math.round(amount*100),currency:document.getElementById('settlement-currency').value};
+    if(!Number.isFinite(amount)||!valid(e)){feedback.textContent='Bitte unterschiedliche Personen und einen gültigen Betrag angeben.';return;}
+    entries.push(e);if(save()){event.target.reset();render();feedback.textContent='Rückzahlung gespeichert.';}else entries.pop();
   });
   document.getElementById('expense-export').addEventListener('click',()=>{
     const blob=new Blob([JSON.stringify({format:'camino-expenses-v1',entries},null,2)],{type:'application/json'});
