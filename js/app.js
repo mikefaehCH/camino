@@ -812,7 +812,19 @@ document.querySelectorAll('#restaurants .rest-city').forEach(c=>{
 })();
 
 /* ===== OFFLINE ===== */
-if('serviceWorker' in navigator && location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+if('serviceWorker' in navigator && location.protocol==='https:'){
+  // Keep installed iPhone web apps up to date without deleting offline data.
+  let refreshing=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(refreshing || !navigator.serviceWorker.controller)return;
+    refreshing=true;
+    location.reload();
+  });
+  navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{
+    // Check for a new worker each time Camino is opened.
+    reg.update().catch(()=>{});
+  }).catch(()=>{});
+}
 
 /* ===== v24: Datenkonsistenz, GPX-Download, Tagesbegleiter ===== */
 const TOTAL_KM=DAYS.reduce((a,x)=>a+(x.km||0),0);
