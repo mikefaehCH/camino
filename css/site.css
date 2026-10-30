@@ -1036,3 +1036,11 @@ body.in-trip #hero .hero-h1{font-size:clamp(2.4rem,10vw,4rem);margin-bottom:.25r
 .today-reminders label{display:block;font-size:.82rem;margin-bottom:.3rem;}
 .today-reminders input{min-height:44px;padding:.5rem;border:1px solid var(--border);border-radius:.35rem;margin-right:.6rem;background:var(--white);color:var(--ink);}
 .today-reminders button{margin-top:.4rem;}
+
+.expense-entry{display:flex;justify-content:space-between;align-items:center;gap:.75rem;border-bottom:1px solid var(--border);padding:.7rem 0;line-height:1.5;}
+.expense-entry .ghost-btn{flex-shrink:0;}
+#expense-balances h5{font-size:1rem;margin:1rem 0 .4rem;}
+#expense-balances p{margin:.35rem 0;}
+.expense-settlement{font-weight:600;}
+.expense-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:1rem;}
+.expense-actions input[type=file]{max-width:100%;font-size:.8rem;}
