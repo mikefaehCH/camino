@@ -590,18 +590,22 @@
       </article>
     </div>
     <div class="expense-handoff" aria-labelledby="expense-handoff-title">
-      <h3 id="expense-handoff-title">Ausgabe für Splitwise vorbereiten</h3>
-      <p>Keine automatische Verbindung zu Splitwise. Der Entwurf bleibt auf diesem Gerät, bis du ihn bewusst teilst oder kopierst. Keine Speicherung auf einem Server.</p>
+      <h3 id="expense-handoff-title">Unsere Reisekasse</h3>
+      <p>Gemeinsame Ausgaben erfassen, fair aufteilen und sehen, wer wem wie viel schuldet. Alles wird nur auf diesem Gerät gespeichert. Für die gemeinsame Nutzung auf mehreren Geräten braucht es später eine sichere Synchronisierung.</p>
       <form id="expense-form">
         <label>Beschreibung <input id="expense-description" type="text" maxlength="120" required placeholder="Zum Beispiel Abendessen" autocomplete="off"></label>
         <label>Betrag <input id="expense-amount" type="number" min="0.01" max="999999" step="0.01" required inputmode="decimal" placeholder="0.00"></label>
         <label>Währung <select id="expense-currency"><option>EUR</option><option>CHF</option></select></label>
         <label>Bezahlt von <select id="expense-payer"><option>Mike</option><option>Ante</option><option>Kevin</option><option>Luis</option></select></label>
         <fieldset><legend>Aufteilen auf</legend><label><input type="checkbox" name="expense-member" value="Mike" checked> Mike</label><label><input type="checkbox" name="expense-member" value="Ante" checked> Ante</label><label><input type="checkbox" name="expense-member" value="Kevin" checked> Kevin</label><label><input type="checkbox" name="expense-member" value="Luis" checked> Luis</label></fieldset>
-        <button type="submit" class="ghost-btn">Ausgabe kopieren</button>
-        <a href="https://www.splitwise.com/" target="_blank" rel="noopener noreferrer">Splitwise öffnen</a>
+        <button type="submit" class="ghost-btn">Ausgabe speichern</button>
         <p id="expense-feedback" role="status" aria-live="polite"></p>
       </form>
+      <h4>Erfasste Ausgaben</h4>
+      <div id="expense-list" aria-live="polite"></div>
+      <h4>Salden und Ausgleich</h4>
+      <div id="expense-balances"></div>
+      <div class="expense-actions"><button type="button" class="ghost-btn" id="expense-export">Backup exportieren</button><label>Backup importieren <input type="file" id="expense-import" accept="application/json,.json"></label></div>
     </div>
     <p style="font-size:.8rem;opacity:.8;margin-top:1rem">Stand: 29. Oktober 2026. Kein Gesamtbudget ausgewiesen, solange Preise fehlen. Keine Buchungsnummern oder Zahlungsdaten veröffentlicht.</p>
   </div>
