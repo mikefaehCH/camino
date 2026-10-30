@@ -997,7 +997,7 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
   update();
 })();
 
-/* Independent travel expenses: local-only storage, no external financial service. */
+/* Shared travel expenses: server-enforced project membership, no external financial service. */
 window.initTravelExpenses=async function initTravelExpenses(client,projectId){
   const form=document.getElementById('expense-form');
   if(!form)return;
@@ -1032,17 +1032,13 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId){
   // Keep the local backup untouched if the upload fails.
   let legacy=[];
   try{const stored=JSON.parse(localStorage.getItem(KEY)||'[]');if(Array.isArray(stored))legacy=stored.filter(valid).slice(0,1000);}catch{}
-  if(legacy.length){
+  if(legacy.length&&confirm(legacy.length+' lokal gespeicherte Einträge in die gemeinsame Camino-Reisekasse übernehmen?')){
     const rows=legacy.map(e=>({project_id:projectId,entry_id:e.id,payload:e}));
     const {error}=await table().upsert(rows,{onConflict:'project_id,entry_id',ignoreDuplicates:true});
     if(error)throw error;
     localStorage.removeItem(KEY);
   }
   await reload();
-  if(entries.length===0){
-    const initial={id:'initial-pazo-2027',description:'Pazo Santa Teresa (13.–14. Juni 2027)',cents:50900,currency:'CHF',payer:'Mike',members:[...people]};
-    if(valid(initial))await insert(initial);
-  }
   function render(){
     const list=document.getElementById('expense-list'),balances=document.getElementById('expense-balances');
     list.replaceChildren();balances.replaceChildren();

@@ -1,5 +1,5 @@
 /* Camino 2027 – Offline-Cache */
-const CACHE = 'camino-v62';
+const CACHE = 'camino-v63';
 const FOTOS = 'camino-fotos'; // vom Knopf «Fotos offline speichern», bleibt über Updates erhalten
 const CORE = ['./', './index.html', './css/site.css', './js/app.js', './js/push-client.js', './js/auth-core.js', './js/auth-ui.js', './data/trip.js', './manifest.webmanifest', './icon.svg', './icon-192.png', './apple-touch-icon.png',
   './images/start/pilger-nebelwald-800.webp', './images/porto/porto-douro-sonnenuntergang-800.webp', './images/porto/porto-ponte-luis-blaue-stunde-800.webp',
