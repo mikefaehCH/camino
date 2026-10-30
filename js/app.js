@@ -1005,10 +1005,27 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
       const row=document.createElement('div');row.className='expense-entry';
       const info=document.createElement('span');
       info.textContent=e.kind==='settlement'?'Rückzahlung: '+e.from+' an '+e.to+' · '+money(e.cents,e.currency):e.description+' · '+money(e.cents,e.currency)+' · bezahlt von '+e.payer+' · '+e.members.join(', ');
+      const edit=document.createElement('button');edit.type='button';edit.textContent='Bearbeiten';edit.className='ghost-btn';
+      edit.setAttribute('aria-label','Eintrag bearbeiten: '+(e.description||'Rückzahlung'));
+      edit.addEventListener('click',()=>{
+        const newAmount=prompt('Neuer Betrag in '+e.currency+' (bisher '+money(e.cents,e.currency)+')',(e.cents/100).toFixed(2));
+        if(newAmount===null)return;
+        const amount=Number(newAmount.replace(',','.'));
+        if(!Number.isFinite(amount)||amount<=0||amount>999999){feedback.textContent='Ungültiger Betrag.';return;}
+        const revised={...e,cents:Math.round(amount*100)};
+        if(e.kind!=='settlement'){
+          const description=prompt('Beschreibung',e.description);
+          if(description===null)return;
+          revised.description=description.trim();
+        }
+        if(!valid(revised)||!revised.description&&e.kind!=='settlement'){feedback.textContent='Ungültiger Eintrag.';return;}
+        const previous=entries;entries=entries.map(x=>x.id===e.id?revised:x);
+        if(save()){render();feedback.textContent='Eintrag aktualisiert.';}else entries=previous;
+      });
       const remove=document.createElement('button');remove.type='button';remove.textContent='Löschen';remove.className='ghost-btn';
       remove.setAttribute('aria-label','Eintrag löschen: '+(e.description||'Rückzahlung'));
       remove.addEventListener('click',()=>{if(!confirm('Diese Ausgabe wirklich löschen?'))return;entries=entries.filter(x=>x.id!==e.id);if(save())render();});
-      row.append(info,remove);list.appendChild(row);
+      row.append(info,edit,remove);list.appendChild(row);
     }
     for(const currency of ['EUR','CHF']){
       const relevant=entries.filter(e=>e.currency===currency);if(!relevant.length)continue;
