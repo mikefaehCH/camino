@@ -178,6 +178,14 @@
   </div>
   <div class="today-picker" id="today-picker" role="tablist" aria-label="Tag wählen"></div>
   <div class="today-card" id="today-card"></div>
+  <div class="today-reminders" aria-labelledby="today-reminders-title">
+    <h3 id="today-reminders-title">Erinnerung im Kalender</h3>
+    <p>Wähle den Reisetag und die Uhrzeit. Der Kalender kann dich auch bei geschlossener Website erinnern. Keine automatischen Website-Push-Nachrichten.</p>
+    <label for="reminder-time">Abmarschzeit</label>
+    <input id="reminder-time" type="time" value="08:00">
+    <button id="reminder-download" class="ghost-btn" type="button">Kalendereintrag speichern</button>
+    <p id="reminder-feedback" role="status" aria-live="polite"></p>
+  </div>
   <p class="connection-status" id="connection-status" role="status" aria-live="polite">Verbindungsstatus wird geprüft …</p>
   <div class="wbox" id="offline-tip"><strong>Offline:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen. Etappen, Hotels, Telefonnummern und GPX sind dann auch ohne Netz da. Fotos nur, wenn ihr sie unten speichert. Karte und Wetter brauchen Empfang.</div>
 </section>
@@ -580,6 +588,24 @@
         <p><strong>Weitere Kosten:</strong> Transfers, Traslatio-Boot, Verpflegung und sonstige Ausgaben.</p>
         <p>Alle Beträge noch zu erfassen; bislang nicht von Mike bezahlt.</p>
       </article>
+    </div>
+    <div class="expense-handoff" aria-labelledby="expense-handoff-title">
+      <h3 id="expense-handoff-title">Unsere Reisekasse</h3>
+      <p>Gemeinsame Ausgaben erfassen, fair aufteilen und sehen, wer wem wie viel schuldet. Alles wird nur auf diesem Gerät gespeichert. Für die gemeinsame Nutzung auf mehreren Geräten braucht es später eine sichere Synchronisierung.</p>
+      <form id="expense-form">
+        <label>Beschreibung <input id="expense-description" type="text" maxlength="120" required placeholder="Zum Beispiel Abendessen" autocomplete="off"></label>
+        <label>Betrag <input id="expense-amount" type="number" min="0.01" max="999999" step="0.01" required inputmode="decimal" placeholder="0.00"></label>
+        <label>Währung <select id="expense-currency"><option>EUR</option><option>CHF</option></select></label>
+        <label>Bezahlt von <select id="expense-payer"><option>Mike</option><option>Ante</option><option>Kevin</option><option>Luis</option></select></label>
+        <fieldset><legend>Aufteilen auf</legend><label><input type="checkbox" name="expense-member" value="Mike" checked> Mike</label><label><input type="checkbox" name="expense-member" value="Ante" checked> Ante</label><label><input type="checkbox" name="expense-member" value="Kevin" checked> Kevin</label><label><input type="checkbox" name="expense-member" value="Luis" checked> Luis</label></fieldset>
+        <button type="submit" class="ghost-btn">Ausgabe speichern</button>
+        <p id="expense-feedback" role="status" aria-live="polite"></p>
+      </form>
+      <h4>Erfasste Ausgaben</h4>
+      <div id="expense-list" aria-live="polite"></div>
+      <h4>Salden und Ausgleich</h4>
+      <div id="expense-balances"></div>
+      <div class="expense-actions"><button type="button" class="ghost-btn" id="expense-export">Backup exportieren</button><label>Backup importieren <input type="file" id="expense-import" accept="application/json,.json"></label></div>
     </div>
     <p style="font-size:.8rem;opacity:.8;margin-top:1rem">Stand: 29. Oktober 2026. Kein Gesamtbudget ausgewiesen, solange Preise fehlen. Keine Buchungsnummern oder Zahlungsdaten veröffentlicht.</p>
   </div>

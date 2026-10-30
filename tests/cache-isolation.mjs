@@ -6,7 +6,7 @@ import vm from 'node:vm';
 const source = fs.readFileSync(new URL('../sw.js', import.meta.url), 'utf8');
 const handlers = {};
 const deleted = [];
-const keys = ['camino-v48', 'camino-v49', 'camino-fotos', 'zuerich-v19', 'sommer2027-v23', 'unrelated'];
+const keys = ['camino-v48', 'camino-v49', 'camino-v50', 'camino-fotos', 'zuerich-v19', 'sommer2027-v23', 'unrelated'];
 const self = { addEventListener: (name, fn) => { handlers[name] = fn; }, clients: { claim: async () => {} } };
 const caches = { keys: async () => keys, delete: async key => { deleted.push(key); return true; } };
 vm.runInNewContext(source, { self, caches, Promise, URL, setTimeout });
@@ -14,7 +14,7 @@ assert.equal(typeof handlers.activate, 'function', 'activate handler missing');
 let pending;
 handlers.activate({ waitUntil: promise => { pending = promise; } });
 await pending;
-assert.deepEqual(deleted, ['camino-v48', 'camino-v49']);
+assert.deepEqual(deleted, ['camino-v48', 'camino-v49', 'camino-v50']);
 console.log('PASS: Camino only removes its obsolete own cache');
 
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
@@ -49,3 +49,17 @@ assert.ok(app.includes("addEventListener('offline',update)"), 'Missing offline e
 assert.ok(app.includes("addEventListener('online',update)"), 'Missing online event update');
 assert.ok(app.includes("navigator.onLine!==false"), 'Missing initial network state');
 console.log('PASS: day companion connectivity indicator');
+
+assert.ok(html.includes('id="expense-form"'), 'Expense tracker missing');
+assert.ok(html.includes('id="expense-balances"'), 'Balance view missing');
+assert.ok(html.includes('id="expense-export"'), 'Backup export missing');
+assert.ok(app.includes("camino-expenses-v1"), 'Local ledger storage missing');
+assert.ok(app.includes("expense-settlement"), 'Settlement calculation missing');
+assert.ok(!html.includes('https://www.splitwise.com/'), 'External Splitwise link should not exist');
+console.log('PASS: independent travel expense tracker');
+
+assert.ok(html.includes('id="reminder-download"'), 'Calendar reminder action missing');
+assert.ok(app.includes('BEGIN:VALARM'), 'Calendar reminder alarm missing');
+assert.ok(app.includes('navigator.share({text})'), 'Native share missing');
+assert.ok(app.includes('https://wa.me/?text='), 'WhatsApp fallback missing');
+console.log('PASS: calendar and share handoff controls');

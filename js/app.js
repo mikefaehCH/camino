@@ -343,8 +343,20 @@ function shareText(i){
 }
 async function shareDay(i){
   const text=shareText(i);
-  if(navigator.share){try{await navigator.share({text});return;}catch(e){if(e&&e.name==='AbortError')return;}}
-  window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener');
+  if(navigator.share){
+    try{await navigator.share({text});return;}
+    catch(e){if(e&&e.name==='AbortError')return;}
+  }
+  const url='https://wa.me/?text='+encodeURIComponent(text);
+  const win=window.open(url,'_blank','noopener');
+  if(!win){
+    try{
+      await navigator.clipboard.writeText(text);
+      alert('Tagesprogramm kopiert. Du kannst es in WhatsApp einfügen.');
+    }catch{
+      window.location.href=url;
+    }
+  }
 }
 
 /* ===== Wo bin ich? ===== */
@@ -971,4 +983,113 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
   window.addEventListener('online',update);
   window.addEventListener('offline',update);
   update();
+})();
+
+/* Independent travel expenses: local-only storage, no external financial service. */
+(function initTravelExpenses(){
+  const form=document.getElementById('expense-form');
+  if(!form)return;
+  const KEY='camino-expenses-v1', people=['Mike','Ante','Kevin','Luis'];
+  const feedback=document.getElementById('expense-feedback');
+  const money=(c,cur)=>(c/100).toFixed(2)+' '+cur;
+  let entries=[];
+  try{const saved=JSON.parse(localStorage.getItem(KEY)||'[]');if(Array.isArray(saved))entries=saved.filter(valid).slice(0,1000);}catch{}
+  function valid(e){return e&&typeof e.id==='string'&&typeof e.description==='string'&&e.description.length<=120&&Number.isSafeInteger(e.cents)&&e.cents>0&&e.cents<=99999900&&['EUR','CHF'].includes(e.currency)&&people.includes(e.payer)&&Array.isArray(e.members)&&e.members.length>0&&e.members.every(m=>people.includes(m))&&new Set(e.members).size===e.members.length;}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(entries));return true;}catch{feedback.textContent='Speichern fehlgeschlagen. Bitte Backup exportieren und freien Speicher prüfen.';return false;}}
+  function render(){
+    const list=document.getElementById('expense-list'),balances=document.getElementById('expense-balances');
+    list.replaceChildren();balances.replaceChildren();
+    if(!entries.length){list.textContent='Noch keine Ausgaben erfasst.';balances.textContent='Noch keine Salden.';return;}
+    const ordered=[...entries].reverse();
+    for(const e of ordered){
+      const row=document.createElement('div');row.className='expense-entry';
+      const info=document.createElement('span');
+      info.textContent=e.description+' · '+money(e.cents,e.currency)+' · bezahlt von '+e.payer+' · '+e.members.join(', ');
+      const remove=document.createElement('button');remove.type='button';remove.textContent='Löschen';remove.className='ghost-btn';
+      remove.setAttribute('aria-label','Ausgabe löschen: '+e.description);
+      remove.addEventListener('click',()=>{if(!confirm('Diese Ausgabe wirklich löschen?'))return;entries=entries.filter(x=>x.id!==e.id);if(save())render();});
+      row.append(info,remove);list.appendChild(row);
+    }
+    for(const currency of ['EUR','CHF']){
+      const relevant=entries.filter(e=>e.currency===currency);if(!relevant.length)continue;
+      const net=Object.fromEntries(people.map(p=>[p,0]));
+      for(const e of relevant){
+        net[e.payer]+=e.cents;
+        const base=Math.floor(e.cents/e.members.length),rem=e.cents%e.members.length;
+        e.members.forEach((p,i)=>net[p]-=base+(i<rem?1:0));
+      }
+      const heading=document.createElement('h5');heading.textContent=currency;balances.appendChild(heading);
+      for(const p of people){const row=document.createElement('p');row.textContent=p+': '+(net[p]>=0?'erhält ':'schuldet ')+money(Math.abs(net[p]),currency);balances.appendChild(row);}
+      const debtors=people.filter(p=>net[p]<0).map(p=>({p,c:-net[p]})),creditors=people.filter(p=>net[p]>0).map(p=>({p,c:net[p]}));
+      let i=0,j=0;
+      while(i<debtors.length&&j<creditors.length){
+        const c=Math.min(debtors[i].c,creditors[j].c);
+        const row=document.createElement('p');row.className='expense-settlement';row.textContent=debtors[i].p+' zahlt '+creditors[j].p+' '+money(c,currency);balances.appendChild(row);
+        debtors[i].c-=c;creditors[j].c-=c;if(!debtors[i].c)i++;if(!creditors[j].c)j++;
+      }
+    }
+  }
+  form.addEventListener('submit',event=>{
+    event.preventDefault();
+    const description=document.getElementById('expense-description').value.trim();
+    const amount=Number(document.getElementById('expense-amount').value);
+    const currency=document.getElementById('expense-currency').value;
+    const payer=document.getElementById('expense-payer').value;
+    const members=Array.from(form.querySelectorAll('input[name="expense-member"]:checked'),el=>el.value);
+    const e={id:typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+String(Math.random()).slice(2),description,cents:Math.round(amount*100),currency,payer,members};
+    if(!description||!Number.isFinite(amount)||amount<=0||!valid(e)){feedback.textContent='Bitte gültigen Betrag, Beschreibung und Beteiligte angeben.';return;}
+    entries.push(e);if(save()){form.reset();render();feedback.textContent='Ausgabe auf diesem Gerät gespeichert.';}else entries.pop();
+  });
+  document.getElementById('expense-export').addEventListener('click',()=>{
+    const blob=new Blob([JSON.stringify({format:'camino-expenses-v1',entries},null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='camino-reisekasse-backup.json';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  });
+  document.getElementById('expense-import').addEventListener('change',async event=>{
+    const file=event.target.files&&event.target.files[0];if(!file)return;
+    try{
+      if(file.size>1000000)throw Error('Datei zu gross');
+      const data=JSON.parse(await file.text());
+      if(data.format!=='camino-expenses-v1'||!Array.isArray(data.entries)||data.entries.length>1000||!data.entries.every(valid))throw Error('Ungültiges Backup');
+      if(!confirm('Aktuelle Ausgaben durch dieses Backup ersetzen?'))return;
+      const previous=entries;entries=data.entries;if(save()){render();feedback.textContent='Backup importiert.';}else entries=previous;
+    }catch{feedback.textContent='Backup konnte nicht importiert werden.';}
+    finally{event.target.value='';}
+  });
+  render();
+})();
+
+/* Calendar handoff: local ICS download, no notification permission or push service. */
+(function initCalendarReminder(){
+  const button=document.getElementById('reminder-download');
+  if(!button)return;
+  const esc=value=>String(value||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');
+  const pad=n=>String(n).padStart(2,'0');
+  button.addEventListener('click',()=>{
+    const day=DAYS[CUR];
+    const time=document.getElementById('reminder-time').value;
+    const out=document.getElementById('reminder-feedback');
+    if(!day||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time)){
+      out.textContent='Bitte eine gültige Abmarschzeit auswählen.';return;
+    }
+    const date=day.d.replace(/-/g,'');
+    const [hour,minute]=time.split(':').map(Number);
+    const start=date+'T'+pad(hour)+pad(minute)+'00';
+    const end=date+'T'+pad(hour===23?23:hour+1)+pad(hour===23?59:minute)+'00';
+    const title=esc('Camino: '+day.title+' – Abmarsch');
+    const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Camino 2027//DE',
+      'BEGIN:VEVENT','UID:camino-'+date+'-'+pad(hour)+pad(minute)+'@camino.local',
+      'DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,''),
+      'DTSTART:'+start,'DTEND:'+end,'SUMMARY:'+title,
+      'DESCRIPTION:'+esc('Reisetag: '+day.title+'; Details: '+SITE_URL+'#heute'),
+      'BEGIN:VALARM','TRIGGER:-PT30M','ACTION:DISPLAY',
+      'DESCRIPTION:Camino – Abmarsch in 30 Minuten','END:VALARM',
+      'END:VEVENT','END:VCALENDAR',''].join('\r\n');
+    const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement('a');
+    link.href=url;link.download='camino-abmarsch-'+date+'.ics';
+    document.body.appendChild(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    out.textContent='Kalendereintrag erstellt. Importiere ihn in deinen Kalender und aktiviere dort Erinnerungen.';
+  });
 })();
