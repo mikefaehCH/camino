@@ -998,7 +998,7 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
 })();
 
 /* Independent travel expenses: local-only storage, no external financial service. */
-(function initTravelExpenses(){
+window.initTravelExpenses=function initTravelExpenses(){
   const form=document.getElementById('expense-form');
   if(!form)return;
   const KEY='camino-expenses-v1', people=['Mike','Ante','Kevin','Luis'];
@@ -1099,8 +1099,7 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
     finally{event.target.value='';}
   });
   render();
-})();
-
+};
 /* Calendar handoff: local ICS download, no notification permission or push service. */
 (function initCalendarReminder(){
   const button=document.getElementById('reminder-download');
