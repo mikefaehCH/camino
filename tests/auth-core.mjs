@@ -11,7 +11,7 @@ const client={
   signOut:async()=>({error:null}),
   getUser:async()=>({data:{user},error:null})
  },
- from:table=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:{user_id:user.id,display_name:'Test',role:'member'},error:null})})})})
+ from:table=>{assert.equal(table,'project_members');return {select:()=>({eq:(field,value)=>{assert.equal(field,'user_id');assert.equal(value,user.id);return {eq:(projectField,projectValue)=>{assert.equal(projectField,'project_id');assert.equal(projectValue,'camino');return {maybeSingle:async()=>({data:{user_id:user.id,display_name:'Test'},error:null})};}};}})};}
 };
 const sandbox={window:{location:{origin:'https://mikefaehch.github.io'},URL},URL};
 vm.runInNewContext(code,sandbox);
