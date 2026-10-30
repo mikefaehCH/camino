@@ -54,7 +54,7 @@ assert.ok(html.includes('id="expense-form"'), 'Expense tracker missing');
 assert.ok(html.includes('id="expense-balances"'), 'Balance view missing');
 assert.ok(html.includes('id="expense-export"'), 'Backup export missing');
 assert.ok(app.includes("camino-expenses-v1"), 'Local ledger storage missing');
-assert.ok(app.includes("expense-settlement"), 'Settlement calculation missing');
+assert.ok(app.includes("expense-payment"), 'Settlement calculation missing');
 assert.ok(!html.includes('https://www.splitwise.com/'), 'External Splitwise link should not exist');
 console.log('PASS: independent travel expense tracker');
 
