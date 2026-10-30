@@ -74,5 +74,14 @@ assert.ok(app.includes('net[e.from]+=e.cents;net[e.to]-=e.cents'), 'Repayments m
 console.log('PASS: repayment entries affect balances');
 
 assert.ok(app.includes("edit.textContent='Bearbeiten'"), 'Expense editing action missing');
-assert.ok(app.includes("entries=entries.map(x=>x.id===e.id?revised:x)"), 'Expense editing must preserve entry identity');
+assert.ok(app.includes('await update(revised)'), 'Expense editing must update the shared ledger');
+assert.ok(app.includes(".eq('entry_id',e.id)"), 'Expense editing must preserve entry identity');
 console.log('PASS: existing expenses can be edited');
+
+const authUi = fs.readFileSync(new URL('../js/auth-ui.js', import.meta.url), 'utf8');
+assert.ok(html.includes('id="expense-private"') && html.includes('id="expense-auth"'), 'Private expense login gate missing');
+assert.ok(html.includes('id="expense-private"') && html.includes('hidden'), 'Private ledger must be hidden before login');
+assert.ok(authUi.includes('await auth.membership()'), 'Must verify project membership');
+assert.ok(authUi.includes('await window.initTravelExpenses(auth.client,auth.projectId)'), 'Must fetch server ledger before showing private UI');
+assert.ok(app.includes("client.from('camino_ledger_entries')"), 'Shared RLS ledger missing');
+console.log('PASS: member-only shared Reisekasse');
