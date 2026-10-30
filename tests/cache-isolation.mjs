@@ -14,7 +14,7 @@ assert.equal(typeof handlers.activate, 'function', 'activate handler missing');
 let pending;
 handlers.activate({ waitUntil: promise => { pending = promise; } });
 await pending;
-assert.deepEqual(deleted, ['camino-v48']);
+assert.deepEqual(deleted, ['camino-v48', 'camino-v49']);
 console.log('PASS: Camino only removes its obsolete own cache');
 
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
