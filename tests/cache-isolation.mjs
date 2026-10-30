@@ -36,3 +36,10 @@ const app = fs.readFileSync(new URL('../js/app.js', import.meta.url), 'utf8');
 assert.ok(app.includes("window.addEventListener('hashchange',revealStageHash)"), 'Stage deep links must open on navigation');
 assert.ok(app.includes('revealStageHash();'), 'Stage deep links must open on initial load');
 console.log('PASS: Deep-linked chapters expand on initial load and navigation');
+
+const todayLinks = html.slice(html.indexOf('class="today-quicklinks"'), html.indexOf('class="today-picker"'));
+for (const target of ['karte','etappen','buchungen','restaurants']) {
+  assert.ok(todayLinks.includes('href="#' + target + '"'), 'Missing Today quick link: ' + target);
+  assert.ok(html.includes('id="' + target + '"'), 'Missing Today quick link target: ' + target);
+}
+console.log('PASS: Today quick links resolve to existing sections');
