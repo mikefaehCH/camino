@@ -147,6 +147,17 @@ STAGES.forEach((s,i)=>{
     if(sd.d===TODAY)s.classList.add('today-stage');}
 });
 function openStage(n,scroll){const s=STAGES[n-1];if(!s)return;s.classList.add('open');s.querySelector('.stage-head').setAttribute('aria-expanded','true');if(scroll)s.scrollIntoView({behavior:'smooth',block:'start'});}
+// Deep links to editorial chapters must open the matching collapsed stage.
+function revealStageHash(){
+  const match=location.hash.match(/^#etappe-([1-7])$/);
+  if(!match)return;
+  const n=Number(match[1]);
+  openStage(n,false);
+  const target=document.getElementById('etappe-'+n);
+  if(target)requestAnimationFrame(()=>target.scrollIntoView({behavior:'instant',block:'start'}));
+}
+window.addEventListener('hashchange',revealStageHash);
+revealStageHash();
 const ti=SDAYS.findIndex(x=>x.d===TODAY);if(ti>=0)openStage(ti+1,false);
 document.getElementById('open-all').addEventListener('click',e=>{const allOpen=STAGES.every(s=>s.classList.contains('open'));
   STAGES.forEach(s=>{s.classList.toggle('open',!allOpen);s.querySelector('.stage-head').setAttribute('aria-expanded',!allOpen);});

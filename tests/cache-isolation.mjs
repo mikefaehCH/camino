@@ -31,3 +31,8 @@ for (let n = 1; n <= 7; n++) {
   assert.ok(html.includes('id="etappe-' + n + '"'), 'Missing stage anchor ' + n);
 }
 console.log('PASS: Seven stage chapter links resolve to existing cards');
+
+const app = fs.readFileSync(new URL('../js/app.js', import.meta.url), 'utf8');
+assert.ok(app.includes("window.addEventListener('hashchange',revealStageHash)"), 'Stage deep links must open on navigation');
+assert.ok(app.includes('revealStageHash();'), 'Stage deep links must open on initial load');
+console.log('PASS: Deep-linked chapters expand on initial load and navigation');
