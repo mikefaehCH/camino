@@ -11,13 +11,13 @@ const client={
   signOut:async()=>({error:null}),
   getUser:async()=>({data:{user},error:null})
  },
- from:table=>{assert.equal(table,'project_members');return {select:()=>({eq:(field,value)=>{assert.equal(field,'user_id');assert.equal(value,user.id);return {eq:(projectField,projectValue)=>{assert.equal(projectField,'project_id');assert.equal(projectValue,'camino');return {maybeSingle:async()=>({data:{user_id:user.id,display_name:'Test'},error:null})};}};}})};}
+ from:table=>{assert.equal(table,'project_members');return {select:()=>({eq:(field,value)=>{assert.equal(field,'user_id');assert.equal(value,user.id);return {eq:(projectField,projectValue)=>{assert.equal(projectField,'project_id');assert.equal(projectValue,'45343dda-fa24-4839-ac16-6b111da4ee28');return {maybeSingle:async()=>({data:{user_id:user.id,display_name:'Test'},error:null})};}};}})};}
 };
 const sandbox={window:{location:{origin:'https://mikefaehch.github.io'},URL},URL};
 vm.runInNewContext(code,sandbox);
 const auth=sandbox.window.CaminoAuth.createAuth({
  url:'https://example.supabase.co',publishableKey:'public-key',
- projectId:'camino',redirectPath:'/camino/login.html',
+ projectId:'45343dda-fa24-4839-ac16-6b111da4ee28',redirectPath:'/camino/login.html',
  clientFactory:()=>client
 });
 assert.equal((await auth.currentUser()).id,'test-user');
