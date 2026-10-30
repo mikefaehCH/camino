@@ -18,7 +18,7 @@ assert.deepEqual(deleted, ['camino-v48']);
 console.log('PASS: Camino only removes its obsolete own cache');
 
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const nav = html.match(/<nav id="nav"[\\s\\S]*?<\\/nav>/)?.[0] || '';
+const nav = html.slice(html.indexOf('<nav id="nav"'), html.indexOf('</nav>') + '</nav>'.length);
 for (const [label, target] of [['Entdecken','intro'],['Etappen','reise'],['Heute','heute'],['Karte','karte'],['Genuss','restaurants'],['Infos','infos']]) {
   assert.ok(nav.includes(`href="#${target}">${label}</a>`), `Navigation missing ${label}`);
   assert.ok(html.includes(`id="${target}"`), `Navigation target missing: ${target}`);
