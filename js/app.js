@@ -996,6 +996,11 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
   try{const saved=JSON.parse(localStorage.getItem(KEY)||'[]');if(Array.isArray(saved))entries=saved.filter(valid).slice(0,1000);}catch{}
   function valid(e){if(!e||typeof e.id!=='string'||!Number.isSafeInteger(e.cents)||e.cents<=0||e.cents>99999900||!['EUR','CHF'].includes(e.currency))return false;if(e.kind==='settlement')return people.includes(e.from)&&people.includes(e.to)&&e.from!==e.to;return (e.kind===undefined||e.kind==='expense')&&typeof e.description==='string'&&e.description.length<=120&&people.includes(e.payer)&&Array.isArray(e.members)&&e.members.length>0&&e.members.every(m=>people.includes(m))&&new Set(e.members).size===e.members.length;}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(entries));return true;}catch{feedback.textContent='Speichern fehlgeschlagen. Bitte Backup exportieren und freien Speicher prüfen.';return false;}}
+  // One-time initial booking for new local ledgers; existing data stays untouched.
+  if(localStorage.getItem(KEY)===null&&entries.length===0){
+    const initial={id:'initial-pazo-2027',description:'Pazo Santa Teresa (13.–14. Juni 2027)',cents:50900,currency:'CHF',payer:'Mike',members:[...people]};
+    if(valid(initial)){entries.push(initial);if(!save())entries.pop();}
+  }
   function render(){
     const list=document.getElementById('expense-list'),balances=document.getElementById('expense-balances');
     list.replaceChildren();balances.replaceChildren();
