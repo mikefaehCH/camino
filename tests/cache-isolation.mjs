@@ -72,3 +72,7 @@ assert.ok(html.includes('id="settlement-form"'), 'Repayment form missing');
 assert.ok(app.includes("e.kind==='settlement'"), 'Repayment entries not supported');
 assert.ok(app.includes('net[e.from]+=e.cents;net[e.to]-=e.cents'), 'Repayments must affect balances');
 console.log('PASS: repayment entries affect balances');
+
+assert.ok(app.includes("edit.textContent='Bearbeiten'"), 'Expense editing action missing');
+assert.ok(app.includes("entries=entries.map(x=>x.id===e.id?revised:x)"), 'Expense editing must preserve entry identity');
+console.log('PASS: existing expenses can be edited');
