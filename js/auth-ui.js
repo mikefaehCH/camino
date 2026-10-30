@@ -17,7 +17,7 @@ const status=document.getElementById('expense-auth-status');
 const email=document.getElementById('expense-auth-email');
 const code=document.getElementById('expense-auth-code');
 const otp=document.getElementById('expense-otp-form');
-let initialised=false,revision=0;
+let initialised=false,revision=0,authorisedUserId=null;
 function report(message){status.textContent=message;}
 function hideLedger(){privatePanel.hidden=true;member.hidden=true;login.hidden=false;}
 async function refresh(){
@@ -33,9 +33,11 @@ async function refresh(){
   const membership=await auth.membership();
   if(version!==revision)return;
   if(!membership){report('Angemeldet, aber noch nicht als Camino-Mitglied freigeschaltet. Bitte den Administrator um Freischaltung bitten.');return;}
+  if(initialised&&authorisedUserId!==user.id){location.reload();return;}
   if(!initialised&&typeof window.initTravelExpenses==='function'){
     await window.initTravelExpenses(auth.client,auth.projectId);
     initialised=true;
+    authorisedUserId=user.id;
   }
   if(version!==revision)return;
   privatePanel.hidden=false;
@@ -79,7 +81,7 @@ otp.addEventListener('submit',async event=>{
  finally{button.disabled=false;}
 });
 document.getElementById('expense-auth-signout').addEventListener('click',async()=>{
- try{await auth.signOut();hideLedger();report('Abgemeldet.');}catch{report('Abmeldung fehlgeschlagen.');}
+ try{await auth.signOut();location.reload();}catch{report('Abmeldung fehlgeschlagen.');}
 });
 auth.client.auth.onAuthStateChange(()=>{setTimeout(()=>refresh(),0);});
 refresh();
