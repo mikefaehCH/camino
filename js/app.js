@@ -1148,7 +1148,7 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId){
       if(file.size>1000000)throw Error('Datei zu gross');
       const data=JSON.parse(await file.text());
       if(data.format!=='camino-expenses-v1'||!Array.isArray(data.entries)||data.entries.length>1000||!data.entries.every(valid))throw Error('Ungültiges Backup');
-      if(!confirm('Aktuelle Ausgaben durch dieses Backup ersetzen?'))return;
+      if(!confirm('Backup ergänzend importieren? Bereits vorhandene Einträge bleiben unverändert.'))return;
       const {error}=await table().upsert(data.entries.map(e=>({project_id:projectId,entry_id:e.id,payload:e})),{onConflict:'project_id,entry_id',ignoreDuplicates:true});
       if(error)throw error;
       await reload();feedback.textContent='Backup importiert. Bereits vorhandene Buchungen wurden nicht überschrieben.';
