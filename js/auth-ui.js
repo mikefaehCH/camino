@@ -33,10 +33,14 @@ async function refresh(){
   const membership=await auth.membership();
   if(version!==revision)return;
   if(!membership){report('Angemeldet, aber noch nicht als Camino-Mitglied freigeschaltet. Bitte den Administrator um Freischaltung bitten.');return;}
+  if(!initialised&&typeof window.initTravelExpenses==='function'){
+    await window.initTravelExpenses(auth.client,auth.projectId);
+    initialised=true;
+  }
+  if(version!==revision)return;
   privatePanel.hidden=false;
-  report('Zugriff freigeschaltet. Die Reisekasse ist auf diesem Gerät gespeichert.');
-  if(!initialised&&typeof window.initTravelExpenses==='function'){initialised=true;window.initTravelExpenses();}
- }catch(e){if(version===revision)report('Anmeldung konnte nicht geprüft werden. Bitte Internetverbindung kontrollieren.');}
+  report('Zugriff freigeschaltet. Die Reisekasse wird sicher für die Camino-Gruppe synchronisiert.');
+ }catch(e){if(version===revision){privatePanel.hidden=true;report('Reisekasse konnte nicht sicher geladen werden. Bitte Verbindung und Mitgliedschaft prüfen.');}}
 }
 root.querySelectorAll('[data-auth-provider]').forEach(button=>{
  button.addEventListener('click',async()=>{
