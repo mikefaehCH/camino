@@ -17,7 +17,7 @@ const status=document.getElementById('expense-auth-status');
 const email=document.getElementById('expense-auth-email');
 const code=document.getElementById('expense-auth-code');
 const otp=document.getElementById('expense-otp-form');
-let initialised=false,revision=0,authorisedUserId=null;
+let initialised=false,initPromise=null,revision=0,authorisedUserId=null;
 function report(message){status.textContent=message;}
 function hideLedger(){privatePanel.hidden=true;member.hidden=true;login.hidden=false;}
 async function refresh(){
@@ -35,7 +35,8 @@ async function refresh(){
   if(!membership){report('Angemeldet, aber noch nicht als Camino-Mitglied freigeschaltet. Bitte den Administrator um Freischaltung bitten.');return;}
   if(initialised&&authorisedUserId!==user.id){location.reload();return;}
   if(!initialised&&typeof window.initTravelExpenses==='function'){
-    await window.initTravelExpenses(auth.client,auth.projectId);
+    if(!initPromise)initPromise=window.initTravelExpenses(auth.client,auth.projectId).catch(error=>{initPromise=null;throw error;});
+    await initPromise;
     initialised=true;
     authorisedUserId=user.id;
   }
