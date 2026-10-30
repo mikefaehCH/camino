@@ -1008,8 +1008,14 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
     const ordered=[...entries].reverse();
     for(const e of ordered){
       const row=document.createElement('div');row.className='expense-entry';
-      const info=document.createElement('span');
-      info.textContent=e.kind==='settlement'?'Rückzahlung: '+e.from+' an '+e.to+' · '+money(e.cents,e.currency):e.description+' · '+money(e.cents,e.currency)+' · bezahlt von '+e.payer+' · '+e.members.join(', ');
+      const info=document.createElement('div');info.className='expense-entry-info';
+      const title=document.createElement('strong');title.className='expense-entry-title';
+      title.textContent=e.kind==='settlement'?'Rückzahlung · '+e.from+' an '+e.to:e.description;
+      const meta=document.createElement('span');meta.className='expense-entry-meta';
+      meta.textContent=e.kind==='settlement'?'Bereits verbucht':('Bezahlt von '+e.payer+' · Geteilt durch '+e.members.join(', '));
+      const amountLabel=document.createElement('strong');amountLabel.className='expense-entry-amount';amountLabel.textContent=money(e.cents,e.currency);
+      info.append(title,meta);
+      const actions=document.createElement('div');actions.className='expense-entry-actions';
       const edit=document.createElement('button');edit.type='button';edit.textContent='Bearbeiten';edit.className='ghost-btn';
       edit.setAttribute('aria-label','Eintrag bearbeiten: '+(e.description||'Rückzahlung'));
       edit.addEventListener('click',()=>{
@@ -1030,7 +1036,7 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
       const remove=document.createElement('button');remove.type='button';remove.textContent='Löschen';remove.className='ghost-btn';
       remove.setAttribute('aria-label','Eintrag löschen: '+(e.description||'Rückzahlung'));
       remove.addEventListener('click',()=>{if(!confirm('Diese Ausgabe wirklich löschen?'))return;entries=entries.filter(x=>x.id!==e.id);if(save())render();});
-      row.append(info,edit,remove);list.appendChild(row);
+      actions.append(edit,remove);row.append(info,amountLabel,actions);list.appendChild(row);
     }
     for(const currency of ['EUR','CHF']){
       const relevant=entries.filter(e=>e.currency===currency);if(!relevant.length)continue;
@@ -1041,15 +1047,28 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
         const base=Math.floor(e.cents/e.members.length),rem=e.cents%e.members.length;
         e.members.forEach((p,i)=>net[p]-=base+(i<rem?1:0));
       }
-      const heading=document.createElement('h5');heading.textContent=currency;balances.appendChild(heading);
-      for(const p of people){const row=document.createElement('p');row.textContent=p+': '+(net[p]>=0?'erhält ':'schuldet ')+money(Math.abs(net[p]),currency);balances.appendChild(row);}
+      const section=document.createElement('section');section.className='expense-balance-card';
+      const heading=document.createElement('div');heading.className='expense-balance-heading';
+      const label=document.createElement('h5');label.textContent=currency;
+      const summary=document.createElement('span');summary.textContent='Offene Ausgleichszahlungen';
+      heading.append(label,summary);section.appendChild(heading);
+      const settlements=document.createElement('div');settlements.className='expense-payment-list';
       const debtors=people.filter(p=>net[p]<0).map(p=>({p,c:-net[p]})),creditors=people.filter(p=>net[p]>0).map(p=>({p,c:net[p]}));
       let i=0,j=0;
       while(i<debtors.length&&j<creditors.length){
         const c=Math.min(debtors[i].c,creditors[j].c);
-        const row=document.createElement('p');row.className='expense-settlement';row.textContent=debtors[i].p+' zahlt '+creditors[j].p+' '+money(c,currency);balances.appendChild(row);
+        const row=document.createElement('div');row.className='expense-payment';
+        const description=document.createElement('span');description.textContent=debtors[i].p+' zahlt an '+creditors[j].p;
+        const value=document.createElement('strong');value.textContent=money(c,currency);
+        row.append(description,value);settlements.appendChild(row);
         debtors[i].c-=c;creditors[j].c-=c;if(!debtors[i].c)i++;if(!creditors[j].c)j++;
       }
+      if(!settlements.children.length){const empty=document.createElement('p');empty.textContent='Alles ausgeglichen.';settlements.appendChild(empty);}
+      section.appendChild(settlements);
+      const details=document.createElement('details');details.className='expense-balance-details';
+      const toggle=document.createElement('summary');toggle.textContent='Salden aller Personen anzeigen';details.appendChild(toggle);
+      for(const p of people){const row=document.createElement('div');row.className='expense-balance-person';const name=document.createElement('span');name.textContent=p;const value=document.createElement('span');value.textContent=net[p]===0?'Ausgeglichen':(net[p]>0?'Erhält ':'Schuldet ')+money(Math.abs(net[p]),currency);row.append(name,value);details.appendChild(row);}
+      section.appendChild(details);balances.appendChild(section);
     }
   }
   form.addEventListener('submit',event=>{
