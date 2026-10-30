@@ -16,9 +16,9 @@
     }
     async function signOut(){const {error}=await client.auth.signOut();if(error)throw error;}
     async function currentUser(){const {data,error}=await client.auth.getUser();if(error&&error.name!=='AuthSessionMissingError')throw error;return data?.user||null;}
-    async function membership(table='camino_members'){
+    async function membership(){
       const user=await currentUser();if(!user)return null;
-      const {data,error}=await client.from(table).select('user_id,display_name,role').eq('user_id',user.id).maybeSingle();
+      const {data,error}=await client.from('project_members').select('user_id,display_name').eq('user_id',user.id).eq('project_id',projectId).maybeSingle();
       if(error)throw error;
       return data||null;
     }
