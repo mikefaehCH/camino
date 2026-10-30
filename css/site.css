@@ -1048,3 +1048,27 @@ body.in-trip #hero .hero-h1{font-size:clamp(2.4rem,10vw,4rem);margin-bottom:.25r
 #settlement-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:.75rem;align-items:end;margin:1rem 0;}
 #settlement-form label{display:grid;gap:.4rem;font-size:.85rem;}
 #settlement-form input,#settlement-form select{width:100%;min-height:44px;padding:.6rem;border:1px solid var(--border);border-radius:.35rem;background:var(--white);color:var(--ink);font:inherit;}
+
+
+/* Reisekasse: clear information hierarchy and compact actions */
+.expense-entry{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:1rem;align-items:center;padding:1rem 0;}
+.expense-entry-info{display:flex;flex-direction:column;gap:.25rem;min-width:0;}
+.expense-entry-title{font-size:.94rem;line-height:1.35;overflow-wrap:anywhere;}
+.expense-entry-meta{font-size:.76rem;color:var(--muted);line-height:1.45;}
+.expense-entry-amount{font-size:1rem;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.expense-entry-actions{display:flex;gap:.35rem;align-items:center;}
+.expense-entry-actions .ghost-btn{min-height:40px;padding:.45rem .65rem;font-size:.72rem;white-space:nowrap;}
+#expense-balances{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:1rem;margin-top:1rem;}
+.expense-balance-card{min-width:0;border:1px solid var(--border);border-radius:.8rem;background:var(--card);padding:1.1rem;}
+.expense-balance-heading{display:flex;justify-content:space-between;gap:.5rem;align-items:baseline;border-bottom:1px solid var(--border);padding-bottom:.7rem;}
+.expense-balance-heading h5{font-size:1.05rem;margin:0;}
+.expense-balance-heading span{font-size:.72rem;color:var(--muted);text-align:right;}
+.expense-payment-list{padding:.45rem 0;}
+.expense-payment{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--border);font-size:.85rem;}
+.expense-payment:last-child{border-bottom:0;}
+.expense-payment strong{white-space:nowrap;font-variant-numeric:tabular-nums;}
+.expense-balance-details{border-top:1px solid var(--border);padding-top:.75rem;font-size:.8rem;}
+.expense-balance-details summary{cursor:pointer;color:var(--forest);font-weight:600;min-height:44px;display:flex;align-items:center;}
+.expense-balance-person{display:flex;justify-content:space-between;gap:.7rem;padding:.45rem 0;}
+.expense-balance-person span:last-child{text-align:right;font-variant-numeric:tabular-nums;}
+@media(max-width:720px){.expense-entry{grid-template-columns:minmax(0,1fr) auto;gap:.6rem;}.expense-entry-amount{grid-column:2;grid-row:1;}.expense-entry-actions{grid-column:1/-1;justify-content:flex-end;}.expense-entry-actions .ghost-btn{min-height:44px;}}
