@@ -1030,22 +1030,22 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
     const day=DAYS[CUR];
     const time=document.getElementById('reminder-time').value;
     const out=document.getElementById('reminder-feedback');
-    if(!day||!/^(?:[01]\\d|2[0-3]):[0-5]\\d$/.test(time)){
+    if(!day||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time)){
       out.textContent='Bitte eine gültige Abmarschzeit auswählen.';return;
     }
     const date=day.d.replace(/-/g,'');
     const [hour,minute]=time.split(':').map(Number);
     const start=date+'T'+pad(hour)+pad(minute)+'00';
-    const end=date+'T'+pad((hour+1)%24)+pad(minute)+'00';
+    const end=date+'T'+pad(hour===23?23:hour+1)+pad(hour===23?59:minute)+'00';
     const title=esc('Camino: '+day.title+' – Abmarsch');
     const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Camino 2027//DE',
       'BEGIN:VEVENT','UID:camino-'+date+'-'+pad(hour)+pad(minute)+'@camino.local',
-      'DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').replace(/\\.\\d{3}/,''),
+      'DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,''),
       'DTSTART:'+start,'DTEND:'+end,'SUMMARY:'+title,
       'DESCRIPTION:'+esc('Reisetag: '+day.title+'; Details: '+SITE_URL+'#heute'),
       'BEGIN:VALARM','TRIGGER:-PT30M','ACTION:DISPLAY',
       'DESCRIPTION:Camino – Abmarsch in 30 Minuten','END:VALARM',
-      'END:VEVENT','END:VCALENDAR',''].join('\\r\\n');
+      'END:VEVENT','END:VCALENDAR',''].join('\r\n');
     const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
     const url=URL.createObjectURL(blob);
     const link=document.createElement('a');
