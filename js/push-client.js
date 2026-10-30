@@ -55,6 +55,7 @@ register.addEventListener('click',async()=>{
   if(!subscription)subscription=await sw.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:keyBytes(publicKey)});
   await request('register',{subscription:subscription.toJSON()});
   report('iPhone registriert. Du kannst jetzt den Server-Push senden und die App schliessen.');
+  loadReminders().catch(()=>{});
  }catch(e){report(e.message||'Registrierung fehlgeschlagen.');}
  finally{register.disabled=false;}
 });
@@ -66,5 +67,35 @@ send.addEventListener('click',async()=>{
  }catch(e){report(e.message||'Push-Test fehlgeschlagen.');}
  finally{send.disabled=false;}
 });
+const remindersEnabled=document.getElementById('push-reminders-enabled');
+const morningTime=document.getElementById('push-morning-time');
+const eveningTime=document.getElementById('push-evening-time');
+const saveReminders=document.getElementById('push-reminders-save');
+const remindersFeedback=document.getElementById('push-reminders-feedback');
+async function loadReminders(){
+ if(!remindersEnabled||!remindersFeedback)return;
+ const settings=await request('reminder_settings');
+ remindersEnabled.checked=Boolean(settings.enabled);
+ morningTime.value=settings.morningTime||'07:00';
+ eveningTime.value=settings.eveningTime||'19:00';
+ remindersFeedback.textContent=settings.enabled
+  ?'Automatische Erinnerungen aktiviert: Vorabend '+eveningTime.value+', morgens '+morningTime.value+' (spanische Ortszeit).'
+  :'Automatische Erinnerungen sind ausgeschaltet.';
+}
+if(saveReminders){
+ saveReminders.addEventListener('click',async()=>{
+  saveReminders.disabled=true;
+  try{
+   if(remindersEnabled.checked&&(!('Notification' in window)||Notification.permission!=='granted'))
+    throw new Error('Bitte zuerst Mitteilungen auf diesem iPhone erlauben.');
+   const settings=await request('save_reminders',{enabled:remindersEnabled.checked,morningTime:morningTime.value,eveningTime:eveningTime.value});
+   remindersFeedback.textContent=settings.enabled
+    ?'Gespeichert und aktiviert: Vorabend '+eveningTime.value+', morgens '+morningTime.value+' (spanische Ortszeit).'
+    :'Gespeichert: Automatische Erinnerungen sind ausgeschaltet.';
+  }catch(e){remindersFeedback.textContent=e.message||'Einstellungen konnten nicht gespeichert werden.';}
+  finally{saveReminders.disabled=false;}
+ });
+}
 try{if(localStorage.getItem(storageKey))checkStatus().catch(()=>report('Gerätekennung vorhanden. Bitte iPhone aktivieren.'));}catch{}
+try{if(localStorage.getItem(storageKey))loadReminders().catch(()=>{if(remindersFeedback)remindersFeedback.textContent='Bitte das iPhone für Push aktivieren.';});}catch{}
 })();
