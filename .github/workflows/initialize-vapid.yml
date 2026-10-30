@@ -1,0 +1,16 @@
+name: Initialize Camino VAPID once
+on:
+  push:
+    branches: [chore/initialize-vapid-server]
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate and store VAPID keys inside Supabase
+        run: |
+          set -euo pipefail
+          result="$(curl --fail-with-body --silent --show-error --max-time 30 https://qoensghjemruqafrbmjd.supabase.co/functions/v1/camino-push-bootstrap)"
+          case "$result" in
+            "VAPID configured"|"VAPID already configured") echo "$result";;
+            *) echo "Unexpected response"; exit 1;;
+          esac
