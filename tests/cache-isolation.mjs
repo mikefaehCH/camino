@@ -82,6 +82,6 @@ const authUi = fs.readFileSync(new URL('../js/auth-ui.js', import.meta.url), 'ut
 assert.ok(html.includes('id="expense-private"') && html.includes('id="expense-auth"'), 'Private expense login gate missing');
 assert.ok(html.includes('id="expense-private"') && html.includes('hidden'), 'Private ledger must be hidden before login');
 assert.ok(authUi.includes('await auth.membership()'), 'Must verify project membership');
-assert.ok(authUi.includes('await window.initTravelExpenses(auth.client,auth.projectId)'), 'Must fetch server ledger before showing private UI');
+assert.ok(authUi.includes('initPromise=window.initTravelExpenses(auth.client,auth.projectId)') && authUi.includes('await initPromise'), 'Must fetch server ledger before showing private UI');
 assert.ok(app.includes("client.from('camino_ledger_entries')"), 'Shared RLS ledger missing');
 console.log('PASS: member-only shared Reisekasse');
