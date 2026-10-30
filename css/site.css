@@ -984,3 +984,12 @@ body.in-trip #hero .hero-h1{font-size:clamp(2.4rem,10vw,4rem);margin-bottom:.25r
 .magazine-path>span:last-child{font-size:.79rem;line-height:1.5;color:var(--muted);}
 @media(max-width:420px){.magazine-paths{grid-template-columns:1fr;}.magazine-path{min-height:118px;}}
 @media(prefers-reduced-motion:reduce){.magazine-path{transition:none;}.magazine-path:hover{transform:none;}}
+
+/* Editorial chapter index – short paths to the authentic stage stories. */
+.stage-chapters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;margin:1.1rem 0 1.5rem;}
+.stage-chapters a{display:flex;align-items:center;gap:.7rem;min-height:52px;padding:.7rem .85rem;border:1px solid var(--border);border-radius:.65rem;background:var(--card);text-decoration:none;color:var(--ink);font-size:.8rem;line-height:1.4;transition:border-color .2s,background .2s;}
+.stage-chapters a:hover{border-color:var(--wave);background:var(--foam);}
+.stage-chapters a:focus-visible{outline:3px solid var(--wave);outline-offset:2px;}
+.stage-chapters a span{font-family:var(--serif);font-size:1.2rem;color:var(--wave);min-width:1.5rem;}
+.stage[id^="etappe-"]{scroll-margin-top:72px;}
+@media(max-width:540px){.stage-chapters{grid-template-columns:1fr;}}
