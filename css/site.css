@@ -1004,3 +1004,11 @@ body.in-trip #hero .hero-h1{font-size:clamp(2.4rem,10vw,4rem);margin-bottom:.25r
 #etappen .stage-chapters a{font-weight:500;}
 #etappen .stage-chapters a:hover span{color:var(--ocean);}
 @media(max-width:540px){#etappen .stage{border-radius:1rem;}#etappen .stage-head{min-height:100px;}.editorial-intro{font-size:.94rem;}}
+
+/* Camino 2.0: practical day companion quick navigation. */
+.today-intro{max-width:62ch;margin:.8rem 0 1.1rem;line-height:1.75;}
+.today-quicklinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin:0 0 1.5rem;}
+.today-quicklinks a{display:flex;align-items:center;min-height:48px;padding:.75rem 1rem;border:1px solid var(--border);border-radius:.7rem;text-decoration:none;background:var(--card);color:var(--ocean);font-size:.82rem;font-weight:600;line-height:1.4;}
+.today-quicklinks a:hover{border-color:var(--wave);background:var(--foam);}
+.today-quicklinks a:focus-visible{outline:3px solid var(--wave);outline-offset:2px;}
+@media(max-width:390px){.today-quicklinks{grid-template-columns:1fr;}}
