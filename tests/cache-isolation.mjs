@@ -24,3 +24,10 @@ for (const [label, target] of [['Entdecken','intro'],['Etappen','reise'],['Heute
   assert.ok(html.includes(`id="${target}"`), `Navigation target missing: ${target}`);
 }
 console.log('PASS: Magazine and Today navigation targets exist');
+
+const chapters = html.slice(html.indexOf('class="stage-chapters"'), html.indexOf('<!-- TAG 1 -->'));
+for (let n = 1; n <= 7; n++) {
+  assert.ok(chapters.includes('href="#etappe-' + n + '"'), 'Missing chapter link ' + n);
+  assert.ok(html.includes('id="etappe-' + n + '"'), 'Missing stage anchor ' + n);
+}
+console.log('PASS: Seven stage chapter links resolve to existing cards');
