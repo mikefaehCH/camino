@@ -12,8 +12,9 @@ Die private Ansicht und die neue Salden-Darstellung liegen im PR. **Nicht deploy
 - Im Supabase Dashboard unter Authentication → URL Configuration die Site URL und Redirect Allowlist für `https://mikefaehch.github.io/camino/` setzen.
 - Die Mitgliedschaft ist ein separater Schritt: `public.project_members` mit Projekt-ID `45343dda-fa24-4839-ac16-6b111da4ee28`. Ein Login alleine gibt **keinen** Zugriff.
 
-## Wichtige Einschränkung
-Die bestehende Reisekasse speichert Ausgaben **lokal im Browser (localStorage)**. Die Login-Schranke schützt die normale UI, **aber nicht die lokal gespeicherten Daten auf einem bereits benutzten Gerät**. Es gibt weiterhin keine Synchronisierung zwischen Geräten, keine serverseitig verschlüsselte Speicherung und keine echte serverseitige Zugriffskontrolle auf diese historischen lokalen Einträge. Für eine echte gemeinsame private Reisekasse ist die Migration auf eine Supabase-Tabelle mit RLS pro Projektmitglied nötig. Vorher keine sensiblen Zahlungsdaten erfassen.
+## Gemeinsame Datenbank
+
+Die Reisekasse verwendet `public.camino_ledger_entries` mit Row Level Security. Nur freigeschaltete Camino-Mitglieder können Einträge lesen und bearbeiten. Alte lokale Buchungen werden beim ersten berechtigten Zugriff einmalig übertragen, ohne bereits vorhandene Servereinträge zu überschreiben. Vor erfolgreichem Upload bleiben lokale Daten erhalten. Nach dem Upload werden sie aus localStorage entfernt. Es gibt noch keine Konfliktauflösung für gleichzeitige Bearbeitungen desselben Eintrags.
 
 ## Freigabe-Checkliste
 1. E-Mail-Auth und mindestens einen OAuth-Provider aktivieren, Redirect-URLs konfigurieren.
