@@ -1124,3 +1124,28 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
     out.textContent='Kalendereintrag erstellt. Importiere ihn in deinen Kalender und aktiviere dort Erinnerungen.';
   });
 })();
+
+/* Notification capability test; does not claim remote push delivery. */
+(function initNotificationTest(){
+  const button=document.getElementById('notification-test');
+  if(!button)return;
+  const output=document.getElementById('notification-test-feedback');
+  button.addEventListener('click',async()=>{
+    if(!('Notification' in window)||!('serviceWorker' in navigator)){
+      output.textContent='Mitteilungen werden in diesem Browser nicht unterstützt.';return;
+    }
+    try{
+      const permission=Notification.permission==='default'?await Notification.requestPermission():Notification.permission;
+      if(permission!=='granted'){output.textContent='Mitteilungen sind nicht erlaubt. Bitte die Mitteilungsberechtigung für die installierte App prüfen.';return;}
+      const registration=await navigator.serviceWorker.ready;
+      await registration.showNotification('Camino 2027 – Testmitteilung',{
+        body:'Deine Camino-Web-App kann auf diesem Gerät Mitteilungen anzeigen.',
+        icon:'./icon-192.png',badge:'./icon-192.png',tag:'camino-device-test',
+        data:{url:new URL('./#heute',location.href).href}
+      });
+      output.textContent='Testmitteilung angefordert. Dies testet nur dieses Gerät, nicht den späteren Server-Push.';
+    }catch{
+      output.textContent='Mitteilung konnte nicht angezeigt werden. Auf dem iPhone die Web-App zum Home-Bildschirm hinzufügen und Mitteilungen erlauben.';
+    }
+  });
+})();
