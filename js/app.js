@@ -330,14 +330,14 @@ const restFor=x=>RESTS[x.d]||(x.stage?RESTS['s'+x.stage]:null)||[];
 /* ===== Etappe teilen ===== */
 function shareText(i){
   const x=DAYS[i],p=dayPlan(i),L=[];
-  L.push(`Camino · ${fmt(x.d)}${x.stage&&x.stage<8?` · Etappe ${x.stage}`:''}`);
-  L.push(`*${x.title.replace(/[]\s*/g,'').trim()}*${x.km?` · ${String(x.km).replace('.',',')} km`:''}${x.up?` · ↑${x.up} m`:''}${x.dn?` · ↓${x.dn} m`:''}`);
-  if(p.start!=null)
-  if(x.hl)L.push('Highlights: '+x.hl.join(', '));
+  L.push('Camino · '+fmt(x.d)+(x.stage&&x.stage<8?' · Etappe '+x.stage:''));
+  L.push('*'+x.title.trim()+'*'+(x.km?' · '+String(x.km).replace('.',',')+' km':'')+(x.up?' · ↑'+x.up+' m':'')+(x.dn?' · ↓'+x.dn+' m':''));
+  if(p.start!=null)L.push('Abmarsch: '+String(Math.floor(p.start)).padStart(2,'0')+':'+String(Math.round((p.start%1)*60)).padStart(2,'0')+' Uhr'+(p.srTag||''));
+  if(x.hl&&x.hl.length)L.push('Highlights: '+x.hl.join(', '));
   if(x.cafe)L.push('Erste Pause: '+x.cafe);
-  if(x.hotel)L.push(`Hotel: ${x.hotel} · Check-in ${x.ci}${x.tel?` · ${x.tel}`:''}\nKarte: https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.q)}`);
+  if(x.hotel)L.push('Hotel: '+x.hotel+(x.ci?' · Check-in '+x.ci:'')+(x.tel?' · '+x.tel:'')+(x.q?'\nKarte: https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(x.q):''));
   const r=restFor(x);if(r.length)L.push('Abendessen: '+r.join(' / '));
-  const w=wxFor(x.place,x.d);if(w&&w.fc)L.push(`Wetter: ${w.max}° / ${w.min}° · ${w.rain??'–'}% Regen`);
+  const w=wxFor(x.place,x.d);if(w&&w.fc)L.push('Wetter: '+w.max+'° / '+w.min+'° · '+(w.rain??'–')+'% Regen');
   L.push(SITE_URL+'#heute');
   return L.join('\n');
 }
