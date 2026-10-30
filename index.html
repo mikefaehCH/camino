@@ -187,6 +187,19 @@
     <p id="reminder-feedback" role="status" aria-live="polite"></p>
   </div>
   <div class="today-reminders" aria-labelledby="push-test-title"><h3 id="push-test-title">Mitteilungen testen</h3><p>Teste eine Mitteilung direkt auf diesem Gerät. Du kannst die lokale Anzeige testen oder weiter unten einen echten Server-Push auf dein iPhone senden.</p><button type="button" id="notification-test" class="ghost-btn">Testmitteilung anzeigen</button><p id="notification-test-feedback" role="status" aria-live="polite"></p><div style="margin-top:1rem"><h4>Echter Push vom Server</h4><p>Einmalig dein iPhone aktivieren, danach eine Nachricht vom Server senden – auch wenn die App geschlossen ist. Kein Konto erforderlich; der Test ist nur für dein eigenes Gerät.</p><button type="button" class="ghost-btn" id="push-register">iPhone für Push aktivieren</button> <button type="button" class="ghost-btn" id="push-send">Server-Push senden</button> <button type="button" class="ghost-btn" id="push-check">Versandstatus prüfen</button><p id="push-status" role="status" aria-live="polite">Noch kein Gerät für den Server-Test registriert.</p><small>Push-Test v2 · Serverstatus zeigt die Annahme durch Apple, nicht die Anzeige auf dem iPhone.</small></div></div>
+  <div class="today-reminders" aria-labelledby="automatic-push-title">
+    <h3 id="automatic-push-title">Automatische Camino-Erinnerungen</h3>
+    <p>Für die sieben Etappen vom 12. bis 18. Juni 2027: am Vorabend eine Vorschau und morgens eine Erinnerung. Die Zeiten gelten in <strong>spanischer Ortszeit</strong> (Madrid); in Portugal ist es eine Stunde früher. Die Mitteilungen funktionieren auch bei geschlossener App.</p>
+    <p>Erinnerungen sind standardmässig ausgeschaltet und werden erst nach deiner ausdrücklichen Aktivierung versendet.</p>
+    <label style="display:block;margin:.7rem 0"><input type="checkbox" id="push-reminders-enabled"> Automatische Erinnerungen einschalten</label>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;margin:.75rem 0">
+      <label for="push-evening-time">Vorabend<br><input type="time" id="push-evening-time" value="19:00" min="17:00" max="22:59"></label>
+      <label for="push-morning-time">Etappenmorgen<br><input type="time" id="push-morning-time" value="07:00" min="06:00" max="11:59"></label>
+    </div>
+    <button type="button" class="ghost-btn" id="push-reminders-save">Einstellungen speichern</button>
+    <p id="push-reminders-feedback" role="status" aria-live="polite">Bitte zuerst das iPhone für Push aktivieren.</p>
+    <small>Du kannst die Erinnerungen hier jederzeit wieder ausschalten. Dein Gerät bleibt für den Test registriert.</small>
+  </div>
   <p class="connection-status" id="connection-status" role="status" aria-live="polite">Verbindungsstatus wird geprüft …</p>
   <div class="wbox" id="offline-tip"><strong>Offline:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen. Etappen, Hotels, Telefonnummern und GPX sind dann auch ohne Netz da. Fotos nur, wenn ihr sie unten speichert. Karte und Wetter brauchen Empfang.</div>
 </section>
