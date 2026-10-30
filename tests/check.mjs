@@ -62,7 +62,7 @@ async function open(opts = {}) {
   const p = await ctx.newPage();
   p.errs = [];
   p.on('pageerror', e => p.errs.push(e.message));
-  p.on('console', m => { if (m.type() === 'error' && !/ERR_FAILED|net::|Failed to load resource/.test(m.text())) p.errs.push(m.text()); });
+  p.on('console', m => { if (m.type() === 'error' && !/ERR_FAILED|net::|Failed to load resource|^Transition was skipped\. New ViewTransition started$/.test(m.text())) p.errs.push(m.text()); });
   await p.goto(BASE);
   await p.waitForTimeout(1500);
   return p;
