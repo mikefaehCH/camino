@@ -16,3 +16,11 @@ handlers.activate({ waitUntil: promise => { pending = promise; } });
 await pending;
 assert.deepEqual(deleted, ['camino-v48']);
 console.log('PASS: Camino only removes its obsolete own cache');
+
+const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const nav = html.match(/<nav id="nav"[\\s\\S]*?<\\/nav>/)?.[0] || '';
+for (const [label, target] of [['Entdecken','intro'],['Etappen','reise'],['Heute','heute'],['Karte','karte'],['Genuss','restaurants'],['Infos','infos']]) {
+  assert.ok(nav.includes(`href="#${target}">${label}</a>`), `Navigation missing ${label}`);
+  assert.ok(html.includes(`id="${target}"`), `Navigation target missing: ${target}`);
+}
+console.log('PASS: Magazine and Today navigation targets exist');
