@@ -972,3 +972,38 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
   window.addEventListener('offline',update);
   update();
 })();
+
+/* Expense handoff: deliberately no third-party API, persistence or automatic financial action. */
+(function initExpenseHandoff(){
+  const form=document.getElementById('expense-form');
+  if(!form)return;
+  form.addEventListener('submit',async event=>{
+    event.preventDefault();
+    const feedback=document.getElementById('expense-feedback');
+    const description=document.getElementById('expense-description').value.trim();
+    const amount=Number(document.getElementById('expense-amount').value);
+    const currency=document.getElementById('expense-currency').value;
+    const payer=document.getElementById('expense-payer').value;
+    const members=Array.from(form.querySelectorAll('input[name="expense-member"]:checked'),el=>el.value);
+    if(!description||!Number.isFinite(amount)||amount<=0||amount>999999||!members.length){
+      feedback.textContent='Bitte Beschreibung, gültigen Betrag und mindestens eine beteiligte Person angeben.';
+      return;
+    }
+    const cents=Math.round(amount*100);
+    const base=Math.floor(cents/members.length),remainder=cents%members.length;
+    const shares=members.map((member,i)=>member+': '+((base+(i<remainder?1:0))/100).toFixed(2)+' '+currency);
+    const note=['Camino – Ausgabe für Splitwise (noch nicht erfasst)',description,
+      'Betrag: '+(cents/100).toFixed(2)+' '+currency,'Bezahlt von: '+payer,
+      'Aufteilung:',...shares].join('\n');
+    try{
+      if(!navigator.clipboard||!navigator.clipboard.writeText)throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(note);
+      feedback.textContent='Ausgabe kopiert. Öffne Splitwise und erfasse sie dort manuell.';
+    }catch{
+      const field=document.createElement('textarea');
+      field.value=note;field.readOnly=true;field.setAttribute('aria-label','Ausgabe zum manuellen Kopieren');
+      feedback.replaceChildren(document.createTextNode('Automatisches Kopieren nicht möglich. Text hier markieren und kopieren: '),field);
+      field.focus();field.select();
+    }
+  });
+})();
