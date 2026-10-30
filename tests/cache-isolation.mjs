@@ -55,3 +55,9 @@ assert.ok(html.includes('https://www.splitwise.com/'), 'Splitwise handoff link m
 assert.ok(app.includes('Math.round(amount*100)'), 'Expense split must use integer cents');
 assert.ok(app.includes('noch nicht erfasst'), 'Expense handoff must not claim synchronization');
 console.log('PASS: privacy-preserving expense handoff controls');
+
+assert.ok(html.includes('id="reminder-download"'), 'Calendar reminder action missing');
+assert.ok(app.includes('BEGIN:VALARM'), 'Calendar reminder alarm missing');
+assert.ok(app.includes('navigator.share({text})'), 'Native share missing');
+assert.ok(app.includes('https://wa.me/?text='), 'WhatsApp fallback missing');
+console.log('PASS: calendar and share handoff controls');
