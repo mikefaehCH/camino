@@ -1,5 +1,5 @@
 /* Camino 2027 – Offline-Cache */
-const CACHE = 'camino-v55';
+const CACHE = 'camino-v56';
 const FOTOS = 'camino-fotos'; // vom Knopf «Fotos offline speichern», bleibt über Updates erhalten
 const CORE = ['./', './index.html', './css/site.css', './js/app.js', './data/trip.js', './manifest.webmanifest', './icon.svg', './icon-192.png', './apple-touch-icon.png',
   './images/start/pilger-nebelwald-800.webp', './images/porto/porto-douro-sonnenuntergang-800.webp', './images/porto/porto-ponte-luis-blaue-stunde-800.webp',
@@ -30,4 +30,26 @@ self.addEventListener('fetch', e => {
   }
   // Übrige externe Dateien: zuerst Cache
   e.respondWith(caches.match(req).then(r => r || fetch(req).then(put)));
+});
+
+/* Web Push receiver: sender and VAPID registration are provisioned separately. */
+self.addEventListener('push', event => {
+  event.waitUntil((async()=>{
+    let payload={};
+    try{payload=event.data?.json()||{};}catch{}
+    const title=typeof payload.title==='string'?payload.title.slice(0,90):'Camino 2027';
+    const body=typeof payload.body==='string'?payload.body.slice(0,240):'Neue Mitteilung';
+    // Do not accept arbitrary destinations supplied in a push payload.
+    await self.registration.showNotification(title,{body,icon:'./icon-192.png',badge:'./icon-192.png',tag:'camino-push',data:{url:new URL('./#heute',self.registration.scope).href}});
+  })());
+});
+self.addEventListener('notificationclick',event=>{
+  event.notification.close();
+  event.waitUntil((async()=>{
+    const target=new URL('./#heute',self.registration.scope).href;
+    const clientsList=await self.clients.matchAll({type:'window',includeUncontrolled:true});
+    const existing=clientsList.find(c=>c.url.startsWith(self.registration.scope));
+    if(existing){await existing.focus();existing.navigate(target);return;}
+    await self.clients.openWindow(target);
+  })());
 });
