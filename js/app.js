@@ -1044,6 +1044,8 @@ window.initTravelExpenses=function initTravelExpenses(){
       remove.addEventListener('click',()=>{if(!confirm('Diese Ausgabe wirklich löschen?'))return;entries=entries.filter(x=>x.id!==e.id);if(save())render();});
       row.append(info,edit,remove);list.appendChild(row);
     }
+    const summary=document.createElement('div');summary.className='expense-summary-grid';
+    balances.appendChild(summary);
     for(const currency of ['EUR','CHF']){
       const relevant=entries.filter(e=>e.currency===currency);if(!relevant.length)continue;
       const net=Object.fromEntries(people.map(p=>[p,0]));
@@ -1053,15 +1055,39 @@ window.initTravelExpenses=function initTravelExpenses(){
         const base=Math.floor(e.cents/e.members.length),rem=e.cents%e.members.length;
         e.members.forEach((p,i)=>net[p]-=base+(i<rem?1:0));
       }
-      const heading=document.createElement('h5');heading.textContent=currency;balances.appendChild(heading);
-      for(const p of people){const row=document.createElement('p');row.textContent=p+': '+(net[p]>=0?'erhält ':'schuldet ')+money(Math.abs(net[p]),currency);balances.appendChild(row);}
-      const debtors=people.filter(p=>net[p]<0).map(p=>({p,c:-net[p]})),creditors=people.filter(p=>net[p]>0).map(p=>({p,c:net[p]}));
-      let i=0,j=0;
-      while(i<debtors.length&&j<creditors.length){
-        const c=Math.min(debtors[i].c,creditors[j].c);
-        const row=document.createElement('p');row.className='expense-settlement';row.textContent=debtors[i].p+' zahlt '+creditors[j].p+' '+money(c,currency);balances.appendChild(row);
-        debtors[i].c-=c;creditors[j].c-=c;if(!debtors[i].c)i++;if(!creditors[j].c)j++;
+      const card=document.createElement('section');card.className='expense-balance-card';
+      const heading=document.createElement('div');heading.className='expense-balance-heading';
+      const label=document.createElement('h5');label.textContent=currency;
+      const count=document.createElement('span');count.textContent=relevant.length+' Buchungen';
+      heading.append(label,count);card.appendChild(heading);
+      const peopleList=document.createElement('div');peopleList.className='expense-person-list';
+      for(const p of people){
+        const row=document.createElement('div');row.className='expense-person';
+        const name=document.createElement('span');name.textContent=p;
+        const amount=document.createElement('strong');amount.className=net[p]>0?'positive':net[p]<0?'negative':'neutral';
+        amount.textContent=(net[p]>0?'+':net[p]<0?'−':'')+money(Math.abs(net[p]),currency);
+        const explanation=document.createElement('small');explanation.textContent=net[p]>0?'bekommt zurück':net[p]<0?'ist noch offen':'ausgeglichen';
+        row.append(name,amount,explanation);peopleList.appendChild(row);
       }
+      card.appendChild(peopleList);
+      const title=document.createElement('h6');title.className='expense-transfer-title';title.textContent='So gleicht ihr aus';
+      card.appendChild(title);
+      const debtors=people.filter(p=>net[p]<0).map(p=>({p,c:-net[p]}));
+      const creditors=people.filter(p=>net[p]>0).map(p=>({p,c:net[p]}));
+      let i=0,j=0,transfers=0;
+      while(i<debtors.length&&j<creditors.length){
+        const cents=Math.min(debtors[i].c,creditors[j].c);
+        const row=document.createElement('div');row.className='expense-transfer';
+        const from=document.createElement('span');from.textContent=debtors[i].p;
+        const arrow=document.createElement('span');arrow.className='expense-transfer-arrow';arrow.textContent='→';
+        const to=document.createElement('span');to.textContent=creditors[j].p;
+        const amount=document.createElement('strong');amount.textContent=money(cents,currency);
+        row.append(from,arrow,to,amount);card.appendChild(row);transfers++;
+        debtors[i].c-=cents;creditors[j].c-=cents;
+        if(!debtors[i].c)i++;if(!creditors[j].c)j++;
+      }
+      if(!transfers){const clear=document.createElement('p');clear.className='expense-all-clear';clear.textContent='Alles ausgeglichen.';card.appendChild(clear);}
+      summary.appendChild(card);
     }
   }
   form.addEventListener('submit',event=>{
