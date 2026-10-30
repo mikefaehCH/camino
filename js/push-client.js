@@ -51,7 +51,7 @@ send.addEventListener('click',async()=>{
  send.disabled=true;
  try{
   await request('test');
-  report('Server hat die Nachricht an den Apple-Push-Dienst übermittelt. Die Zustellung auf dem iPhone bitte prüfen.');
+  report('Server-Test geplant. Schliesse Camino jetzt: In etwa 12 Sekunden sollte die Push-Mitteilung eintreffen.');
  }catch(e){report(e.message||'Push-Test fehlgeschlagen.');}
  finally{send.disabled=false;}
 });
