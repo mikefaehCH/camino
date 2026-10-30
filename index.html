@@ -186,7 +186,8 @@
     <button id="reminder-download" class="ghost-btn" type="button">Kalendereintrag speichern</button>
     <p id="reminder-feedback" role="status" aria-live="polite"></p>
   </div>
-  <div class="today-reminders" aria-labelledby="push-test-title"><h3 id="push-test-title">Mitteilungen testen</h3><p>Teste eine Mitteilung direkt auf diesem Gerät. Dies ist noch kein serverseitiger Push: Für echte Nachrichten bei geschlossener App wird der Push-Versand separat eingerichtet.</p><button type="button" id="notification-test" class="ghost-btn">Testmitteilung anzeigen</button><p id="notification-test-feedback" role="status" aria-live="polite"></p></div>\n  <p class="connection-status" id="connection-status" role="status" aria-live="polite">Verbindungsstatus wird geprüft …</p>
+  <div class="today-reminders" aria-labelledby="push-test-title"><h3 id="push-test-title">Mitteilungen testen</h3><p>Teste eine Mitteilung direkt auf diesem Gerät. Der lokale Test ist bereits verfügbar. Für echten Hintergrund-Push melde dich an und registriere dein Gerät.</p><button type="button" id="notification-test" class="ghost-btn">Testmitteilung anzeigen</button><p id="notification-test-feedback" role="status" aria-live="polite"></p><div style="margin-top:1rem"><button type="button" class="ghost-btn" id="push-login">Mit Google anmelden</button> <button type="button" class="ghost-btn" id="push-register">Gerät für Push registrieren</button> <button type="button" class="ghost-btn" id="push-send">Echten Push testen</button><p id="push-status" role="status" aria-live="polite">Für echten Push ist eine Anmeldung als Camino-Mitglied erforderlich.</p></div></div>
+  <p class="connection-status" id="connection-status" role="status" aria-live="polite">Verbindungsstatus wird geprüft …</p>
   <div class="wbox" id="offline-tip"><strong>Offline:</strong> Seite im Browser «Zum Home-Bildschirm» hinzufügen. Etappen, Hotels, Telefonnummern und GPX sind dann auch ohne Netz da. Fotos nur, wenn ihr sie unten speichert. Karte und Wetter brauchen Empfang.</div>
 </section>
 
@@ -608,6 +609,9 @@
 
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="data/trip.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
+<script src="js/auth-core.js"></script>
+<script src="js/push-client.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
