@@ -67,3 +67,8 @@ console.log('PASS: calendar and share handoff controls');
 assert.ok(app.includes("if(p.start!=null)L.push('Abmarsch:"), 'Day sharing must include departure time');
 assert.ok(app.includes("if(x.hl&&x.hl.length)"), 'Highlights should be guarded');
 console.log('PASS: daily share text includes departure');
+
+assert.ok(html.includes('id="settlement-form"'), 'Repayment form missing');
+assert.ok(app.includes("e.kind==='settlement'"), 'Repayment entries not supported');
+assert.ok(app.includes('net[e.from]+=e.cents;net[e.to]-=e.cents'), 'Repayments must affect balances');
+console.log('PASS: repayment entries affect balances');
