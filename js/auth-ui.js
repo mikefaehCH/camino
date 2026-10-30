@@ -44,6 +44,26 @@ async function refresh(){
   report('Zugriff freigeschaltet. Die Reisekasse wird sicher für die Camino-Gruppe synchronisiert.');
  }catch(e){if(version===revision){privatePanel.hidden=true;report('Reisekasse konnte nicht sicher geladen werden. Bitte Verbindung und Mitgliedschaft prüfen.');}}
 }
+// Check GoTrue public provider configuration before redirecting to OAuth.
+// This avoids a confusing "Unsupported provider" page on iOS.
+(async function checkProviders(){
+ try{
+  const response=await fetch('https://qoensghjemruqafrbmjd.supabase.co/auth/v1/settings',{
+   headers:{apikey:'sb_publishable_Qeom38G18vSgrrE5MxoXEw_LhJM1f6S'}
+  });
+  if(!response.ok)return;
+  const settings=await response.json();
+  for(const button of root.querySelectorAll('[data-auth-provider]')){
+   const provider=button.dataset.authProvider;
+   const available=Boolean(settings.external&&settings.external[provider]);
+   if(!available){
+    button.disabled=true;
+    button.title='Dieser Anbieter ist noch nicht in Supabase aktiviert.';
+    button.textContent=button.textContent+' (noch nicht aktiviert)';
+   }
+  }
+ }catch{/* Keep buttons usable when settings cannot be fetched. */}
+})();
 root.querySelectorAll('[data-auth-provider]').forEach(button=>{
  button.addEventListener('click',async()=>{
   button.disabled=true;
