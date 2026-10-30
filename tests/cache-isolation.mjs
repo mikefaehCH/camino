@@ -63,3 +63,7 @@ assert.ok(app.includes('BEGIN:VALARM'), 'Calendar reminder alarm missing');
 assert.ok(app.includes('navigator.share({text})'), 'Native share missing');
 assert.ok(app.includes('https://wa.me/?text='), 'WhatsApp fallback missing');
 console.log('PASS: calendar and share handoff controls');
+
+assert.ok(app.includes("if(p.start!=null)L.push('Abmarsch:"), 'Day sharing must include departure time');
+assert.ok(app.includes("if(x.hl&&x.hl.length)"), 'Highlights should be guarded');
+console.log('PASS: daily share text includes departure');
