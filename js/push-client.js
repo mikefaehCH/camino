@@ -35,10 +35,10 @@ register.addEventListener('click',async()=>{
  register.disabled=true;
  try{
   if(!('Notification' in window)||!('PushManager' in window)||!('serviceWorker' in navigator))throw new Error('Bitte die Camino-App über das Home-Bildschirm-Symbol öffnen.');
-  const {publicKey}=await request('config');
-  if(!publicKey)throw new Error('Push-Schlüssel fehlt.');
   const permission=Notification.permission==='default'?await Notification.requestPermission():Notification.permission;
   if(permission!=='granted')throw new Error('Bitte Mitteilungen in den iPhone-Einstellungen erlauben.');
+  const {publicKey}=await request('config');
+  if(!publicKey)throw new Error('Push-Schlüssel fehlt.');
   const sw=await navigator.serviceWorker.ready;
   let subscription=await sw.pushManager.getSubscription();
   if(!subscription)subscription=await sw.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:keyBytes(publicKey)});
