@@ -4,7 +4,8 @@
 const status=document.getElementById('push-status');
 const register=document.getElementById('push-register');
 const send=document.getElementById('push-send');
-if(!status||!register||!send)return;
+const check=document.getElementById('push-check');
+if(!status||!register||!send||!check)return;
 const endpoint='https://qoensghjemruqafrbmjd.supabase.co/functions/v1/camino-push-device';
 const storageKey='camino-iphone-push-test-token-v1';
 const report=message=>{status.textContent=message;};
@@ -31,6 +32,16 @@ async function request(action,extra={}){
  }
  return data;
 }
+async function checkStatus(){
+ const result=await request('status');
+ const messages={not_tested:'Registriert. Noch kein Server-Test ausgeführt.',scheduled:'Server-Test läuft. In Kürze nochmals prüfen.',accepted:'Apple hat den Push angenommen. Bitte Anzeige auf dem iPhone prüfen.',rejected:'Apple hat den Push abgelehnt. Gerät bitte erneut registrieren.'};
+ report(messages[result.status]||'Status nicht verfügbar.');
+}
+check.addEventListener('click',async()=>{
+ check.disabled=true;
+ try{await checkStatus();}catch(e){report(e.message||'Statusprüfung fehlgeschlagen.');}
+ finally{check.disabled=false;}
+});
 register.addEventListener('click',async()=>{
  register.disabled=true;
  try{
@@ -55,5 +66,5 @@ send.addEventListener('click',async()=>{
  }catch(e){report(e.message||'Push-Test fehlgeschlagen.');}
  finally{send.disabled=false;}
 });
-try{if(localStorage.getItem(storageKey))report('Gerätekennung vorhanden. Falls bereits registriert: Server-Push senden.');}catch{}
+try{if(localStorage.getItem(storageKey))checkStatus().catch(()=>report('Gerätekennung vorhanden. Bitte iPhone aktivieren.'));}catch{}
 })();
