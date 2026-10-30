@@ -50,11 +50,13 @@ assert.ok(app.includes("addEventListener('online',update)"), 'Missing online eve
 assert.ok(app.includes("navigator.onLine!==false"), 'Missing initial network state');
 console.log('PASS: day companion connectivity indicator');
 
-assert.ok(html.includes('id="expense-form"'), 'Expense handoff form missing');
-assert.ok(html.includes('https://www.splitwise.com/'), 'Splitwise handoff link missing');
-assert.ok(app.includes('Math.round(amount*100)'), 'Expense split must use integer cents');
-assert.ok(app.includes('noch nicht erfasst'), 'Expense handoff must not claim synchronization');
-console.log('PASS: privacy-preserving expense handoff controls');
+assert.ok(html.includes('id="expense-form"'), 'Expense tracker missing');
+assert.ok(html.includes('id="expense-balances"'), 'Balance view missing');
+assert.ok(html.includes('id="expense-export"'), 'Backup export missing');
+assert.ok(app.includes("camino-expenses-v1"), 'Local ledger storage missing');
+assert.ok(app.includes("expense-settlement"), 'Settlement calculation missing');
+assert.ok(!html.includes('https://www.splitwise.com/'), 'External Splitwise link should not exist');
+console.log('PASS: independent travel expense tracker');
 
 assert.ok(html.includes('id="reminder-download"'), 'Calendar reminder action missing');
 assert.ok(app.includes('BEGIN:VALARM'), 'Calendar reminder alarm missing');
