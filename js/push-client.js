@@ -1,59 +1,59 @@
-/* Authenticated opt-in Web Push. No device identifiers or secret keys are embedded. */
+/* iOS Web Push self-test: opt-in, device-bound, no account or secrets in source. */
 (function(){
 'use strict';
 const status=document.getElementById('push-status');
-const login=document.getElementById('push-login');
 const register=document.getElementById('push-register');
 const send=document.getElementById('push-send');
-if(!status||!login||!register||!send)return;
-const projectId='45343dda-fa24-4839-ac16-6b111da4ee28';
-const url='https://qoensghjemruqafrbmjd.supabase.co';
-const key='sb_publishable_Qeom38G18vSgrrE5MxoXEw_LhJM1f6S';
-const report=(s)=>{status.textContent=s;};
-if(!window.supabase?.createClient||!window.CaminoAuth){report('Anmeldedienst konnte nicht geladen werden.');return;}
-const auth=window.CaminoAuth.createAuth({url,publishableKey:key,projectId,redirectPath:'/camino/',clientFactory:window.supabase.createClient});
-const decodeKey=(str)=>{
- const pad='='.repeat((4-str.length%4)%4);
- const binary=atob((str+pad).replace(/-/g,'+').replace(/_/g,'/'));
+if(!status||!register||!send)return;
+const endpoint='https://qoensghjemruqafrbmjd.supabase.co/functions/v1/camino-push-device';
+const storageKey='camino-iphone-push-test-token-v1';
+const report=message=>{status.textContent=message;};
+const keyBytes=str=>{
+ const binary=atob((str+'='.repeat((4-str.length%4)%4)).replace(/-/g,'+').replace(/_/g,'/'));
  return Uint8Array.from(binary,c=>c.charCodeAt(0));
 };
-async function member(){
- const m=await auth.membership();
- if(!m)throw new Error('Dein Konto ist noch nicht als Camino-Mitglied freigeschaltet.');
- return m;
+function getToken(){
+ let token=localStorage.getItem(storageKey);
+ if(token&&/^[A-Za-z0-9_-]{43}$/.test(token))return token;
+ if(!window.crypto?.getRandomValues)throw new Error('Sichere Gerätekennung ist nicht verfügbar.');
+ const bytes=new Uint8Array(32);
+ window.crypto.getRandomValues(bytes);
+ token=btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+ localStorage.setItem(storageKey,token);
+ return token;
 }
-login.addEventListener('click',async()=>{
- try{await auth.signIn('google');}catch(e){report(e.message||'Anmeldung fehlgeschlagen.');}
-});
+async function request(action,extra={}){
+ const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token:getToken(),...extra}),cache:'no-store'});
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok){
+  const messages={vapid_not_configured:'Der Server-Schlüssel ist noch nicht bereit.',device_not_registered:'Bitte zuerst dieses iPhone aktivieren.',wait_two_minutes:'Bitte zwei Minuten bis zum nächsten Test warten.',daily_limit:'Das Tageslimit von drei Testnachrichten ist erreicht.',push_provider_rejected:'Der Push-Dienst hat die Nachricht abgelehnt. Bitte Gerät erneut aktivieren.',unsupported_push_endpoint:'Diese Registrierung unterstützt derzeit iPhone-Web-Push.',registration_failed:'Registrierung am Server fehlgeschlagen.'};
+  throw new Error(messages[data.error]||'Serverfehler ('+response.status+').');
+ }
+ return data;
+}
 register.addEventListener('click',async()=>{
  register.disabled=true;
  try{
-  if(!('PushManager' in window)||!('serviceWorker' in navigator))throw new Error('Web Push wird hier nicht unterstützt. Bitte die Home-Bildschirm-App öffnen.');
-  const m=await member();
-  const {data:settings,error:settingsError}=await auth.client.from('push_settings').select('vapid_public_key').eq('project_id',projectId).single();
-  if(settingsError||!settings?.vapid_public_key)throw new Error('Öffentlicher Push-Schlüssel nicht verfügbar.');
+  if(!('Notification' in window)||!('PushManager' in window)||!('serviceWorker' in navigator))throw new Error('Bitte die Camino-App über das Home-Bildschirm-Symbol öffnen.');
   const permission=Notification.permission==='default'?await Notification.requestPermission():Notification.permission;
-  if(permission!=='granted')throw new Error('Mitteilungen wurden nicht erlaubt.');
+  if(permission!=='granted')throw new Error('Bitte Mitteilungen in den iPhone-Einstellungen erlauben.');
+  const {publicKey}=await request('config');
+  if(!publicKey)throw new Error('Push-Schlüssel fehlt.');
   const sw=await navigator.serviceWorker.ready;
-  let sub=await sw.pushManager.getSubscription();
-  if(!sub)sub=await sw.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:decodeKey(settings.vapid_public_key)});
-  const json=sub.toJSON();
-  if(!json.endpoint||!json.keys?.p256dh||!json.keys?.auth)throw new Error('Unvollständige Geräte-Registrierung.');
-  const {error}=await auth.client.from('push_subscriptions').upsert({project_id:projectId,user_id:m.user_id,endpoint:json.endpoint,p256dh:json.keys.p256dh,auth_secret:json.keys.auth},{onConflict:'project_id,user_id,endpoint',ignoreDuplicates:true});
-  if(error)throw error;
-  report('Dieses Gerät ist für echte Push-Mitteilungen registriert.');
- }catch(e){report(e.message||'Geräteregistrierung fehlgeschlagen.');}
+  let subscription=await sw.pushManager.getSubscription();
+  if(!subscription)subscription=await sw.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:keyBytes(publicKey)});
+  await request('register',{subscription:subscription.toJSON()});
+  report('iPhone registriert. Du kannst jetzt den Server-Push senden und die App schliessen.');
+ }catch(e){report(e.message||'Registrierung fehlgeschlagen.');}
  finally{register.disabled=false;}
 });
 send.addEventListener('click',async()=>{
  send.disabled=true;
  try{
-  await member();
-  const {data,error}=await auth.client.functions.invoke('camino-push-self-test',{body:{}});
-  if(error)throw error;
-  report('Server-Push angefordert: '+data.delivered+' Gerät(e) erreicht, '+data.failed+' fehlgeschlagen. App schliessen und erneut testen.');
- }catch(e){report(e.message||'Push-Versand fehlgeschlagen.');}
+  await request('test');
+  report('Server-Test geplant. Schliesse Camino jetzt: In etwa 12 Sekunden sollte die Push-Mitteilung eintreffen.');
+ }catch(e){report(e.message||'Push-Test fehlgeschlagen.');}
  finally{send.disabled=false;}
 });
-auth.currentUser().then(user=>{if(user)report('Angemeldet. Gerät registrieren, danach echten Push testen.');}).catch(()=>{});
+try{if(localStorage.getItem(storageKey))report('Gerätekennung vorhanden. Falls bereits registriert: Server-Push senden.');}catch{}
 })();
