@@ -956,3 +956,19 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
       done();}
     catch(e){idle();b.insertAdjacentHTML('afterend','<span class="map-off"> Nicht alle Fotos gespeichert – mit Netz nochmals versuchen.</span>');}});
 })();
+
+/* Camino 2.0: truthful connectivity indicator; navigator.onLine is not a server reachability test. */
+(function initConnectionStatus(){
+  const status=document.getElementById('connection-status');
+  if(!status)return;
+  const update=()=>{
+    const online=navigator.onLine!==false;
+    status.dataset.connection=online?'online':'offline';
+    status.textContent=online
+      ? 'Netzwerk verfügbar · Karte und Wetter benötigen eine funktionierende Internetverbindung.'
+      : 'Offline · Gespeicherte Etappen, Hotels und GPX bleiben verfügbar. Karte und Wetter sind eingeschränkt.';
+  };
+  window.addEventListener('online',update);
+  window.addEventListener('offline',update);
+  update();
+})();

@@ -1012,3 +1012,7 @@ body.in-trip #hero .hero-h1{font-size:clamp(2.4rem,10vw,4rem);margin-bottom:.25r
 .today-quicklinks a:hover{border-color:var(--wave);background:var(--foam);}
 .today-quicklinks a:focus-visible{outline:3px solid var(--wave);outline-offset:2px;}
 @media(max-width:390px){.today-quicklinks{grid-template-columns:1fr;}}
+
+/* Camino 2.0 network status */
+.connection-status{margin:1rem 0 .75rem;padding:.8rem 1rem;border:1px solid var(--border);border-radius:.6rem;font-size:.82rem;line-height:1.55;background:var(--card);color:var(--ink);}
+.connection-status[data-connection="offline"]{border-style:dashed;font-weight:600;}

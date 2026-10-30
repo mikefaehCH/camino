@@ -14,7 +14,7 @@ assert.equal(typeof handlers.activate, 'function', 'activate handler missing');
 let pending;
 handlers.activate({ waitUntil: promise => { pending = promise; } });
 await pending;
-assert.deepEqual(deleted, ['camino-v48']);
+assert.deepEqual(deleted, ['camino-v48', 'camino-v49']);
 console.log('PASS: Camino only removes its obsolete own cache');
 
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
@@ -43,3 +43,9 @@ for (const target of ['karte','etappen','buchungen','restaurants']) {
   assert.ok(html.includes('id="' + target + '"'), 'Missing Today quick link target: ' + target);
 }
 console.log('PASS: Today quick links resolve to existing sections');
+
+assert.ok(html.includes('id="connection-status"'), 'Missing connectivity status');
+assert.ok(app.includes("addEventListener('offline',update)"), 'Missing offline event update');
+assert.ok(app.includes("addEventListener('online',update)"), 'Missing online event update');
+assert.ok(app.includes("navigator.onLine!==false"), 'Missing initial network state');
+console.log('PASS: day companion connectivity indicator');
