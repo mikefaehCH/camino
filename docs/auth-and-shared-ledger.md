@@ -57,3 +57,16 @@ All current GitHub Pages project sites share the origin `https://mikefaehch.gith
 
 ### Deployment prerequisites
 A real Supabase project, configured OAuth providers, redirect URLs, RLS policies, and an owner-approved invitation roster are necessary before production login can be switched on. A design-only PR is not a working sign-in service.
+
+## Existing implementation found in Sommer2027 (2026-10-30)
+
+Repository `mikefaehCH/Sommer2027` already has a Supabase project, public browser config, Google OAuth, `family_members` authorization, RLS-protected family planner and sync. **Reuse the existing Supabase project**, not a new one, subject to owner confirmation and backend access.
+
+- Public project URL: `https://kgtowblwixgfdnbgcjeq.supabase.co`. Obtain the publishable key from the existing `Sommer2027/supabase/public-config.js` when integrating; it is a public browser key, not a privileged secret.
+- Existing Google login is implemented in `familien-login-inline-1.js`; use its proven OAuth pattern as a starting point, then extract into a shared versioned module. Do not copy `family_members` checks into Camino.
+- Existing `family_members` is specific to Sommer2027. Add project and group membership tables and policies for Camino without broadening permissions on `family_plans`, `activity_votes` or other Sommer2027 data.
+- Explicitly add Camino redirect URL `https://mikefaehch.github.io/camino/**` in Supabase Authentication URL Configuration; keep Sommer2027 redirects. The project has Google OAuth configured in repository code, but real provider/dashboard state must be verified.
+- Existing setup notes and SQL are in `Sommer2027/supabase/SETUP.md` and `supabase/schema.sql`; do not re-run the old schema in an existing production database. New schema changes must be additive, reviewed, idempotent and tested against RLS.
+- Reuse existing public config values only. Never publish `service_role` or OAuth provider secrets.
+- Browser storage is shared across GitHub Pages project paths. Validate common session expectations, callback allowlists, and cross-project isolation with actual tests.
+- Production DB operations cannot be claimed complete from repository code alone. They require Supabase dashboard access or a connected, authorized database migration tool.
