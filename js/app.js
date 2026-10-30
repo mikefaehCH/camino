@@ -1077,7 +1077,7 @@ window.initTravelExpenses=function initTravelExpenses(){
       let i=0,j=0,transfers=0;
       while(i<debtors.length&&j<creditors.length){
         const cents=Math.min(debtors[i].c,creditors[j].c);
-        const row=document.createElement('div');row.className='expense-transfer';
+        const row=document.createElement('div');row.className='expense-transfer expense-settlement';
         const from=document.createElement('span');from.textContent=debtors[i].p;
         const arrow=document.createElement('span');arrow.className='expense-transfer-arrow';arrow.textContent='→';
         const to=document.createElement('span');to.textContent=creditors[j].p;
