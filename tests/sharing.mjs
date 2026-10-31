@@ -12,7 +12,10 @@ const day = {
 };
 function setup({ native, clipboard, open } = {}) {
   const calls = [];
+  const nodes=[];
+  const document={activeElement:{focus(){}},body:{appendChild(){}},createElement(tag){const node={tag,children:[],append(...children){this.children.push(...children);},appendChild(child){this.append(child);},setAttribute(){},addEventListener(){},showModal(){calls.push(['dialog']);},focus(){},select(){this.selected=true;}};nodes.push(node);return node;}};
   const context = {
+    document,
     DAYS: [day, { ...day, stage: undefined }],
     SITE_URL: 'https://example.test/camino/',
     dayPlan: () => ({ start: 7.5 }), fmt: date => date,
@@ -30,7 +33,7 @@ function setup({ native, clipboard, open } = {}) {
   };
   vm.createContext(context);
   vm.runInContext(source, context);
-  return { context, calls };
+  return { context, calls, nodes };
 }
 
 {
@@ -62,6 +65,7 @@ for (const native of [undefined, async () => { throw { name: 'NotAllowedError' }
   assert.equal(new URL(launch[1]).searchParams.get('text'), context.shareText(0), 'Unicode/URLs round-trip');
   assert.equal(launch[2], '_blank');
   assert.equal(launch[3], 'noopener');
+  assert.ok(calls.some(c=>c[0]==='alert'&&c[1]==='Falls WhatsApp nicht geöffnet wurde: Text kopieren'));
   assert.equal(calls.filter(c => c[0] === 'copy').length, 0,
     'A null noopener handle must never overwrite the clipboard');
 }
@@ -72,15 +76,16 @@ for (const native of [undefined, async () => { throw { name: 'NotAllowedError' }
   assert.deepEqual(calls.map(c => c[0]), ['copy', 'alert']);
 }
 for (const clipboard of [undefined, async () => { throw { name: 'NotAllowedError' }; }]) {
-  const { context, calls } = setup({ clipboard });
+  const { context, calls, nodes } = setup({ clipboard });
   await context.copyDay(0);
-  assert.equal(calls.at(-1)[0], 'prompt');
-  assert.equal(calls.at(-1)[2], context.shareText(0), 'Manual copy retains the complete text');
+  assert.equal(calls.at(-1)[0], 'dialog');
+  const field=nodes.find(n=>n.tag==='textarea');
+  assert.equal(field.value,context.shareText(0));assert.equal(field.readOnly,true);assert.equal(field.selected,true);assert.ok(field.value.includes('\n'));
   assert.equal(calls.filter(c => c[0] === 'open').length, 0);
 }
 {
   const { context, calls } = setup({ open: () => { throw Error('Unavailable'); } });
   await context.shareDay(0);
-  assert.deepEqual(calls.map(c => c[0]), ['open', 'prompt']);
+  assert.deepEqual(calls.map(c => c[0]), ['open', 'dialog']);
 }
 console.log('PASS: native share, cancellation, WhatsApp encoding, noopener and explicit/manual copy fallbacks');

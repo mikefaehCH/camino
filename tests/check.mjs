@@ -198,6 +198,28 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   await p.context().close();
 }
 
+// Manueller Kopierdialog: Zeilenumbrüche, Vorauswahl und Fokus.
+{
+  const p=await open();
+  await p.evaluate(()=>{
+    Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async()=>{throw Error('denied');}}});
+    document.querySelector('#today-card .tc-more').open=true;
+  });
+  const button=p.locator('#today-card button').filter({hasText:/^Text kopieren$/});
+  await button.click();
+  const field=p.locator('.copy-dialog textarea');
+  const state=await field.evaluate(el=>({value:el.value,readonly:el.readOnly,start:el.selectionStart,end:el.selectionEnd,focused:document.activeElement===el}));
+  ok(state.readonly&&state.focused&&state.start===0&&state.end===state.value.length&&state.value.includes('\n'),'Kopierdialog: mehrzeiliger Text nicht vollständig vorausgewählt');
+  const dialogStyle=await p.locator('.copy-dialog').evaluate(el=>({bg:getComputedStyle(el).backgroundColor,left:el.getBoundingClientRect().left}));
+  ok(dialogStyle.bg!=='rgba(0, 0, 0, 0)'&&dialogStyle.left>0,'Kopierdialog muss undurchsichtig und zentriert sein');
+  await p.screenshot({path:'/tmp/camino-copy-dialog-390.png'});
+  await p.locator('.copy-dialog button').click();
+  await p.locator('.copy-dialog').waitFor({state:'detached'});
+  ok(await p.locator('.copy-dialog').count()===0,'Kopierdialog wird nicht entfernt');
+  ok(await button.evaluate(el=>document.activeElement===el),'Kopierdialog gibt Fokus nicht zurück');
+  await p.context().close();
+}
+
 // 2f. Text-Schnappschuss (erkennt ungewollte Inhaltsänderungen)
 {
   const p = await open({ date: '2027-06-16T08:00:00+02:00' });
