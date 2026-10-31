@@ -1,7 +1,8 @@
 /* Camino 2027 – Funktionen. Daten kommen aus data/trip.js. Siehe CLAUDE.md. */
 /* NAV */
 const secs=document.querySelectorAll('[id]'),links=document.querySelectorAll('#nav a');
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('on'));const a=document.querySelector(`#nav a[href="#${e.target.id}"]`);if(a)a.classList.add('on');}})},{threshold:.15,rootMargin:'-55px 0px 0px 0px'});
+const NAV_ALIAS={kosten:'infos'};
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const id=NAV_ALIAS[e.target.id]||e.target.id;const a=document.querySelector(`#nav a[href="#${id}"]`);if(a){links.forEach(l=>l.classList.remove('on'));a.classList.add('on');}}})},{threshold:.15,rootMargin:'-55px 0px 0px 0px'});
 secs.forEach(s=>{if(s.id)obs.observe(s);});
 
 /* COUNTDOWN */
@@ -1015,166 +1016,371 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
   update();
 })();
 
-/* Shared travel expenses: server-enforced project membership, no external financial service. */
-window.initTravelExpenses=async function initTravelExpenses(client,projectId){
-  const form=document.getElementById('expense-form');
-  if(!form)return;
-  const KEY='camino-expenses-v1', people=['Mike','Ante','Kevin','Luis'];
-  const feedback=document.getElementById('expense-feedback');
-  const money=(c,cur)=>(c/100).toFixed(2)+' '+cur;
-  let entries=[];
+/* Shared travel expenses (Reisekasse 2.0): server-enforced project membership, CHF settlement,
+   offline queue. Calculations live in js/ledger.js. No external financial service. */
+window.initTravelExpenses=async function initTravelExpenses(client,projectId,me){
+  const app=document.getElementById('expense-private');
+  if(!app||!window.CaminoLedger)return;
+  const L=window.CaminoLedger;
+  const $=id=>document.getElementById(id);
   const table=()=>client.from('camino_ledger_entries');
-  function valid(e){if(!e||typeof e.id!=='string'||!Number.isSafeInteger(e.cents)||e.cents<=0||e.cents>99999900||!['EUR','CHF'].includes(e.currency))return false;if(e.kind==='settlement')return people.includes(e.from)&&people.includes(e.to)&&e.from!==e.to;return (e.kind===undefined||e.kind==='expense')&&typeof e.description==='string'&&e.description.length<=120&&people.includes(e.payer)&&Array.isArray(e.members)&&e.members.length>0&&e.members.every(m=>people.includes(m))&&new Set(e.members).size===e.members.length;}
-  async function reload(){
-    const {data,error}=await table().select('entry_id,payload').eq('project_id',projectId).order('created_at',{ascending:true}).limit(1000);
-    if(error)throw error;
-    entries=(data||[]).map(row=>row.payload).filter(valid);
-    render();
+  const DEFAULT_PEOPLE=['Mike','Ante','Kevin','Luis'];
+  let people=DEFAULT_PEOPLE.slice();
+  const myName=(me&&me.name)||'';
+  const userKey=(me&&me.userId)||'anon';
+  const CACHE_KEY='camino-kasse-cache-v2:'+userKey, OUTBOX_KEY='camino-kasse-outbox-v2:'+userKey, LEGACY_KEY='camino-expenses-v1';
+  const uid=()=>typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+String(Math.random()).slice(2);
+  const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'null');}catch{return null;}};
+  const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true;}catch{return false;}};
+  const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
+  const chf=c=>L.format(c)+' CHF';
+  const COLORS={Mike:'p1',Ante:'p2',Kevin:'p3',Luis:'p4'};
+  const avatar=name=>{const a=el('span','kx-av '+(COLORS[name]||'p0'),String(name||'?').slice(0,1));a.setAttribute('aria-hidden','true');return a;};
+
+  // Members from the server roster (RLS: only visible to members); fallback to the four pilgrims.
+  try{
+    const {data}=await client.from('project_members').select('display_name').eq('project_id',projectId);
+    const names=(data||[]).map(r=>r.display_name).filter(Boolean);
+    if(names.length)people=DEFAULT_PEOPLE.filter(p=>names.includes(p)).concat(names.filter(n=>!DEFAULT_PEOPLE.includes(n)));
+  }catch{}
+
+  let server=(read(CACHE_KEY)||[]); // last known server payloads
+  let outbox=(read(OUTBOX_KEY)||[]); // [{entry, base}] waiting for upload
+  let syncing=false, lastSync=null, offline=false;
+
+  function merged(){
+    const byId=new Map();
+    for(const p of server)byId.set(p.id,{raw:p,pending:false});
+    for(const o of outbox)byId.set(o.entry.id,{raw:o.entry,pending:true});
+    const out=[];
+    for(const {raw,pending} of byId.values()){const e=L.normalize(raw,people);if(e){e.pending=pending;out.push(e);}}
+    return out;
   }
-  async function insert(e){
-    const {error}=await table().insert({project_id:projectId,entry_id:e.id,payload:e});
+  function tripRate(entries){const s=entries.find(e=>e.kind==='settings'&&!e.deleted_at);return s?s.chf_per_eur:null;}
+
+  async function pull(){
+    const {data,error}=await table().select('entry_id,payload,updated_at').eq('project_id',projectId).order('created_at',{ascending:true}).limit(2000);
     if(error)throw error;
-    await reload();
+    server=(data||[]).map(r=>r.payload).filter(p=>p&&typeof p==='object');
+    write(CACHE_KEY,server);
   }
-  async function update(e){
-    const {error}=await table().update({payload:e,updated_at:new Date().toISOString()}).eq('project_id',projectId).eq('entry_id',e.id);
-    if(error)throw error;
-    await reload();
-  }
-  async function remove(e){
-    const {error}=await table().delete().eq('project_id',projectId).eq('entry_id',e.id);
-    if(error)throw error;
-    await reload();
-  }
-  // One-time migration of existing local entries, never overwriting server records.
-  // Keep the local backup untouched if the upload fails.
-  let legacy=[];
-  try{const stored=JSON.parse(localStorage.getItem(KEY)||'[]');if(Array.isArray(stored))legacy=stored.filter(valid).slice(0,1000);}catch{}
-  if(legacy.length&&confirm(legacy.length+' lokal gespeicherte Einträge in die gemeinsame Camino-Reisekasse übernehmen?')){
-    const rows=legacy.map(e=>({project_id:projectId,entry_id:e.id,payload:e}));
-    const {error}=await table().upsert(rows,{onConflict:'project_id,entry_id',ignoreDuplicates:true});
-    if(error)throw error;
-    localStorage.removeItem(KEY);
-  }
-  await reload();
-  function render(){
-    const list=document.getElementById('expense-list'),balances=document.getElementById('expense-balances');
-    list.replaceChildren();balances.replaceChildren();
-    if(!entries.length){list.textContent='Noch keine Ausgaben erfasst.';balances.textContent='Noch keine Salden.';return;}
-    const ordered=[...entries].reverse();
-    for(const e of ordered){
-      const row=document.createElement('div');row.className='expense-entry';
-      const info=document.createElement('div');info.className='expense-entry-info';
-      const title=document.createElement('strong');title.className='expense-entry-title';
-      title.textContent=e.kind==='settlement'?'Rückzahlung · '+e.from+' an '+e.to:e.description;
-      const meta=document.createElement('span');meta.className='expense-entry-meta';
-      meta.textContent=e.kind==='settlement'?'Bereits verbucht':('Bezahlt von '+e.payer+' · Geteilt durch '+e.members.join(', '));
-      const amountLabel=document.createElement('strong');amountLabel.className='expense-entry-amount';amountLabel.textContent=money(e.cents,e.currency);
-      info.append(title,meta);
-      const actions=document.createElement('div');actions.className='expense-entry-actions';
-      const edit=document.createElement('button');edit.type='button';edit.textContent='Bearbeiten';edit.className='ghost-btn';
-      edit.setAttribute('aria-label','Eintrag bearbeiten: '+(e.description||'Rückzahlung'));
-      edit.addEventListener('click',async()=>{
-        const newAmount=prompt('Neuer Betrag in '+e.currency+' (bisher '+money(e.cents,e.currency)+')',(e.cents/100).toFixed(2));
-        if(newAmount===null)return;
-        const amount=Number(newAmount.replace(',','.'));
-        if(!Number.isFinite(amount)||amount<=0||amount>999999){feedback.textContent='Ungültiger Betrag.';return;}
-        const revised={...e,cents:Math.round(amount*100)};
-        if(e.kind!=='settlement'){
-          const description=prompt('Beschreibung',e.description);
-          if(description===null)return;
-          revised.description=description.trim();
+  async function flush(){
+    if(syncing||!outbox.length)return;
+    syncing=true;
+    try{
+      const ids=outbox.map(o=>o.entry.id);
+      const {data,error}=await table().select('entry_id,payload').eq('project_id',projectId).in('entry_id',ids);
+      if(error)throw error;
+      const remote=new Map((data||[]).map(r=>[r.entry_id,r.payload]));
+      const conflicts=[];
+      for(const o of outbox.slice()){
+        const current=remote.get(o.entry.id);
+        if(current&&o.base!==undefined&&(current.updated_at||null)!==(o.base||null)){conflicts.push(current.description||'Eintrag');}
+        else{
+          const {error:e2}=await table().upsert({project_id:projectId,entry_id:o.entry.id,payload:o.entry,updated_at:new Date().toISOString()},{onConflict:'project_id,entry_id'});
+          if(e2)throw e2;
         }
-        if(!valid(revised)||!revised.description&&e.kind!=='settlement'){feedback.textContent='Ungültiger Eintrag.';return;}
-        try{await update(revised);feedback.textContent='Eintrag aktualisiert.';}catch{feedback.textContent='Aktualisierung fehlgeschlagen. Bitte erneut versuchen.';}
-      });
-      const del=document.createElement('button');del.type='button';del.textContent='Löschen';del.className='ghost-btn';
-      del.setAttribute('aria-label','Eintrag löschen: '+(e.description||'Rückzahlung'));
-      del.addEventListener('click',async()=>{if(!confirm('Diese Ausgabe wirklich löschen?'))return;try{await remove(e);}catch{feedback.textContent='Löschen fehlgeschlagen.';}});
-      actions.append(edit,del);row.append(info,amountLabel,actions);list.appendChild(row);
-    }
-    const summary=document.createElement('div');summary.className='expense-summary-grid';
-    balances.appendChild(summary);
-    for(const currency of ['EUR','CHF']){
-      const relevant=entries.filter(e=>e.currency===currency);if(!relevant.length)continue;
-      const net=Object.fromEntries(people.map(p=>[p,0]));
-      for(const e of relevant){
-        if(e.kind==='settlement'){net[e.from]+=e.cents;net[e.to]-=e.cents;continue;}
-        net[e.payer]+=e.cents;
-        const base=Math.floor(e.cents/e.members.length),rem=e.cents%e.members.length;
-        e.members.forEach((p,i)=>net[p]-=base+(i<rem?1:0));
+        outbox=outbox.filter(x=>x!==o);write(OUTBOX_KEY,outbox);
       }
-      const card=document.createElement('section');card.className='expense-balance-card';
-      const heading=document.createElement('div');heading.className='expense-balance-heading';
-      const label=document.createElement('h5');label.textContent=currency;
-      const count=document.createElement('span');count.textContent=relevant.length+' Buchungen';
-      heading.append(label,count);card.appendChild(heading);
-      const peopleList=document.createElement('div');peopleList.className='expense-person-list';
-      for(const p of people){
-        const row=document.createElement('div');row.className='expense-person';
-        const name=document.createElement('span');name.textContent=p;
-        const amount=document.createElement('strong');amount.className=net[p]>0?'positive':net[p]<0?'negative':'neutral';
-        amount.textContent=(net[p]>0?'+':net[p]<0?'−':'')+money(Math.abs(net[p]),currency);
-        const explanation=document.createElement('small');explanation.textContent=net[p]>0?'bekommt zurück':net[p]<0?'ist noch offen':'ausgeglichen';
-        row.append(name,amount,explanation);peopleList.appendChild(row);
-      }
-      card.appendChild(peopleList);
-      const title=document.createElement('h6');title.className='expense-transfer-title';title.textContent='So gleicht ihr aus';
-      card.appendChild(title);
-      const debtors=people.filter(p=>net[p]<0).map(p=>({p,c:-net[p]}));
-      const creditors=people.filter(p=>net[p]>0).map(p=>({p,c:net[p]}));
-      let i=0,j=0,transfers=0;
-      while(i<debtors.length&&j<creditors.length){
-        const cents=Math.min(debtors[i].c,creditors[j].c);
-        const row=document.createElement('div');row.className='expense-transfer expense-settlement';
-        const from=document.createElement('span');from.textContent=debtors[i].p;
-        const arrow=document.createElement('span');arrow.className='expense-transfer-arrow';arrow.textContent='→';
-        const to=document.createElement('span');to.textContent=creditors[j].p;
-        const amount=document.createElement('strong');amount.textContent=money(cents,currency);
-        row.append(from,arrow,to,amount);card.appendChild(row);transfers++;
-        debtors[i].c-=cents;creditors[j].c-=cents;
-        if(!debtors[i].c)i++;if(!creditors[j].c)j++;
-      }
-      if(!transfers){const clear=document.createElement('p');clear.className='expense-all-clear';clear.textContent='Alles ausgeglichen.';card.appendChild(clear);}
-      summary.appendChild(card);
-    }
+      if(conflicts.length)toast('Inzwischen geändert, deine Änderung wurde verworfen: '+conflicts.join(', '));
+      offline=false;
+      await pull();
+      lastSync=new Date();
+    }catch(e){offline=true;}
+    finally{syncing=false;render();}
   }
+  async function save(entry,{silent=false}={}){
+    const prev=merged().find(x=>x.id===entry.id);
+    const base=prev?(server.find(p=>p.id===entry.id)||{}).updated_at||null:undefined;
+    entry.updated_at=new Date().toISOString();
+    entry.updated_by=myName||null;
+    const existing=outbox.findIndex(o=>o.entry.id===entry.id);
+    if(existing>=0)outbox[existing]={entry,base:outbox[existing].base};else outbox.push({entry,base});
+    write(OUTBOX_KEY,outbox);
+    render();
+    await flush();
+    if(!silent&&offline)toast('Gespeichert auf diesem Gerät. Wird hochgeladen, sobald wieder Netz da ist.');
+  }
+  function payloadOf(e){
+    const p={v:2,id:e.id,kind:e.kind,status:e.status,cents:e.cents,currency:e.currency,rate_used:e.rate_used,spent_on:e.spent_on,deleted_at:e.deleted_at||null};
+    if(e.kind==='settlement'){p.from=e.from;p.to=e.to;}
+    else{p.description=e.description;p.category=e.category;p.payer=e.payer;p.members=e.members.slice();}
+    return p;
+  }
+
+  /* ---------- Toast with undo ---------- */
+  let toastTimer=null,undoFn=null;
+  function toast(text,undo){
+    const t=$('kx-toast');$('kx-toast-text').textContent=text;undoFn=undo||null;
+    $('kx-toast-undo').hidden=!undo;t.hidden=false;clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>{t.hidden=true;undoFn=null;},undo?10000:5000);
+  }
+  $('kx-toast-undo').addEventListener('click',async()=>{const f=undoFn;undoFn=null;$('kx-toast').hidden=true;if(f)await f();});
+
+  /* ---------- Rendering ---------- */
+  function dayLabel(d){
+    if(!d)return 'Ohne Datum';
+    const i=typeof DAYS!=='undefined'?DAYS.findIndex(x=>x.d===d):-1;
+    const base=typeof fmt==='function'?fmt(d):d;
+    if(i<0)return base;
+    const x=DAYS[i];
+    return base+(x.stage?' · Etappe '+x.stage:'')+' · '+x.title;
+  }
+  function render(){
+    const entries=merged();
+    const rate=tripRate(entries);
+    const s=L.summarize(entries,people,rate);
+    const mine=myName&&people.includes(myName)?myName:null;
+    // Bilanz
+    const balance=mine?s.net[mine]:0;
+    $('kx-balance-label').textContent=!mine?'Stand der Gruppe':balance>0?'Hallo '+mine+', du bekommst':balance<0?'Hallo '+mine+', du schuldest':'Hallo '+mine+', du bist ausgeglichen';
+    $('kx-balance-amount').textContent=mine?L.format(Math.abs(balance))+' CHF':chf(s.total);
+    $('kx-total').textContent=chf(s.total);
+    $('kx-share').textContent=mine?chf(s.share[mine]):'–';
+    const note=$('kx-rate-note');
+    if(s.missingRate){note.hidden=false;note.textContent=s.missingRate+(s.missingRate===1?' Eintrag in EUR wartet':' Einträge in EUR warten')+' auf den Reisekurs (unter «Mehr»).';}else note.hidden=true;
+    $('kx-rate-hint').textContent=rate?'In CHF, fester Reisekurs 1 EUR = '+String(rate)+' CHF.':'Reisekurs noch nicht festgelegt.';
+    if(rate&&document.activeElement!==$('kx-rate'))$('kx-rate').value=String(rate);
+    // Ausgleich
+    const tr=$('kx-transfers');tr.replaceChildren();
+    if(!s.transfers.length){tr.appendChild(el('p','kx-empty','Alles ausgeglichen.'));$('kx-copy').hidden=true;}
+    else{
+      $('kx-copy').hidden=false;
+      for(const t of s.transfers){
+        const row=el('div','kx-row kx-transfer');
+        const who=el('span','kx-who');who.append(avatar(t.from));const arr=el('span','kx-arrow');arr.innerHTML=ICON('arrow-right');who.append(arr,avatar(t.to));
+        const label=el('span','kx-row-main kx-transfer-main');
+        label.append(el('span','',t.to===mine?t.from+' zahlt dir':t.from===mine?'Du zahlst '+t.to:t.from+' zahlt '+t.to),el('strong','kx-num',chf(t.cents)));
+        const amount=document.createTextNode('');
+        const done=el('button','kx-btn kx-btn-small','Bezahlt');done.type='button';
+        done.setAttribute('aria-label',t.from+' an '+t.to+' '+L.format(t.cents)+' CHF als bezahlt markieren');
+        done.addEventListener('click',async()=>{
+          const e={v:2,id:uid(),kind:'settlement',status:'bezahlt',cents:t.cents,currency:'CHF',rate_used:null,spent_on:TODAY,from:t.from,to:t.to,deleted_at:null};
+          await save(e,{silent:true});
+          toast('Rückzahlung '+t.from+' → '+t.to+' verbucht',async()=>{await save({...e,deleted_at:new Date().toISOString()},{silent:true});});
+        });
+        row.append(who,label,amount,done);tr.appendChild(row);
+      }
+    }
+    // Noch offen
+    const openBox=$('kx-open');openBox.replaceChildren();
+    const opens=entries.filter(e=>!e.deleted_at&&e.kind==='expense'&&e.status==='offen');
+    for(const e of opens){
+      const b=el('button','kx-row kx-open-row');b.type='button';
+      b.append(el('span','kx-row-main',e.description),el('span','kx-warn',e.cents===null?'Betrag fehlt':L.format(e.cents)+' '+e.currency+' · offen'));
+      b.addEventListener('click',()=>openSheet(e));openBox.appendChild(b);
+    }
+    const suggestions=['Hin- und Rückflüge','Unterkünfte','Translatio-Boot'].filter(n=>!entries.some(e=>!e.deleted_at&&e.description&&e.description.toLowerCase().startsWith(n.toLowerCase().slice(0,6))));
+    if(!opens.length)openBox.appendChild(el('p','kx-empty','Nichts offen. Posten ohne bekannten Betrag kannst du hier vormerken.'));
+    if(suggestions.length){
+      const chips=el('div','kx-chips');
+      for(const n of suggestions){const c=el('button','kx-chip','+ '+n);c.type='button';c.addEventListener('click',()=>openSheet(null,{description:n,unknown:true,category:n==='Unterkünfte'?'unterkunft':'transport'}));chips.appendChild(c);}
+      openBox.appendChild(chips);
+    }
+    // Ausgaben nach Tag
+    const days=$('kx-days');days.replaceChildren();
+    const list=entries.filter(e=>!e.deleted_at&&(e.kind==='settlement'||(e.kind==='expense'&&e.status!=='offen'))).sort((a,b)=>String(b.spent_on||'').localeCompare(String(a.spent_on||''))||String(b.updated_at||'').localeCompare(String(a.updated_at||'')));
+    if(!list.length)days.appendChild(el('p','kx-empty','Noch keine Ausgaben. Tippe auf «+ Ausgabe».'));
+    const groups=new Map();for(const e of list){const k=e.spent_on||'';if(!groups.has(k))groups.set(k,[]);groups.get(k).push(e);}
+    for(const [d,items] of groups){
+      const g=el('div','kx-day');g.appendChild(el('h4','kx-day-title',dayLabel(d)));
+      const card=el('div','kx-card kx-list');
+      for(const e of items){
+        const row=el('button','kx-row kx-entry');row.type='button';
+        const main=el('span','kx-entry-main');
+        if(e.kind==='settlement'){main.append(el('span','kx-entry-title','Rückzahlung '+e.from+' → '+e.to),el('span','kx-entry-meta',(e.pending?'wartet auf Verbindung · ':'')+'Ausgleich'));}
+        else{
+          const forWhom=e.members.length===people.length?'alle '+people.length:e.members.join(', ');
+          main.append(el('span','kx-entry-title',e.description),el('span','kx-entry-meta',(e.pending?'wartet auf Verbindung · ':'')+e.payer+' · '+forWhom+' · '+L.categoryLabel(e.category)));
+        }
+        const amt=el('span','kx-entry-amount');amt.appendChild(el('strong','kx-num',L.format(e.cents)+' '+e.currency));
+        const c=L.chfCents(e,rate);if(e.currency==='EUR'&&c!==null)amt.appendChild(el('span','kx-entry-meta kx-num','≈ '+L.format(c)+' CHF'));
+        row.append(main,amt);row.addEventListener('click',()=>openSheet(e));card.appendChild(row);
+      }
+      g.appendChild(card);days.appendChild(g);
+    }
+    // Kategorien
+    const cats=$('kx-cats');cats.replaceChildren();
+    if(mine&&s.share[mine]>0){
+      const mineCats=s.byCategory[mine];const max=Math.max(...Object.values(mineCats));
+      for(const [id,label] of L.CATEGORIES){
+        const v=mineCats[id];if(!v)continue;
+        const row=el('div','kx-bar');const top=el('div','kx-bar-top');top.append(el('span','',label),el('span','kx-num',chf(v)));
+        const track=el('div','kx-track');const fill=el('div','kx-fill kx-c-'+id);fill.style.width=Math.max(4,Math.round(v/max*100))+'%';track.appendChild(fill);
+        row.append(top,track);cats.appendChild(row);
+      }
+      const sum=el('div','kx-bar-sum');sum.append(el('span','','Dein Anteil bisher'),el('strong','kx-num',chf(s.share[mine])));cats.appendChild(sum);
+    }else cats.appendChild(el('p','kx-empty','Sobald Ausgaben erfasst sind, siehst du hier deinen Anteil nach Kategorie.'));
+    // Heute-Zeile
+    const today=document.getElementById('kx-today');
+    if(today&&mine)today.textContent=balance>0?'Kasse: du bekommst '+chf(balance):balance<0?'Kasse: du schuldest '+chf(-balance):'Kasse: ausgeglichen';
+    // Sync-Status
+    const pending=outbox.length;
+    $('kx-sync').textContent=pending?(pending===1?'1 Änderung wartet auf Verbindung.':pending+' Änderungen warten auf Verbindung.'):offline?'Offline: zuletzt geladener Stand.':'';
+    $('kx-identity').textContent=myName?'Angemeldet als '+myName+(me&&me.email?' ('+me.email+')':''):'';
+  }
+
+  /* ---------- Sheet (add / edit) ---------- */
+  const sheet=$('kx-sheet'),form=$('kx-form');
+  let editing=null,kind='expense',currency='EUR',category='essen',payer=myName||people[0],members=people.slice(),from=people[1]||people[0],to=myName||people[0],confirmDelete=false;
+  function chipGroup(box,values,isOn,onPick,labelOf){
+    box.replaceChildren();
+    for(const v of values){const b=el('button','kx-chip',labelOf?labelOf(v):v);b.type='button';b.setAttribute('aria-pressed',String(isOn(v)));b.addEventListener('click',()=>{onPick(v);paint();});box.appendChild(b);}
+  }
+  function paint(){
+    for(const b of form.querySelectorAll('[data-kind]'))b.setAttribute('aria-pressed',String(b.dataset.kind===kind));
+    for(const b of $('kx-currency').querySelectorAll('[data-cur]'))b.setAttribute('aria-pressed',String(b.dataset.cur===currency));
+    form.querySelector('.kx-only-expense').hidden=kind!=='expense';
+    form.querySelector('.kx-only-settlement').hidden=kind!=='settlement';
+    $('kx-unknown').closest('label').hidden=kind!=='expense';
+    const unknown=kind==='expense'&&$('kx-unknown').checked;
+    $('kx-amount').disabled=unknown;
+    chipGroup($('kx-cat'),L.CATEGORIES.map(c=>c[0]),v=>v===category,v=>category=v,v=>L.categoryLabel(v));
+    chipGroup($('kx-payer'),people,v=>v===payer,v=>payer=v);
+    chipGroup($('kx-members'),people,v=>members.includes(v),v=>{members=members.includes(v)?members.filter(x=>x!==v):people.filter(p=>p===v||members.includes(p));});
+    chipGroup($('kx-from'),people,v=>v===from,v=>from=v);
+    chipGroup($('kx-to'),people,v=>v===to,v=>to=v);
+    const cents=L.parseAmount($('kx-amount').value);
+    $('kx-each').textContent=kind==='expense'&&cents&&members.length?'je '+L.format(Math.round(cents/members.length))+' '+currency:members.length?'':'mindestens 1 Person';
+    $('kx-sheet-title').textContent=editing?(kind==='settlement'?'Rückzahlung bearbeiten':'Ausgabe bearbeiten'):(kind==='settlement'?'Neue Rückzahlung':'Neue Ausgabe');
+    $('kx-delete-row').hidden=!editing;
+    $('kx-delete').textContent=confirmDelete?'Wirklich löschen?':'Löschen';
+  }
+  for(const b of form.querySelectorAll('[data-kind]'))b.addEventListener('click',()=>{kind=b.dataset.kind;paint();});
+  for(const b of $('kx-currency').querySelectorAll('[data-cur]'))b.addEventListener('click',()=>{currency=b.dataset.cur;paint();});
+  $('kx-amount').addEventListener('input',paint);
+  $('kx-unknown').addEventListener('change',paint);
+  function openSheet(entry,preset){
+    editing=entry||null;confirmDelete=false;$('kx-form-error').textContent='';
+    const e=entry||{};
+    kind=e.kind||'expense';currency=e.currency||(preset&&preset.currency)||'EUR';
+    category=e.category||(preset&&preset.category)||'essen';
+    payer=e.payer||(people.includes(myName)?myName:people[0]);
+    members=e.members?e.members.slice():people.slice();
+    from=e.from||people.find(p=>p!==myName)||people[0];to=e.to||(people.includes(myName)?myName:people[1]);
+    $('kx-amount').value=e.cents?(e.cents/100).toFixed(2):'';
+    $('kx-desc').value=e.description||(preset&&preset.description)||'';
+    $('kx-unknown').checked=Boolean((e.status==='offen'&&e.cents===null)||(preset&&preset.unknown));
+    $('kx-date').value=e.spent_on||TODAY;
+    paint();
+    if(typeof sheet.showModal==='function'){try{sheet.showModal();}catch{sheet.setAttribute('open','');}}else sheet.setAttribute('open','');
+    setTimeout(()=>{try{($('kx-unknown').checked?$('kx-desc'):$('kx-amount')).focus();}catch{}},60);
+  }
+  function closeSheet(){if(typeof sheet.close==='function'&&sheet.open)sheet.close();else sheet.removeAttribute('open');}
+  $('kx-add').addEventListener('click',()=>openSheet(null));
+  $('kx-cancel').addEventListener('click',closeSheet);
   form.addEventListener('submit',async event=>{
     event.preventDefault();
-    const description=document.getElementById('expense-description').value.trim();
-    const amount=Number(document.getElementById('expense-amount').value);
-    const currency=document.getElementById('expense-currency').value;
-    const payer=document.getElementById('expense-payer').value;
-    const members=Array.from(form.querySelectorAll('input[name="expense-member"]:checked'),el=>el.value);
-    const e={id:typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+String(Math.random()).slice(2),description,cents:Math.round(amount*100),currency,payer,members};
-    if(!description||!Number.isFinite(amount)||amount<=0||!valid(e)){feedback.textContent='Bitte gültigen Betrag, Beschreibung und Beteiligte angeben.';return;}
-    try{await insert(e);form.reset();feedback.textContent='Ausgabe für die Camino-Gruppe gespeichert.';}catch{feedback.textContent='Speichern fehlgeschlagen. Bitte erneut versuchen.';}
+    const err=$('kx-form-error');err.textContent='';
+    const unknown=kind==='expense'&&$('kx-unknown').checked;
+    const cents=unknown?null:L.parseAmount($('kx-amount').value);
+    if(!unknown&&!cents){err.textContent='Bitte einen gültigen Betrag eingeben, z. B. 42.80.';try{$('kx-amount').focus();}catch{}return;}
+    const date=/^\d{4}-\d{2}-\d{2}$/.test($('kx-date').value)?$('kx-date').value:null;
+    const rate=tripRate(merged());
+    const base={v:2,id:editing?editing.id:uid(),kind,cents,currency:unknown?'EUR':currency,spent_on:date,deleted_at:null,
+      rate_used:currency==='EUR'&&!unknown?(editing&&editing.currency==='EUR'&&editing.cents===cents&&editing.rate_used?editing.rate_used:rate):null};
+    let entry;
+    if(kind==='settlement'){
+      if(from===to){err.textContent='Von und An müssen verschiedene Personen sein.';return;}
+      entry={...base,status:'bezahlt',from,to};
+    }else{
+      const description=$('kx-desc').value.trim();
+      if(!description){err.textContent='Bitte kurz beschreiben, wofür die Ausgabe war.';try{$('kx-desc').focus();}catch{}return;}
+      if(!members.length){err.textContent='Bitte mindestens eine Person bei «Für» auswählen.';return;}
+      entry={...base,status:unknown?'offen':'bezahlt',description,category,payer,members:members.slice()};
+    }
+    if(!L.normalize(entry,people)){err.textContent='Der Eintrag ist unvollständig.';return;}
+    closeSheet();
+    await save(entry);
+    if(!offline)toast(editing?'Änderung gespeichert':'Gespeichert');
   });
-  document.getElementById('settlement-form').addEventListener('submit',async event=>{
+  $('kx-delete').addEventListener('click',async()=>{
+    if(!editing)return;
+    if(!confirmDelete){confirmDelete=true;paint();return;}
+    const original=payloadOf(editing);
+    closeSheet();
+    await save({...original,deleted_at:new Date().toISOString()},{silent:true});
+    toast('Eintrag gelöscht',async()=>{await save({...original,deleted_at:null},{silent:true});});
+  });
+
+  /* ---------- Mehr: Kurs, Export, Import, Abmelden ---------- */
+  $('kx-rate-form').addEventListener('submit',async event=>{
     event.preventDefault();
-    const from=document.getElementById('settlement-from').value,to=document.getElementById('settlement-to').value;
-    const amount=Number(document.getElementById('settlement-amount').value);
-    const e={kind:'settlement',id:typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+String(Math.random()).slice(2),from,to,cents:Math.round(amount*100),currency:document.getElementById('settlement-currency').value};
-    if(!Number.isFinite(amount)||!valid(e)){feedback.textContent='Bitte unterschiedliche Personen und einen gültigen Betrag angeben.';return;}
-    try{await insert(e);event.target.reset();feedback.textContent='Rückzahlung gespeichert.';}catch{feedback.textContent='Speichern fehlgeschlagen.';}
+    const value=Number(String($('kx-rate').value).replace(',','.'));
+    if(!L.validRate(value)){toast('Bitte einen Kurs wie 0.94 eingeben.');return;}
+    await save({v:2,id:'settings',kind:'settings',chf_per_eur:Math.round(value*10000)/10000},{silent:true});
+    toast('Reisekurs gespeichert');
   });
-  document.getElementById('expense-export').addEventListener('click',()=>{
-    const blob=new Blob([JSON.stringify({format:'camino-expenses-v1',entries},null,2)],{type:'application/json'});
-    const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='camino-reisekasse-backup.json';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  function download(name,type,text){
+    const blob=new Blob([text],{type});const url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  $('kx-export-json').addEventListener('click',()=>{
+    const all=merged().map(e=>e.kind==='settings'?{v:2,id:e.id,kind:'settings',chf_per_eur:e.chf_per_eur}:payloadOf(e));
+    download('camino-reisekasse-backup.json','application/json',JSON.stringify({format:'camino-expenses-v2',entries:all},null,2));
   });
-  document.getElementById('expense-import').addEventListener('change',async event=>{
-    const file=event.target.files&&event.target.files[0];if(!file)return;
+  $('kx-export-csv').addEventListener('click',()=>{
+    const entries=merged().filter(e=>!e.deleted_at&&e.kind!=='settings'),rate=tripRate(merged());
+    const q=v=>'"'+String(v===null||v===undefined?'':v).replace(/"/g,'""')+'"';
+    const rows=[['Datum','Art','Beschreibung','Kategorie','Betrag','Währung','CHF','Bezahlt von','Für','Status']];
+    for(const e of entries){const c=L.chfCents(e,rate);rows.push([e.spent_on||'',e.kind==='settlement'?'Rückzahlung':'Ausgabe',e.kind==='settlement'?e.from+' → '+e.to:e.description,e.kind==='settlement'?'':L.categoryLabel(e.category),e.cents===null?'':(e.cents/100).toFixed(2),e.currency,c===null?'':(c/100).toFixed(2),e.kind==='settlement'?e.from:e.payer,e.kind==='settlement'?e.to:e.members.join(', '),e.status]);}
+    download('camino-reisekasse.csv','text/csv;charset=utf-8','﻿'+rows.map(r=>r.map(q).join(';')).join('\r\n'));
+  });
+  $('kx-import').addEventListener('change',async event=>{
+    const file=event.target.files&&event.target.files[0];const box=$('kx-import-confirm');box.replaceChildren();box.hidden=true;
+    if(!file)return;
     try{
-      if(file.size>1000000)throw Error('Datei zu gross');
+      if(file.size>1000000)throw Error('size');
       const data=JSON.parse(await file.text());
-      if(data.format!=='camino-expenses-v1'||!Array.isArray(data.entries)||data.entries.length>1000||!data.entries.every(valid))throw Error('Ungültiges Backup');
-      if(!confirm('Backup ergänzend importieren? Bereits vorhandene Einträge bleiben unverändert.'))return;
-      const {error}=await table().upsert(data.entries.map(e=>({project_id:projectId,entry_id:e.id,payload:e})),{onConflict:'project_id,entry_id',ignoreDuplicates:true});
-      if(error)throw error;
-      await reload();feedback.textContent='Backup importiert. Bereits vorhandene Buchungen wurden nicht überschrieben.';
-    }catch{feedback.textContent='Backup konnte nicht importiert werden.';}
+      if(!['camino-expenses-v1','camino-expenses-v2'].includes(data.format)||!Array.isArray(data.entries)||data.entries.length>2000)throw Error('format');
+      const known=new Set(merged().map(e=>e.id));
+      const fresh=data.entries.filter(x=>L.normalize(x,people)&&!known.has(x.id));
+      box.hidden=false;
+      if(!fresh.length){box.appendChild(el('p','','Keine neuen Einträge im Backup.'));return;}
+      box.appendChild(el('p','',fresh.length+' neue Einträge ergänzen? Bestehende bleiben unverändert.'));
+      const yes=el('button','kx-btn kx-btn-primary','Ergänzen');yes.type='button';
+      const no=el('button','kx-btn','Abbrechen');no.type='button';
+      yes.addEventListener('click',async()=>{box.hidden=true;for(const x of fresh){outbox.push({entry:{...x,v:2},base:undefined});}write(OUTBOX_KEY,outbox);await flush();toast(fresh.length+' Einträge ergänzt');});
+      no.addEventListener('click',()=>{box.hidden=true;});
+      const row=el('div','kx-inline-row');row.append(yes,no);box.appendChild(row);
+    }catch{box.hidden=false;box.appendChild(el('p','','Diese Datei ist kein gültiges Backup der Camino-Kasse.'));}
     finally{event.target.value='';}
   });
+  $('kx-copy').addEventListener('click',async()=>{
+    const s=L.summarize(merged(),people,tripRate(merged()));
+    const text='Camino-Kasse, Ausgleich:\n'+s.transfers.map(t=>t.from+' → '+t.to+': '+chf(t.cents)).join('\n');
+    try{await navigator.clipboard.writeText(text);toast('Text kopiert');}
+    catch{if(typeof showCopyDialog==='function')showCopyDialog(text);else toast('Kopieren nicht möglich');}
+  });
+  $('kx-signout').addEventListener('click',async()=>{
+    try{localStorage.removeItem(CACHE_KEY);}catch{}
+    try{if(me&&me.signOut)await me.signOut();}catch{}
+    location.reload();
+  });
+
+  /* ---------- Legacy local entries: explicit, in-page consent ---------- */
+  let legacy=[];
+  try{const stored=JSON.parse(localStorage.getItem(LEGACY_KEY)||'[]');if(Array.isArray(stored))legacy=stored.filter(x=>L.normalize(x,people)).slice(0,1000);}catch{}
+  if(legacy.length){
+    const box=$('kx-migrate');box.hidden=false;box.replaceChildren(el('p','','Auf diesem Gerät liegen '+legacy.length+' ältere Einträge. In die gemeinsame Kasse übernehmen?'));
+    const yes=el('button','kx-btn kx-btn-primary','Übernehmen');yes.type='button';
+    const no=el('button','kx-btn','Später');no.type='button';
+    yes.addEventListener('click',async()=>{
+      const rows=legacy.map(x=>({project_id:projectId,entry_id:x.id,payload:x}));
+      const {error}=await table().upsert(rows,{onConflict:'project_id,entry_id',ignoreDuplicates:true});
+      if(error){toast('Übernahme fehlgeschlagen. Die Einträge bleiben auf diesem Gerät.');return;}
+      try{localStorage.removeItem(LEGACY_KEY);}catch{}
+      box.hidden=true;await pull();render();toast(legacy.length+' Einträge übernommen');
+    });
+    no.addEventListener('click',()=>{box.hidden=true;});
+    const row=el('div','kx-inline-row');row.append(yes,no);box.appendChild(row);
+  }
+
+  window.addEventListener('online',()=>flush());
+  render();
+  try{await pull();offline=false;}catch(e){offline=true;if(!server.length)throw e;}
+  render();
+  await flush();
 };
 /* Calendar handoff: local ICS download, no notification permission or push service. */
 (function initCalendarReminder(){

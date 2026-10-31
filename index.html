@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" />
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" />
   <path d="m6 6 12 12" /></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></symbol><symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
   <circle cx="12" cy="10" r="3" /></symbol><symbol id="i-share-2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3" />
   <circle cx="6" cy="12" r="3" />
@@ -175,6 +175,7 @@
     <a href="#etappen">Etappen im Detail</a>
     <a href="#buchungen">Unterkünfte</a>
     <a href="#restaurants">Essen &amp; Trinken</a>
+    <a href="#kosten" id="kx-today">Reisekasse</a>
   </div>
   <div class="today-picker" id="today-picker" role="tablist" aria-label="Tag wählen"></div>
   <div class="today-card" id="today-card"></div>
@@ -577,60 +578,134 @@
 <button class="theme-btn" id="theme-btn" type="button" aria-label="Hell/Dunkel umschalten"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
 
 <!-- KOSTENÜBERSICHT: Beträge in CHF; unbekannte Kosten nicht summieren. -->
-<section id="kosten" aria-labelledby="kosten-title" style="padding:clamp(3rem,7vw,6rem) 1.25rem;background:var(--cream,#f7f4ec);color:var(--ink,#243b31)">
-  <div style="max-width:960px;margin:auto">
-    <div class="chip" style="margin-bottom:1rem">Reisekasse</div>
-    <h2 id="kosten-title" style="font-family:var(--serif,Georgia,serif);font-size:clamp(2rem,5vw,3.5rem);margin:0 0 .65rem">Unsere <em>Kosten.</em></h2>
-    <p style="max-width:45rem;line-height:1.6;margin-bottom:2rem">Ausgaben, Rückzahlungen und noch offene Positionen an einem Ort.</p>
-    <div class="expense-auth" id="expense-auth" aria-labelledby="expense-auth-title">
-      <h3 id="expense-auth-title">Private Reisekasse</h3>
-      <p>Die Reisekasse ist nur für angemeldete, freigeschaltete Mitglieder unserer Camino-Gruppe sichtbar.</p>
-      <div id="expense-auth-login">
-        <div class="expense-auth-providers">
-          <button type="button" class="ghost-btn" data-auth-provider="google">Mit Google anmelden</button>
-          <button type="button" class="ghost-btn" data-auth-provider="apple">Mit Apple anmelden</button>
-          <button type="button" class="ghost-btn" data-auth-provider="azure">Mit Microsoft anmelden</button>
-        </div>
-        <form id="expense-email-form">
-          <label for="expense-auth-email">Oder mit E-Mail anmelden</label>
-          <div class="expense-email-row"><input id="expense-auth-email" type="email" autocomplete="email" required placeholder="deine@email.ch"><button class="ghost-btn" type="submit">Login-Code senden</button></div>
+<section id="kosten" class="kx-sec" aria-labelledby="kosten-title">
+  <div class="kx-wrap">
+    <header class="kx-head">
+      <div class="chip">Reisekasse</div>
+      <h2 id="kosten-title">Unsere <em>Kasse.</em></h2>
+    </header>
+    <div class="kx-auth" id="expense-auth">
+      <p class="kx-lead">Nur für Ante, Kevin, Luis und Mike. Wer wem was schuldet, siehst du nach der Anmeldung.</p>
+      <div id="expense-auth-login" class="kx-card kx-login">
+        <form id="expense-email-form" class="kx-form">
+          <label for="expense-auth-email">Deine E-Mail-Adresse</label>
+          <input id="expense-auth-email" type="email" autocomplete="email" required placeholder="name@beispiel.ch">
+          <button class="kx-btn kx-btn-primary" type="submit">Code senden</button>
         </form>
-        <form id="expense-otp-form" hidden>
-          <label for="expense-auth-code">Sechsstelligen Code aus der E-Mail eingeben</label>
-          <div class="expense-email-row"><input id="expense-auth-code" type="text" inputmode="numeric" pattern="[0-9]{6,8}" autocomplete="one-time-code" maxlength="8" required placeholder="123456"><button class="ghost-btn" type="submit">Code bestätigen</button></div>
+        <form id="expense-otp-form" class="kx-form" hidden>
+          <p class="kx-sent" id="expense-auth-sent"></p>
+          <label for="expense-auth-code">Code aus der E-Mail</label>
+          <input id="expense-auth-code" class="kx-code" type="text" inputmode="numeric" pattern="[0-9]{6,8}" autocomplete="one-time-code" maxlength="8" required placeholder="······">
+          <p class="kx-hint">Das iPhone schlägt den Code aus der Mail über der Tastatur vor. Nach der letzten Ziffer geht es automatisch weiter.</p>
+          <button class="kx-btn kx-btn-primary" type="submit">Anmelden</button>
+          <div class="kx-row-links">
+            <button type="button" class="kx-link" id="expense-auth-other">Andere E-Mail</button>
+            <button type="button" class="kx-link" id="expense-auth-resend">Code erneut senden</button>
+          </div>
         </form>
       </div>
-      <div id="expense-auth-member" hidden><p id="expense-auth-identity"></p><button type="button" class="ghost-btn" id="expense-auth-signout">Abmelden</button></div>
-      <p id="expense-auth-status" role="status" aria-live="polite">Anmeldestatus wird geprüft …</p>
+      <div id="expense-auth-member" hidden><p id="expense-auth-identity" class="kx-hint"></p><button type="button" class="kx-btn" id="expense-auth-signout">Abmelden</button></div>
+      <p id="expense-auth-status" class="kx-status" role="status" aria-live="polite">Anmeldestatus wird geprüft …</p>
     </div>
-    <div class="expense-handoff" id="expense-private" aria-labelledby="expense-handoff-title" hidden>
-      <h3 id="expense-handoff-title">Unsere Reisekasse</h3>
-      <div class="expense-planned"><h4>Weitere Positionen ohne erfassten Betrag</h4><p>Hin- und Rückflüge: bereits bezahlt, Betrag noch offen.</p><p>Übrige Unterkünfte: Porto, O Porriño, Pontevedra, Armenteira, Vilanova de Arousa, Padrón, Santiago und A Coruña.</p><p>Transfers, Traslatio-Boot, Verpflegung und Sonstiges werden bei Bekanntwerden des Betrags erfasst.</p></div>
-      <p>Gemeinsame Ausgaben erfassen, fair aufteilen und sehen, wer wem wie viel schuldet. Die Einträge werden online in der gemeinsamen Camino-Reisekasse gespeichert und beim Laden für freigeschaltete Mitglieder abgerufen. Zum Erfassen und Bearbeiten braucht es eine Internetverbindung. Gleichzeitige Änderungen desselben Eintrags werden noch nicht zusammengeführt.</p>
-      <form id="expense-form">
-        <label>Beschreibung <input id="expense-description" type="text" maxlength="120" required placeholder="Zum Beispiel Abendessen" autocomplete="off"></label>
-        <label>Betrag <input id="expense-amount" type="number" min="0.01" max="999999" step="0.01" required inputmode="decimal" placeholder="0.00"></label>
-        <label>Währung <select id="expense-currency"><option>EUR</option><option>CHF</option></select></label>
-        <label>Bezahlt von <select id="expense-payer"><option>Mike</option><option>Ante</option><option>Kevin</option><option>Luis</option></select></label>
-        <fieldset><legend>Aufteilen auf</legend><label><input type="checkbox" name="expense-member" value="Mike" checked> Mike</label><label><input type="checkbox" name="expense-member" value="Ante" checked> Ante</label><label><input type="checkbox" name="expense-member" value="Kevin" checked> Kevin</label><label><input type="checkbox" name="expense-member" value="Luis" checked> Luis</label></fieldset>
-        <button type="submit" class="ghost-btn">Ausgabe speichern</button>
-        <p id="expense-feedback" role="status" aria-live="polite"></p>
-      </form>
-      <h4>Rückzahlung verbuchen</h4>
-      <form id="settlement-form">
-        <label>Von <select id="settlement-from"><option>Mike</option><option>Ante</option><option>Kevin</option><option>Luis</option></select></label>
-        <label>An <select id="settlement-to"><option>Ante</option><option>Mike</option><option>Kevin</option><option>Luis</option></select></label>
-        <label>Betrag <input id="settlement-amount" type="number" min="0.01" max="999999" step="0.01" inputmode="decimal" required></label>
-        <label>Währung <select id="settlement-currency"><option>EUR</option><option>CHF</option></select></label>
-        <button type="submit" class="ghost-btn">Rückzahlung speichern</button>
-      </form>
-      <h4>Erfasste Ausgaben</h4>
-      <div id="expense-list" aria-live="polite"></div>
-      <h4>Salden und Ausgleich</h4>
-      <div id="expense-balances"></div>
-      <div class="expense-actions"><button type="button" class="ghost-btn" id="expense-export">Backup exportieren</button><label>Backup importieren <input type="file" id="expense-import" accept="application/json,.json"></label></div>
+
+    <div id="expense-private" class="kx-app" hidden>
+      <div id="kx-migrate" class="kx-card kx-notice" hidden></div>
+      <section class="kx-balance" aria-label="Meine Bilanz">
+        <span class="kx-balance-label" id="kx-balance-label">Dein Stand</span>
+        <span class="kx-balance-amount" id="kx-balance-amount">–</span>
+        <div class="kx-balance-foot">
+          <div><span>Gruppe total</span><strong id="kx-total">–</strong></div>
+          <div><span>Dein Anteil</span><strong id="kx-share">–</strong></div>
+        </div>
+        <p class="kx-balance-note" id="kx-rate-note" hidden></p>
+      </section>
+
+      <section class="kx-block" aria-labelledby="kx-settle-title">
+        <h3 id="kx-settle-title">Ausgleich</h3>
+        <div id="kx-transfers" class="kx-card kx-list"></div>
+        <div class="kx-row-links">
+          <button type="button" class="kx-link" id="kx-copy">Text für den Gruppenchat kopieren</button>
+        </div>
+        <p class="kx-hint" id="kx-rate-hint"></p>
+      </section>
+
+      <section class="kx-block" aria-labelledby="kx-open-title">
+        <h3 id="kx-open-title">Noch offen</h3>
+        <div id="kx-open" class="kx-stack"></div>
+      </section>
+
+      <section class="kx-block" aria-labelledby="kx-entries-title">
+        <h3 id="kx-entries-title">Ausgaben</h3>
+        <div id="kx-days" class="kx-stack" aria-live="polite"></div>
+      </section>
+
+      <section class="kx-block" aria-labelledby="kx-cats-title">
+        <h3 id="kx-cats-title">Was dich die Reise kostet</h3>
+        <div id="kx-cats" class="kx-stack"></div>
+      </section>
+
+      <details class="kx-more" id="kx-more">
+        <summary>Mehr: Reisekurs, Export, Backup, Abmelden</summary>
+        <div class="kx-more-body">
+          <form id="kx-rate-form" class="kx-form kx-inline">
+            <label for="kx-rate">Reisekurs: 1 EUR = … CHF</label>
+            <div class="kx-inline-row"><input id="kx-rate" type="text" inputmode="decimal" placeholder="z. B. 0.94" autocomplete="off"><button class="kx-btn" type="submit">Speichern</button></div>
+            <p class="kx-hint">Gilt für neue Einträge. Bestehende Einträge behalten ihren Kurs.</p>
+          </form>
+          <div class="kx-inline-row">
+            <button type="button" class="kx-btn" id="kx-export-csv">Export CSV</button>
+            <button type="button" class="kx-btn" id="kx-export-json">Backup JSON</button>
+          </div>
+          <label class="kx-btn kx-file">Backup importieren<input type="file" id="kx-import" accept="application/json,.json"></label>
+          <div id="kx-import-confirm" class="kx-notice" hidden></div>
+          <p class="kx-hint" id="kx-identity"></p>
+          <button type="button" class="kx-btn" id="kx-signout">Abmelden</button>
+        </div>
+      </details>
+
+      <button type="button" class="kx-fab" id="kx-add"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>Ausgabe</button>
+      <p id="kx-sync" class="kx-hint" role="status" aria-live="polite"></p>
     </div>
-    <p style="font-size:.8rem;opacity:.8;margin-top:1rem">Stand: 29. Oktober 2026. Kein Gesamtbudget ausgewiesen, solange Preise fehlen. Keine Buchungsnummern oder Zahlungsdaten veröffentlicht.</p>
+
+    <dialog id="kx-sheet" class="kx-sheet" aria-labelledby="kx-sheet-title">
+      <form id="kx-form" method="dialog" class="kx-sheet-form">
+        <div class="kx-sheet-grip" aria-hidden="true"></div>
+        <div class="kx-sheet-head">
+          <button type="button" class="kx-link" id="kx-cancel">Abbrechen</button>
+          <strong id="kx-sheet-title">Neue Ausgabe</strong>
+          <span class="kx-spacer"></span>
+        </div>
+        <div class="kx-seg kx-kind" role="group" aria-label="Art">
+          <button type="button" data-kind="expense" aria-pressed="true">Ausgabe</button>
+          <button type="button" data-kind="settlement" aria-pressed="false">Rückzahlung</button>
+        </div>
+        <div class="kx-amount-row">
+          <label class="kx-amount"><span>Betrag</span><input id="kx-amount" type="text" inputmode="decimal" autocomplete="off" placeholder="0.00"></label>
+          <div class="kx-seg" role="group" aria-label="Währung" id="kx-currency">
+            <button type="button" data-cur="EUR" aria-pressed="true">EUR</button>
+            <button type="button" data-cur="CHF" aria-pressed="false">CHF</button>
+          </div>
+        </div>
+        <label class="kx-check"><input type="checkbox" id="kx-unknown"> Betrag noch unbekannt (offener Posten)</label>
+        <div class="kx-only-expense">
+          <label class="kx-field"><span>Wofür?</span><input id="kx-desc" type="text" maxlength="120" autocomplete="off" placeholder="z. B. Abendessen in Redondela"></label>
+          <div class="kx-field"><span>Kategorie</span><div class="kx-chips" id="kx-cat"></div></div>
+          <div class="kx-field"><span>Bezahlt von</span><div class="kx-chips kx-grid4" id="kx-payer"></div></div>
+          <div class="kx-field"><span class="kx-field-row">Für<em id="kx-each"></em></span><div class="kx-chips kx-grid4" id="kx-members"></div></div>
+        </div>
+        <div class="kx-only-settlement" hidden>
+          <div class="kx-field"><span>Von</span><div class="kx-chips kx-grid4" id="kx-from"></div></div>
+          <div class="kx-field"><span>An</span><div class="kx-chips kx-grid4" id="kx-to"></div></div>
+        </div>
+        <label class="kx-field"><span>Datum</span><input id="kx-date" type="date"></label>
+        <p class="kx-error" id="kx-form-error" role="alert"></p>
+        <button type="submit" class="kx-btn kx-btn-primary kx-save" id="kx-save">Speichern</button>
+        <div class="kx-delete-row" id="kx-delete-row" hidden>
+          <button type="button" class="kx-btn kx-btn-danger" id="kx-delete">Löschen</button>
+        </div>
+      </form>
+    </dialog>
+    <div id="kx-toast" class="kx-toast" role="status" aria-live="polite" hidden><span id="kx-toast-text"></span><button type="button" id="kx-toast-undo">Rückgängig</button></div>
   </div>
 </section>
 
@@ -644,6 +719,7 @@
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="data/trip.js"></script>
 <script src="js/push-client.js"></script>
+<script src="js/ledger.js"></script>
 <script src="js/app.js"></script>
 <script src="js/auth-core.js"></script>
 <script type="module" src="js/auth-ui.js"></script>

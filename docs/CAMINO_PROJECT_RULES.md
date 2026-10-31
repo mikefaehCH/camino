@@ -11,6 +11,7 @@ Statisch, ohne Build, ohne npm-Abhängigkeiten. Sprache der Seite: Deutsch, Schw
 | `index.html` | Markup: Etappentexte (`<!-- TAG n -->`, `.s-lead`, `.s-prose`, `.ibox`), Unterkunftskarten, Restaurants (`#restaurants .rest-city`), Compostela, Klima | Texte ändern |
 | `css/site.css` | Gestaltung «Camino Journal». Spätere Regeln überschreiben frühere | Design |
 | `js/app.js` | Funktionen, in Abschnitten `/* ===== … ===== */` | Logik |
+| `js/ledger.js` | Reisekasse: reine Rechenfunktionen (CHF-Ausgleich, Aufteilung, Validierung), Tests in `tests/ledger.mjs` | Kasse rechnen |
 | `routes/*.gpx` | Komoot-Exporte pro Etappe (6a/6b getrennt) | GPX |
 | `images/<kapitel>/*-800.webp, -1600.webp` | Bilder, eingebunden über `IMAGE_DATA` | Bilder |
 | `sw.js` | Service Worker (Offline) | Offline |

@@ -47,3 +47,13 @@ Die Reisekasse verwendet `public.camino_ledger_entries` mit Row Level Security. 
 - PR bleibt Draft: Mike richtet Google/Apple/Microsoft, Rücksprung-Adressen und ein
   Mitglied ein; danach müssen alle Login-Wege und die gemeinsame Reisekasse auf dem
   physischen iPhone bestanden sein. Mock-/Emulationstests ersetzen diesen Nachweis nicht.
+
+## Reisekasse 2.0 (31.10.2026)
+
+- **Anmeldung nur per E-Mail-Code** (`signInWithOtp`, `shouldCreateUser:false`): Nur die vier im Dashboard angelegten Konten erhalten einen Code; fremde Adressen werden abgewiesen. Google/Apple/Microsoft sind aus der Oberfläche entfernt, bis ein Anbieter wirklich eingerichtet ist.
+- **Mailversand:** eigener SMTP (Gmail), da der Supabase-Standardversand nur an Team-Adressen liefert (max. 2/h). Vorlage «Magic link or OTP» enthält `{{ .Token }}`.
+- **Rechnen:** `js/ledger.js`. Ausgleich immer in CHF; jeder EUR-Eintrag speichert `rate_used`. Der Reisekurs liegt als Eintrag `id:"settings"` in `camino_ledger_entries` und kann von jedem Mitglied geändert werden (keine Schemaänderung nötig; bewusste Abweichung von «nur Admin»).
+- **Datenformat v2** im `payload`: `kind` (expense/settlement/settings), `status` (bezahlt/offen, offen erlaubt `cents:null`), `category`, `spent_on`, `rate_used`, `deleted_at` (Soft-Delete, mit Rückgängig), `updated_at`, `updated_by` (Anzeigename, clientseitig gesetzt, nicht serverseitig erzwungen). v1-Einträge bleiben lesbar.
+- **Offline:** Änderungen gehen zuerst in `localStorage` (`camino-kasse-outbox-v2:<user>`), werden bei Verbindung hochgeladen; der letzte Stand liegt in `camino-kasse-cache-v2:<user>` und wird beim Abmelden gelöscht. Konflikt: Hat jemand denselben Eintrag inzwischen geändert, gewinnt die Serverfassung und die eigene Änderung wird mit Hinweis verworfen. localStorage gilt pro Origin (`mikefaehch.github.io`), also auch für andere eigene Seiten dort.
+- **Keine Browser-Dialoge** (`alert/confirm/prompt`) mehr: Bestätigungen, Löschen und Import laufen im Seitenlayout.
+- **Offen:** Die älteren, leeren Tabellen `expense_entries` und `expense_settlements` sind noch vorhanden (siehe #31); echter Zwei-Geräte-Test und Test aus der Home-Bildschirm-App stehen aus.
