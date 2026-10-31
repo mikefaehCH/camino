@@ -85,3 +85,16 @@ assert.ok(authUi.includes('await auth.membership()'), 'Must verify project membe
 assert.ok(authUi.includes('initPromise=window.initTravelExpenses(auth.client,auth.projectId)') && authUi.includes('await initPromise'), 'Must fetch server ledger before showing private UI');
 assert.ok(app.includes("client.from('camino_ledger_entries')"), 'Shared RLS ledger missing');
 console.log('PASS: member-only shared Reisekasse');
+
+// PR #21 / 04102f3: Ausgleichsberechnung bleibt vorhanden; Saldo-UI aus #28.
+assert.ok(app.includes("expense-transfer expense-settlement"), "Ausgleichszeilen fehlen");
+for(const name of ["expense-entry-info","expense-entry-title","expense-entry-meta","expense-entry-amount","expense-entry-actions"]) assert.ok(app.includes(name), name+" fehlt");
+
+const {createHash}=await import('node:crypto');
+const sdk=fs.readFileSync(new URL('../vendor/supabase/supabase-js-2.57.0.mjs',import.meta.url));
+assert.equal(createHash('sha256').update(sdk).digest('hex'),'d5ae1d6ffd43c1a27e39ed6a731ecf94bf06ff1b357b7812d6e53869a3094173');
+assert.ok(authUi.includes('../vendor/supabase/supabase-js-2.57.0.mjs'));
+assert.ok(source.includes('./vendor/supabase/supabase-js-2.57.0.mjs'));
+const localSdk=await import('../vendor/supabase/supabase-js-2.57.0.mjs');
+assert.equal(typeof localSdk.createClient,'function');
+console.log('PASS: lokaler, gepinnter Supabase-SDK mit CORE-Cache und geprüften Bytes');

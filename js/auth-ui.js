@@ -1,6 +1,6 @@
 /* Private Camino ledger access. Authentication is not authorisation:
    only project_members membership unlocks local ledger UI. */
-import {createClient} from 'https://esm.sh/@supabase/supabase-js@2.57.0';
+import {createClient} from '../vendor/supabase/supabase-js-2.57.0.mjs';
 const auth=window.CaminoAuth.createAuth({
  url:'https://qoensghjemruqafrbmjd.supabase.co',
  publishableKey:'sb_publishable_Qeom38G18vSgrrE5MxoXEw_LhJM1f6S',
@@ -17,7 +17,7 @@ const status=document.getElementById('expense-auth-status');
 const email=document.getElementById('expense-auth-email');
 const code=document.getElementById('expense-auth-code');
 const otp=document.getElementById('expense-otp-form');
-let initialised=false,initPromise=null,revision=0,authorisedUserId=null;
+let initialised=false,initPromise=null,revision=0,authorisedUserId=null,accessInterrupted=false;
 function report(message){status.textContent=message;}
 function hideLedger(){privatePanel.hidden=true;member.hidden=true;login.hidden=false;}
 async function refresh(){
@@ -27,13 +27,13 @@ async function refresh(){
  try{
   const user=await auth.currentUser();
   if(version!==revision)return;
-  if(!user){report('Bitte anmelden. Nur freigeschaltete Camino-Mitglieder haben Zugriff.');return;}
+  if(!user){accessInterrupted=initialised;report('Bitte anmelden. Nur freigeschaltete Camino-Mitglieder haben Zugriff.');return;}
   member.hidden=false;login.hidden=true;
   identity.textContent='Angemeldet: '+(user.email||'Konto');
   const membership=await auth.membership();
   if(version!==revision)return;
-  if(!membership){report('Angemeldet, aber noch nicht als Camino-Mitglied freigeschaltet. Bitte den Administrator um Freischaltung bitten.');return;}
-  if(initialised&&authorisedUserId!==user.id){location.reload();return;}
+  if(!membership){accessInterrupted=initialised;report('Angemeldet, aber noch nicht als Camino-Mitglied freigeschaltet. Bitte den Administrator um Freischaltung bitten.');return;}
+  if(initialised&&(accessInterrupted||authorisedUserId!==user.id)){location.reload();return;}
   if(!initialised&&typeof window.initTravelExpenses==='function'){
     if(!initPromise)initPromise=window.initTravelExpenses(auth.client,auth.projectId).catch(error=>{initPromise=null;throw error;});
     await initPromise;
@@ -43,7 +43,7 @@ async function refresh(){
   if(version!==revision)return;
   privatePanel.hidden=false;
   report('Zugriff freigeschaltet. Die Reisekasse wird sicher für die Camino-Gruppe synchronisiert.');
- }catch(e){if(version===revision){privatePanel.hidden=true;report('Reisekasse konnte nicht sicher geladen werden. Bitte Verbindung und Mitgliedschaft prüfen.');}}
+ }catch(e){if(version===revision){accessInterrupted=initialised;privatePanel.hidden=true;report('Reisekasse konnte nicht sicher geladen werden. Bitte Verbindung und Mitgliedschaft prüfen.');}}
 }
 // Check GoTrue public provider configuration before redirecting to OAuth.
 // This avoids a confusing "Unsupported provider" page on iOS.

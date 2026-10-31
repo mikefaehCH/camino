@@ -1,6 +1,11 @@
 ### #heute
 Heute
 Euer heutiger Tag
+Alles Wichtige für den aktuellen Tag an einem Ort. Wähle euren Reisetag und öffne bei Bedarf die vollständige Etappenbeschreibung.
+Route & Standort
+Etappen im Detail
+Unterkünfte
+Essen & Trinken
 Fr
 11.
 Sa
@@ -53,8 +58,31 @@ Navigation zum Hotel
 Anrufen
 Mehr: Teilen, GPX, Komoot
 Teilen
+Text kopieren
 GPX
 Komoot
+Erinnerung im Kalender
+Wähle den Reisetag und die Uhrzeit. Der Kalender erinnert dich auch bei geschlossener App. Für den separaten Server-Push-Test findest du weiter unten die Geräteaktivierung.
+Abmarschzeit
+ Kalendereintrag speichern
+Mitteilungen testen
+Teste eine Mitteilung direkt auf diesem Gerät. Du kannst die lokale Anzeige testen oder weiter unten einen echten Server-Push auf dein iPhone senden.
+Testmitteilung anzeigen
+Echter Push vom Server
+Einmalig dein iPhone aktivieren, danach eine Nachricht vom Server senden – auch wenn die App geschlossen ist. Kein Konto erforderlich; der Test ist nur für dein eigenes Gerät.
+iPhone für Push aktivieren Server-Push senden Versandstatus prüfen
+Noch kein Gerät für den Server-Test registriert.
+Push-Test v2 · Serverstatus zeigt die Annahme durch Apple, nicht die Anzeige auf dem iPhone.
+Automatische Camino-Erinnerungen
+Für die sieben Etappen vom 12. bis 18. Juni 2027: am Vorabend eine Vorschau und morgens eine Erinnerung. Die Zeiten gelten in spanischer Ortszeit (Madrid); in Portugal ist es eine Stunde früher. Die Mitteilungen funktionieren auch bei geschlossener App.
+Erinnerungen sind standardmässig ausgeschaltet und werden erst nach deiner ausdrücklichen Aktivierung versendet.
+ Automatische Erinnerungen einschalten
+Vorabend
+Etappenmorgen
+Einstellungen speichern
+Bitte zuerst das iPhone für Push aktivieren.
+Du kannst die Erinnerungen hier jederzeit wieder ausschalten. Dein Gerät bleibt für den Test registriert.
+Netzwerk verfügbar · Karte und Wetter benötigen eine funktionierende Internetverbindung.
 Offline: Seite im Browser «Zum Home-Bildschirm» hinzufügen. Etappen, Hotels, Telefonnummern und GPX sind dann auch ohne Netz da. Fotos nur, wenn ihr sie unten speichert. Karte und Wetter brauchen Empfang.
 Alle 34 Fotos offline speichern (ca. 3 MB)
 ### #reise
@@ -131,6 +159,7 @@ gebucht · Check-in 15–22 Uhr
 Rúa Pérez Leirós 1, 36400 O Porriño
 Praktisch
 Etappe teilen
+Text kopieren
 Etappe 2 · So, 13. Jun
 O Porriño → Redondela
 16,1 km · ↑ 250 m · ↓ 290 m
@@ -168,6 +197,7 @@ gebucht · Frühstück inkl.
 Rúa Pai Crespo 23, 36800 Redondela
 Praktisch
 Etappe teilen
+Text kopieren
 Etappe 3 · Mo, 14. Jun
 Redondela → Pontevedra
 24 km · ↑ 450 m · ↓ 450 m
@@ -209,6 +239,7 @@ gebucht · Check-in ab 15 Uhr
 Rúa do Barón 19, 36002 Pontevedra
 Praktisch
 Etappe teilen
+Text kopieren
 Etappe 4 · Di, 15. Jun
 Pontevedra → Armenteira
 22,5 km · ↑ 680 m · ↓ 380 m
@@ -246,6 +277,7 @@ gebucht · 400 m vom Kloster · Frühstück inkl.
 Armenteira, 36192 Caroi (Meis)
 Praktisch
 Etappe teilen
+Text kopieren
 Etappe 5 · Mi, 16. Jun
 Armenteira → Vilanova de Arousa
 24,8 km · ↑ 150 m · ↓ 450 m
@@ -284,6 +316,7 @@ Bestätigung ausstehend · Check-in 15–21 Uhr
 Av. as Sinas 64, 36620 Vilanova de Arousa
 Praktisch
 Etappe teilen
+Text kopieren
 Etappe 6 · Do, 17. Jun
 Translatio nach Padrón
 Boot · 10 km zu Fuss · ↑ 130 m · ↓ 90 m
@@ -335,6 +368,7 @@ Kleingruppe, 7–13 Personen.
 Gezeitentabelle Vilagarcía ↗
 Plan B ohne Boot: knapp 8 km zu Fuss nach Vilagarcía de Arousa, dann Zug nach Pontecesures (ca. 2–3 €). Preise laut Pilgerforum, vor Buchung prüfen.
 Etappe teilen
+Text kopieren
 Etappe 7 · Fr, 18. Jun
 Padrón → Santiago
 25,2 km · ↑ 450 m · ↓ 180 m
@@ -372,6 +406,7 @@ gebucht · Altstadt · Check-in ab 16 Uhr
 Rúa de Altamira 18, 15704 Santiago de Compostela
 Praktisch
 Etappe teilen
+Text kopieren
 Sa, 19. Jun
 Santiago → A Coruña
 Foto: Borre / Unsplash
@@ -402,6 +437,7 @@ gebucht · Frühstück inkl.
 Av. de Pedro Barrié de la Maza 3, 15003 A Coruña
 Praktisch
 Etappe teilen
+Text kopieren
 So, 20. Jun
 A Coruña → Zürich
 Air Europa UX7234 A Coruña 12:35 → Madrid 13:45, UX1671 Madrid 15:10 → Zürich 17:30. 1 Koffer à 23 kg inklusive, durchgecheckt.

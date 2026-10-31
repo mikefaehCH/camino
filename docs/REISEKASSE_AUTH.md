@@ -22,3 +22,29 @@ Die Reisekasse verwendet `public.camino_ledger_entries` mit Row Level Security. 
 3. Prüfen: abgemeldet = keine Reisekasse; angemeldet ohne Mitgliedschaft = gesperrt; Mitglied = sichtbar.
 4. Auf dem iPhone testen; vorhandene lokale Ausgaben bleiben erhalten.
 5. Erst danach PR mergen und veröffentlichen.
+
+## Nachweis und Grenzen (31.10.2026)
+
+- SQL-Referenz: [camino-ledger-reference.sql](camino-ledger-reference.sql), direkt gegen
+  den Live-Katalog geprüft, keine Migration und keine automatische Ausführung.
+- `tests/auth-ui.mjs` prüft mit Mocks: abgemeldet, kein Mitglied, entzogene Mitgliedschaft,
+  abgelaufene Session sowie frischer Zustand nach Wiederanmeldung und Kontowechsel.
+- `tests/ledger-delete.mjs` klickt den echten Handler: Ausgabe/Rückzahlung, Abbruch,
+  Fehler und Filter auf Projekt und Eintrag. Keine produktiven Finanzdaten.
+- Ein UI-Mock beweist keine Live-RLS. Vor Freigabe in einer isolierten Testumgebung
+  mit echten JWTs SELECT/INSERT/UPDATE/DELETE je Identität prüfen: anon, angemeldeter
+  Nichtmitglied-Nutzer, Mitglied, danach entzogene Mitgliedschaft und abgelaufenes JWT.
+  Erwartung: nur aktuelles Mitglied erlaubt, übrige ohne Datenzugriff; auch fremde
+  project_id und Änderung von payload.id/entry_id prüfen. Keine realen Daten löschen.
+- localStorage gilt pro **Origin**, nicht pro Pfad. Alle Seiten unter
+  `https://mikefaehch.github.io` teilen denselben Speicherbereich. Schlüsselpräfixe sind
+  Kollisionsschutz, keine Sicherheitsgrenze gegen andere Skripte desselben Origins.
+- Katalogbefund: `authenticated` hat auf `project_members` auch TRUNCATE-Rechte.
+  TRUNCATE ist nicht durch RLS geschützt, obwohl der normale PostgREST-Zugriff keine
+  entsprechende Operation anbietet. Vor Freigabe administrativ minimal nötige Rechte
+  prüfen/reduzieren. In diesem Auftrag wurde keine Live-Berechtigung verändert.
+- Ablehnen der optionalen Migration lässt die lokale Sicherung unverändert; die Frage
+  erscheint beim nächsten Laden erneut (P3 bewusst unverändert).
+- PR bleibt Draft: Mike richtet Google/Apple/Microsoft, Rücksprung-Adressen und ein
+  Mitglied ein; danach müssen alle Login-Wege und die gemeinsame Reisekasse auf dem
+  physischen iPhone bestanden sein. Mock-/Emulationstests ersetzen diesen Nachweis nicht.

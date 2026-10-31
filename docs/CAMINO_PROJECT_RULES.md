@@ -37,6 +37,7 @@ Nur die Datei lesen, die man braucht. `index.html` nicht komplett laden, wenn nu
   Credit-Format: `Foto: Name`, `license`, `licenseUrl`, `edited:true`.
 - Design bewahren: Farben Ivory/Forest/Sage/Charcoal, Fraunces + DM Sans (lokal), Lucide-SVG-Icons (`ICON('name')`), **keine Emojis**.
 - Externe Dienste: Open-Meteo (Wetter, ohne Schlüssel, ein Abruf pro Laden), OpenStreetMap-Kacheln, Links zu Google Maps/Komoot.
+  Supabase (Projekt `qoensghjemruqafrbmjd`): Auth, Mitgliedschaft und gemeinsame Reisekasse; OAuth-Anbieter Google/Apple/Microsoft erst nach Konfiguration durch Mike. Der SDK 2.57.0 liegt lokal unter `vendor/supabase/`, kein SDK-CDN zur Laufzeit.
   Keine neuen Dienste, Frameworks oder npm-Pakete ohne Freigabe.
 - Mobile first (iPhone). Touch-Ziele ≥ 44 px, kein horizontaler Überlauf.
 

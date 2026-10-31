@@ -1078,3 +1078,13 @@ body.in-trip #hero .hero-h1{font-size:clamp(2.4rem,10vw,4rem);margin-bottom:.25r
 .expense-transfer strong{grid-column:1/-1;font-variant-numeric:tabular-nums;font-size:1.04rem;color:var(--ocean);}
 #expense-balances .expense-all-clear{margin:.6rem 0;font-weight:600;}
 @media(max-width:650px){.expense-auth-providers{grid-template-columns:1fr;}.expense-auth-providers .ghost-btn{width:100%;}.expense-summary-grid{grid-template-columns:1fr;}}
+
+/* Kompakte Ausgabenzeilen aus PR #21; Saldo-Karten bleiben aus #28. */
+.expense-entry{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:1rem;align-items:center;padding:1rem 0;}
+.expense-entry-info{display:flex;flex-direction:column;gap:.25rem;min-width:0;}
+.expense-entry-title{font-size:.94rem;line-height:1.35;overflow-wrap:anywhere;}
+.expense-entry-meta{font-size:.76rem;color:var(--muted);line-height:1.45;}
+.expense-entry-amount{font-size:1rem;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.expense-entry-actions{display:flex;gap:.35rem;align-items:center;}
+.expense-entry-actions .ghost-btn{min-height:44px;padding:.45rem .65rem;font-size:.72rem;white-space:nowrap;}
+@media(max-width:720px){.expense-entry{grid-template-columns:minmax(0,1fr) auto;gap:.6rem;}.expense-entry-amount{grid-column:2;grid-row:1;}.expense-entry-actions{grid-column:1/-1;justify-content:flex-end;}.expense-entry-actions .ghost-btn{min-height:44px;}}
