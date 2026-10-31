@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import './sharing.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const UPDATE = process.argv.includes('--update');
@@ -56,7 +57,7 @@ for (const f of fs.readdirSync(path.join(ROOT, 'routes')).filter(f => f.endsWith
 /* ---------- 2. Seite im Browser ---------- */
 const browser = await pw.chromium.launch();
 async function open(opts = {}) {
-  const ctx = await browser.newContext({ viewport: { width: opts.w || 390, height: opts.h || 844 } });
+  const ctx = await browser.newContext({ timezoneId: 'Europe/Lisbon', viewport: { width: opts.w || 390, height: opts.h || 844 } });
   if (opts.date) await ctx.addInitScript(`(()=>{const T=new Date('${opts.date}').getTime();const O=Date;class D extends O{constructor(...a){super(...(a.length?a:[T]));}static now(){return T;}}window.Date=D;})()`);
   await ctx.route('**/*', r => r.request().url().startsWith(BASE) ? r.continue() : r.abort());
   const p = await ctx.newPage();
@@ -153,7 +154,7 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
 
 // 2d. Offline (Service Worker)
 {
-  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const ctx = await browser.newContext({ timezoneId: 'Europe/Lisbon', viewport: { width: 390, height: 844 } });
   await ctx.route('**/*', r => r.request().url().startsWith(BASE) ? r.continue() : r.abort());
   const p = await ctx.newPage();
   await p.goto(BASE);
@@ -173,7 +174,31 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   await ctx.close();
 }
 
-// 2e. Text-Schnappschuss (erkennt ungewollte Inhaltsänderungen)
+// 2e. Sharing controls execute the selected day's native/copy actions.
+{
+  const p = await open();
+  await p.evaluate(() => {
+    window.shareCalls = [];
+    Object.defineProperty(navigator, 'share', { configurable: true, value: async data => window.shareCalls.push(['share', data.text]) });
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async text => window.shareCalls.push(['copy', text]) } });
+    window.alert = () => {};
+    renderToday(1);
+    document.querySelector('#today-card .tc-more').open = true;
+  });
+  await p.locator('#today-card button').filter({ hasText: /^Text kopieren$/ }).click();
+  await p.locator('#today-card button').filter({ hasText: /^\s*Teilen$/ }).click();
+  const shared = await p.evaluate(() => ({ calls: window.shareCalls, expected: shareText(1) }));
+  ok(shared.calls.length === 2 && shared.calls[0][0] === 'copy' && shared.calls[1][0] === 'share', 'Tagesansicht: Kopieren/Teilen nicht verbunden');
+  ok(shared.calls.every(call => call[1] === shared.expected), 'Teilen verwendet nicht den ausgewählten Tag');
+  const stage = p.locator('#etappe-2');
+  await p.evaluate(() => openStage(2, false));
+  await stage.locator('.stage-share button').filter({ hasText: /^Text kopieren$/ }).click();
+  const stageCopy = await p.evaluate(() => ({ actual: window.shareCalls.at(-1), expected: shareText(DAYS.findIndex(d => d.stage === 2)) }));
+  ok(stageCopy.actual[0] === 'copy' && stageCopy.actual[1] === stageCopy.expected, 'Etappe: Kopieren verwendet falsche Tagesdaten');
+  await p.context().close();
+}
+
+// 2f. Text-Schnappschuss (erkennt ungewollte Inhaltsänderungen)
 {
   const p = await open({ date: '2027-06-16T08:00:00+02:00' });
   await p.evaluate(() => { for (let n = 1; n <= 8; n++) try { openStage(n, false); } catch (e) {}

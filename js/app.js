@@ -338,7 +338,7 @@ function shareText(i){
   if(x.hotel)L.push('Hotel: '+x.hotel+(x.ci?' · Check-in '+x.ci:'')+(x.tel?' · '+x.tel:'')+(x.q?'\nKarte: https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(x.q):''));
   const r=restFor(x);if(r.length)L.push('Abendessen: '+r.join(' / '));
   const w=wxFor(x.place,x.d);if(w&&w.fc)L.push('Wetter: '+w.max+'° / '+w.min+'° · '+(w.rain??'–')+'% Regen');
-  L.push(SITE_URL+'#heute');
+  L.push(SITE_URL+(x.stage&&x.stage<=7?'#etappe-'+x.stage:'#heute'));
   return L.join('\n');
 }
 async function shareDay(i){
@@ -347,15 +347,17 @@ async function shareDay(i){
     try{await navigator.share({text});return;}
     catch(e){if(e&&e.name==='AbortError')return;}
   }
-  const url='https://wa.me/?text='+encodeURIComponent(text);
-  const win=window.open(url,'_blank','noopener');
-  if(!win){
-    try{
-      await navigator.clipboard.writeText(text);
-      alert('Tagesprogramm kopiert. Du kannst es in WhatsApp einfügen.');
-    }catch{
-      window.location.href=url;
-    }
+  // noopener may return null even when the tab opens. It is not a popup-block signal.
+  try{window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener');}
+  catch{await copyDay(i);}
+}
+async function copyDay(i){
+  const text=shareText(i);
+  try{
+    await navigator.clipboard.writeText(text);
+    alert('Tagesprogramm kopiert. Du kannst es in WhatsApp einfügen.');
+  }catch{
+    window.prompt('Text markieren und kopieren:',text);
   }
 }
 
@@ -402,9 +404,10 @@ renderToday=function(i){
   const pb=document.createElement('div');pb.className='tc-plan';pb.innerHTML=planHTML(i);body.insertBefore(pb,btns);
   loadWX().then(()=>{if(CUR===i)pb.innerHTML=planHTML(i);});
   const sh=document.createElement('button');sh.type='button';sh.className='btn';sh.innerHTML=ICON('share-2')+' Teilen';sh.addEventListener('click',()=>shareDay(i));
+  const cp=document.createElement('button');cp.type='button';cp.className='btn';cp.textContent='Text kopieren';cp.addEventListener('click',()=>copyDay(i));
   const lo=document.createElement('button');lo.type='button';lo.className='btn';lo.innerHTML=ICON('locate-fixed')+' Wo bin ich?';
   lo.addEventListener('click',()=>{document.getElementById('karte').scrollIntoView({behavior:'smooth',block:'start'});locate();});
-  btns.appendChild(sh);btns.appendChild(lo);
+  btns.appendChild(sh);btns.appendChild(cp);btns.appendChild(lo);
 };
 (function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
 
@@ -415,7 +418,8 @@ STAGES.forEach((s,k)=>{
   const pb=document.createElement('div');pb.className='stage-plan';pb.innerHTML=planHTML(i);w.after(pb);
   const row=document.createElement('div');row.className='stage-share';
   const b=document.createElement('button');b.type='button';b.className='btn';b.innerHTML=ICON('share-2')+' Etappe teilen';b.addEventListener('click',()=>shareDay(i));
-  row.appendChild(b);pb.after(row);
+  const cp=document.createElement('button');cp.type='button';cp.className='btn';cp.textContent='Text kopieren';cp.addEventListener('click',()=>copyDay(i));
+  row.append(b,cp);pb.after(row);
   loadWX().then(()=>{pb.innerHTML=planHTML(i);});
 });
 
