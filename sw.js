@@ -1,7 +1,7 @@
 /* Camino 2027 – Offline-Cache */
-const CACHE = 'camino-v65';
+const CACHE = 'camino-v66';
 const FOTOS = 'camino-fotos'; // vom Knopf «Fotos offline speichern», bleibt über Updates erhalten
-const CORE = ['./', './index.html', './css/site.css', './js/app.js', './js/push-client.js', './data/trip.js', './manifest.webmanifest', './icon.svg', './icon-192.png', './apple-touch-icon.png',
+const CORE = ['./', './index.html', './css/site.css', './js/app.js', './js/push-client.js', './js/auth-core.js', './js/auth-ui.js', './vendor/supabase/supabase-js-2.57.0.mjs', './data/trip.js', './manifest.webmanifest', './icon.svg', './icon-192.png', './apple-touch-icon.png',
   './images/start/pilger-nebelwald-800.webp', './images/porto/porto-douro-sonnenuntergang-800.webp', './images/porto/porto-ponte-luis-blaue-stunde-800.webp',
   './images/porto/porto-ribeira-800.webp', './images/porto/porto-pasteis-de-nata-800.webp',
   './routes/etappe-1.gpx','./routes/etappe-2.gpx','./routes/etappe-3.gpx','./routes/etappe-4.gpx','./routes/etappe-5.gpx','./routes/etappe-6a.gpx','./routes/etappe-6b.gpx','./routes/etappe-7.gpx', './vendor/leaflet/leaflet.js', './vendor/leaflet/leaflet.css', './vendor/leaflet/images/layers.png', './vendor/leaflet/images/layers-2x.png',

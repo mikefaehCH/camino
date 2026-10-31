@@ -1,24 +1,23 @@
-# Shared login rollout checklist (not deployed)
+# Camino Auth: verbindlicher Rollout-Stand
 
-Existing backend: Sommer 2027 Supabase project `kgtowblwixgfdnbgcjeq`.
+Backend: `qoensghjemruqafrbmjd` (eu-central-1), siehe SHARED_PLATFORM.md.
+Das separate Sommer-2027-Projekt wird nicht verändert.
 
-## Ready in code
-- `js/auth-core.js` provides a reusable provider-based OAuth adapter and authenticated membership lookup.
-- It is intentionally **not loaded by the live site** until database RLS and redirect configuration are confirmed.
-- Google is the first supported provider. Apple and Microsoft (`azure`) are only code options until configured in Supabase and provider consoles.
-- Login never implies membership. The Camino membership table is separate from Sommer2027's `family_members`.
-- The adapter requires a pinned Supabase JS SDK and public publishable key, passed by the integrating site. Never commit a secret key.
+- PR #28 lädt Auth-Oberfläche und Adapter. Auf main ist dieser Stand noch nicht veröffentlicht.
+- Login und Projektmitgliedschaft sind getrennt. Ausschliesslich administrative Freischaltung berechtigt zum Zugriff.
+- Gemeinsame Reisekasse: `public.camino_ledger_entries`, serverseitige RLS.
+- OAuth: Google, Apple und Microsoft müssen mit eigenen Client-IDs/Secrets im Provider und in Supabase eingerichtet werden. Microsoft fordert den Scope `email` an.
+- Callback bei den Anbietern: `https://qoensghjemruqafrbmjd.supabase.co/auth/v1/callback`.
+- Camino-Rückleitung in Supabase erlauben: `https://mikefaehch.github.io/camino/`. Bestehende Site URL anderer Projekte nicht überschreiben.
+- E-Mail: Versand und Vorlage prüfen; Code-Eingabe ermöglicht Login im selben iPhone-PWA-Fenster.
+- Keine Zugangsdaten im Repository. Keine Benutzer oder E-Mail-Adressen erfinden.
+- Lokale Ausgaben nur nach ausdrücklicher Bestätigung übernehmen. Bei Abbruch oder Uploadfehler bleibt die lokale Sicherung erhalten; bestehende Servereinträge werden nicht überschrieben.
+- Keine automatische Startbuchung: Die leere gemeinsame Reisekasse bleibt leer, bis ein Mitglied Einträge erfasst oder importiert.
 
-## Backend deployment gate
-1. Review and remediate Supabase security advisor findings for existing privileged functions, without breaking Sommer2027 triggers or RLS.
-2. Review additive Camino SQL migration and verify no changes to existing family tables.
-3. Deploy tables, server-enforced RLS, privileges and database constraints; run negative tests using unauthorized identities.
-4. Add Camino callback URL to Auth redirect allowlist; verify Google provider works with existing project.
-5. Invite exactly four approved accounts, mapping each identity to the correct pilgrim. Do not guess email addresses or user IDs.
-6. Only then wire the adapter into the Camino UI and migrate local expense backups with explicit user confirmation.
-7. Test Google OAuth on desktop, Safari, and iPhone home-screen PWA. Do not assume PWA OAuth works identically to Safari.
-
-## Current restrictions
-- No production login, shared ledger, membership grants or cross-device synchronization is enabled by this PR.
-- Public GitHub Pages HTML is not access-controlled; only database records can be protected with RLS.
-- All GitHub Pages project paths on `mikefaehch.github.io` share one origin and potentially browser storage. The backend must enforce cross-project isolation independently.
+## Noch vor Veröffentlichung nachweisen
+1. Berechtigten Benutzer anmelden und administrativ als Camino-Mitglied freischalten.
+2. Abgemeldet und angemeldet ohne Mitgliedschaft: kein Zugriff; Mitglied: Zugriff.
+3. Alle vier Anmeldewege auf Desktop und iPhone-PWA prüfen, einschliesslich Rückleitung und Abmeldung/Kontowechsel.
+4. Zwei Geräte: Erfassung, Bearbeitung, Rückzahlung und Import prüfen.
+5. Layout bei 390 px und vollständige Website-Prüfung ausführen.
+6. Erst nach erfüllten Voraussetzungen und Projektfreigabe veröffentlichen.

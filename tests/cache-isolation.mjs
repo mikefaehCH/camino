@@ -74,5 +74,27 @@ assert.ok(app.includes('net[e.from]+=e.cents;net[e.to]-=e.cents'), 'Repayments m
 console.log('PASS: repayment entries affect balances');
 
 assert.ok(app.includes("edit.textContent='Bearbeiten'"), 'Expense editing action missing');
-assert.ok(app.includes("entries=entries.map(x=>x.id===e.id?revised:x)"), 'Expense editing must preserve entry identity');
+assert.ok(app.includes('await update(revised)'), 'Expense editing must update the shared ledger');
+assert.ok(app.includes(".eq('entry_id',e.id)"), 'Expense editing must preserve entry identity');
 console.log('PASS: existing expenses can be edited');
+
+const authUi = fs.readFileSync(new URL('../js/auth-ui.js', import.meta.url), 'utf8');
+assert.ok(html.includes('id="expense-private"') && html.includes('id="expense-auth"'), 'Private expense login gate missing');
+assert.ok(html.includes('id="expense-private"') && html.includes('hidden'), 'Private ledger must be hidden before login');
+assert.ok(authUi.includes('await auth.membership()'), 'Must verify project membership');
+assert.ok(authUi.includes('initPromise=window.initTravelExpenses(auth.client,auth.projectId)') && authUi.includes('await initPromise'), 'Must fetch server ledger before showing private UI');
+assert.ok(app.includes("client.from('camino_ledger_entries')"), 'Shared RLS ledger missing');
+console.log('PASS: member-only shared Reisekasse');
+
+// PR #21 / 04102f3: Ausgleichsberechnung bleibt vorhanden; Saldo-UI aus #28.
+assert.ok(app.includes("expense-transfer expense-settlement"), "Ausgleichszeilen fehlen");
+for(const name of ["expense-entry-info","expense-entry-title","expense-entry-meta","expense-entry-amount","expense-entry-actions"]) assert.ok(app.includes(name), name+" fehlt");
+
+const {createHash}=await import('node:crypto');
+const sdk=fs.readFileSync(new URL('../vendor/supabase/supabase-js-2.57.0.mjs',import.meta.url));
+assert.equal(createHash('sha256').update(sdk).digest('hex'),'d5ae1d6ffd43c1a27e39ed6a731ecf94bf06ff1b357b7812d6e53869a3094173');
+assert.ok(authUi.includes('../vendor/supabase/supabase-js-2.57.0.mjs'));
+assert.ok(source.includes('./vendor/supabase/supabase-js-2.57.0.mjs'));
+const localSdk=await import('../vendor/supabase/supabase-js-2.57.0.mjs');
+assert.equal(typeof localSdk.createClient,'function');
+console.log('PASS: lokaler, gepinnter Supabase-SDK mit CORE-Cache und geprüften Bytes');

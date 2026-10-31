@@ -11,7 +11,7 @@
       if(!PROVIDERS.includes(provider))throw new Error('Unsupported provider');
       const redirectTo=new URL(redirectPath,root.location.origin);
       if(redirectTo.origin!==root.location.origin)throw new Error('Unsafe redirect');
-      const {error}=await client.auth.signInWithOAuth({provider,options:{redirectTo:redirectTo.href}});
+      const {error}=await client.auth.signInWithOAuth({provider,options:{redirectTo:redirectTo.href,...(provider==='azure'?{scopes:'email'}:{})}});
       if(error)throw error;
     }
     async function signOut(){const {error}=await client.auth.signOut();if(error)throw error;}

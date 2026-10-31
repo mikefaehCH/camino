@@ -582,10 +582,31 @@
     <div class="chip" style="margin-bottom:1rem">Reisekasse</div>
     <h2 id="kosten-title" style="font-family:var(--serif,Georgia,serif);font-size:clamp(2rem,5vw,3.5rem);margin:0 0 .65rem">Unsere <em>Kosten.</em></h2>
     <p style="max-width:45rem;line-height:1.6;margin-bottom:2rem">Ausgaben, Rückzahlungen und noch offene Positionen an einem Ort.</p>
-    <div class="expense-handoff" aria-labelledby="expense-handoff-title">
+    <div class="expense-auth" id="expense-auth" aria-labelledby="expense-auth-title">
+      <h3 id="expense-auth-title">Private Reisekasse</h3>
+      <p>Die Reisekasse ist nur für angemeldete, freigeschaltete Mitglieder unserer Camino-Gruppe sichtbar.</p>
+      <div id="expense-auth-login">
+        <div class="expense-auth-providers">
+          <button type="button" class="ghost-btn" data-auth-provider="google">Mit Google anmelden</button>
+          <button type="button" class="ghost-btn" data-auth-provider="apple">Mit Apple anmelden</button>
+          <button type="button" class="ghost-btn" data-auth-provider="azure">Mit Microsoft anmelden</button>
+        </div>
+        <form id="expense-email-form">
+          <label for="expense-auth-email">Oder mit E-Mail anmelden</label>
+          <div class="expense-email-row"><input id="expense-auth-email" type="email" autocomplete="email" required placeholder="deine@email.ch"><button class="ghost-btn" type="submit">Login-Code senden</button></div>
+        </form>
+        <form id="expense-otp-form" hidden>
+          <label for="expense-auth-code">Sechsstelligen Code aus der E-Mail eingeben</label>
+          <div class="expense-email-row"><input id="expense-auth-code" type="text" inputmode="numeric" pattern="[0-9]{6,8}" autocomplete="one-time-code" maxlength="8" required placeholder="123456"><button class="ghost-btn" type="submit">Code bestätigen</button></div>
+        </form>
+      </div>
+      <div id="expense-auth-member" hidden><p id="expense-auth-identity"></p><button type="button" class="ghost-btn" id="expense-auth-signout">Abmelden</button></div>
+      <p id="expense-auth-status" role="status" aria-live="polite">Anmeldestatus wird geprüft …</p>
+    </div>
+    <div class="expense-handoff" id="expense-private" aria-labelledby="expense-handoff-title" hidden>
       <h3 id="expense-handoff-title">Unsere Reisekasse</h3>
       <div class="expense-planned"><h4>Weitere Positionen ohne erfassten Betrag</h4><p>Hin- und Rückflüge: bereits bezahlt, Betrag noch offen.</p><p>Übrige Unterkünfte: Porto, O Porriño, Pontevedra, Armenteira, Vilanova de Arousa, Padrón, Santiago und A Coruña.</p><p>Transfers, Traslatio-Boot, Verpflegung und Sonstiges werden bei Bekanntwerden des Betrags erfasst.</p></div>
-      <p>Gemeinsame Ausgaben erfassen, fair aufteilen und sehen, wer wem wie viel schuldet. Alles wird nur auf diesem Gerät gespeichert. Für die gemeinsame Nutzung auf mehreren Geräten braucht es später eine sichere Synchronisierung.</p>
+      <p>Gemeinsame Ausgaben erfassen, fair aufteilen und sehen, wer wem wie viel schuldet. Die Einträge werden online in der gemeinsamen Camino-Reisekasse gespeichert und beim Laden für freigeschaltete Mitglieder abgerufen. Zum Erfassen und Bearbeiten braucht es eine Internetverbindung. Gleichzeitige Änderungen desselben Eintrags werden noch nicht zusammengeführt.</p>
       <form id="expense-form">
         <label>Beschreibung <input id="expense-description" type="text" maxlength="120" required placeholder="Zum Beispiel Abendessen" autocomplete="off"></label>
         <label>Betrag <input id="expense-amount" type="number" min="0.01" max="999999" step="0.01" required inputmode="decimal" placeholder="0.00"></label>
@@ -624,5 +645,7 @@
 <script src="data/trip.js"></script>
 <script src="js/push-client.js"></script>
 <script src="js/app.js"></script>
+<script src="js/auth-core.js"></script>
+<script type="module" src="js/auth-ui.js"></script>
 </body>
 </html>
