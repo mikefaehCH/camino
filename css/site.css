@@ -1224,3 +1224,27 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   #nav{justify-content:space-between;padding-inline:.25rem;}
   #nav a{flex:1 1 auto;text-align:center;padding-left:.3rem;padding-right:.3rem;font-size:.76rem;}
 }
+/* Reisekasse: vorgemerkte Posten */
+.kx-pending{align-items:center;gap:.6rem;}
+.kx-pending-main{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:.2rem;background:none;border:0;padding:.2rem 0;min-height:44px;font:inherit;color:var(--ink);text-align:left;cursor:pointer;justify-content:center;}
+.kx-pending-side{display:flex;flex-direction:column;align-items:flex-end;gap:.35rem;flex:0 0 auto;}
+.kx-pending.is-due{background:color-mix(in srgb,var(--dnbg) 70%,transparent);}
+.kx-pending.is-due .kx-entry-meta{color:var(--dntx);font-weight:500;}
+.kx-btn-due{background:var(--forest);border-color:var(--forest);color:var(--ivory);font-weight:700;}
+.kx-chip-strong{border-color:var(--forest);color:var(--link);font-weight:700;}
+.kx-plan{opacity:.38;}
+.kx-track{display:flex;}
+.kx-track .kx-fill{border-radius:0;}
+.kx-track .kx-fill:first-child{border-radius:999px 0 0 999px;}
+.kx-track .kx-fill:last-child{border-radius:0 999px 999px 0;}
+.kx-track .kx-fill:only-child{border-radius:999px;}
+.kx-bar-sum-plan{border-top:0;padding-top:0;color:var(--muted);}
+.kx-status button{font-size:.88rem;padding:0 .3rem;}
+.kx-hotel-row{flex-wrap:wrap;align-items:center;}
+.kx-hotel-row .kx-entry-main{flex:1 1 12rem;}
+.kx-hotel-row.is-done{opacity:.6;}
+.kx-hotel-ctl{display:flex;gap:.4rem;align-items:center;flex:1 1 12rem;}
+.kx-hotel-amount{font:inherit;font-size:16px;min-height:44px;flex:1 1 6rem;min-width:0;box-sizing:border-box;border:1px solid var(--border);border-radius:10px;background:var(--ivory);color:var(--ink);padding:0 .7rem;font-variant-numeric:tabular-nums;}
+.kx-seg-mini{padding:3px;}
+.kx-seg-mini button{min-height:38px;padding:0 .55rem;font-size:.82rem;}
+.kx-ok{font-size:.82rem;color:var(--link);font-weight:700;}

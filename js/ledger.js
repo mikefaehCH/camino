@@ -31,10 +31,12 @@
       return validRate(raw.chf_per_eur) ? { v: 2, id: raw.id, kind, chf_per_eur: raw.chf_per_eur, updated_at: raw.updated_at || null, updated_by: raw.updated_by || null } : null;
     }
     if (kind !== 'expense' && kind !== 'settlement') return null;
-    const status = raw.status === 'offen' ? 'offen' : 'bezahlt';
+    const status = raw.status === 'offen' || raw.status === 'vorgemerkt' ? raw.status : 'bezahlt';
     const cents = raw.cents === null || raw.cents === undefined ? null : raw.cents;
     if (cents === null) {
       if (kind !== 'expense' || status !== 'offen') return null;
+    } else if (status === 'vorgemerkt' && kind !== 'expense') {
+      return null;
     } else if (!Number.isSafeInteger(cents) || cents <= 0 || cents > MAX_CENTS) return null;
     const currency = CURRENCIES.includes(raw.currency) ? raw.currency : cents === null ? 'EUR' : null;
     if (!currency) return null;
@@ -47,6 +49,8 @@
       currency,
       rate_used: validRate(raw.rate_used) ? raw.rate_used : null,
       spent_on: /^\d{4}-\d{2}-\d{2}$/.test(raw.spent_on || '') ? raw.spent_on : null,
+      charge_on: /^\d{4}-\d{2}-\d{2}$/.test(raw.charge_on || '') ? raw.charge_on : null,
+      settled_on: /^\d{4}-\d{2}-\d{2}$/.test(raw.settled_on || '') ? raw.settled_on : null,
       deleted_at: raw.deleted_at || null,
       updated_at: raw.updated_at || null,
       updated_by: typeof raw.updated_by === 'string' ? raw.updated_by.slice(0, 80) : null,
@@ -92,15 +96,24 @@
     return entries.filter((e) => e && !e.deleted_at && e.kind !== 'settings');
   }
 
-  /* Bilanz der Gruppe. missingRate = EUR-Einträge, die ohne Reisekurs nicht umgerechnet werden können. */
+  /* Bilanz der Gruppe. Nur abgerechnete Einträge zählen im Ausgleich; vorgemerkte (gebucht, noch nicht belastet)
+     erscheinen separat als planned/plannedShare/plannedByCategory. missingRate = EUR ohne Reisekurs. */
   function summarize(entries, people, tripRate) {
-    const net = {}, share = {}, byCategory = {};
-    people.forEach((p) => { net[p] = 0; share[p] = 0; byCategory[p] = {}; });
-    let total = 0, missingRate = 0;
+    const net = {}, share = {}, byCategory = {}, plannedShare = {}, plannedByCategory = {};
+    people.forEach((p) => { net[p] = 0; share[p] = 0; byCategory[p] = {}; plannedShare[p] = 0; plannedByCategory[p] = {}; });
+    let total = 0, missingRate = 0, planned = 0;
     for (const e of active(entries)) {
       if (e.status === 'offen' || e.cents === null) continue;
       const chf = chfCents(e, tripRate);
       if (chf === null) { missingRate++; continue; }
+      if (e.status === 'vorgemerkt') {
+        planned += chf;
+        for (const [p, c] of Object.entries(split(chf, e.members, e.id))) {
+          plannedShare[p] += c;
+          plannedByCategory[p][e.category] = (plannedByCategory[p][e.category] || 0) + c;
+        }
+        continue;
+      }
       if (e.kind === 'settlement') {
         net[e.from] += chf;
         net[e.to] -= chf;
@@ -115,7 +128,7 @@
         byCategory[p][e.category] = (byCategory[p][e.category] || 0) + c;
       }
     }
-    return { net, share, byCategory, total, missingRate, transfers: transfers(net, people) };
+    return { net, share, byCategory, total, missingRate, planned, plannedShare, plannedByCategory, transfers: transfers(net, people) };
   }
 
   /* Wenige Ausgleichszahlungen: Schuldner und Gläubiger absteigend paaren. */

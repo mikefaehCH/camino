@@ -78,4 +78,19 @@ assert.equal(L.parseAmount('1.234'), null);
 assert.equal(L.format(125050), '1’250.50');
 assert.equal(L.format(-8434), '−84.34');
 
-console.log('PASS: Reisekasse-Rechenlogik (v1/v2, Mischwährung, rotierende Rappen, Ausgleich, offene Posten, Soft-Delete)');
+// Vorgemerkt: gebucht, aber noch nicht belastet → nicht im Ausgleich, separat ausgewiesen
+const hotel = n({ id: 'h1', description: 'Parador', category: 'unterkunft', cents: 20000, currency: 'CHF', status: 'vorgemerkt', charge_on: '2027-05-01', payer: 'Mike', members: P });
+assert.equal(hotel.status, 'vorgemerkt');
+assert.equal(hotel.charge_on, '2027-05-01');
+assert.equal(n({ id: 'x', kind: 'settlement', status: 'vorgemerkt', from: 'Ante', to: 'Mike', cents: 1, currency: 'CHF' }), null);
+const withPlan = L.summarize([v1, hotel], P, rate);
+assert.equal(withPlan.total, 50900);
+assert.equal(withPlan.planned, 20000);
+assert.equal(withPlan.net.Mike, 50900 - 12725);
+assert.equal(withPlan.plannedShare.Mike, 5000);
+assert.equal(withPlan.plannedByCategory.Ante.unterkunft, 5000);
+const charged = L.summarize([v1, { ...hotel, status: 'bezahlt' }], P, rate);
+assert.equal(charged.total, 70900);
+assert.equal(charged.planned, 0);
+
+console.log('PASS: Reisekasse-Rechenlogik (v1/v2, Mischwährung, rotierende Rappen, Ausgleich, offene Posten, vorgemerkte Posten, Soft-Delete)');
