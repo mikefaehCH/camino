@@ -348,8 +348,22 @@ async function shareDay(i){
     catch(e){if(e&&e.name==='AbortError')return;}
   }
   // noopener may return null even when the tab opens. It is not a popup-block signal.
-  try{window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener');}
+  try{window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener');alert('Falls WhatsApp nicht geöffnet wurde: Text kopieren');}
   catch{await copyDay(i);}
+}
+function showCopyDialog(text){
+  const previous=document.activeElement;
+  const dialog=document.createElement('dialog');dialog.className='copy-dialog';
+  const title=document.createElement('h2');title.id='copy-dialog-title';title.textContent='Tagesprogramm kopieren';
+  dialog.setAttribute('aria-labelledby',title.id);
+  const label=document.createElement('label');label.textContent='Text markieren und kopieren:';
+  const textarea=document.createElement('textarea');textarea.readOnly=true;textarea.value=text;textarea.rows=12;
+  label.appendChild(textarea);
+  const close=document.createElement('button');close.type='button';close.className='ghost-btn';close.textContent='Schliessen';
+  close.addEventListener('click',()=>dialog.close());
+  dialog.addEventListener('close',()=>{dialog.remove();previous?.focus();},{once:true});
+  dialog.append(title,label,close);document.body.appendChild(dialog);
+  dialog.showModal();textarea.focus();textarea.select();
 }
 async function copyDay(i){
   const text=shareText(i);
@@ -357,7 +371,7 @@ async function copyDay(i){
     await navigator.clipboard.writeText(text);
     alert('Tagesprogramm kopiert. Du kannst es in WhatsApp einfügen.');
   }catch{
-    window.prompt('Text markieren und kopieren:',text);
+    showCopyDialog(text);
   }
 }
 

@@ -39,10 +39,9 @@ Die Reisekasse verwendet `public.camino_ledger_entries` mit Row Level Security. 
 - localStorage gilt pro **Origin**, nicht pro Pfad. Alle Seiten unter
   `https://mikefaehch.github.io` teilen denselben Speicherbereich. Schlüsselpräfixe sind
   Kollisionsschutz, keine Sicherheitsgrenze gegen andere Skripte desselben Origins.
-- Katalogbefund: `authenticated` hat auf `project_members` auch TRUNCATE-Rechte.
-  TRUNCATE ist nicht durch RLS geschützt, obwohl der normale PostgREST-Zugriff keine
-  entsprechende Operation anbietet. Vor Freigabe administrativ minimal nötige Rechte
-  prüfen/reduzieren. In diesem Auftrag wurde keine Live-Berechtigung verändert.
+- Am 31.10.2026 wurden die unnötigen Client-Rechte auf `project_members` entzogen,
+  einschliesslich TRUNCATE. Per `has_table_privilege` bestätigt: SELECT erlaubt,
+  INSERT/UPDATE/DELETE/TRUNCATE verweigert. Keine Mitgliedschaft oder Finanzdaten geändert.
 - Ablehnen der optionalen Migration lässt die lokale Sicherung unverändert; die Frage
   erscheint beim nächsten Laden erneut (P3 bewusst unverändert).
 - PR bleibt Draft: Mike richtet Google/Apple/Microsoft, Rücksprung-Adressen und ein

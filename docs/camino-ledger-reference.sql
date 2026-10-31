@@ -42,9 +42,9 @@ CREATE POLICY "camino ledger members delete" ON public.camino_ledger_entries FOR
 USING (private.is_project_member(project_id));
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.camino_ledger_entries TO authenticated;
 -- Live hat anon keine Tabellenrechte auf diesen beiden Tabellen.
--- Live hat authenticated SELECT/INSERT/UPDATE/DELETE/TRUNCATE/REFERENCES/TRIGGER
--- auf project_members, aber nur eine SELECT-Policy, keine Schreib-Policy.
--- TRUNCATE umgeht RLS: diese breiten Rechte separat administrativ prüfen/reduzieren.
--- Hier wird nichts an der Live-Konfiguration geändert.
+-- Am 31.10.2026 durch Migration restrict_project_members_client_privileges gehärtet:
+-- authenticated hat auf project_members nur SELECT; keine Client-Schreib-/TRUNCATE-Rechte.
+REVOKE INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER
+ON public.project_members FROM authenticated;
 -- Mitgliedschaft muss administrativ freigeschaltet werden, nie durch Selbstregistrierung.
 -- Negativtests mit echten JWTs sind vor Freigabe separat nötig, siehe REISEKASSE_AUTH.md.
