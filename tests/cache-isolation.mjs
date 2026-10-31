@@ -17,9 +17,17 @@ await pending;
 assert.deepEqual(deleted, ['camino-v48', 'camino-v49', 'camino-v50']);
 console.log('PASS: Camino only removes its obsolete own cache');
 
+// Regression 31.10.2026: Supabase-Antworten dürfen nie aus dem Cache kommen (Kasse zeigte nach dem Speichern den alten, leeren Stand).
+const fetches = [];
+const respond = { calls: 0 };
+assert.equal(typeof handlers.fetch, 'function', 'fetch handler missing');
+handlers.fetch({ request: { method: 'GET', url: 'https://qoensghjemruqafrbmjd.supabase.co/rest/v1/camino_ledger_entries?select=payload' }, respondWith: () => { respond.calls++; } });
+assert.equal(respond.calls, 0, 'Service Worker darf Supabase-Anfragen nicht beantworten');
+console.log('PASS: Supabase-Anfragen umgehen den Service Worker');
+
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const nav = html.slice(html.indexOf('<nav id="nav"'), html.indexOf('</nav>') + '</nav>'.length);
-for (const [label, target] of [['Entdecken','intro'],['Etappen','reise'],['Heute','heute'],['Karte','karte'],['Genuss','restaurants'],['Infos','infos']]) {
+for (const [label, target] of [['Entdecken','intro'],['Etappen','reise'],['Heute','heute'],['Karte','karte'],['Genuss','restaurants'],['Infos','infos'],['Kasse','kosten']]) {
   assert.ok(nav.includes(`href="#${target}">${label}</a>`), `Navigation missing ${label}`);
   assert.ok(html.includes(`id="${target}"`), `Navigation target missing: ${target}`);
 }

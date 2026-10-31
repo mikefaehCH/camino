@@ -1,9 +1,14 @@
 /* Camino 2027 – Funktionen. Daten kommen aus data/trip.js. Siehe CLAUDE.md. */
 /* NAV */
 const secs=document.querySelectorAll('[id]'),links=document.querySelectorAll('#nav a');
-const NAV_ALIAS={kosten:'infos'};
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const id=NAV_ALIAS[e.target.id]||e.target.id;const a=document.querySelector(`#nav a[href="#${id}"]`);if(a){links.forEach(l=>l.classList.remove('on'));a.classList.add('on');}}})},{threshold:.15,rootMargin:'-55px 0px 0px 0px'});
-secs.forEach(s=>{if(s.id)obs.observe(s);});
+/* Menü markiert den Abschnitt, in dem man gerade liest (letzter Abschnitt, dessen Anfang oben erreicht ist). */
+const navTargets=[...links].map(a=>({a,el:document.getElementById(a.getAttribute('href').slice(1))})).filter(x=>x.el).sort((p,q)=>p.el.compareDocumentPosition(q.el)&Node.DOCUMENT_POSITION_FOLLOWING?-1:1);
+let navTick=false;
+function markNav(){navTick=false;const y=120;let cur=null;for(const t of navTargets){if(t.el.getBoundingClientRect().top<=y)cur=t;}
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)cur=navTargets.reduce((m,t)=>{const top=t.el.getBoundingClientRect().top;return top<innerHeight&&(!m||top>m.el.getBoundingClientRect().top)?t:m;},cur);
+  links.forEach(l=>l.classList.toggle('on',Boolean(cur&&l===cur.a)));}
+addEventListener('scroll',()=>{if(!navTick){navTick=true;requestAnimationFrame(markNav);}},{passive:true});
+addEventListener('load',markNav);markNav();
 
 /* COUNTDOWN */
 function updateCountdown(){
