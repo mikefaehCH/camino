@@ -618,6 +618,7 @@
           <div><span>Gruppe total</span><strong id="kx-total">–</strong></div>
           <div><span>Dein Anteil</span><strong id="kx-share">–</strong></div>
         </div>
+        <p class="kx-balance-note" id="kx-planned" hidden></p>
         <p class="kx-balance-note" id="kx-rate-note" hidden></p>
       </section>
 
@@ -631,7 +632,8 @@
       </section>
 
       <section class="kx-block" aria-labelledby="kx-open-title">
-        <h3 id="kx-open-title">Noch offen</h3>
+        <h3 id="kx-open-title">Noch nicht abgerechnet</h3>
+        <p class="kx-hint">Gebucht, aber noch nicht belastet. Zählt erst im Ausgleich, wenn du «Abrechnen» tippst.</p>
         <div id="kx-open" class="kx-stack"></div>
       </section>
 
@@ -687,7 +689,15 @@
             <button type="button" data-cur="CHF" aria-pressed="false">CHF</button>
           </div>
         </div>
-        <label class="kx-check"><input type="checkbox" id="kx-unknown"> Betrag noch unbekannt (offener Posten)</label>
+        <div class="kx-field kx-only-expense-status"><span>Abrechnung</span>
+          <div class="kx-seg kx-status" role="group" aria-label="Abrechnung" id="kx-status">
+            <button type="button" data-status="bezahlt" aria-pressed="true">Jetzt</button>
+            <button type="button" data-status="vorgemerkt" aria-pressed="false">Vorgemerkt</button>
+            <button type="button" data-status="offen" aria-pressed="false">Betrag offen</button>
+          </div>
+          <p class="kx-hint" id="kx-status-hint"></p>
+        </div>
+        <label class="kx-field" id="kx-charge-field" hidden><span>Wird belastet am (optional)</span><input id="kx-charge" type="date"></label>
         <div class="kx-only-expense">
           <label class="kx-field"><span>Wofür?</span><input id="kx-desc" type="text" maxlength="120" autocomplete="off" placeholder="z. B. Abendessen in Redondela"></label>
           <div class="kx-field"><span>Kategorie</span><div class="kx-chips" id="kx-cat"></div></div>
@@ -704,6 +714,27 @@
         <div class="kx-delete-row" id="kx-delete-row" hidden>
           <button type="button" class="kx-btn kx-btn-danger" id="kx-delete">Löschen</button>
         </div>
+      </form>
+    </dialog>
+    <dialog id="kx-hotels" class="kx-sheet" aria-labelledby="kx-hotels-title">
+      <form id="kx-hotels-form" method="dialog" class="kx-sheet-form">
+        <div class="kx-sheet-grip" aria-hidden="true"></div>
+        <div class="kx-sheet-head">
+          <button type="button" class="kx-link" id="kx-hotels-cancel">Abbrechen</button>
+          <strong id="kx-hotels-title">Unterkünfte erfassen</strong>
+          <span class="kx-spacer"></span>
+        </div>
+        <p class="kx-hint">Betrag pro Unterkunft eintragen. Leere Zeilen werden übersprungen.</p>
+        <div id="kx-hotels-list" class="kx-card kx-list"></div>
+        <div class="kx-field"><span>Bezahlt von</span><div class="kx-chips kx-grid4" id="kx-hotels-payer"></div></div>
+        <div class="kx-field"><span>Abrechnung</span>
+          <div class="kx-seg" role="group" aria-label="Abrechnung" id="kx-hotels-status">
+            <button type="button" data-status="vorgemerkt" aria-pressed="true">Vorgemerkt</button>
+            <button type="button" data-status="bezahlt" aria-pressed="false">Jetzt abrechnen</button>
+          </div>
+        </div>
+        <p class="kx-error" id="kx-hotels-error" role="alert"></p>
+        <button type="submit" class="kx-btn kx-btn-primary kx-save" id="kx-hotels-save">Speichern</button>
       </form>
     </dialog>
     <div id="kx-toast" class="kx-toast" role="status" aria-live="polite" hidden><span id="kx-toast-text"></span><button type="button" id="kx-toast-undo">Rückgängig</button></div>

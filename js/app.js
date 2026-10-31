@@ -1107,7 +1107,7 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
     if(!silent&&offline)toast('Gespeichert auf diesem Gerät. Wird hochgeladen, sobald wieder Netz da ist.');
   }
   function payloadOf(e){
-    const p={v:2,id:e.id,kind:e.kind,status:e.status,cents:e.cents,currency:e.currency,rate_used:e.rate_used,spent_on:e.spent_on,deleted_at:e.deleted_at||null};
+    const p={v:2,id:e.id,kind:e.kind,status:e.status,cents:e.cents,currency:e.currency,rate_used:e.rate_used,spent_on:e.spent_on,charge_on:e.charge_on||null,settled_on:e.settled_on||null,deleted_at:e.deleted_at||null};
     if(e.kind==='settlement'){p.from=e.from;p.to=e.to;}
     else{p.description=e.description;p.category=e.category;p.payer=e.payer;p.members=e.members.slice();}
     return p;
@@ -1142,6 +1142,8 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
     $('kx-balance-amount').textContent=mine?L.format(Math.abs(balance))+' CHF':chf(s.total);
     $('kx-total').textContent=chf(s.total);
     $('kx-share').textContent=mine?chf(s.share[mine]):'–';
+    const planned=$('kx-planned');
+    if(s.planned){planned.hidden=false;planned.textContent='+ '+chf(s.planned)+' vorgemerkt'+(mine&&s.plannedShare[mine]?' (dein Anteil '+chf(s.plannedShare[mine])+')':'')+', noch nicht im Ausgleich.';}else planned.hidden=true;
     const note=$('kx-rate-note');
     if(s.missingRate){note.hidden=false;note.textContent=s.missingRate+(s.missingRate===1?' Eintrag in EUR wartet':' Einträge in EUR warten')+' auf den Reisekurs (unter «Mehr»).';}else note.hidden=true;
     $('kx-rate-hint').textContent=rate?'In CHF, fester Reisekurs 1 EUR = '+String(rate)+' CHF.':'Reisekurs noch nicht festgelegt.';
@@ -1167,24 +1169,50 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
         row.append(who,label,amount,done);tr.appendChild(row);
       }
     }
-    // Noch offen
+    // Noch nicht abgerechnet: vorgemerkt (Betrag bekannt) und offen (Betrag fehlt)
     const openBox=$('kx-open');openBox.replaceChildren();
-    const opens=entries.filter(e=>!e.deleted_at&&e.kind==='expense'&&e.status==='offen');
-    for(const e of opens){
-      const b=el('button','kx-row kx-open-row');b.type='button';
-      b.append(el('span','kx-row-main',e.description),el('span','kx-warn',e.cents===null?'Betrag fehlt':L.format(e.cents)+' '+e.currency+' · offen'));
-      b.addEventListener('click',()=>openSheet(e));openBox.appendChild(b);
+    const pendingItems=entries.filter(e=>!e.deleted_at&&e.kind==='expense'&&(e.status==='vorgemerkt'||e.status==='offen'));
+    const isDue=e=>e.status==='vorgemerkt'&&e.charge_on&&e.charge_on<=TODAY;
+    pendingItems.sort((x,y)=>(isDue(y)-isDue(x))||String(x.charge_on||x.spent_on||'9').localeCompare(String(y.charge_on||y.spent_on||'9')));
+    const due=pendingItems.filter(isDue);
+    if(due.length>1){
+      const all=el('button','kx-btn kx-btn-primary','Alle '+due.length+' fälligen abrechnen');all.type='button';
+      all.addEventListener('click',()=>settleMany(due));openBox.appendChild(all);
     }
-    const suggestions=['Hin- und Rückflüge','Unterkünfte','Translatio-Boot'].filter(n=>!entries.some(e=>!e.deleted_at&&e.description&&e.description.toLowerCase().startsWith(n.toLowerCase().slice(0,6))));
-    if(!opens.length)openBox.appendChild(el('p','kx-empty','Nichts offen. Posten ohne bekannten Betrag kannst du hier vormerken.'));
-    if(suggestions.length){
-      const chips=el('div','kx-chips');
-      for(const n of suggestions){const c=el('button','kx-chip','+ '+n);c.type='button';c.addEventListener('click',()=>openSheet(null,{description:n,unknown:true,category:n==='Unterkünfte'?'unterkunft':'transport'}));chips.appendChild(c);}
-      openBox.appendChild(chips);
+    if(pendingItems.length){
+      const card=el('div','kx-card kx-list');
+      for(const e of pendingItems){
+        const row=el('div','kx-row kx-pending'+(isDue(e)?' is-due':''));
+        const open=el('button','kx-pending-main');open.type='button';open.addEventListener('click',()=>openSheet(e));
+        const title=el('span','kx-entry-title',e.description);
+        const meta=[e.payer];
+        if(e.spent_on)meta.push(typeof fmt==='function'?fmt(e.spent_on):e.spent_on);
+        if(e.status==='offen')meta.push('Betrag fehlt');
+        else if(e.charge_on)meta.push((isDue(e)?'fällig seit ':'Belastung ')+(typeof fmt==='function'?fmt(e.charge_on):e.charge_on));
+        open.append(title,el('span','kx-entry-meta',(e.pending?'wartet auf Verbindung · ':'')+meta.join(' · ')));
+        row.appendChild(open);
+        if(e.status==='vorgemerkt'){
+          const side=el('div','kx-pending-side');
+          side.appendChild(el('strong','kx-num',L.format(e.cents)+' '+e.currency));
+          const go=el('button','kx-btn kx-btn-small'+(isDue(e)?' kx-btn-due':''),'Abrechnen');go.type='button';
+          go.setAttribute('aria-label',e.description+' jetzt abrechnen');
+          go.addEventListener('click',()=>settleMany([e]));
+          side.appendChild(go);row.appendChild(side);
+        }else row.appendChild(el('span','kx-warn','Betrag fehlt'));
+        card.appendChild(row);
+      }
+      openBox.appendChild(card);
+    }else openBox.appendChild(el('p','kx-empty','Nichts vorgemerkt.'));
+    const actions=el('div','kx-chips');
+    const hotelsLeft=hotelRows().filter(h=>!h.done).length;
+    if(hotelsLeft){const h=el('button','kx-chip kx-chip-strong','Unterkünfte erfassen ('+hotelsLeft+')');h.type='button';h.addEventListener('click',openHotels);actions.appendChild(h);}
+    for(const n of ['Hin- und Rückflüge','Translatio-Boot'].filter(n=>!entries.some(e=>!e.deleted_at&&e.description&&e.description.toLowerCase().startsWith(n.toLowerCase().slice(0,6))))){
+      const c=el('button','kx-chip','+ '+n);c.type='button';c.addEventListener('click',()=>openSheet(null,{description:n,status:'offen',category:'transport'}));actions.appendChild(c);
     }
+    if(actions.childNodes.length)openBox.appendChild(actions);
     // Ausgaben nach Tag
     const days=$('kx-days');days.replaceChildren();
-    const list=entries.filter(e=>!e.deleted_at&&(e.kind==='settlement'||(e.kind==='expense'&&e.status!=='offen'))).sort((a,b)=>String(b.spent_on||'').localeCompare(String(a.spent_on||''))||String(b.updated_at||'').localeCompare(String(a.updated_at||'')));
+    const list=entries.filter(e=>!e.deleted_at&&(e.kind==='settlement'||(e.kind==='expense'&&e.status==='bezahlt'))).sort((a,b)=>String(b.spent_on||'').localeCompare(String(a.spent_on||''))||String(b.updated_at||'').localeCompare(String(a.updated_at||'')));
     if(!list.length)days.appendChild(el('p','kx-empty','Noch keine Ausgaben. Tippe auf «+ Ausgabe».'));
     const groups=new Map();for(const e of list){const k=e.spent_on||'';if(!groups.has(k))groups.set(k,[]);groups.get(k).push(e);}
     for(const [d,items] of groups){
@@ -1204,30 +1232,101 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
       }
       g.appendChild(card);days.appendChild(g);
     }
-    // Kategorien
+    // Kategorien (abgerechnet dunkel, vorgemerkt hell)
     const cats=$('kx-cats');cats.replaceChildren();
-    if(mine&&s.share[mine]>0){
-      const mineCats=s.byCategory[mine];const max=Math.max(...Object.values(mineCats));
+    if(mine&&(s.share[mine]>0||s.plannedShare[mine]>0)){
+      const done=s.byCategory[mine],plan=s.plannedByCategory[mine];
+      const max=Math.max(1,...L.CATEGORIES.map(([id])=>(done[id]||0)+(plan[id]||0)));
       for(const [id,label] of L.CATEGORIES){
-        const v=mineCats[id];if(!v)continue;
-        const row=el('div','kx-bar');const top=el('div','kx-bar-top');top.append(el('span','',label),el('span','kx-num',chf(v)));
-        const track=el('div','kx-track');const fill=el('div','kx-fill kx-c-'+id);fill.style.width=Math.max(4,Math.round(v/max*100))+'%';track.appendChild(fill);
+        const v=done[id]||0,p=plan[id]||0;if(!v&&!p)continue;
+        const row=el('div','kx-bar');const top=el('div','kx-bar-top');
+        top.append(el('span','',label),el('span','kx-num',chf(v+p)+(p?' (davon '+L.format(p)+' vorgemerkt)':'')));
+        const track=el('div','kx-track');
+        if(v){const f=el('div','kx-fill kx-c-'+id);f.style.width=Math.max(2,v/max*100)+'%';track.appendChild(f);}
+        if(p){const f=el('div','kx-fill kx-plan kx-c-'+id);f.style.width=Math.max(2,p/max*100)+'%';track.appendChild(f);}
         row.append(top,track);cats.appendChild(row);
       }
       const sum=el('div','kx-bar-sum');sum.append(el('span','','Dein Anteil bisher'),el('strong','kx-num',chf(s.share[mine])));cats.appendChild(sum);
+      if(s.plannedShare[mine]){const sum2=el('div','kx-bar-sum kx-bar-sum-plan');sum2.append(el('span','','Mit Vorgemerkten voraussichtlich'),el('strong','kx-num',chf(s.share[mine]+s.plannedShare[mine])));cats.appendChild(sum2);}
     }else cats.appendChild(el('p','kx-empty','Sobald Ausgaben erfasst sind, siehst du hier deinen Anteil nach Kategorie.'));
     // Heute-Zeile
     const today=document.getElementById('kx-today');
-    if(today&&mine)today.textContent=balance>0?'Kasse: du bekommst '+chf(balance):balance<0?'Kasse: du schuldest '+chf(-balance):'Kasse: ausgeglichen';
+    const myDue=mine?due.filter(e=>e.payer===mine).length:0;
+    if(today&&mine&&myDue)today.textContent='Kasse: '+myDue+(myDue===1?' Buchung':' Buchungen')+' fällig zum Abrechnen';
+    else if(today&&mine)today.textContent=balance>0?'Kasse: du bekommst '+chf(balance):balance<0?'Kasse: du schuldest '+chf(-balance):'Kasse: ausgeglichen';
     // Sync-Status
     const pending=outbox.length;
     $('kx-sync').textContent=pending?(pending===1?'1 Änderung wartet auf Verbindung.':pending+' Änderungen warten auf Verbindung.'):offline?'Offline: zuletzt geladener Stand.':'';
     $('kx-identity').textContent=myName?'Angemeldet als '+myName+(me&&me.email?' ('+me.email+')':''):'';
   }
 
+  async function settleMany(items){
+    const originals=items.map(payloadOf);
+    for(const o of originals)await save({...o,status:'bezahlt',settled_on:TODAY},{silent:true});
+    toast(items.length===1?'«'+items[0].description+'» abgerechnet':items.length+' Buchungen abgerechnet',async()=>{for(const o of originals)await save(o,{silent:true});});
+  }
+  /* Unterkünfte aus dem Reiseplan (DAYS): aufeinanderfolgende Nächte im selben Hotel zusammengefasst. */
+  function hotelRows(){
+    if(typeof DAYS==='undefined')return [];
+    const rows=[];
+    for(const d of DAYS){if(!d.hotel)continue;const last=rows[rows.length-1];if(last&&last.hotel===d.hotel)last.nights++;else rows.push({hotel:d.hotel,date:d.d,title:d.title,nights:1});}
+    const active=merged().filter(e=>!e.deleted_at&&e.kind==='expense');
+    for(const r of rows){const key=r.hotel.toLowerCase();r.done=active.some(e=>e.description.toLowerCase().includes(key));}
+    return rows;
+  }
+  const hotelsSheet=$('kx-hotels'),hotelsForm=$('kx-hotels-form');
+  let hotelsPayer=myName||people[0],hotelsStatus='vorgemerkt',hotelsCur={};
+  function paintHotels(){
+    chipGroup($('kx-hotels-payer'),people,v=>v===hotelsPayer,v=>{hotelsPayer=v;paintHotels();});
+    for(const b of $('kx-hotels-status').querySelectorAll('[data-status]'))b.setAttribute('aria-pressed',String(b.dataset.status===hotelsStatus));
+    for(const b of hotelsForm.querySelectorAll('[data-hcur]'))b.setAttribute('aria-pressed',String(hotelsCur[b.dataset.hotel]===b.dataset.hcur));
+  }
+  for(const b of $('kx-hotels-status').querySelectorAll('[data-status]'))b.addEventListener('click',()=>{hotelsStatus=b.dataset.status;paintHotels();});
+  function openHotels(){
+    const list=$('kx-hotels-list');list.replaceChildren();$('kx-hotels-error').textContent='';hotelsCur={};
+    hotelsPayer=people.includes(myName)?myName:people[0];hotelsStatus='vorgemerkt';
+    hotelRows().forEach((h,i)=>{
+      const row=el('div','kx-row kx-hotel-row'+(h.done?' is-done':''));
+      const info=el('div','kx-entry-main');
+      info.append(el('span','kx-entry-title',h.hotel),el('span','kx-entry-meta',(typeof fmt==='function'?fmt(h.date):h.date)+' · '+h.nights+(h.nights===1?' Nacht':' Nächte')+' · '+h.title));
+      row.appendChild(info);
+      if(h.done){row.appendChild(el('span','kx-ok','erfasst'));}
+      else{
+        hotelsCur[h.hotel]='EUR';
+        const ctl=el('div','kx-hotel-ctl');
+        const input=el('input','kx-hotel-amount');input.type='text';input.inputMode='decimal';input.placeholder='Betrag';input.autocomplete='off';
+        input.dataset.hotel=h.hotel;input.dataset.date=h.date;input.setAttribute('aria-label','Betrag für '+h.hotel);
+        const seg=el('div','kx-seg kx-seg-mini');seg.setAttribute('role','group');seg.setAttribute('aria-label','Währung für '+h.hotel);
+        for(const c of ['EUR','CHF']){const b=el('button','',c);b.type='button';b.dataset.hcur=c;b.dataset.hotel=h.hotel;b.addEventListener('click',()=>{hotelsCur[h.hotel]=c;paintHotels();});seg.appendChild(b);}
+        ctl.append(input,seg);row.appendChild(ctl);
+      }
+      list.appendChild(row);
+    });
+    paintHotels();
+    if(typeof hotelsSheet.showModal==='function'){try{hotelsSheet.showModal();}catch{hotelsSheet.setAttribute('open','');}}else hotelsSheet.setAttribute('open','');
+  }
+  function closeHotels(){if(typeof hotelsSheet.close==='function'&&hotelsSheet.open)hotelsSheet.close();else hotelsSheet.removeAttribute('open');}
+  $('kx-hotels-cancel').addEventListener('click',closeHotels);
+  hotelsForm.addEventListener('submit',async event=>{
+    event.preventDefault();
+    const err=$('kx-hotels-error');err.textContent='';
+    const rate=tripRate(merged());const created=[];
+    for(const input of hotelsForm.querySelectorAll('.kx-hotel-amount')){
+      if(!input.value.trim())continue;
+      const cents=L.parseAmount(input.value);
+      if(!cents){err.textContent='Bitte den Betrag bei «'+input.dataset.hotel+'» prüfen, z. B. 128.50.';try{input.focus();}catch{}return;}
+      const cur=hotelsCur[input.dataset.hotel]||'EUR';
+      created.push({v:2,id:uid(),kind:'expense',status:hotelsStatus,cents,currency:cur,rate_used:cur==='EUR'?rate:null,spent_on:input.dataset.date,charge_on:null,settled_on:hotelsStatus==='bezahlt'?TODAY:null,deleted_at:null,description:input.dataset.hotel,category:'unterkunft',payer:hotelsPayer,members:people.slice()});
+    }
+    if(!created.length){err.textContent='Bitte mindestens einen Betrag eintragen.';return;}
+    closeHotels();
+    for(const e of created)await save(e,{silent:true});
+    toast(created.length+(created.length===1?' Unterkunft ':' Unterkünfte ')+(hotelsStatus==='vorgemerkt'?'vorgemerkt':'abgerechnet'));
+  });
+
   /* ---------- Sheet (add / edit) ---------- */
   const sheet=$('kx-sheet'),form=$('kx-form');
-  let editing=null,kind='expense',currency='EUR',category='essen',payer=myName||people[0],members=people.slice(),from=people[1]||people[0],to=myName||people[0],confirmDelete=false;
+  let editing=null,mode='bezahlt',kind='expense',currency='EUR',category='essen',payer=myName||people[0],members=people.slice(),from=people[1]||people[0],to=myName||people[0],confirmDelete=false;
   function chipGroup(box,values,isOn,onPick,labelOf){
     box.replaceChildren();
     for(const v of values){const b=el('button','kx-chip',labelOf?labelOf(v):v);b.type='button';b.setAttribute('aria-pressed',String(isOn(v)));b.addEventListener('click',()=>{onPick(v);paint();});box.appendChild(b);}
@@ -1237,9 +1336,12 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
     for(const b of $('kx-currency').querySelectorAll('[data-cur]'))b.setAttribute('aria-pressed',String(b.dataset.cur===currency));
     form.querySelector('.kx-only-expense').hidden=kind!=='expense';
     form.querySelector('.kx-only-settlement').hidden=kind!=='settlement';
-    $('kx-unknown').closest('label').hidden=kind!=='expense';
-    const unknown=kind==='expense'&&$('kx-unknown').checked;
+    form.querySelector('.kx-only-expense-status').hidden=kind!=='expense';
+    for(const b of $('kx-status').querySelectorAll('[data-status]'))b.setAttribute('aria-pressed',String(b.dataset.status===mode));
+    const unknown=kind==='expense'&&mode==='offen';
     $('kx-amount').disabled=unknown;
+    $('kx-charge-field').hidden=!(kind==='expense'&&mode==='vorgemerkt');
+    $('kx-status-hint').textContent=kind!=='expense'?'':mode==='vorgemerkt'?'Gebucht, aber noch nicht belastet. Zählt erst im Ausgleich, wenn du «Abrechnen» tippst.':mode==='offen'?'Betrag noch unbekannt. Du kannst ihn später ergänzen.':'Zählt sofort im Ausgleich.';
     chipGroup($('kx-cat'),L.CATEGORIES.map(c=>c[0]),v=>v===category,v=>category=v,v=>L.categoryLabel(v));
     chipGroup($('kx-payer'),people,v=>v===payer,v=>payer=v);
     chipGroup($('kx-members'),people,v=>members.includes(v),v=>{members=members.includes(v)?members.filter(x=>x!==v):people.filter(p=>p===v||members.includes(p));});
@@ -1254,7 +1356,7 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
   for(const b of form.querySelectorAll('[data-kind]'))b.addEventListener('click',()=>{kind=b.dataset.kind;paint();});
   for(const b of $('kx-currency').querySelectorAll('[data-cur]'))b.addEventListener('click',()=>{currency=b.dataset.cur;paint();});
   $('kx-amount').addEventListener('input',paint);
-  $('kx-unknown').addEventListener('change',paint);
+  for(const b of $('kx-status').querySelectorAll('[data-status]'))b.addEventListener('click',()=>{mode=b.dataset.status;paint();});
   function openSheet(entry,preset){
     editing=entry||null;confirmDelete=false;$('kx-form-error').textContent='';
     const e=entry||{};
@@ -1265,11 +1367,12 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
     from=e.from||people.find(p=>p!==myName)||people[0];to=e.to||(people.includes(myName)?myName:people[1]);
     $('kx-amount').value=e.cents?(e.cents/100).toFixed(2):'';
     $('kx-desc').value=e.description||(preset&&preset.description)||'';
-    $('kx-unknown').checked=Boolean((e.status==='offen'&&e.cents===null)||(preset&&preset.unknown));
+    mode=e.status||(preset&&preset.status)||'bezahlt';
+    $('kx-charge').value=e.charge_on||'';
     $('kx-date').value=e.spent_on||TODAY;
     paint();
     if(typeof sheet.showModal==='function'){try{sheet.showModal();}catch{sheet.setAttribute('open','');}}else sheet.setAttribute('open','');
-    setTimeout(()=>{try{($('kx-unknown').checked?$('kx-desc'):$('kx-amount')).focus();}catch{}},60);
+    setTimeout(()=>{try{(mode==='offen'?$('kx-desc'):$('kx-amount')).focus();}catch{}},60);
   }
   function closeSheet(){if(typeof sheet.close==='function'&&sheet.open)sheet.close();else sheet.removeAttribute('open');}
   $('kx-add').addEventListener('click',()=>openSheet(null));
@@ -1277,7 +1380,7 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
   form.addEventListener('submit',async event=>{
     event.preventDefault();
     const err=$('kx-form-error');err.textContent='';
-    const unknown=kind==='expense'&&$('kx-unknown').checked;
+    const unknown=kind==='expense'&&mode==='offen';
     const cents=unknown?null:L.parseAmount($('kx-amount').value);
     if(!unknown&&!cents){err.textContent='Bitte einen gültigen Betrag eingeben, z. B. 42.80.';try{$('kx-amount').focus();}catch{}return;}
     const date=/^\d{4}-\d{2}-\d{2}$/.test($('kx-date').value)?$('kx-date').value:null;
@@ -1292,7 +1395,9 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
       const description=$('kx-desc').value.trim();
       if(!description){err.textContent='Bitte kurz beschreiben, wofür die Ausgabe war.';try{$('kx-desc').focus();}catch{}return;}
       if(!members.length){err.textContent='Bitte mindestens eine Person bei «Für» auswählen.';return;}
-      entry={...base,status:unknown?'offen':'bezahlt',description,category,payer,members:members.slice()};
+      const charge=/^\d{4}-\d{2}-\d{2}$/.test($('kx-charge').value)?$('kx-charge').value:null;
+      const wasSettled=editing&&editing.status==='bezahlt';
+      entry={...base,status:mode,charge_on:mode==='vorgemerkt'?charge:null,settled_on:mode==='bezahlt'?((editing&&editing.settled_on)||(wasSettled?null:TODAY)):null,description,category,payer,members:members.slice()};
     }
     if(!L.normalize(entry,people)){err.textContent='Der Eintrag ist unvollständig.';return;}
     closeSheet();

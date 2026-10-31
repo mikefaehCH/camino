@@ -138,10 +138,46 @@ const rows = (p) => p.evaluate(() => window.__rows.map((r) => r.payload));
 
   // Offener Posten ohne Betrag
   await p.locator('#kx-open .kx-chip', { hasText: 'Translatio-Boot' }).click();
-  assert.equal(await p.locator('#kx-unknown').isChecked(), true);
+  assert.equal(await p.locator('#kx-status [data-status="offen"]').getAttribute('aria-pressed'), 'true');
   await p.click('#kx-save');
   await p.waitForFunction(() => window.__rows.some((r) => r.payload.status === 'offen'));
   assert.ok((await text(p, '#kx-open')).includes('Betrag fehlt'));
+
+
+  // Vorgemerkt: zählt nicht im Ausgleich, bis «Abrechnen»
+  const balanceBefore = await text(p, '#kx-balance-amount');
+  await p.click('#kx-add');
+  await p.fill('#kx-amount', '400');
+  await p.locator('#kx-currency [data-cur="CHF"]').click();
+  await p.fill('#kx-desc', 'Parador Test');
+  await p.locator('#kx-status [data-status="vorgemerkt"]').click();
+  assert.equal(await p.locator('#kx-charge-field').isVisible(), true);
+  await p.fill('#kx-charge', '2026-01-01');
+  await p.click('#kx-save');
+  await p.waitForFunction(() => window.__rows.some((r) => r.payload.description === 'Parador Test'));
+  assert.equal(await text(p, '#kx-balance-amount'), balanceBefore, 'Vorgemerktes darf den Stand nicht ändern');
+  assert.match(await text(p, '#kx-planned'), /400\.00 CHF vorgemerkt/);
+  assert.match(await text(p, '#kx-open'), /fällig seit/);
+  await p.locator('#kx-open .kx-pending', { hasText: 'Parador Test' }).locator('button', { hasText: 'Abrechnen' }).click();
+  await p.waitForFunction(() => window.__rows.find((r) => r.payload.description === 'Parador Test').payload.status === 'bezahlt');
+  assert.notEqual(await text(p, '#kx-balance-amount'), balanceBefore);
+  assert.ok((await text(p, '#kx-days')).includes('Parador Test'));
+  await p.click('#kx-toast-undo');
+  await p.waitForFunction(() => window.__rows.find((r) => r.payload.description === 'Parador Test').payload.status === 'vorgemerkt');
+  assert.equal(await text(p, '#kx-balance-amount'), balanceBefore);
+
+  // Unterkünfte aus dem Reiseplan gesammelt erfassen
+  await p.locator('#kx-open .kx-chip', { hasText: 'Unterkünfte erfassen' }).click();
+  const hotelInputs = p.locator('#kx-hotels .kx-hotel-amount');
+  assert.ok((await hotelInputs.count()) >= 5);
+  await hotelInputs.nth(0).fill('656,20');
+  await hotelInputs.nth(1).fill('369');
+  await p.click('#kx-hotels-save');
+  await p.waitForFunction(() => window.__rows.filter((r) => r.payload.category === 'unterkunft' && r.payload.status === 'vorgemerkt').length >= 2);
+  const hotelRows = (await rows(p)).filter((r) => r.category === 'unterkunft' && r.status === 'vorgemerkt' && r.description !== 'Parador Test');
+  assert.equal(hotelRows.length, 2);
+  assert.ok(hotelRows.every((r) => r.spent_on && r.members.length === 4 && r.payer === 'Mike'));
+  assert.equal(await text(p, '#kx-balance-amount'), balanceBefore, 'Sammel-Erfassung als vorgemerkt ändert den Stand nicht');
 
   // Offline erfassen, später hochladen
   await p.evaluate(() => { window.__fail = true; });
@@ -157,7 +193,7 @@ const rows = (p) => p.evaluate(() => window.__rows.map((r) => r.payload));
 
   // Kategorien, Heute-Zeile, Touch-Ziele, keine Browser-Dialoge
   assert.ok((await text(p, '#kx-cats')).includes('Unterkunft'));
-  assert.match(await text(p, '#kx-today'), /^Kasse: du bekommst/);
+  assert.match(await text(p, '#kx-today'), /^Kasse: (du bekommst|1 Buchung fällig zum Abrechnen)/);
   const small = await p.evaluate(() => [...document.querySelectorAll('#kosten a, #kosten button, #kosten summary')].filter((e) => { const b = e.getBoundingClientRect(); return e.offsetParent && b.width > 0 && b.height < 44; }).map((e) => e.textContent.trim().slice(0, 25)));
   assert.deepEqual(small, [], 'Touch-Ziele unter 44 px in der Kasse');
   assert.equal(await p.evaluate(() => document.documentElement.scrollWidth - innerWidth <= 0), true, 'Horizontaler Überlauf');
@@ -193,4 +229,4 @@ const rows = (p) => p.evaluate(() => window.__rows.map((r) => r.payload));
 
 await browser.close();
 server.close();
-console.log('PASS: Reisekasse 2.0 (Erfassen, CHF-Ausgleich, Bezahlt/Rückgängig, Bearbeiten, Löschen, offene Posten, Offline-Warteschlange, Übernahme, keine Browser-Dialoge, 44-px-Ziele)');
+console.log('PASS: Reisekasse 2.0 (Erfassen, CHF-Ausgleich, Bezahlt/Rückgängig, Bearbeiten, Löschen, offene/vorgemerkte Posten, Abrechnen, Unterkünfte gesammelt, Offline-Warteschlange, Übernahme, keine Browser-Dialoge, 44-px-Ziele)');
