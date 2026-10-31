@@ -9,8 +9,8 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import './sharing.mjs';
 import './auth-core.mjs';
-import './ledger-migration.mjs';
-import './ledger-delete.mjs';
+import './ledger.mjs';
+import './kasse-ui.mjs';
 import './auth-ui.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');

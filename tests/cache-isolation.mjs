@@ -50,11 +50,11 @@ assert.ok(app.includes("addEventListener('online',update)"), 'Missing online eve
 assert.ok(app.includes("navigator.onLine!==false"), 'Missing initial network state');
 console.log('PASS: day companion connectivity indicator');
 
-assert.ok(html.includes('id="expense-form"'), 'Expense tracker missing');
-assert.ok(html.includes('id="expense-balances"'), 'Balance view missing');
-assert.ok(html.includes('id="expense-export"'), 'Backup export missing');
-assert.ok(app.includes("camino-expenses-v1"), 'Local ledger storage missing');
-assert.ok(app.includes("expense-settlement"), 'Settlement calculation missing');
+assert.ok(html.includes('id="kx-form"'), 'Expense sheet missing');
+assert.ok(html.includes('id="kx-balance-amount"') && html.includes('id="kx-transfers"'), 'Balance view missing');
+assert.ok(html.includes('id="kx-export-json"') && html.includes('id="kx-export-csv"'), 'Backup export missing');
+assert.ok(app.includes("camino-expenses-v1") && app.includes('camino-kasse-outbox-v2'), 'Legacy import or offline queue missing');
+assert.ok(app.includes('L.summarize('), 'Settlement calculation missing');
 assert.ok(!html.includes('https://www.splitwise.com/'), 'External Splitwise link should not exist');
 console.log('PASS: independent travel expense tracker');
 
@@ -68,27 +68,28 @@ assert.ok(app.includes("if(p.start!=null)L.push('Abmarsch:"), 'Day sharing must 
 assert.ok(app.includes("if(x.hl&&x.hl.length)"), 'Highlights should be guarded');
 console.log('PASS: daily share text includes departure');
 
-assert.ok(html.includes('id="settlement-form"'), 'Repayment form missing');
-assert.ok(app.includes("e.kind==='settlement'"), 'Repayment entries not supported');
-assert.ok(app.includes('net[e.from]+=e.cents;net[e.to]-=e.cents'), 'Repayments must affect balances');
+assert.ok(html.includes('data-kind="settlement"'), 'Repayment entry missing');
+assert.ok(app.includes("kind:'settlement'"), 'Repayment entries not supported');
+const ledgerSrc = fs.readFileSync(new URL('../js/ledger.js', import.meta.url), 'utf8');
+assert.ok(ledgerSrc.includes('net[e.from] += chf;') && ledgerSrc.includes('net[e.to] -= chf;'), 'Repayments must affect balances');
 console.log('PASS: repayment entries affect balances');
 
-assert.ok(app.includes("edit.textContent='Bearbeiten'"), 'Expense editing action missing');
-assert.ok(app.includes('await update(revised)'), 'Expense editing must update the shared ledger');
-assert.ok(app.includes(".eq('entry_id',e.id)"), 'Expense editing must preserve entry identity');
+assert.ok(app.includes('openSheet(e)'), 'Expense editing action missing');
+assert.ok(app.includes("onConflict:'project_id,entry_id'"), 'Expense editing must update the shared ledger');
+assert.ok(app.includes('id:editing?editing.id:uid()'), 'Expense editing must preserve entry identity');
 console.log('PASS: existing expenses can be edited');
 
 const authUi = fs.readFileSync(new URL('../js/auth-ui.js', import.meta.url), 'utf8');
 assert.ok(html.includes('id="expense-private"') && html.includes('id="expense-auth"'), 'Private expense login gate missing');
 assert.ok(html.includes('id="expense-private"') && html.includes('hidden'), 'Private ledger must be hidden before login');
 assert.ok(authUi.includes('await auth.membership()'), 'Must verify project membership');
-assert.ok(authUi.includes('initPromise=window.initTravelExpenses(auth.client,auth.projectId)') && authUi.includes('await initPromise'), 'Must fetch server ledger before showing private UI');
+assert.ok(authUi.includes('initPromise=window.initTravelExpenses(auth.client,auth.projectId,') && authUi.includes('await initPromise'), 'Must fetch server ledger before showing private UI');
 assert.ok(app.includes("client.from('camino_ledger_entries')"), 'Shared RLS ledger missing');
 console.log('PASS: member-only shared Reisekasse');
 
 // PR #21 / 04102f3: Ausgleichsberechnung bleibt vorhanden; Saldo-UI aus #28.
-assert.ok(app.includes("expense-transfer expense-settlement"), "Ausgleichszeilen fehlen");
-for(const name of ["expense-entry-info","expense-entry-title","expense-entry-meta","expense-entry-amount","expense-entry-actions"]) assert.ok(app.includes(name), name+" fehlt");
+assert.ok(app.includes("'kx-row kx-transfer'"), "Ausgleichszeilen fehlen");
+for(const name of ["kx-entry-main","kx-entry-title","kx-entry-meta","kx-entry-amount"]) assert.ok(app.includes(name), name+" fehlt");
 
 const {createHash}=await import('node:crypto');
 const sdk=fs.readFileSync(new URL('../vendor/supabase/supabase-js-2.57.0.mjs',import.meta.url));
