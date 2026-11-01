@@ -23,7 +23,9 @@ const server = http.createServer((req, res) => {
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const BASE = `http://127.0.0.1:${server.address().port}/`;
-const browser = await pw.chromium.launch();
+const engineName = process.env.TEST_BROWSER || 'chromium';
+if (!['chromium', 'webkit'].includes(engineName)) throw new Error('Unbekannter Testbrowser: ' + engineName);
+const browser = await pw[engineName].launch();
 
 const MOCK = `(()=>{
   window.__rows=[];window.__fail=false;window.__dialogs=0;
