@@ -1341,6 +1341,7 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
     const unknown=kind==='expense'&&mode==='offen';
     $('kx-amount').disabled=unknown;
     $('kx-charge-field').hidden=!(kind==='expense'&&mode==='vorgemerkt');
+    $('kx-charge').disabled=$('kx-charge-field').hidden;
     $('kx-status-hint').textContent=kind!=='expense'?'':mode==='vorgemerkt'?'Gebucht, aber noch nicht belastet. Zählt erst im Ausgleich, wenn du «Abrechnen» tippst.':mode==='offen'?'Betrag noch unbekannt. Du kannst ihn später ergänzen.':'Zählt sofort im Ausgleich.';
     chipGroup($('kx-cat'),L.CATEGORIES.map(c=>c[0]),v=>v===category,v=>category=v,v=>L.categoryLabel(v));
     chipGroup($('kx-payer'),people,v=>v===payer,v=>payer=v);

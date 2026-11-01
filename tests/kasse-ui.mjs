@@ -82,6 +82,7 @@ const rows = (p) => p.evaluate(() => window.__rows.map((r) => r.payload));
   // Ausgabe in CHF erfassen
   await p.click('#kx-add');
   assert.ok(await p.locator('#kx-sheet').evaluate((d) => d.open));
+  assert.equal(await p.locator('#kx-charge').isDisabled(), true, 'Inaktives Belastungsdatum darf die Formularvalidierung nicht blockieren');
   await p.fill('#kx-amount', '509');
   await p.locator('#kx-currency [data-cur="CHF"]').click();
   await p.fill('#kx-desc', 'Pazo Santa Teresa');
@@ -154,6 +155,7 @@ const rows = (p) => p.evaluate(() => window.__rows.map((r) => r.payload));
   await p.fill('#kx-desc', 'Parador Test');
   await p.locator('#kx-status [data-status="vorgemerkt"]').click();
   assert.equal(await p.locator('#kx-charge-field').isVisible(), true);
+  assert.equal(await p.locator('#kx-charge').isEnabled(), true, 'Vorgemerkte Buchungen müssen das optionale Belastungsdatum verwenden können');
   await p.fill('#kx-charge', '2026-01-01');
   await p.click('#kx-save');
   await p.waitForFunction(() => window.__rows.some((r) => r.payload.description === 'Parador Test'));
