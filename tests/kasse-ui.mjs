@@ -182,12 +182,26 @@ const rows = (p) => p.evaluate(() => window.__rows.map((r) => r.payload));
   assert.equal(await text(p, '#kx-balance-amount'), balanceBefore, 'Sammel-Erfassung als vorgemerkt ändert den Stand nicht');
 
   // Offline erfassen, später hochladen
+  // Stored rows can be visible before the previous flush has finished rendering.
+  await p.waitForFunction(() => document.getElementById('kx-sync').textContent === '');
   await p.evaluate(() => { window.__fail = true; });
   await p.click('#kx-add');
   await p.fill('#kx-amount', '12');
   await p.fill('#kx-desc', 'Kaffee');
   await p.click('#kx-save');
-  await p.waitForFunction(() => /wartet auf Verbindung/.test(document.getElementById('kx-sync').textContent));
+  try {
+    await p.waitForFunction(() => /wartet auf Verbindung/.test(document.getElementById('kx-sync').textContent));
+  } catch (error) {
+    console.error('Synthetic offline fixture state:', await p.evaluate(() => ({
+      sync: document.getElementById('kx-sync').textContent,
+      formError: document.getElementById('kx-form-error').textContent,
+      open: document.getElementById('kx-sheet').open,
+      invalid: [...document.querySelectorAll('#kx-form input:invalid')].map(e => ({ id: e.id, value: e.value, reason: e.validationMessage })),
+      pending: Object.keys(localStorage).filter(k => k.startsWith('camino-kasse-outbox-v2:')).map(k => JSON.parse(localStorage.getItem(k)).length),
+      saved: window.__rows.some(r => r.payload.description === 'Kaffee'),
+    })));
+    throw error;
+  }
   assert.ok((await text(p, '#kx-days')).includes('wartet auf Verbindung'));
   await p.evaluate(() => { window.__fail = false; window.dispatchEvent(new Event('online')); });
   await p.waitForFunction(() => window.__rows.some((r) => r.payload.description === 'Kaffee'));
