@@ -21,8 +21,10 @@ const otp=document.getElementById('expense-otp-form');
 const sent=document.getElementById('expense-auth-sent');
 const resend=document.getElementById('expense-auth-resend');
 let initialised=false,initPromise=null,revision=0,authorisedUserId=null,accessInterrupted=false,cooldown=null;
+const pushTests=document.getElementById('member-push-tests');
+function hidePushTests(){if(pushTests)pushTests.hidden=true;}
 function report(message){status.textContent=message;}
-function hideLedger(){privatePanel.hidden=true;member.hidden=true;login.hidden=false;root.hidden=false;}
+function hideLedger(){hidePushTests();privatePanel.hidden=true;member.hidden=true;login.hidden=false;root.hidden=false;}
 function mask(address){const [name,domain]=String(address).split('@');if(!domain)return address;return name.slice(0,Math.min(4,name.length))+'…@'+domain;}
 async function refresh(){
  const version=++revision;
@@ -46,6 +48,7 @@ async function refresh(){
   }
   if(version!==revision)return;
   privatePanel.hidden=false;
+  if(pushTests)pushTests.hidden=false;
   root.hidden=true;
   report('');
  }catch(e){if(version===revision){accessInterrupted=initialised;privatePanel.hidden=true;root.hidden=false;report('Die Kasse konnte nicht geladen werden. Bitte Verbindung prüfen und die Seite neu laden.');}}
