@@ -8,6 +8,10 @@ jobs:
   regression:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -18,6 +22,8 @@ jobs:
       - name: Install Playwright for existing browser checks
         run: |
           npm install --no-save playwright
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps ${{ matrix.browser }}
       - name: Existing Camino checks
         run: npm run check
+        env:
+          TEST_BROWSER: ${{ matrix.browser }}

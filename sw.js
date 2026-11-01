@@ -1,5 +1,5 @@
 /* Camino 2027 – Offline-Cache */
-const CACHE = 'camino-v69';
+const CACHE = 'camino-v70';
 const FOTOS = 'camino-fotos'; // vom Knopf «Fotos offline speichern», bleibt über Updates erhalten
 const CORE = ['./', './index.html', './css/site.css', './js/ledger.js', './js/app.js', './js/push-client.js', './js/auth-core.js', './js/auth-ui.js', './vendor/supabase/supabase-js-2.57.0.mjs', './data/trip.js', './manifest.webmanifest', './icon.svg', './icon-192.png', './apple-touch-icon.png',
   './images/start/pilger-nebelwald-800.webp', './images/porto/porto-douro-sonnenuntergang-800.webp', './images/porto/porto-ponte-luis-blaue-stunde-800.webp',
@@ -16,11 +16,11 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('fetch', e => {
   const req = e.request;
-  if (req.method !== 'GET') return;
+  if (req.method !== 'GET' || req.headers.has('authorization') || req.cache === 'no-store') return;
   const url = new URL(req.url);
   // Datenbank und Login (Supabase) nie zwischenspeichern: immer live, private Daten gehören nicht in den Cache.
   if (url.hostname.endsWith('.supabase.co') || url.hostname.endsWith('.supabase.in')) return;
-  const put = res => { if (res && (res.ok || res.type === 'opaque')) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); } return res; };
+  const put = res => { if (res && (res.ok || res.type === 'opaque') && !/(?:^|,)\s*(?:private|no-store)\b/i.test(res.headers.get('cache-control') || '')) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); } return res; };
   // Seite & Wetter & Kartenkacheln: zuerst Netz, sonst Cache
   if (url.origin === location.origin || url.hostname.endsWith('open-meteo.com') || url.hostname.endsWith('tile.openstreetmap.org')) {
     // Netz zuerst, aber nach 3 s auf den Cache ausweichen (schwacher Empfang)
