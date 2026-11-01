@@ -9,6 +9,7 @@ const auth=window.CaminoAuth.createAuth({
  clientFactory:createClient
 });
 const root=document.getElementById('expense-auth');
+const pushTests=document.getElementById('member-push-tests');
 const privatePanel=document.getElementById('expense-private');
 const login=document.getElementById('expense-auth-login');
 const member=document.getElementById('expense-auth-member');
@@ -22,7 +23,7 @@ const sent=document.getElementById('expense-auth-sent');
 const resend=document.getElementById('expense-auth-resend');
 let initialised=false,initPromise=null,revision=0,authorisedUserId=null,accessInterrupted=false,cooldown=null;
 function report(message){status.textContent=message;}
-function hideLedger(){privatePanel.hidden=true;member.hidden=true;login.hidden=false;root.hidden=false;}
+function hideLedger(){if(pushTests)pushTests.hidden=true;privatePanel.hidden=true;member.hidden=true;login.hidden=false;root.hidden=false;}
 function mask(address){const [name,domain]=String(address).split('@');if(!domain)return address;return name.slice(0,Math.min(4,name.length))+'…@'+domain;}
 async function refresh(){
  const version=++revision;
@@ -45,6 +46,7 @@ async function refresh(){
     authorisedUserId=user.id;
   }
   if(version!==revision)return;
+  if(pushTests)pushTests.hidden=false;
   privatePanel.hidden=false;
   root.hidden=true;
   report('');
