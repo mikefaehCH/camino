@@ -271,7 +271,27 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   await p.context().close();
 }
 
-// 2g. Text-Schnappschuss (erkennt ungewollte Inhaltsänderungen)
+// 2g. Rapid stage updates keep every requested state and release shared transition names.
+{
+  const p = await open({ date: '2026-10-18T10:00:00+02:00' });
+  await p.evaluate(() => {
+    for (let n = 1; n <= 7; n++) openStage(n, false);
+    const card = document.querySelector('#journey .j-item[data-stage="1"] .j-card');
+    card.click();
+    openStage(1, false);
+  });
+  await p.waitForTimeout(1000);
+  const result = await p.evaluate(() => ({
+    open: STAGES.slice(0, 7).every(stage => stage.classList.contains('open')),
+    named: [...document.querySelectorAll('[style]')].filter(el => el.style.viewTransitionName === 'st-img').length,
+  }));
+  ok(result.open, 'Schnelle Etappenwechsel verlieren angeforderte Zustände');
+  ok(result.named === 0, 'Bild-Übergang hinterlässt einen reservierten Namen');
+  ok(p.errs.length === 0, 'Schnelle Etappenwechsel erzeugen Script-Fehler: ' + p.errs.join(' | '));
+  await p.context().close();
+}
+
+// 2h. Text-Schnappschuss (erkennt ungewollte Inhaltsänderungen)
 {
   const p = await open({ date: '2027-06-16T08:00:00+02:00' });
   await p.evaluate(() => { for (let n = 1; n <= 8; n++) try { openStage(n, false); } catch (e) {}
