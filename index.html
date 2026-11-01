@@ -5,6 +5,7 @@
 <meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Camino Portugués 2027</title>
+<meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Unser Camino Portugués im Juni 2027: Porto, Valença, Variante Espiritual, Santiago und A Coruña – Reisejournal und Reisebegleiter für vier Freunde.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nach Santiago. Zu viert. – Camino Portugués 2027">
@@ -24,6 +25,7 @@
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:400;font-display:swap;src:url(vendor/fonts/dm-sans-latin-400-normal.woff2) format('woff2');}
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:swap;src:url(vendor/fonts/dm-sans-latin-500-normal.woff2) format('woff2');}
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:600 700;font-display:swap;src:url(vendor/fonts/dm-sans-latin-700-normal.woff2) format('woff2');}
+#member-push-tests[hidden]{display:none!important}
 </style>
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link rel="manifest" href="manifest.webmanifest">
@@ -188,7 +190,7 @@
     <button id="reminder-download" class="ghost-btn" type="button">Kalendereintrag speichern</button>
     <p id="reminder-feedback" role="status" aria-live="polite"></p>
   </div>
-  <div class="today-reminders" aria-labelledby="push-test-title"><h3 id="push-test-title">Mitteilungen testen</h3><p>Teste eine Mitteilung direkt auf diesem Gerät. Du kannst die lokale Anzeige testen oder weiter unten einen echten Server-Push auf dein iPhone senden.</p><button type="button" id="notification-test" class="ghost-btn">Testmitteilung anzeigen</button><p id="notification-test-feedback" role="status" aria-live="polite"></p><div style="margin-top:1rem"><h4>Echter Push vom Server</h4><p>Einmalig dein iPhone aktivieren, danach eine Nachricht vom Server senden – auch wenn die App geschlossen ist. Kein Konto erforderlich; der Test ist nur für dein eigenes Gerät.</p><button type="button" class="ghost-btn" id="push-register">iPhone für Push aktivieren</button> <button type="button" class="ghost-btn" id="push-send">Server-Push senden</button> <button type="button" class="ghost-btn" id="push-check">Versandstatus prüfen</button><p id="push-status" role="status" aria-live="polite">Noch kein Gerät für den Server-Test registriert.</p><small>Push-Test v2 · Serverstatus zeigt die Annahme durch Apple, nicht die Anzeige auf dem iPhone.</small></div></div>
+  <div class="today-reminders" aria-labelledby="push-test-title" id="member-push-tests" hidden><h3 id="push-test-title">Mitteilungen testen</h3><p>Teste eine Mitteilung direkt auf diesem Gerät. Du kannst die lokale Anzeige testen oder weiter unten einen echten Server-Push auf dein iPhone senden.</p><button type="button" id="notification-test" class="ghost-btn">Testmitteilung anzeigen</button><p id="notification-test-feedback" role="status" aria-live="polite"></p><div style="margin-top:1rem"><h4>Echter Push vom Server</h4><p>Einmalig dein iPhone aktivieren, danach eine Nachricht vom Server senden – auch wenn die App geschlossen ist. Kein Konto erforderlich; der Test ist nur für dein eigenes Gerät.</p><button type="button" class="ghost-btn" id="push-register">iPhone für Push aktivieren</button> <button type="button" class="ghost-btn" id="push-send">Server-Push senden</button> <button type="button" class="ghost-btn" id="push-check">Versandstatus prüfen</button><p id="push-status" role="status" aria-live="polite">Noch kein Gerät für den Server-Test registriert.</p><small>Push-Test v2 · Serverstatus zeigt die Annahme durch Apple, nicht die Anzeige auf dem iPhone.</small></div></div>
   <div class="today-reminders" aria-labelledby="automatic-push-title">
     <h3 id="automatic-push-title">Automatische Camino-Erinnerungen</h3>
     <p>Für die sieben Etappen vom 12. bis 18. Juni 2027: am Vorabend eine Vorschau und morgens eine Erinnerung. Die Zeiten gelten in <strong>spanischer Ortszeit</strong> (Madrid); in Portugal ist es eine Stunde früher. Die Mitteilungen funktionieren auch bei geschlossener App.</p>
