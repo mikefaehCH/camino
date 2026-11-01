@@ -21,7 +21,7 @@ console.log('PASS: Camino only removes its obsolete own cache');
 const fetches = [];
 const respond = { calls: 0 };
 assert.equal(typeof handlers.fetch, 'function', 'fetch handler missing');
-handlers.fetch({ request: { method: 'GET', url: 'https://qoensghjemruqafrbmjd.supabase.co/rest/v1/camino_ledger_entries?select=payload' }, respondWith: () => { respond.calls++; } });
+handlers.fetch({ request: new Request('https://fixture.supabase.co/rest/v1/synthetic_entries?select=payload'), respondWith: () => { respond.calls++; } });
 assert.equal(respond.calls, 0, 'Service Worker darf Supabase-Anfragen nicht beantworten');
 console.log('PASS: Supabase-Anfragen umgehen den Service Worker');
 

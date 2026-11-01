@@ -12,6 +12,7 @@ import './auth-core.mjs';
 import './ledger.mjs';
 import './kasse-ui.mjs';
 import './auth-ui.mjs';
+import './service-worker-private.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const UPDATE = process.argv.includes('--update');
@@ -59,7 +60,9 @@ for (const f of fs.readdirSync(path.join(ROOT, 'routes')).filter(f => f.endsWith
 }
 
 /* ---------- 2. Seite im Browser ---------- */
-const browser = await pw.chromium.launch();
+const engineName = process.env.TEST_BROWSER || 'chromium';
+if (!['chromium', 'webkit'].includes(engineName)) throw new Error('Unbekannter Testbrowser: ' + engineName);
+const browser = await pw[engineName].launch();
 async function open(opts = {}) {
   const ctx = await browser.newContext({ timezoneId: 'Europe/Lisbon', viewport: { width: opts.w || 390, height: opts.h || 844 } });
   if (opts.date) await ctx.addInitScript(`(()=>{const T=new Date('${opts.date}').getTime();const O=Date;class D extends O{constructor(...a){super(...(a.length?a:[T]));}static now(){return T;}}window.Date=D;})()`);
@@ -224,7 +227,71 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   await p.context().close();
 }
 
-// 2f. Text-Schnappschuss (erkennt ungewollte Inhaltsänderungen)
+// 2f. Location errors and low-accuracy navigation without a working GPX network.
+{
+  const p = await open({ date: '2026-10-18T10:00:00+02:00' });
+  const unavailable = await p.evaluate(() => {
+    Object.defineProperty(navigator, 'geolocation', { configurable: true, value: undefined });
+    document.getElementById('locate-btn').click();
+    return document.getElementById('loc-out').textContent;
+  });
+  ok(unavailable.includes('nicht unterstützt'), 'Standort ohne Browserunterstützung: Hinweis fehlt');
+  for (const code of [1, 2, 3]) {
+    const result = await p.evaluate(code => {
+      let options;
+      Object.defineProperty(navigator, 'geolocation', { configurable: true, value: {
+        getCurrentPosition: (_success, error, opts) => { options = opts; error({ code }); },
+      } });
+      document.getElementById('locate-btn').click();
+      return { text: document.getElementById('loc-out').textContent, options };
+    }, code);
+    ok(result.text.includes(code === 1 ? 'abgelehnt' : 'nicht gefunden'), 'Standortfehler ' + code + ': Hinweis fehlt');
+    ok(result.options.timeout === 15000 && result.options.maximumAge === 60000, 'Standortanfrage muss begrenzt bleiben');
+  }
+  await p.evaluate(() => {
+    renderToday(1);
+    const destination = DAYS[1];
+    loadGPX = () => Promise.reject(new Error('synthetic offline GPX fixture'));
+    for (const stage of Object.keys(GPX)) delete GPX[stage];
+    window.CMAP = null;
+    Object.defineProperty(navigator, 'geolocation', { configurable: true, value: {
+      getCurrentPosition: success => success({ coords: {
+        latitude: destination.lat + 0.001, longitude: destination.lon, accuracy: 500,
+      } }),
+    } });
+    document.getElementById('locate-btn').click();
+  });
+  await p.waitForFunction(() => document.getElementById('loc-out').textContent.includes('Standort ungenau'));
+  const result = await p.evaluate(() => {
+    const out = document.getElementById('loc-out'), link = out.querySelector('a');
+    return { text: out.textContent, href: link?.href, target: link?.target, rel: link?.rel };
+  });
+  ok(result.text.includes('Luftlinie'), 'Ohne GPX darf keine Reststrecke auf dem Weg behauptet werden');
+  ok(result.href?.startsWith('https://www.google.com/maps/dir/') && result.target === '_blank' && result.rel.includes('noopener'), 'Standort-Fallback: sicherer Navigationslink fehlt');
+  await p.context().close();
+}
+
+// 2g. Rapid stage updates keep every requested state and release shared transition names.
+{
+  const p = await open({ date: '2026-10-18T10:00:00+02:00' });
+  await p.evaluate(() => {
+    for (let n = 1; n <= 7; n++) openStage(n, false);
+    const card = document.querySelector('#journey .j-item[data-stage="1"] .j-card');
+    card.click();
+    openStage(1, false);
+  });
+  await p.waitForTimeout(1000);
+  const result = await p.evaluate(() => ({
+    open: STAGES.slice(0, 7).every(stage => stage.classList.contains('open')),
+    named: [...document.querySelectorAll('[style]')].filter(el => el.style.viewTransitionName === 'st-img').length,
+  }));
+  ok(result.open, 'Schnelle Etappenwechsel verlieren angeforderte Zustände');
+  ok(result.named === 0, 'Bild-Übergang hinterlässt einen reservierten Namen');
+  ok(p.errs.length === 0, 'Schnelle Etappenwechsel erzeugen Script-Fehler: ' + p.errs.join(' | '));
+  await p.context().close();
+}
+
+// 2h. Text-Schnappschuss (erkennt ungewollte Inhaltsänderungen)
 {
   const p = await open({ date: '2027-06-16T08:00:00+02:00' });
   await p.evaluate(() => { for (let n = 1; n <= 8; n++) try { openStage(n, false); } catch (e) {}

@@ -689,6 +689,11 @@ document.querySelectorAll('#restaurants .ri[data-status]').forEach(r=>r.insertAd
   if(etappen){etappen.style.display='none';const hr=etappen.nextElementSibling;if(hr&&hr.tagName==='HR')hr.style.display='none';}
   /* Öffnen / Schliessen mit Bild-Übergang */
   const itemOf=n=>journey.querySelector(`.j-item[data-stage="${n}"]`);
+  let stageTransition=null;
+  const transitionImages=new Set();
+  const clearTransitionImages=()=>{for(const img of transitionImages)img.style.viewTransitionName='';transitionImages.clear();};
+  const nameTransitionImage=img=>{if(img){img.style.viewTransitionName='st-img';transitionImages.add(img);}};
+  const reportTransitionError=error=>{if(!error||error.name!=='AbortError')console.error(error);};
   function setOpen(n,open){
     const it=itemOf(n),st=STAGES[n-1];if(!it||!st)return;
     st.classList.toggle('open',open);it.classList.toggle('open',open);
@@ -697,19 +702,27 @@ document.querySelectorAll('#restaurants .ri[data-status]').forEach(r=>r.insertAd
   }
   function transition(n,open,scroll){
     const it=itemOf(n);if(!it)return;
+    // Preserve a superseded update, then release its shared image name before starting another.
+    if(stageTransition){stageTransition.apply();stageTransition.vt.skipTransition();stageTransition=null;}
+    clearTransitionImages();
     const cardImg=it.querySelector('.j-card .j-img img, .j-card .j-img .img-ph');
     const doIt=()=>{setOpen(n,open);};
     const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(document.startViewTransition&&!reduce&&cardImg){
       const heroOf=()=>it.querySelector('.stage-body .ph-fig .img-hero, .stage-body .ph-fig .img-ph');
-      if(open){cardImg.style.viewTransitionName='st-img';}
-      else{const h=heroOf();if(h)h.style.viewTransitionName='st-img';}
+      const current={vt:null,updated:false,apply(){if(!this.updated){this.updated=true;doIt();}}};
+      nameTransitionImage(open?cardImg:heroOf());
       const vt=document.startViewTransition(()=>{
-        if(open)cardImg.style.viewTransitionName='';else{const h=heroOf();if(h)h.style.viewTransitionName='';}
-        doIt();
-        if(open){const h=heroOf();if(h)h.style.viewTransitionName='st-img';}else cardImg.style.viewTransitionName='st-img';
+        current.apply();
+        if(stageTransition!==current)return;
+        clearTransitionImages();
+        nameTransitionImage(open?heroOf():cardImg);
       });
-      vt.finished.finally(()=>{cardImg.style.viewTransitionName='';const h=heroOf();if(h)h.style.viewTransitionName='';});
+      current.vt=vt;stageTransition=current;
+      const cleanup=()=>{if(stageTransition===current){clearTransitionImages();stageTransition=null;}};
+      vt.ready.catch(reportTransitionError);
+      vt.updateCallbackDone.catch(reportTransitionError);
+      vt.finished.then(cleanup,error=>{cleanup();reportTransitionError(error);});
     }else doIt();
     if(scroll&&open)setTimeout(()=>it.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}),reduce?0:260);
   }
@@ -1341,6 +1354,7 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
     const unknown=kind==='expense'&&mode==='offen';
     $('kx-amount').disabled=unknown;
     $('kx-charge-field').hidden=!(kind==='expense'&&mode==='vorgemerkt');
+    $('kx-charge').disabled=$('kx-charge-field').hidden;
     $('kx-status-hint').textContent=kind!=='expense'?'':mode==='vorgemerkt'?'Gebucht, aber noch nicht belastet. Zählt erst im Ausgleich, wenn du «Abrechnen» tippst.':mode==='offen'?'Betrag noch unbekannt. Du kannst ihn später ergänzen.':'Zählt sofort im Ausgleich.';
     chipGroup($('kx-cat'),L.CATEGORIES.map(c=>c[0]),v=>v===category,v=>category=v,v=>L.categoryLabel(v));
     chipGroup($('kx-payer'),people,v=>v===payer,v=>payer=v);
