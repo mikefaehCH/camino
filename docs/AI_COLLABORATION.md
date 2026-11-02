@@ -13,7 +13,7 @@ Verbindliche Regeln: [AGENTS.md](../AGENTS.md). Technische Vorgaben: [CAMINO_PRO
 - ChatGPT/Codex implementiert normalerweise auf `feat/`, `fix/` oder `chore/`-Aufgabenbranch; Claude implementiert nur bei ausdrücklich abweichender Issue-Zuordnung.
 - PR verweist mit `Refs #<issue>` auf das Issue und nennt **Agent, Ausgangs- und HEAD-Commit, Änderung, Tests/Validierung, Risiken und nächsten Schritt**.
 - Bestehende Tests ausführen, keine Website-Funktionen ohne Auftrag ändern; kein Force-Push, keine direkten Main-Änderungen.
-- Merge/Deployment nur mit ausdrücklicher, für dieses Projekt geltender Freigabe; CI-Erfolg ist allein keine Merge-Freigabe.
+- Eine ausdrückliche Projekt- oder Auftragsfreigabe umfasst Merge und Deployment innerhalb ihres Umfangs. **Kein separater Freigabe-Dialog pro technischem Schritt.** Für Auto-Merge müssen zusätzlich der exakte PR-HEAD, vollständige grüne CI, das unabhängige Review und das PR-Opt-in laut [RELEASE_POLICY.md](RELEASE_POLICY.md) verifiziert sein. CI-Erfolg allein autorisiert keinen Merge.
 
 ## 3. Unabhängiges Review
 - Claude reviewt normalerweise direkt am PR, auf dem **konkreten geprüften Commit-SHA**.
