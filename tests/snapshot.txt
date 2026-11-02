@@ -70,7 +70,7 @@ Mitteilungen testen
 Teste eine Mitteilung direkt auf diesem Gerät. Du kannst die lokale Anzeige testen oder weiter unten einen echten Server-Push auf dein iPhone senden.
 Testmitteilung anzeigen
 Echter Push vom Server
-Einmalig dein iPhone aktivieren, danach eine Nachricht vom Server senden – auch wenn die App geschlossen ist. Kein Konto erforderlich; der Test ist nur für dein eigenes Gerät.
+Einmalig dein iPhone aktivieren, danach eine Nachricht vom Server senden – auch wenn die App geschlossen ist. Der Server-Test ist nur für freigeschaltete Camino-Mitglieder.
 iPhone für Push aktivieren Server-Push senden Versandstatus prüfen
 Noch kein Gerät für den Server-Test registriert.
 Push-Test v2 · Serverstatus zeigt die Annahme durch Apple, nicht die Anzeige auf dem iPhone.
