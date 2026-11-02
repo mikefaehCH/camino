@@ -10,7 +10,7 @@ Freiwillige Erinnerungen für die sieben Etappen vom 12.–18. Juni 2027. Die Da
 - **Gültigkeit**: Bei Aktivierung wird die Subscription bis 1. Juli 2027 aufbewahrt. Das Gerät muss bis zur Reise weiterhin gültig sein; bei ungültigen Push-Endpunkten wird der Versand abgeschaltet.
 
 ## Architektur
-`js/push-client.js` sendet mit einem lokal generierten, 256-Bit-zufälligen Token `reminder_settings` und `save_reminders` an `camino-push-device`. Die Datenbank speichert nur SHA-256 des Tokens in `public.push_test_devices`. Der Endpoint ist an einen passenden Token gebunden und validiert Zeitfenster.
+`js/push-client.js` sendet mit einem lokal generierten, 256-Bit-zufälligen Token `reminder_settings` und `save_reminders` an `camino-push-device`. Die Datenbank speichert nur SHA-256 des Tokens in `public.push_test_devices`. Die vorbereitete Härtung in `PUSH_DEVICE_MEMBERSHIP.md` verlangt zusätzlich einen geprüften Supabase-Bearer und Projektmitgliedschaft für die Geräteschnittstelle; sie ist vor manueller Migration und Function-Deployment noch nicht produktiv.
 
 Supabase `pg_cron` Job `camino-2027-reminder-dispatch` ruft alle fünf Minuten via `pg_net` die Edge Function `camino-push-reminders` auf. Das Cron-Geheimnis steht ausschliesslich in `private.camino_reminder_dispatch_auth`; es wird nicht in Repository oder Browser eingebettet. Die Edge Function validiert das Geheimnis und liest fällige Erinnerungen über service-role-beschränkte RPCs. `private.camino_reminder_log` verhindert doppelte Benachrichtigungen pro Gerät, Datum und Typ.
 

@@ -8,6 +8,7 @@ const auth=window.CaminoAuth.createAuth({
  redirectPath:'/camino/',
  clientFactory:createClient
 });
+window.getCaminoPushAccessToken=async()=>{const {data,error}=await auth.client.auth.getSession();if(error)throw error;return data?.session?.access_token||null;};
 const root=document.getElementById('expense-auth');
 const privatePanel=document.getElementById('expense-private');
 const login=document.getElementById('expense-auth-login');

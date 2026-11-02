@@ -1,4 +1,4 @@
-/* iOS Web Push self-test: opt-in, device-bound, no account or secrets in source. */
+/* iOS Web Push self-test: opt-in, member-authorised, device-bound; no secrets in source. */
 (function(){
 'use strict';
 const status=document.getElementById('push-status');
@@ -23,11 +23,17 @@ function getToken(){
  localStorage.setItem(storageKey,token);
  return token;
 }
+async function accessToken(){
+ const token=await window.getCaminoPushAccessToken?.();
+ if(!token)throw new Error('Bitte zuerst anmelden.');
+ return token;
+}
 async function request(action,extra={}){
- const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token:getToken(),...extra}),cache:'no-store'});
+ const bearer=await accessToken();
+ const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+bearer},body:JSON.stringify({action,token:getToken(),...extra}),cache:'no-store'});
  const data=await response.json().catch(()=>({}));
  if(!response.ok){
-  const messages={vapid_not_configured:'Der Server-Schlüssel ist noch nicht bereit.',device_not_registered:'Bitte zuerst dieses iPhone aktivieren.',wait_two_minutes:'Bitte zwei Minuten bis zum nächsten Test warten.',daily_limit:'Das Tageslimit von drei Testnachrichten ist erreicht.',push_provider_rejected:'Der Push-Dienst hat die Nachricht abgelehnt. Bitte Gerät erneut aktivieren.',unsupported_push_endpoint:'Diese Registrierung unterstützt derzeit iPhone-Web-Push.',registration_failed:'Registrierung am Server fehlgeschlagen.'};
+  const messages={origin_denied:'Diese Website darf den Push-Test nicht verwenden.',method_not_allowed:'Diese Anfrage wird nicht unterstützt.',too_large:'Die Anfrage ist zu gross.',invalid_json:'Die Anfrage konnte nicht verarbeitet werden.',invalid_device_token:'Die Gerätekennung ist ungültig. Bitte das Gerät erneut aktivieren.',invalid_subscription:'Die Geräteregistrierung ist ungültig.',invalid_endpoint:'Die Push-Adresse ist ungültig.',status_unavailable:'Der Versandstatus ist derzeit nicht verfügbar.',settings_unavailable:'Die Erinnerungen konnten nicht geladen werden.',settings_save_failed:'Die Erinnerungen konnten nicht gespeichert werden.',invalid_reminder_settings:'Bitte gültige Erinnerungszeiten wählen.',invalid_action:'Diese Push-Aktion wird nicht unterstützt.',lookup_failed:'Das Gerät konnte nicht geprüft werden.',auth_required:'Bitte zuerst anmelden.',invalid_session:'Die Anmeldung ist abgelaufen. Bitte erneut anmelden.',membership_required:'Du bist für Camino noch nicht freigeschaltet. Bitte Mike fragen.',membership_unavailable:'Die Freischaltung konnte nicht geprüft werden. Bitte später erneut versuchen.',device_owner_mismatch:'Dieses Gerät gehört zu einem anderen Konto. Bitte mit dem bisherigen Konto anmelden.',rate_limit_unavailable:'Das Testlimit konnte nicht geprüft werden. Bitte später erneut versuchen.',test_already_in_progress:'Ein Push-Test läuft bereits. Bitte kurz warten.',server_unavailable:'Der Server ist derzeit nicht verfügbar.',vapid_not_configured:'Der Server-Schlüssel ist noch nicht bereit.',device_not_registered:'Bitte zuerst dieses iPhone aktivieren.',wait_two_minutes:'Bitte zwei Minuten bis zum nächsten Test warten.',daily_limit:'Das Tageslimit von drei Testnachrichten ist erreicht.',push_provider_rejected:'Der Push-Dienst hat die Nachricht abgelehnt. Bitte Gerät erneut aktivieren.',unsupported_push_endpoint:'Diese Registrierung unterstützt derzeit iPhone-Web-Push.',registration_failed:'Registrierung am Server fehlgeschlagen.'};
   throw new Error(messages[data.error]||'Serverfehler ('+response.status+').');
  }
  return data;
@@ -45,6 +51,7 @@ check.addEventListener('click',async()=>{
 register.addEventListener('click',async()=>{
  register.disabled=true;
  try{
+  await accessToken();
   if(!('Notification' in window)||!('PushManager' in window)||!('serviceWorker' in navigator))throw new Error('Bitte die Camino-App über das Home-Bildschirm-Symbol öffnen.');
   const permission=Notification.permission==='default'?await Notification.requestPermission():Notification.permission;
   if(permission!=='granted')throw new Error('Bitte Mitteilungen in den iPhone-Einstellungen erlauben.');
@@ -96,6 +103,6 @@ if(saveReminders){
   finally{saveReminders.disabled=false;}
  });
 }
-try{if(localStorage.getItem(storageKey))checkStatus().catch(()=>report('Gerätekennung vorhanden. Bitte iPhone aktivieren.'));}catch{}
-try{if(localStorage.getItem(storageKey))loadReminders().catch(()=>{if(remindersFeedback)remindersFeedback.textContent='Bitte das iPhone für Push aktivieren.';});}catch{}
+try{if(localStorage.getItem(storageKey))checkStatus().catch(e=>report(e.message||'Gerätekennung vorhanden. Bitte iPhone aktivieren.'));}catch{}
+try{if(localStorage.getItem(storageKey))loadReminders().catch(e=>{if(remindersFeedback)remindersFeedback.textContent=e.message||'Bitte das iPhone für Push aktivieren.';});}catch{}
 })();
