@@ -256,3 +256,91 @@ for (const session of [null, "synthetic-access-token"]) {
 console.log(
   "PASS: no-session client/server rejection, verified identity and membership, device ownership, per-user quota call and revoked-member delivery denial",
 );
+
+// Exercise the pinned real SDK as well: only its HTTP transport is mocked.
+const { createClient: realCreateClient } =
+  await import("../vendor/supabase/supabase-js-2.57.0.mjs");
+for (const mode of ["missing", "invalid", "nonmember", "member"]) {
+  const http = [];
+  const handler = createPushDeviceHandler({
+    env: (name) =>
+      name === "SUPABASE_URL"
+        ? "https://fixture.supabase.co"
+        : "synthetic-service-key",
+    waitUntil() {
+      throw Error("config must not schedule a push");
+    },
+    webpush: {},
+    createClient: (url, key, options) =>
+      realCreateClient(url, key, {
+        ...options,
+        global: {
+          fetch: async (input, init) => {
+            const req = new Request(input, init),
+              endpoint = new URL(req.url);
+            http.push(endpoint.pathname);
+            const json = (value, status = 200) =>
+              new Response(JSON.stringify(value), {
+                status,
+                headers: { "content-type": "application/json" },
+              });
+            if (endpoint.pathname === "/auth/v1/user") {
+              assert.equal(
+                req.headers.get("authorization"),
+                "Bearer synthetic-access-token",
+              );
+              return mode === "invalid"
+                ? json({ message: "Invalid JWT" }, 401)
+                : json({ id: userId, is_anonymous: false });
+            }
+            if (endpoint.pathname === "/rest/v1/project_members") {
+              assert.equal(
+                endpoint.searchParams.get("user_id"),
+                "eq." + userId,
+              );
+              assert.equal(
+                endpoint.searchParams.get("project_id"),
+                "eq." + CAMINO_PROJECT_ID,
+              );
+              return json(mode === "nonmember" ? [] : [{ user_id: userId }]);
+            }
+            assert.equal(
+              endpoint.pathname,
+              "/rest/v1/rpc/get_push_credentials_for_service",
+            );
+            return json({
+              publicKey: "public-only",
+              privateKey: "server-only-test-secret",
+            });
+          },
+        },
+      }),
+  });
+  const response = await handler(
+    new Request("https://edge.example.test", {
+      method: "POST",
+      headers: {
+        origin: "https://mikefaehch.github.io",
+        "content-type": "application/json",
+        ...(mode === "missing"
+          ? {}
+          : { authorization: "Bearer synthetic-access-token" }),
+      },
+      body: JSON.stringify({ action: "config", token }),
+    }),
+  );
+  assert.equal(
+    response.status,
+    mode === "member" ? 200 : mode === "nonmember" ? 403 : 401,
+  );
+  if (mode === "missing") assert.equal(http.length, 0);
+  if (mode !== "member")
+    assert.equal(
+      http.includes("/rest/v1/rpc/get_push_credentials_for_service"),
+      false,
+    );
+  else assert.deepEqual(await response.json(), { publicKey: "public-only" });
+}
+console.log(
+  "PASS: real pinned SDK with mocked fetch verifies bearer and membership without network or secret disclosure",
+);
