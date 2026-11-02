@@ -1249,6 +1249,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .kx-seg-mini button{min-height:38px;padding:0 .55rem;font-size:.82rem;}
 .kx-ok{font-size:.82rem;color:var(--link);font-weight:700;}
 
-/* Fold headings: remove orphaned horizontal separators beside the text. */
-#stempel.sec.fold, #compostela.sec.fold, #galicien.sec.fold { border-top: 0; border-bottom: 0; }
-#stempel.sec.fold + hr.rule, #compostela.sec.fold + hr.rule, #galicien.sec.fold + hr.rule { display: none; }
+/* Fold headings: avoid decorative rules that appear as stray lines beside the headings. */
+#stempel .sec-rule, #compostela .sec-rule, #wetter .sec-rule { display: none; }
+#stempel + hr.rule, #compostela + hr.rule { display: none; }
