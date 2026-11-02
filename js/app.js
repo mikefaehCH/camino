@@ -1389,6 +1389,12 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
     setTimeout(()=>{try{(mode==='offen'?$('kx-desc'):$('kx-amount')).focus();}catch{}},60);
   }
   function closeSheet(){if(typeof sheet.close==='function'&&sheet.open)sheet.close();else sheet.removeAttribute('open');}
+  // Close only when the backdrop itself is clicked; never dismiss clicks inside the form.
+  sheet.addEventListener('click',event=>{
+    if(event.target!==sheet)return;
+    const rect=sheet.getBoundingClientRect();
+    if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)closeSheet();
+  });
   $('kx-add').addEventListener('click',()=>openSheet(null));
   $('kx-cancel').addEventListener('click',closeSheet);
   form.addEventListener('submit',async event=>{
