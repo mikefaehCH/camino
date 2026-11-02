@@ -1248,3 +1248,4 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .kx-seg-mini{padding:3px;}
 .kx-seg-mini button{min-height:38px;padding:0 .55rem;font-size:.82rem;}
 .kx-ok{font-size:.82rem;color:var(--link);font-weight:700;}
+

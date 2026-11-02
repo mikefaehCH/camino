@@ -111,6 +111,32 @@ const rows = (p) => p.evaluate(() => window.__rows.map((r) => r.payload));
   assert.match(await text(p, '#kx-form-error'), /gültigen Betrag/);
   await p.click('#kx-cancel');
 
+  // Regression: real backdrop pointer tap closes without writing; drag from inside does not.
+  await p.click('#kx-add');
+  await p.fill('#kx-desc', 'Ungespeicherter Entwurf');
+  const beforeDismiss = JSON.stringify(await rows(p));
+  const rect = await p.locator('#kx-sheet').boundingBox();
+  assert.ok(rect, 'Dialog muss sichtbar sein');
+  const outsideX = Math.max(2, rect.x - 12);
+  const outsideY = Math.max(2, rect.y - 12);
+  await p.mouse.move(outsideX, outsideY);
+  await p.mouse.down();
+  await p.mouse.up();
+  assert.equal(await p.locator('#kx-sheet').evaluate(d => d.open), false, 'Backdrop schliesst Dialog');
+  assert.equal(JSON.stringify(await rows(p)), beforeDismiss, 'Backdrop darf nicht speichern');
+  await p.click('#kx-add');
+  await p.fill('#kx-desc', 'Entwurf bleibt bei Drag');
+  const descRect = await p.locator('#kx-desc').boundingBox();
+  assert.ok(descRect);
+  await p.mouse.move(descRect.x + 15, descRect.y + 15);
+  await p.mouse.down();
+  await p.mouse.move(outsideX, outsideY, { steps: 6 });
+  await p.mouse.up();
+  assert.equal(await p.locator('#kx-sheet').evaluate(d => d.open), true, 'Drag aus Formular darf Dialog nicht schliessen');
+  await p.keyboard.press('Escape');
+  assert.equal(await p.locator('#kx-sheet').evaluate(d => d.open), false, 'Escape schliesst Dialog');
+  assert.equal(JSON.stringify(await rows(p)), beforeDismiss, 'Escape darf nicht speichern');
+
   // Ausgleich: Bezahlt + Rückgängig
   const before = (await p.locator('#kx-transfers .kx-transfer').count());
   assert.ok(before >= 2);
