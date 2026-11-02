@@ -6,7 +6,7 @@ Deno.serve(
   createPushDeviceHandler({
     createClient,
     webpush,
-    env: (name) => Deno.env.get(name),
-    waitUntil: (task) => EdgeRuntime.waitUntil(task),
+    env: (name: string) => Deno.env.get(name),
+    waitUntil: (task: Promise<unknown>) => EdgeRuntime.waitUntil(task),
   }),
 );
