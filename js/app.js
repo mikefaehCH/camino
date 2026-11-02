@@ -1389,11 +1389,18 @@ window.initTravelExpenses=async function initTravelExpenses(client,projectId,me)
     setTimeout(()=>{try{(mode==='offen'?$('kx-desc'):$('kx-amount')).focus();}catch{}},60);
   }
   function closeSheet(){if(typeof sheet.close==='function'&&sheet.open)sheet.close();else sheet.removeAttribute('open');}
-  // Close only when the backdrop itself is clicked; never dismiss clicks inside the form.
-  sheet.addEventListener('click',event=>{
-    if(event.target!==sheet)return;
+  // Dismiss only genuine backdrop taps; dragging out of an input must not discard edits.
+  let downOnBackdrop=false;
+  const isOutsideSheet=event=>{
     const rect=sheet.getBoundingClientRect();
-    if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)closeSheet();
+    return event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom;
+  };
+  sheet.addEventListener('pointerdown',event=>{
+    downOnBackdrop=event.target===sheet&&isOutsideSheet(event);
+  });
+  sheet.addEventListener('click',event=>{
+    if(downOnBackdrop&&event.target===sheet&&isOutsideSheet(event))closeSheet();
+    downOnBackdrop=false;
   });
   $('kx-add').addEventListener('click',()=>openSheet(null));
   $('kx-cancel').addEventListener('click',closeSheet);
