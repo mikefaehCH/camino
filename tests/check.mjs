@@ -180,6 +180,21 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   const o = await p.evaluate(async () => ({ title: document.querySelector('#today-card .tc-title')?.textContent, gpx: (await fetch('routes/etappe-7.gpx').then(r => r.status).catch(() => 0)) }));
   ok(o.title, 'Offline: Tagesansicht fehlt');
   ok(o.gpx === 200, 'Offline: GPX nicht im Cache');
+  // A missing exact entry must be reported, even if unrelated entries exist.
+  await p.evaluate(async () => {
+    const core = await caches.open('camino-v74');
+    await core.delete(new URL('routes/etappe-7.gpx', location.href));
+    const photos = await caches.open('camino-fotos');
+    const selected = Object.values(IMAGE_MAP.chapters).flatMap(c => [c.hero, ...(c.gallery || [])]).find(g => g && g.src);
+    if (selected) await photos.delete(new URL(selected.src, location.href));
+    await photos.put(new URL('unrelated-photo.webp', location.href), new Response('synthetic', { status: 200 }));
+    window.dispatchEvent(new Event('offline'));
+  });
+  await p.waitForFunction(() => {
+    const text = document.querySelector('#offline-tip [role=status]')?.textContent || '';
+    return text.includes('GPX: unvollständig') && text.includes('Ausgewählte Fotos: unvollständig');
+  }, null, { timeout: 10000 });
+  ok(true, 'Offline-Anzeige meldet fehlende GPX und ausgewählte Fotos');
   await ctx.close();
 }
 
