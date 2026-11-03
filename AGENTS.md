@@ -10,7 +10,7 @@ Gilt für ChatGPT/Codex und Claude. **GitHub ist die verbindliche Quelle** für 
 
 ## Änderungen und Freigaben
 - Jede Codeänderung auf einem Aufgabenbranch mit Pull Request und Issue-Verweis. **Keine direkten Änderungen an `main`, kein Force-Push.**
-- **Autonomer Merge und Deployment sind für ausdrücklich freigegebene Aufträge im vereinbarten Umfang gestattet**, nachdem alle Pflichtprüfungen, das unabhängige Review und GitHub-Schutzregeln erfüllt sind. Die Freigabe zum Entwicklungsauftrag umfasst diese technischen Folgeschritte; sie gilt nicht für andere offene PRs. Der geprüfte Ablauf steht in [docs/RELEASE_POLICY.md](docs/RELEASE_POLICY.md).
+- **Autonomer Merge und Deployment sind für ausdrücklich freigegebene Aufträge im vereinbarten Umfang gestattet**, nachdem alle Pflichtprüfungen und GitHub-Schutzregeln erfüllt sind; Claude-Reviews sind zusätzlich und nicht blockierend. Die Freigabe zum Entwicklungsauftrag umfasst diese technischen Folgeschritte; sie gilt nicht für andere offene PRs. Der geprüfte Ablauf steht in [docs/RELEASE_POLICY.md](docs/RELEASE_POLICY.md).
 - Keine zusätzlichen Funktionen, Designänderungen oder Änderungen persönlicher Inhalte ohne passenden Auftrag. Keine erfundenen Reise-/Buchungsdaten, keine geheimen Daten.
 - Bestehende technische Vorgaben und Validierung in [docs/CAMINO_PROJECT_RULES.md](docs/CAMINO_PROJECT_RULES.md) beachten. Bei Widerspruch gilt die strengere Schutzregel; eine Entscheidung von Mike einholen.
 - Issues und PRs statt gemeinsamer, ständig überschreibbarer Statusdatei verwenden. Relevante Beiträge dokumentieren Agent, geprüften Commit, Ergebnis, Validierung und nächsten Schritt.
