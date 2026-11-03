@@ -1016,7 +1016,7 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
   if(!tip||!connection)return;
   const photos=[...new Set(Object.values(IMAGE_MAP.chapters||{}).flatMap(c=>[c.hero,...(c.gallery||[])]).filter(g=>g&&g.src).map(g=>g.src))];
   const routes=[...Object.values(GPX_FILES),...GPX_EXTRA];
-  const core=['./index.html','./css/site.css','./js/offline-readiness.js','./js/app.js','./data/trip.js'];
+  const core=['./','./index.html','./css/site.css','./js/offline-readiness.js','./js/app.js','./js/ledger.js','./js/push-client.js','./js/auth-core.js','./js/auth-ui.js','./vendor/supabase/supabase-js-2.57.0.mjs','./data/trip.js'];
   const detail=document.createElement('p');detail.setAttribute('role','status');detail.setAttribute('aria-live','polite');tip.appendChild(detail);
   const button=document.createElement('button');button.type='button';button.className='btn';tip.appendChild(button);
   const label=(name,value)=>!value?`${name}: unbekannt`:value.found===value.total?`${name}: verfügbar (${value.found}/${value.total})`:`${name}: unvollständig (${value.found}/${value.total})`;
