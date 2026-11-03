@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import '../js/offline-readiness.js';
+const inspect=globalThis.CaminoOfflineReadiness.inspect;
+const base='https://example.test/camino/';
+const files={ 'camino-v74':new Map([['https://example.test/camino/index.html',{ok:true}],['https://example.test/camino/data/trip.js',{ok:true}],['https://example.test/camino/routes/a.gpx',{ok:true}]]), 'camino-fotos':new Map([['https://example.test/camino/a.webp',{ok:true}],['https://example.test/camino/unrelated.webp',{ok:true}]]) };
+const caches={keys:async()=>Object.keys(files),open:async name=>({match:async url=>files[name].get(url)})};
+const check=()=>inspect(caches,'camino-v74',['index.html','data/trip.js'],['routes/a.gpx','routes/b.gpx'],['a.webp','b.webp'],base,true);
+let result=await check();
+assert.deepEqual(result.core,{found:2,total:2});
+assert.deepEqual(result.routes,{found:1,total:2});
+assert.deepEqual(result.photos,{found:1,total:2},'unrelated cache entries cannot replace selected photos');
+files['camino-fotos'].set(base+'b.webp',{ok:false});
+assert.equal((await check()).photos.found,1,'unsuccessful response is not available');
+files['camino-fotos'].set(base+'b.webp',{ok:true});
+assert.equal((await check()).photos.found,2);
+assert.equal((await inspect(caches,'camino-v74',['index.html'],[],[],base,false)).core,null,'uncontrolled page is unknown');
+assert.equal((await inspect({keys:async()=>{throw Error('denied')}},'camino-v74',['index.html'],[],[],base,true)).core,null);
+console.log('Offline readiness: synthetic cache regression checks passed');

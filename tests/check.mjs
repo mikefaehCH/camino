@@ -1,4 +1,5 @@
 import './push-membership.mjs';
+import './offline-readiness.mjs';
 // Camino 2027 – Prüfung nach jeder Änderung
 // Aufruf:  node tests/check.mjs            (prüfen)
 //          node tests/check.mjs --update   (Text-Schnappschuss neu schreiben)
