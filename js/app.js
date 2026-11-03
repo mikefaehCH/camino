@@ -1009,35 +1009,42 @@ window.AFTER_GPX.push(()=>{if(!IN_TRIP||!window.CMAP||typeof L==='undefined')ret
     b.innerHTML=ICON('route')+' Ganze Route';b.addEventListener('click',()=>window.CMAP.fitBounds(all));tools.insertBefore(b,tools.children[1]||null);}});
 /* Hotel-Adressen in den Etappen aus den zentralen Daten */
 STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x.addr)a.textContent=x.addr;});
-/* Fotos auf Wunsch offline speichern (eigener Cache, bleibt über Updates erhalten) */
-(function(){const tip=document.getElementById('offline-tip');if(!tip||!('caches' in window))return;
-  const list=[...new Set(Object.values(IMAGE_MAP.chapters||{}).flatMap(c=>[c.hero,...(c.gallery||[])]).filter(g=>g&&g.src).map(g=>g.src))];
-  if(!list.length)return;const b=document.createElement('button');b.type='button';b.className='btn';
-  const idle=()=>{b.disabled=false;b.innerHTML=ICON('download')+` Alle ${list.length} Fotos offline speichern (ca. 3 MB)`;};
-  const done=()=>{b.disabled=true;b.innerHTML=ICON('check')+' Fotos offline gespeichert';};
-  idle();tip.appendChild(document.createElement('br'));tip.appendChild(b);
-  caches.open('camino-fotos').then(c=>c.keys()).then(k=>{if(k.length>=list.length)done();}).catch(()=>{});
-  b.addEventListener('click',async()=>{b.disabled=true;let n=0;
-    try{const c=await caches.open('camino-fotos');
-      for(const src of list){const u=new URL(src,location.href).href;if(!(await c.match(u))){const r=await fetch(u);if(r.ok)await c.put(u,r);}n++;b.textContent=`Fotos werden gespeichert … ${n}/${list.length}`;}
-      done();}
-    catch(e){idle();b.insertAdjacentHTML('afterend','<span class="map-off"> Nicht alle Fotos gespeichert – mit Netz nochmals versuchen.</span>');}});
-})();
-
-/* Camino 2.0: truthful connectivity indicator; navigator.onLine is not a server reachability test. */
-(function initConnectionStatus(){
-  const status=document.getElementById('connection-status');
-  if(!status)return;
-  const update=()=>{
-    const online=navigator.onLine!==false;
-    status.dataset.connection=online?'online':'offline';
-    status.textContent=online
-      ? 'Netzwerk verfügbar · Karte und Wetter benötigen eine funktionierende Internetverbindung.'
-      : 'Offline · Gespeicherte Etappen, Hotels und GPX bleiben verfügbar. Karte und Wetter sind eingeschränkt.';
-  };
-  window.addEventListener('online',update);
-  window.addEventListener('offline',update);
-  update();
+/* Offline status checks exact cache entries; never fetches to claim readiness. */
+(function initOfflineReadiness(){
+  const tip=document.getElementById('offline-tip');
+  const connection=document.getElementById('connection-status');
+  if(!tip||!connection)return;
+  const photos=[...new Set(Object.values(IMAGE_MAP.chapters||{}).flatMap(c=>[c.hero,...(c.gallery||[])]).filter(g=>g&&g.src).map(g=>g.src))];
+  const routes=[...Object.values(GPX_FILES),...GPX_EXTRA];
+  const core=['./','./index.html','./css/site.css','./js/offline-readiness.js','./js/app.js','./js/ledger.js','./js/push-client.js','./js/auth-core.js','./js/auth-ui.js','./vendor/supabase/supabase-js-2.57.0.mjs','./data/trip.js'];
+  const detail=document.createElement('p');detail.setAttribute('role','status');detail.setAttribute('aria-live','polite');tip.appendChild(detail);
+  const button=document.createElement('button');button.type='button';button.className='btn';tip.appendChild(button);
+  const label=(name,value)=>!value?`${name}: unbekannt`:value.found===value.total?`${name}: verfügbar (${value.found}/${value.total})`:`${name}: unvollständig (${value.found}/${value.total})`;
+  let busy=false,saveFailed=false;
+  async function refresh(){
+    const result=await CaminoOfflineReadiness.inspect(window.caches,'camino-v74',core,routes,photos,location.href,Boolean(navigator.serviceWorker?.controller));
+    detail.textContent=[label('Reisedaten und Unterkünfte',result.core),label('GPX',result.routes),label('Ausgewählte Fotos',result.photos)].join(' · ')+(saveFailed?' · Nicht alle Fotos gespeichert – bitte erneut versuchen.':'');
+    const complete=result.photos&&result.photos.found===result.photos.total;
+    button.disabled=busy||Boolean(complete)||!photos.length||!('caches' in window);
+    if(!busy)button.textContent=complete?'Fotos offline gespeichert':` ${photos.length} Fotos offline speichern`;
+  }
+  button.addEventListener('click',async()=>{
+    if(busy)return;busy=true;saveFailed=false;button.disabled=true;
+    try{
+      const cache=await caches.open('camino-fotos');let count=0;
+      for(const src of photos){
+        const url=new URL(src,location.href).href;
+        const existing=await cache.match(url);
+        if(!existing||!existing.ok){const response=await fetch(url);if(!response.ok)throw new Error('Foto nicht verfügbar');await cache.put(url,response);}
+        button.textContent=`Fotos werden gespeichert … ${++count}/${photos.length}`;
+      }
+    }catch{saveFailed=true;}
+    finally{busy=false;await refresh();}
+  });
+  function updateConnection(){connection.dataset.connection=navigator.onLine===false?'offline':'online';connection.textContent=navigator.onLine===false?'Offline · Verfügbarkeit auf diesem Gerät siehe unten. Karte und Wetter sind eingeschränkt.':'Netzwerk verfügbar · Karte und Wetter benötigen eine funktionierende Internetverbindung.';refresh();}
+  window.addEventListener('online',updateConnection);window.addEventListener('offline',updateConnection);
+  navigator.serviceWorker?.addEventListener('controllerchange',refresh);
+  updateConnection();
 })();
 
 /* Shared travel expenses (Reisekasse 2.0): server-enforced project membership, CHF settlement,

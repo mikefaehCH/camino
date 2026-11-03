@@ -84,7 +84,7 @@ Einstellungen speichern
 Bitte zuerst das iPhone für Push aktivieren.
 Du kannst die Erinnerungen hier jederzeit wieder ausschalten. Dein Gerät bleibt für den Test registriert.
 Netzwerk verfügbar · Karte und Wetter benötigen eine funktionierende Internetverbindung.
-Offline: Seite im Browser «Zum Home-Bildschirm» hinzufügen. Etappen, Hotels, Telefonnummern und GPX sind dann auch ohne Netz da. Fotos nur, wenn ihr sie unten speichert. Karte und Wetter brauchen Empfang.
+Offline: Seite im Browser «Zum Home-Bildschirm» hinzufügen. Prüfe unten, welche Daten auf diesem Gerät gespeichert sind. Fotos kannst du separat speichern. Karte und Wetter brauchen Empfang.
 Alle 34 Fotos offline speichern (ca. 3 MB)
 ### #reise
 Die Reise

@@ -53,9 +53,9 @@ for (const target of ['karte','etappen','buchungen','restaurants']) {
 console.log('PASS: Today quick links resolve to existing sections');
 
 assert.ok(html.includes('id="connection-status"'), 'Missing connectivity status');
-assert.ok(app.includes("addEventListener('offline',update)"), 'Missing offline event update');
-assert.ok(app.includes("addEventListener('online',update)"), 'Missing online event update');
-assert.ok(app.includes("navigator.onLine!==false"), 'Missing initial network state');
+assert.ok(app.includes("addEventListener('offline',updateConnection)"), 'Missing offline event update');
+assert.ok(app.includes("addEventListener('online',updateConnection)"), 'Missing online event update');
+assert.ok(app.includes("navigator.onLine===false"), 'Missing initial network state');
 console.log('PASS: day companion connectivity indicator');
 
 assert.ok(html.includes('id="kx-form"'), 'Expense sheet missing');
