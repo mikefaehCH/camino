@@ -343,6 +343,12 @@ function shareText(i){
   if(x.cafe)L.push('Erste Pause: '+x.cafe);
   if(x.hotel)L.push('Hotel: '+x.hotel+(x.ci?' · Check-in '+x.ci:'')+(x.tel?' · '+x.tel:'')+(x.q?'\nKarte: https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(x.q):''));
   const r=restFor(x);if(r.length)L.push('Abendessen: '+r.join(' / '));
+  if(x.stage&&GPX_FILES[x.stage]){
+    const routes=x.stage===6&&GPX_EXTRA.length
+      ?[['GPX 6a',GPX_EXTRA[0]],['GPX 6b',GPX_FILES[x.stage]]]
+      :[['GPX',GPX_FILES[x.stage]]];
+    for(const [label,path] of routes)L.push(label+': '+new URL(path,SITE_URL).href);
+  }
   const w=wxFor(x.place,x.d);if(w&&w.fc)L.push('Wetter: '+w.max+'° / '+w.min+'° · '+(w.rain??'–')+'% Regen');
   L.push(SITE_URL+(x.stage&&x.stage<=7?'#etappe-'+x.stage:'#heute'));
   return L.join('\n');

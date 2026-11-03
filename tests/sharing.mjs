@@ -18,6 +18,9 @@ function setup({ native, clipboard, open } = {}) {
     document,
     DAYS: [day, { ...day, stage: undefined }],
     SITE_URL: 'https://example.test/camino/',
+    GPX_FILES: { 1: 'routes/etappe-1.gpx', 6: 'routes/etappe-6b.gpx' },
+    GPX_EXTRA: ['routes/etappe-6a.gpx'],
+    URL,
     dayPlan: () => ({ start: 7.5 }), fmt: date => date,
     restFor: () => ['Restaurant & Bar'], wxFor: () => null,
     navigator: {
@@ -43,7 +46,13 @@ function setup({ native, clipboard, open } = {}) {
     '+351 000 000', 'Restaurant & Bar', '#etappe-1']) assert.ok(text.includes(value), value);
   const map = text.split('\n').find(line => line.startsWith('Karte: ')).slice(7);
   assert.equal(new URL(map).searchParams.get('query'), day.q);
+  assert.ok(text.includes('GPX: https://example.test/camino/routes/etappe-1.gpx'));
   assert.ok(context.shareText(1).endsWith('#heute'), 'Travel days keep the Today landing link');
+  assert.ok(!context.shareText(1).includes('GPX:'), 'Non-stage days do not get a route link');
+  context.DAYS.push({ ...day, stage: 6 });
+  const splitRoute = context.shareText(2);
+  assert.ok(splitRoute.includes('GPX 6a: https://example.test/camino/routes/etappe-6a.gpx'));
+  assert.ok(splitRoute.includes('GPX 6b: https://example.test/camino/routes/etappe-6b.gpx'));
 }
 {
   const { context, calls } = setup({ native: async () => {} });
