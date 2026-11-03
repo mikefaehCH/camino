@@ -203,6 +203,14 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   await stage.locator('.stage-share button').filter({ hasText: /^Text kopieren$/ }).click();
   const stageCopy = await p.evaluate(() => ({ actual: window.shareCalls.at(-1), expected: shareText(DAYS.findIndex(d => d.stage === 2)) }));
   ok(stageCopy.actual[0] === 'copy' && stageCopy.actual[1] === stageCopy.expected, 'Etappe: Kopieren verwendet falsche Tagesdaten');
+  await p.evaluate(() => {
+    renderToday(DAYS.findIndex(d => d.stage === 6));
+    document.querySelector('#today-card .tc-more').open = true;
+  });
+  await p.locator('#today-card button').filter({ hasText: /^\s*Teilen$/ }).click();
+  const stage6Share = await p.evaluate(() => window.shareCalls.at(-1)[1]);
+  ok(stage6Share.includes('GPX 6a: https://mikefaehch.github.io/camino/routes/etappe-6a.gpx'), 'Etappe 6: GPX 6a fehlt im Teilen-Text');
+  ok(stage6Share.includes('GPX 6b: https://mikefaehch.github.io/camino/routes/etappe-6b.gpx'), 'Etappe 6: GPX 6b fehlt im Teilen-Text');
   await p.context().close();
 }
 
