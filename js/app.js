@@ -102,7 +102,7 @@ function wxHTML(x){if(!(x&&x.fc))return '';const at=WX&&WX._at?new Date(WX._at):
 function realIdx(){return DAYS.findIndex(x=>x.d===TODAY);}
 function renderToday(i){
   const x=DAYS[i],real=realIdx()===i;
-  document.querySelectorAll('.tp').forEach((b,j)=>{b.classList.toggle('on',j===i);b.setAttribute('aria-selected',j===i);});
+  document.querySelectorAll('.tp').forEach((b,j)=>{b.classList.toggle('on',j===i);b.setAttribute('aria-pressed',j===i);});
   document.getElementById('heute-chip').textContent=real?'Heute':'Vorschau';
   const stats=[];
   if(x.km)stats.push(`<span><b>${String(x.km).replace('.',',')}</b>km</span>`);
@@ -129,7 +129,7 @@ function renderToday(i){
 }
 (function(){
   const p=document.getElementById('today-picker');const ri=realIdx();
-  p.innerHTML=DAYS.map((x,i)=>{const y=dt(x.d);return `<button class="tp${i===ri?' real':''}" type="button" role="tab">${WD[y.getDay()]}<b>${y.getDate()}.</b></button>`;}).join('');
+  p.innerHTML=DAYS.map((x,i)=>{const y=dt(x.d);return `<button class="tp${i===ri?' real':''}" type="button" aria-label="${fmt(x.d)}" aria-controls="today-card"${i===ri?' aria-current="date"':''}>${WD[y.getDay()]}<b>${y.getDate()}.</b></button>`;}).join('');
   p.querySelectorAll('.tp').forEach((b,i)=>b.addEventListener('click',()=>renderToday(i)));
   let start=ri;
   if(start<0){start=TODAY<DAYS[0].d?1:DAYS.length-1;}
@@ -1022,7 +1022,7 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
   const label=(name,value)=>!value?`${name}: unbekannt`:value.found===value.total?`${name}: verfügbar (${value.found}/${value.total})`:`${name}: unvollständig (${value.found}/${value.total})`;
   let busy=false,saveFailed=false;
   async function refresh(){
-    const result=await CaminoOfflineReadiness.inspect(window.caches,'camino-v74',core,routes,photos,location.href,Boolean(navigator.serviceWorker?.controller));
+    const result=await CaminoOfflineReadiness.inspect(window.caches,'camino-v75',core,routes,photos,location.href,Boolean(navigator.serviceWorker?.controller));
     detail.textContent=[label('Reisedaten und Unterkünfte',result.core),label('GPX',result.routes),label('Ausgewählte Fotos',result.photos)].join(' · ')+(saveFailed?' · Nicht alle Fotos gespeichert – bitte erneut versuchen.':'');
     const complete=result.photos&&result.photos.found===result.photos.total;
     button.disabled=busy||Boolean(complete)||!photos.length||!('caches' in window);

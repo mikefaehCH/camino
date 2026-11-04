@@ -304,9 +304,9 @@ a:focus-visible,button:focus-visible,[role=button]:focus-visible{outline:2px sol
 
 /* heute */
 #heute{padding-top:2.25rem;}
-.today-picker{display:flex;gap:.35rem;overflow-x:auto;scrollbar-width:none;padding:.2rem 0 .8rem;}
-.today-picker::-webkit-scrollbar{display:none;}
-.tp{flex:0 0 auto;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:.8rem;padding:.4rem .6rem;font:500 .7rem var(--sans);cursor:pointer;text-align:center;line-height:1.25;}
+.today-picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(48px,1fr));gap:.35rem;padding:.2rem 0 .8rem;}
+.tp:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+.tp{border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:.8rem;padding:.4rem .6rem;font:500 .7rem var(--sans);cursor:pointer;text-align:center;line-height:1.25;}
 .tp b{display:block;font:600 .95rem var(--serif);color:var(--ink);}
 .tp.on{background:var(--ocean);border-color:var(--ocean);color:rgba(255,255,255,.75);}
 .tp.on b{color:#fff;}
