@@ -33,9 +33,12 @@ const ok = (c, m) => { if (!c) fail(m); };
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json',
   '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp',
   '.woff2': 'font/woff2', '.gpx': 'application/gpx+xml', '.txt': 'text/plain' };
+let upgradeFixtureOld = false;
 const missing = new Set();
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+  if (p === '/upgrade-fixture.html') { res.writeHead(200, { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' }); return res.end('<!doctype html><title>Upgrade fixture</title>'); }
+  if (p === '/sw.js' && upgradeFixtureOld) { const sw = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').replace(/const CACHE = 'camino-v\d+'/, "const CACHE = 'camino-v0-test-upgrade'"); res.writeHead(200, { 'Content-Type': 'text/javascript', 'Cache-Control': 'no-store' }); return res.end(sw); }
   if (p.endsWith('/')) p += 'index.html';
   const f = path.join(ROOT, p);
   if (!f.startsWith(ROOT) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { missing.add(p); res.writeHead(404); return res.end(); }
@@ -65,6 +68,51 @@ for (const f of fs.readdirSync(path.join(ROOT, 'routes')).filter(f => f.endsWith
 const engineName = process.env.TEST_BROWSER || 'chromium';
 if (!['chromium', 'webkit'].includes(engineName)) throw new Error('Unbekannter Testbrowser: ' + engineName);
 const browser = await pw[engineName].launch();
+
+// Real Service Worker upgrade in an isolated browser context; no production state.
+{
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  await ctx.route('**/*', r => r.request().url().startsWith(BASE) ? r.continue() : r.abort());
+  const p = await ctx.newPage();
+  try {
+    upgradeFixtureOld = true;
+    await p.goto(BASE + 'upgrade-fixture.html');
+    await p.evaluate(async () => {
+      const registration = await navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' });
+      await navigator.serviceWorker.ready;
+      for (const name of ['camino-fotos', 'zuerich-vtest', 'sommer2027-vtest']) {
+        const cache = await caches.open(name);
+        await cache.put('./synthetic-marker', new Response(name));
+      }
+      return !!registration.active;
+    });
+    upgradeFixtureOld = false;
+    await p.evaluate(async () => (await navigator.serviceWorker.getRegistration()).update());
+    await p.waitForFunction(async () => {
+      const keys = await caches.keys();
+      return keys.some(k => /^camino-v\\d+$/.test(k)) && !keys.includes('camino-v0-test-upgrade');
+    }, null, { timeout: 20000 });
+    const state = await p.evaluate(async () => {
+      const keys = await caches.keys();
+      const markers = await Promise.all(['camino-fotos', 'zuerich-vtest', 'sommer2027-vtest'].map(async name => {
+        const response = await (await caches.open(name)).match('./synthetic-marker');
+        return response && response.text();
+      }));
+      return { keys, markers };
+    });
+    ok(state.markers.join('|') === 'camino-fotos|zuerich-vtest|sommer2027-vtest', 'SW-Upgrade: Fotos oder fremde Caches gingen verloren');
+    await ctx.setOffline(true);
+    const offline = await p.evaluate(async () => {
+      const response = await fetch('./routes/etappe-6a.gpx');
+      return response.ok && (await response.text()).includes('</gpx>');
+    });
+    ok(offline, 'SW-Upgrade: GPX nach Update nicht offline verfügbar');
+  } finally {
+    upgradeFixtureOld = false;
+    await ctx.close();
+  }
+}
+
 async function open(opts = {}) {
   const ctx = await browser.newContext({ timezoneId: 'Europe/Lisbon', viewport: { width: opts.w || 390, height: opts.h || 844 } });
   if (opts.date) await ctx.addInitScript(`(()=>{const T=new Date('${opts.date}').getTime();const O=Date;class D extends O{constructor(...a){super(...(a.length?a:[T]));}static now(){return T;}}window.Date=D;})()`);
