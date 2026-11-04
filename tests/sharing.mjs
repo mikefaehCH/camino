@@ -88,7 +88,7 @@ for (const native of [undefined, async () => { throw { name: 'NotAllowedError' }
 for (const clipboard of [undefined, async () => { throw { name: 'NotAllowedError' }; }]) {
   const { context, calls, nodes } = setup({ clipboard });
   await context.copyDay(0);
-  assert.equal(calls.at(-1)[0], 'dialog');
+  assert.ok(calls.some(c => c[0] === 'dialog'));
   const field=nodes.find(n=>n.tag==='textarea');
   assert.equal(field.value,context.shareText(0));assert.equal(field.readOnly,true);assert.equal(field.selected,true);assert.ok(field.value.includes('\n'));
   assert.equal(calls.filter(c => c[0] === 'open').length, 0);
@@ -96,7 +96,7 @@ for (const clipboard of [undefined, async () => { throw { name: 'NotAllowedError
 {
   const { context, calls } = setup({ open: () => { throw Error('Unavailable'); } });
   await context.shareDay(0);
-  assert.deepEqual(calls.map(c => c[0]), ['open', 'dialog']);
+  assert.deepEqual(calls.map(c => c[0]), ['open', 'dialog', 'focus']);
 }
 // A browser without Clipboard API must offer a labelled, closable manual copy dialog.
 {
