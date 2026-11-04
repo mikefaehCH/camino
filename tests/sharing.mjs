@@ -13,7 +13,8 @@ const day = {
 function setup({ native, clipboard, open } = {}) {
   const calls = [];
   const nodes=[];
-  const document={activeElement:{focus(){}},body:{appendChild(){}},createElement(tag){const node={tag,children:[],append(...children){this.children.push(...children);},appendChild(child){this.append(child);},setAttribute(){},addEventListener(){},showModal(){calls.push(['dialog']);},focus(){},select(){this.selected=true;}};nodes.push(node);return node;}};
+  const previousFocus = {focus(){calls.push(['restore-focus']);}};
+  const document={activeElement:previousFocus,body:{appendChild(){}},createElement(tag){const node={tag,children:[],attrs:{},listeners:{},append(...children){this.children.push(...children);},appendChild(child){this.append(child);},setAttribute(name,value){this.attrs[name]=value;},addEventListener(name,fn){this.listeners[name]=fn;},showModal(){calls.push(['dialog']);},focus(){calls.push(['focus',tag]);},select(){this.selected=true;},close(){this.listeners.close?.();},remove(){calls.push(['remove-dialog']);}};nodes.push(node);return node;}};
   const context = {
     document,
     DAYS: [day, { ...day, stage: undefined }],
@@ -97,4 +98,31 @@ for (const clipboard of [undefined, async () => { throw { name: 'NotAllowedError
   await context.shareDay(0);
   assert.deepEqual(calls.map(c => c[0]), ['open', 'dialog']);
 }
-console.log('PASS: native share, cancellation, WhatsApp encoding, noopener and explicit/manual copy fallbacks');
+// A browser without Clipboard API must offer a labelled, closable manual copy dialog.
+{
+  const { context, calls, nodes } = setup();
+  await context.copyDay(0);
+  const dialog = nodes.find(n => n.tag === 'dialog');
+  const heading = nodes.find(n => n.tag === 'h2');
+  const label = nodes.find(n => n.tag === 'label');
+  const textarea = nodes.find(n => n.tag === 'textarea');
+  const close = nodes.find(n => n.tag === 'button');
+  assert.equal(dialog.attrs['aria-labelledby'], heading.id);
+  assert.equal(heading.textContent, 'Tagesprogramm kopieren');
+  assert.ok(label.children.includes(textarea), 'Textarea must have a visible label');
+  assert.equal(textarea.readOnly, true);
+  assert.equal(textarea.selected, true);
+  assert.equal(close.type, 'button');
+  assert.equal(close.textContent, 'Schliessen');
+  close.listeners.click();
+  assert.deepEqual(calls.slice(-2).map(c => c[0]), ['remove-dialog', 'restore-focus'],
+    'Closing restores focus to the previously active element');
+}
+// Browser-native sharing failure (not cancellation) must use a reversible WhatsApp handoff.
+{
+  const { context, calls } = setup({ native: async () => { throw { name: 'NotAllowedError' }; } });
+  await context.shareDay(0);
+  assert.deepEqual(calls.map(c => c[0]), ['native', 'open', 'alert']);
+  assert.equal(new URL(calls[1][1]).searchParams.get('text'), context.shareText(0));
+}
+console.log('PASS: native share, cancellation, WhatsApp encoding, noopener, accessible manual copy and focus restoration');
