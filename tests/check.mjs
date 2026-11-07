@@ -222,6 +222,13 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   const sw = await p.evaluate(() => navigator.serviceWorker.register('sw.js').then(() => Promise.race([navigator.serviceWorker.ready.then(() => 'ok'), new Promise(r => setTimeout(() => r('timeout'), 10000))])).catch(e => 'Fehler: ' + e.message));
   ok(sw === 'ok', 'Service Worker: ' + sw);
   await p.waitForTimeout(2500); await p.reload(); await p.waitForTimeout(1000);
+  await p.goto(BASE + '#tag-2027-06-17');
+  const packageButton = p.getByRole('button', { name: 'Tagespaket offline speichern' });
+  const packageStatus = p.locator('#today-card .day-route [role=status]');
+  await p.waitForFunction(() => !!navigator.serviceWorker.controller);
+  if (await packageButton.isEnabled()) await packageButton.click();
+  await p.waitForFunction(() => document.querySelector('#today-card .day-route [role=status]')?.textContent.startsWith('Tagespaket offline verfügbar'));
+  ok((await packageStatus.textContent()).includes('GPX'), 'Offline-Paket nennt GPX');
   const foto = await p.evaluate(async () => { const b = [...document.querySelectorAll('#offline-tip .btn')][0]; if (!b) return null; b.click();
     for (let i = 0; i < 100 && !b.disabled; i++) await new Promise(r => setTimeout(r, 50));
     for (let i = 0; i < 200 && !/gespeichert$/.test(b.textContent.trim()); i++) await new Promise(r => setTimeout(r, 100));
@@ -236,9 +243,14 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   await p.goto(BASE + '#tag-2027-06-17');
   await p.reload();
   await p.waitForFunction(() =>
-    document.querySelector('#today-card .day-route [role=status]')?.textContent === 'GPX offline verfügbar'
+    document.querySelector('#today-card .day-route [role=status]')?.textContent.startsWith('Tagespaket offline verfügbar')
   );
   ok((await p.locator('#today-card .tc-title').textContent()).includes('Translatio'), 'Offline-Tageslink: Bootstag nicht ausgewählt');
+  await p.evaluate(() => openStage(6, false));
+  const map = p.locator('#etappe-6 .reading-map');
+  await map.waitFor();
+  ok(await map.locator('polyline').count() === 2, 'GPX-Lesekarte verbindet die zwei Gehstrecken nicht');
+  ok(await map.locator('circle').getAttribute('cx') !== null, 'GPX-Lesekarte zeigt Lesepunkt ohne Internet');
   const routes = p.locator('#today-card .day-route a[download]');
   ok((await routes.allTextContents()).join('|') === 'GPX 6a|GPX 6b', 'Offline-Tageslink: beide GPX-Dateien fehlen');
   const tracks = await routes.evaluateAll(links => Promise.all(links.map(async link => {
