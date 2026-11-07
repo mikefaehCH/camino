@@ -125,7 +125,7 @@ async function open(opts = {}) {
   p.errs = [];
   p.on('pageerror', e => { if (!/^Transition was skipped\. New ViewTransition started$/.test(e.message)) p.errs.push(e.message); });
   p.on('console', m => { if (m.type() === 'error' && !/ERR_FAILED|net::|Failed to load resource|^Transition was skipped\. New ViewTransition started$/.test(m.text())) p.errs.push(m.text()); });
-  await p.goto(BASE);
+  await p.goto(BASE + (opts.hash || ''));
   await p.waitForTimeout(1500);
   return p;
 }
@@ -249,6 +249,25 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   }, null, { timeout: 10000 });
   ok(true, 'Offline-Anzeige meldet fehlende GPX und ausgewählte Fotos');
   await ctx.close();
+}
+
+// A shared date takes priority over the evening preview and survives navigation.
+{
+  const p = await open({ date: '2027-06-16T20:00:00+01:00', hash: '#tag-2027-06-11' });
+  const selected = () => p.locator('#today-picker [aria-pressed="true"]').getAttribute('aria-label');
+  ok((await selected()).includes('11.'), 'Tageslink: Anreise wird beim Öffnen ausgewählt');
+  await p.evaluate(() => { location.hash = 'tag-2027-06-17'; });
+  await p.waitForFunction(() => document.querySelector('.tc-title')?.textContent.includes('Translatio'));
+  ok(await p.locator('.day-route a[download]').count() === 2, 'Tageslink: Bootstag zeigt beide GPX-Strecken');
+  await p.evaluate(() => { location.hash = 'tag-2027-06-20'; });
+  await p.waitForFunction(() => document.querySelector('.tc-title')?.textContent.includes('A Coruña → Zürich'));
+  await p.reload();
+  ok((await selected()).includes('20.'), 'Tageslink: Heimreise bleibt nach Neuladen ausgewählt');
+  await p.goto(BASE + '#tag-2099-01-01');
+  await p.reload();
+  ok((await selected()).includes('17.'), 'Ungültiger Tageslink: reguläre Abendvorschau bleibt verfügbar');
+  ok(p.errs.length === 0, 'Tageslink erzeugt Browserfehler: ' + p.errs.join(', '));
+  await p.context().close();
 }
 
 // 2e. Sharing controls execute the selected day's native/copy actions.

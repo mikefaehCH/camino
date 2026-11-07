@@ -17,7 +17,7 @@ function setup({ native, clipboard, open } = {}) {
   const document={activeElement:previousFocus,body:{appendChild(){}},createElement(tag){const node={tag,children:[],attrs:{},listeners:{},append(...children){this.children.push(...children);},appendChild(child){this.append(child);},setAttribute(name,value){this.attrs[name]=value;},addEventListener(name,fn){this.listeners[name]=fn;},showModal(){calls.push(['dialog']);},focus(){calls.push(['focus',tag]);},select(){this.selected=true;},close(){this.listeners.close?.();},remove(){calls.push(['remove-dialog']);}};nodes.push(node);return node;}};
   const context = {
     document,
-    DAYS: [day, { ...day, stage: undefined }],
+    DAYS: [day, { ...day, d: '2027-06-11', stage: undefined }],
     SITE_URL: 'https://example.test/camino/',
     GPX_FILES: { 1: 'routes/etappe-1.gpx', 6: 'routes/etappe-6b.gpx' },
     GPX_EXTRA: ['routes/etappe-6a.gpx'],
@@ -48,7 +48,9 @@ function setup({ native, clipboard, open } = {}) {
   const map = text.split('\n').find(line => line.startsWith('Karte: ')).slice(7);
   assert.equal(new URL(map).searchParams.get('query'), day.q);
   assert.ok(text.includes('GPX: https://example.test/camino/routes/etappe-1.gpx'));
-  assert.ok(context.shareText(1).endsWith('#heute'), 'Travel days keep the Today landing link');
+  assert.ok(context.shareText(1).endsWith('#tag-2027-06-11'), 'Travel days link to the correct date');
+  assert.ok(context.shareText(0, true).endsWith('#tag-2027-06-12'), 'Short version links to the selected date');
+  assert.ok(text.endsWith('#tag-2027-06-12'), 'Full version links to the selected date');
   assert.ok(!context.shareText(1).includes('GPX:'), 'Non-stage days do not get a route link');
   context.DAYS.push({ ...day, stage: 6 });
   const splitRoute = context.shareText(2);

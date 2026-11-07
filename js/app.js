@@ -1,5 +1,5 @@
 /* Camino 2027 – Funktionen. Daten kommen aus data/trip.js. Siehe CLAUDE.md. */
-const CORE_CACHE = 'camino-v76';
+const CORE_CACHE = 'camino-v77';
 /* NAV */
 const secs=document.querySelectorAll('[id]'),links=document.querySelectorAll('#nav a');
 /* Menü markiert den Abschnitt, in dem man gerade liest (letzter Abschnitt, dessen Anfang oben erreicht ist). */
@@ -101,6 +101,10 @@ function wxHTML(x){if(!(x&&x.fc))return '';const at=WX&&WX._at?new Date(WX._at):
 
 /* ===== HEUTE ===== */
 function realIdx(){return DAYS.findIndex(x=>x.d===TODAY);}
+function linkedDayIdx(){return DAYS.findIndex(day=>location.hash==='#tag-'+day.d);}
+function scrollToDayProgram(){
+  requestAnimationFrame(()=>document.getElementById('heute').scrollIntoView({behavior:'instant',block:'start'}));
+}
 function renderToday(i){
   const x=DAYS[i],real=realIdx()===i;
   document.querySelectorAll('.tp').forEach((b,j)=>{b.classList.toggle('on',j===i);b.setAttribute('aria-pressed',j===i);});
@@ -132,10 +136,11 @@ function renderToday(i){
   const p=document.getElementById('today-picker');const ri=realIdx();
   p.innerHTML=DAYS.map((x,i)=>{const y=dt(x.d);return `<button class="tp${i===ri?' real':''}" type="button" aria-label="${fmt(x.d)}" aria-controls="today-card"${i===ri?' aria-current="date"':''}>${WD[y.getDay()]}<b>${y.getDate()}.</b></button>`;}).join('');
   p.querySelectorAll('.tp').forEach((b,i)=>b.addEventListener('click',()=>renderToday(i)));
-  let start=ri;
-  if(start<0){start=TODAY<DAYS[0].d?1:DAYS.length-1;}
+  const linked=linkedDayIdx();
+  const start=linked>=0?linked:ri>=0?ri:TODAY<DAYS[0].d?1:DAYS.length-1;
   renderToday(start);
-  if(ri>=0){document.getElementById('heute-h2').innerHTML='Euer <em>heutiger Tag</em>';}
+  if(linked>=0&&linked!==ri){document.getElementById('heute-h2').textContent='Euer Tagesprogramm';}
+  else if(ri>=0){document.getElementById('heute-h2').innerHTML='Euer <em>heutiger Tag</em>';}
   else if(TODAY<DAYS[0].d){document.getElementById('heute-h2').innerHTML='So sieht <em>jeder Tag</em> aus';}
 })();
 
@@ -343,6 +348,7 @@ function dayRoutes(stage){
 }
 function shareText(i,compact=false){
   const x=DAYS[i],p=dayPlan(i),L=[];
+  const dayUrl=SITE_URL+'#tag-'+x.d;
   L.push('Camino · '+fmt(x.d)+(x.stage&&x.stage<8?' · Etappe '+x.stage:''));
   L.push('*'+x.title.trim()+'*'+(x.km?' · '+String(x.km).replace('.',',')+' km':'')+(x.up?' · ↑'+x.up+' m':'')+(x.dn?' · ↓'+x.dn+' m':''));
   if(p.start!=null)L.push('Abmarsch: '+String(Math.floor(p.start)).padStart(2,'0')+':'+String(Math.round((p.start%1)*60)).padStart(2,'0')+' Uhr'+(p.srTag||''));
@@ -351,9 +357,10 @@ function shareText(i,compact=false){
   if(x.hotel)L.push('Hotel: '+x.hotel+(x.ci?' · Check-in '+x.ci:'')+(x.tel?' · '+x.tel:'')+(x.q?'\nKarte: https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(x.q):''));
   const r=restFor(x);if(r.length)L.push('Abendessen: '+r.join(' / '));
   for(const [label,path] of dayRoutes(x.stage))L.push(label+': '+new URL(path,SITE_URL).href);
-  if(compact)return L.slice(0,2).concat(L.filter(line=>line.startsWith('Abmarsch:')||line.startsWith('GPX')),SITE_URL+'#heute').join('\n');
+  if(compact)return L.slice(0,2).concat(L.filter(line=>line.startsWith('Abmarsch:')||line.startsWith('GPX')),dayUrl).join('\n');
   const w=wxFor(x.place,x.d);if(w&&w.fc)L.push('Wetter: '+w.max+'° / '+w.min+'° · '+(w.rain??'–')+'% Regen');
-  L.push(SITE_URL+(x.stage&&x.stage<=7?'#etappe-'+x.stage:'#heute'));
+  if(x.stage&&x.stage<=7)L.push('Etappendetails: '+SITE_URL+'#etappe-'+x.stage);
+  L.push(dayUrl);
   return L.join('\n');
 }
 async function shareDay(i,compact=false){
@@ -513,6 +520,7 @@ renderToday=function(i){_renderToday3(i);const body=document.querySelector('#tod
 
 /* ===== v9: Abends schon den nächsten Tag zeigen ===== */
 (function(){
+  if(linkedDayIdx()>=0)return;
   const h=new Date().getHours(),ri=realIdx();
   let next=-1;
   if(h>=18){
@@ -1055,6 +1063,14 @@ renderToday=function(i){_renderToday28(i);
     const w=document.createElement('div');w.className='tc-more-btns';rest.forEach(b=>w.appendChild(b));d.appendChild(w);(btns.parentElement.querySelector('.day-route')||btns).after(d);}
 };
 (function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
+if(linkedDayIdx()>=0)scrollToDayProgram();
+window.addEventListener('hashchange',()=>{
+  const linked=linkedDayIdx();
+  if(linked<0)return;
+  renderToday(linked);
+  if(linked!==realIdx())document.getElementById('heute-h2').textContent='Euer Tagesprogramm';
+  scrollToDayProgram();
+});
 /* Karte: am Reisetag auf die heutige Etappe zoomen, Knopf für die ganze Route */
 window.AFTER_GPX.push(()=>{if(!IN_TRIP||!window.CMAP||typeof L==='undefined')return;const x=DAYS[realIdx()];const g=x&&x.stage&&GPX[x.stage];if(!g)return;
   const pts=g.pts.map(p=>[p[0],p[1]]);if(x.stage===6&&window.GPX6A)pts.push(...window.GPX6A.pts.map(p=>[p[0],p[1]]));
