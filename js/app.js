@@ -1011,8 +1011,11 @@ function dayRoutePanel(stage,routes){
   panel.className='day-route';
   const mapLink=document.createElement('a');
   mapLink.className='btn';mapLink.href='#karte';mapLink.textContent='Etappe auf der Karte';
-  mapLink.addEventListener('click',async()=>{
-    await loadGPX();
+  mapLink.addEventListener('click',async event=>{
+    if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+    event.preventDefault();
+    location.hash='karte';
+    await loadGPX().catch(()=>{});
     if(!panel.isConnected||location.hash!=='#karte'||!window.CMAP||!GPX[stage])return;
     const tracks=stage===6?[window.GPX6A,GPX[stage]]:[GPX[stage]];
     const points=tracks.filter(Boolean).flatMap(track=>track.pts.map(([lat,lon])=>[lat,lon]));
