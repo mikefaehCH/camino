@@ -1,5 +1,5 @@
 /* Camino 2027 – Funktionen. Daten kommen aus data/trip.js. Siehe CLAUDE.md. */
-const CORE_CACHE = 'camino-v77';
+const CORE_CACHE = 'camino-v78';
 /* NAV */
 const secs=document.querySelectorAll('[id]'),links=document.querySelectorAll('#nav a');
 /* Menü markiert den Abschnitt, in dem man gerade liest (letzter Abschnitt, dessen Anfang oben erreicht ist). */
@@ -1013,6 +1013,70 @@ const IN_TRIP=TODAY>=DAYS[0].d&&TODAY<=DAYS[DAYS.length-1].d;
 if(IN_TRIP)document.body.classList.add('in-trip');
 /* Hell/Dunkel-Knopf ins Startbild, damit er keine Inhalte überdeckt */
 (function(){const b=document.getElementById('theme-btn'),h=document.getElementById('hero');if(b&&h)h.appendChild(b);})();
+/* GPX-Lesekarte: ein Punkt folgt dem Lesefortschritt, auch ohne Kartenkacheln. */
+(function mountStageMaps(){
+  const active=[];
+  const still=matchMedia('(prefers-reduced-motion: reduce)');
+  let frame=0;
+  function update(){
+    frame=0;
+    for(const {body, map, move} of active){
+      if(!map.getClientRects().length)continue;
+      const rect=body.getBoundingClientRect();
+      const distance=Math.max(1,rect.height-map.offsetHeight);
+      move(still.matches?0:Math.max(0,Math.min(1,(map.getBoundingClientRect().top-rect.top)/distance)));
+    }
+  }
+  function schedule(){if(!frame)frame=requestAnimationFrame(update);}
+  function mount(){
+    for(const [index,stage] of STAGES.entries()){
+      const n=index+1, body=stage.querySelector('.stage-body');
+      const tracks=n===6?[window.GPX6A,GPX[n]]:[GPX[n]];
+      if(!body||tracks.some(track=>!track||!Number.isFinite(track.km)||track.km<=0))continue;
+      const map=document.createElement('aside');
+      map.className='reading-map';
+      map.setAttribute('aria-label','GPX-Übersicht zur Etappe '+n);
+      map.innerHTML='<div><strong>Etappenverlauf</strong><small></small></div><svg viewBox="0 0 320 82" aria-hidden="true"></svg>';
+      map.querySelector('small').textContent=n===6?'Zwei Gehstrecken · Boot dazwischen':'Der Punkt folgt beim Lesen';
+      const svg=map.querySelector('svg');
+      const latitudes=tracks.flatMap(track=>track.pts.map(([lat])=>lat));
+      const longitudes=tracks.flatMap(track=>track.pts.map(([,lon])=>lon));
+      const minLat=Math.min(...latitudes),maxLat=Math.max(...latitudes);
+      const minLon=Math.min(...longitudes),maxLon=Math.max(...longitudes);
+      const correction=Math.cos((minLat+maxLat)/2*Math.PI/180);
+      const width=(maxLon-minLon)*correction,height=maxLat-minLat;
+      const scale=Math.min(300/Math.max(width,1e-8),64/Math.max(height,1e-8));
+      const xy=([lat,lon])=>[160+((lon-minLon)*correction-width/2)*scale,41+((maxLat-lat)-height/2)*scale];
+      const add=(tag,attrs)=>{
+        const element=document.createElementNS('http://www.w3.org/2000/svg',tag);
+        for(const [key,value] of Object.entries(attrs))element.setAttribute(key,value);
+        svg.append(element);
+        return element;
+      };
+      for(const track of tracks)add('polyline',{points:track.pts.map(p=>xy(p).map(v=>v.toFixed(1)).join(',')).join(' ')});
+      const dot=add('circle',{r:5});
+      const total=tracks.reduce((sum,track)=>sum+track.km,0);
+      function move(fraction){
+        let km=fraction*total;
+        let track=tracks[0];
+        if(tracks.length===2&&km>track.km){km-=track.km;track=tracks[1];}
+        const index=track.cum.findIndex(value=>value>=km);
+        const [x,y]=xy(track.pts[index<0?track.pts.length-1:index]);
+        dot.setAttribute('cx',x);
+        dot.setAttribute('cy',y);
+      }
+      body.prepend(map);
+      move(0);
+      active.push({body,map,move});
+    }
+    schedule();
+  }
+  window.AFTER_GPX.push(mount);
+  addEventListener('scroll',schedule,{passive:true});
+  addEventListener('resize',schedule);
+  still.addEventListener('change',schedule);
+})();
+const DAY_OFFLINE_CORE=['./index.html','./css/site.css','./js/offline-readiness.js','./js/app.js','./js/ledger.js','./js/push-client.js','./js/auth-core.js','./js/auth-ui.js','./vendor/supabase/supabase-js-2.57.0.mjs','./data/trip.js'];
 /* Tageskarte: vier Hauptknöpfe, der Rest unter «Mehr» */
 function dayRoutePanel(stage,routes){
   const panel=document.createElement('div');
@@ -1038,12 +1102,48 @@ function dayRoutePanel(stage,routes){
     file.className='btn';file.href=path;file.download='';file.textContent=label;
     panel.append(file);
   }
-  panel.append(status);
+  const save=document.createElement('button');
+  save.type='button';save.className='btn';save.textContent='Tagespaket offline speichern';
+  const day=SDAYS.find(item=>item.stage===stage);
+  const photoFiles=[...new Set((IMAGE_MAP.dayChapters[day?.d]||[]).flatMap(id=>{
+    const chapter=IMAGE_MAP.chapters[id];
+    return chapter?[chapter.hero,...(chapter.gallery||[])].map(photo=>photo?.src).filter(Boolean):[];
+  }))];
+  const routeFiles=routes.map(([,path])=>path);
+  panel.append(save,status);
+  let busy=false,failed=false;
+  const complete=value=>value&&value.found===value.total;
   panel.refreshOffline=async()=>{
-    const result=await CaminoOfflineReadiness.inspect(window.caches,CORE_CACHE,[],routes.map(([,path])=>path),[],location.href,Boolean(navigator.serviceWorker?.controller));
-    const ready=result.routes;
-    status.textContent=!ready?'GPX offline: noch nicht geprüft':ready.found===ready.total?'GPX offline verfügbar':`GPX offline: ${ready.found} von ${ready.total} gespeichert`;
+    const result=await CaminoOfflineReadiness.inspect(window.caches,CORE_CACHE,DAY_OFFLINE_CORE,routeFiles,photoFiles,location.href,Boolean(navigator.serviceWorker?.controller));
+    if(busy||!panel.isConnected)return;
+    const ready=complete(result.core)&&complete(result.routes)&&(!photoFiles.length||complete(result.photos));
+    save.disabled=Boolean(ready)||!window.caches;
+    status.textContent=ready?'Tagespaket offline verfügbar · Tagesprogramm, GPX und Etappenbilder'
+      :failed?'Paket noch unvollständig. Mit Empfang erneut versuchen.'
+      :!result.routes?'GPX offline: noch nicht geprüft'
+      :complete(result.routes)?'GPX offline verfügbar · Tagespaket kann ergänzt werden'
+      :`GPX offline: ${result.routes.found} von ${result.routes.total} gespeichert`;
   };
+  save.addEventListener('click',async()=>{
+    if(busy)return;
+    busy=true;failed=false;save.disabled=true;status.textContent='Tagespaket wird gespeichert …';
+    try{
+      const registration=await navigator.serviceWorker?.getRegistration();
+      if(!registration?.active||!navigator.serviceWorker.controller)throw Error('Offline-Speicher noch nicht bereit');
+      const core=await caches.open(CORE_CACHE);
+      const photos=await caches.open('camino-fotos');
+      for(const [cache,files] of [[core,[...DAY_OFFLINE_CORE,...routeFiles]],[photos,photoFiles]]){
+        const missing=[];
+        for(const file of files){
+          const url=new URL(file,location.href);
+          if(url.origin!==location.origin)throw Error('Nur lokale Dateien im Tagespaket');
+          if(!(await cache.match(url.href))?.ok)missing.push(url.href);
+        }
+        if(missing.length)await cache.addAll(missing);
+      }
+    }catch{failed=true;}
+    finally{busy=false;await panel.refreshOffline();}
+  });
   panel.refreshOffline();
   return panel;
 }
@@ -1087,7 +1187,7 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
   if(!tip||!connection)return;
   const photos=[...new Set(Object.values(IMAGE_MAP.chapters||{}).flatMap(c=>[c.hero,...(c.gallery||[])]).filter(g=>g&&g.src).map(g=>g.src))];
   const routes=[...Object.values(GPX_FILES),...GPX_EXTRA];
-  const core=['./','./index.html','./css/site.css','./js/offline-readiness.js','./js/app.js','./js/ledger.js','./js/push-client.js','./js/auth-core.js','./js/auth-ui.js','./vendor/supabase/supabase-js-2.57.0.mjs','./data/trip.js'];
+  const core=['./',...DAY_OFFLINE_CORE];
   const detail=document.createElement('p');detail.setAttribute('role','status');detail.setAttribute('aria-live','polite');tip.appendChild(detail);
   const button=document.createElement('button');button.type='button';button.className='btn';tip.appendChild(button);
   const label=(name,value)=>!value?`${name}: unbekannt`:value.found===value.total?`${name}: verfügbar (${value.found}/${value.total})`:`${name}: unvollständig (${value.found}/${value.total})`;
