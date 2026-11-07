@@ -86,11 +86,15 @@ const browser = await pw[engineName].launch();
       }
       return !!registration.active;
     });
+    await p.waitForFunction(() => navigator.serviceWorker.controller?.state === 'activated');
+    await p.evaluate(() => { window.upgradeFixtureController = navigator.serviceWorker.controller; });
     upgradeFixtureOld = false;
     await p.evaluate(async () => (await navigator.serviceWorker.getRegistration()).update());
     await p.waitForFunction(async () => {
       const keys = await caches.keys();
-      return keys.some(k => /^camino-v\\d+$/.test(k)) && !keys.includes('camino-v0-test-upgrade');
+      const controller = navigator.serviceWorker.controller;
+      return controller?.state === 'activated' && controller !== window.upgradeFixtureController
+        && keys.some(k => k.startsWith('camino-v')) && !keys.includes('camino-v0-test-upgrade');
     }, null, { timeout: 20000 });
     const state = await p.evaluate(async () => {
       const keys = await caches.keys();
