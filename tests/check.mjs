@@ -232,6 +232,20 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   const o = await p.evaluate(async () => ({ title: document.querySelector('#today-card .tc-title')?.textContent, gpx: (await fetch('routes/etappe-7.gpx').then(r => r.status).catch(() => 0)) }));
   ok(o.title, 'Offline: Tagesansicht fehlt');
   ok(o.gpx === 200, 'Offline: GPX nicht im Cache');
+
+  await p.goto(BASE + '#tag-2027-06-17');
+  await p.reload();
+  await p.waitForFunction(() =>
+    document.querySelector('#today-card .day-route [role=status]')?.textContent === 'GPX offline verfügbar'
+  );
+  ok((await p.locator('#today-card .tc-title').textContent()).includes('Translatio'), 'Offline-Tageslink: Bootstag nicht ausgewählt');
+  const routes = p.locator('#today-card .day-route a[download]');
+  ok((await routes.allTextContents()).join('|') === 'GPX 6a|GPX 6b', 'Offline-Tageslink: beide GPX-Dateien fehlen');
+  const tracks = await routes.evaluateAll(links => Promise.all(links.map(async link => {
+    const response = await fetch(link.href);
+    return response.ok && (await response.text()).includes('</gpx>');
+  })));
+  ok(tracks.length === 2 && tracks.every(Boolean), 'Offline-Tageslink: GPX-Dateien ohne Netz nicht lesbar');
   // A missing exact entry must be reported, even if unrelated entries exist.
   const coreCacheName = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/const CACHE = '(camino-v\d+)'/)[1];
   await p.evaluate(async (cacheName) => {
