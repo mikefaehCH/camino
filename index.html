@@ -758,5 +758,14 @@
 <script src="js/app.js"></script>
 <script src="js/auth-core.js"></script>
 <script type="module" src="js/auth-ui.js"></script>
+<dialog id="day-share-preview" class="copy-dialog" aria-labelledby="day-share-title">
+  <form method="dialog">
+    <h2 id="day-share-title">Tagesprogramm teilen</h2>
+    <label>Umfang <select name="format"><option value="kurz">Kurzfassung</option><option value="voll">Vollständiges Programm</option></select></label>
+    <label>Vorschau <textarea name="preview" rows="8" readonly></textarea></label>
+    <button type="button" class="btn pri" data-share-confirm>Jetzt teilen</button>
+    <button class="btn">Schliessen</button>
+  </form>
+</dialog>
 </body>
 </html>

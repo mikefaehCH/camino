@@ -86,11 +86,15 @@ const browser = await pw[engineName].launch();
       }
       return !!registration.active;
     });
+    await p.waitForFunction(() => navigator.serviceWorker.controller?.state === 'activated');
+    await p.evaluate(() => { window.upgradeFixtureController = navigator.serviceWorker.controller; });
     upgradeFixtureOld = false;
     await p.evaluate(async () => (await navigator.serviceWorker.getRegistration()).update());
     await p.waitForFunction(async () => {
       const keys = await caches.keys();
-      return keys.some(k => /^camino-v\\d+$/.test(k)) && !keys.includes('camino-v0-test-upgrade');
+      const controller = navigator.serviceWorker.controller;
+      return controller?.state === 'activated' && controller !== window.upgradeFixtureController
+        && keys.some(k => k.startsWith('camino-v')) && !keys.includes('camino-v0-test-upgrade');
     }, null, { timeout: 20000 });
     const state = await p.evaluate(async () => {
       const keys = await caches.keys();
@@ -288,15 +292,15 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   });
   const button=p.locator('#today-card button').filter({hasText:/^Text kopieren$/});
   await button.click();
-  const field=p.locator('.copy-dialog textarea');
+  const field=p.locator('[aria-labelledby=copy-dialog-title] textarea');
   const state=await field.evaluate(el=>({value:el.value,readonly:el.readOnly,start:el.selectionStart,end:el.selectionEnd,focused:document.activeElement===el}));
   ok(state.readonly&&state.focused&&state.start===0&&state.end===state.value.length&&state.value.includes('\n'),'Kopierdialog: mehrzeiliger Text nicht vollständig vorausgewählt');
-  const dialogStyle=await p.locator('.copy-dialog').evaluate(el=>({bg:getComputedStyle(el).backgroundColor,left:el.getBoundingClientRect().left}));
+  const dialogStyle=await p.locator('[aria-labelledby=copy-dialog-title]').evaluate(el=>({bg:getComputedStyle(el).backgroundColor,left:el.getBoundingClientRect().left}));
   ok(dialogStyle.bg!=='rgba(0, 0, 0, 0)'&&dialogStyle.left>0,'Kopierdialog muss undurchsichtig und zentriert sein');
   await p.screenshot({path:'/tmp/camino-copy-dialog-390.png'});
-  await p.locator('.copy-dialog button').click();
-  await p.locator('.copy-dialog').waitFor({state:'detached'});
-  ok(await p.locator('.copy-dialog').count()===0,'Kopierdialog wird nicht entfernt');
+  await p.locator('[aria-labelledby=copy-dialog-title] button').click();
+  await p.locator('[aria-labelledby=copy-dialog-title]').waitFor({state:'detached'});
+  ok(await p.locator('[aria-labelledby=copy-dialog-title]').count()===0,'Kopierdialog wird nicht entfernt');
   ok(await button.evaluate(el=>document.activeElement===el),'Kopierdialog gibt Fokus nicht zurück');
   await p.context().close();
 }
