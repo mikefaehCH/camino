@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 
 const app = fs.readFileSync(new URL('../js/app.js', import.meta.url), 'utf8');
-const source = app.slice(app.indexOf('function shareText(i)'), app.indexOf('/* ===== Wo bin ich?'));
+const source = app.slice(app.indexOf('function dayRoutes(stage)'), app.indexOf('/* ===== Wo bin ich?'));
 const day = {
   d: '2027-06-12', stage: 1, title: 'Praça & São + café?', km: 12.5, up: 100, dn: 80,
   hl: ['Fluss & Brücke'], cafe: 'Café São', hotel: 'Hôtel Test', ci: '15:00',

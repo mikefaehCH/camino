@@ -1,4 +1,5 @@
 /* Camino 2027 – Funktionen. Daten kommen aus data/trip.js. Siehe CLAUDE.md. */
+const CORE_CACHE = 'camino-v76';
 /* NAV */
 const secs=document.querySelectorAll('[id]'),links=document.querySelectorAll('#nav a');
 /* Menü markiert den Abschnitt, in dem man gerade liest (letzter Abschnitt, dessen Anfang oben erreicht ist). */
@@ -334,7 +335,13 @@ document.querySelectorAll('#restaurants .rest-city').forEach(c=>{
 const restFor=x=>RESTS[x.d]||(x.stage?RESTS['s'+x.stage]:null)||[];
 
 /* ===== Etappe teilen ===== */
-function shareText(i){
+function dayRoutes(stage){
+  if(!stage||!GPX_FILES[stage])return [];
+  return stage===6&&GPX_EXTRA.length
+    ?[['GPX 6a',GPX_EXTRA[0]],['GPX 6b',GPX_FILES[stage]]]
+    :[['GPX',GPX_FILES[stage]]];
+}
+function shareText(i,compact=false){
   const x=DAYS[i],p=dayPlan(i),L=[];
   L.push('Camino · '+fmt(x.d)+(x.stage&&x.stage<8?' · Etappe '+x.stage:''));
   L.push('*'+x.title.trim()+'*'+(x.km?' · '+String(x.km).replace('.',',')+' km':'')+(x.up?' · ↑'+x.up+' m':'')+(x.dn?' · ↓'+x.dn+' m':''));
@@ -343,25 +350,21 @@ function shareText(i){
   if(x.cafe)L.push('Erste Pause: '+x.cafe);
   if(x.hotel)L.push('Hotel: '+x.hotel+(x.ci?' · Check-in '+x.ci:'')+(x.tel?' · '+x.tel:'')+(x.q?'\nKarte: https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(x.q):''));
   const r=restFor(x);if(r.length)L.push('Abendessen: '+r.join(' / '));
-  if(x.stage&&GPX_FILES[x.stage]){
-    const routes=x.stage===6&&GPX_EXTRA.length
-      ?[['GPX 6a',GPX_EXTRA[0]],['GPX 6b',GPX_FILES[x.stage]]]
-      :[['GPX',GPX_FILES[x.stage]]];
-    for(const [label,path] of routes)L.push(label+': '+new URL(path,SITE_URL).href);
-  }
+  for(const [label,path] of dayRoutes(x.stage))L.push(label+': '+new URL(path,SITE_URL).href);
+  if(compact)return L.slice(0,2).concat(L.filter(line=>line.startsWith('Abmarsch:')||line.startsWith('GPX')),SITE_URL+'#heute').join('\n');
   const w=wxFor(x.place,x.d);if(w&&w.fc)L.push('Wetter: '+w.max+'° / '+w.min+'° · '+(w.rain??'–')+'% Regen');
   L.push(SITE_URL+(x.stage&&x.stage<=7?'#etappe-'+x.stage:'#heute'));
   return L.join('\n');
 }
-async function shareDay(i){
-  const text=shareText(i);
+async function shareDay(i,compact=false){
+  const text=shareText(i,compact);
   if(navigator.share){
     try{await navigator.share({text});return;}
     catch(e){if(e&&e.name==='AbortError')return;}
   }
   // noopener may return null even when the tab opens. It is not a popup-block signal.
   try{window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener');alert('Falls WhatsApp nicht geöffnet wurde: Text kopieren');}
-  catch{await copyDay(i);}
+  catch{await copyDay(i,compact);}
 }
 function showCopyDialog(text){
   const previous=document.activeElement;
@@ -377,14 +380,28 @@ function showCopyDialog(text){
   dialog.append(title,label,close);document.body.appendChild(dialog);
   dialog.showModal();textarea.focus();textarea.select();
 }
-async function copyDay(i){
-  const text=shareText(i);
+async function copyDay(i,compact=false){
+  const text=shareText(i,compact);
   try{
     await navigator.clipboard.writeText(text);
     alert('Tagesprogramm kopiert. Du kannst es in WhatsApp einfügen.');
   }catch{
     showCopyDialog(text);
   }
+}
+
+function previewDay(i){
+  const dialog=document.getElementById('day-share-preview');
+  const form=dialog.querySelector('form');
+  form.elements.format.value='kurz';
+  const update=()=>{form.elements.preview.value=shareText(i,form.elements.format.value==='kurz');};
+  form.elements.format.onchange=update;
+  form.querySelector('[data-share-confirm]').onclick=()=>{
+    dialog.close();
+    shareDay(i,form.elements.format.value==='kurz');
+  };
+  update();
+  dialog.showModal();
 }
 
 /* ===== Wo bin ich? ===== */
@@ -890,7 +907,6 @@ renderToday=function(i){_renderToday24(i);const x=DAYS[i];const card=document.ge
   if(x.addr){const nav=document.createElement('a');nav.className='btn';nav.target='_blank';nav.rel='noopener';
     nav.href='https://www.google.com/maps/dir/?api=1&travelmode=walking&destination='+encodeURIComponent((x.hotel||'')+', '+x.addr);
     nav.innerHTML=ICON('navigation')+' Navigation zum Hotel';if(old)old.replaceWith(nav);else btns.appendChild(nav);}
-  if(x.stage&&GPX_FILES[x.stage]){const g=document.createElement('a');g.className='btn';g.href=GPX_FILES[x.stage];g.setAttribute('download',`camino-etappe-${x.stage}.gpx`);g.innerHTML=ICON('download')+' GPX';btns.appendChild(g);}
   const st=x.stage&&STAGES[x.stage-1];const k=st&&st.querySelector('.mbtn.k');
   if(k){const a=document.createElement('a');a.className='btn';a.href=k.href;a.target='_blank';a.rel='noopener';a.innerHTML=ICON('route')+' Komoot';btns.appendChild(a);}
   if(TODAY>DAYS[DAYS.length-1].d){const c=document.getElementById('heute-chip');if(c)c.textContent='Rückblick';}
@@ -990,14 +1006,50 @@ if(IN_TRIP)document.body.classList.add('in-trip');
 /* Hell/Dunkel-Knopf ins Startbild, damit er keine Inhalte überdeckt */
 (function(){const b=document.getElementById('theme-btn'),h=document.getElementById('hero');if(b&&h)h.appendChild(b);})();
 /* Tageskarte: vier Hauptknöpfe, der Rest unter «Mehr» */
+function dayRoutePanel(stage,routes){
+  const panel=document.createElement('div');
+  panel.className='day-route';
+  const mapLink=document.createElement('a');
+  mapLink.className='btn';mapLink.href='#karte';mapLink.textContent='Etappe auf der Karte';
+  mapLink.addEventListener('click',async()=>{
+    await loadGPX();
+    if(!panel.isConnected||location.hash!=='#karte'||!window.CMAP||!GPX[stage])return;
+    const tracks=stage===6?[window.GPX6A,GPX[stage]]:[GPX[stage]];
+    const points=tracks.filter(Boolean).flatMap(track=>track.pts.map(([lat,lon])=>[lat,lon]));
+    window.CMAP.invalidateSize();
+    window.CMAP.fitBounds(points,{padding:[24,24],animate:false});
+  });
+  const status=document.createElement('p');
+  status.setAttribute('role','status');
+  panel.append(mapLink);
+  for(const [label,path] of routes){
+    const file=document.createElement('a');
+    file.className='btn';file.href=path;file.download='';file.textContent=label;
+    panel.append(file);
+  }
+  panel.append(status);
+  panel.refreshOffline=async()=>{
+    const result=await CaminoOfflineReadiness.inspect(window.caches,CORE_CACHE,[],routes.map(([,path])=>path),[],location.href,Boolean(navigator.serviceWorker?.controller));
+    const ready=result.routes;
+    status.textContent=!ready?'GPX offline: noch nicht geprüft':ready.found===ready.total?'GPX offline verfügbar':`GPX offline: ${ready.found} von ${ready.total} gespeichert`;
+  };
+  panel.refreshOffline();
+  return panel;
+}
 const _renderToday28=renderToday;
 renderToday=function(i){_renderToday28(i);
   const btns=document.querySelector('#today-card .tc-btns');if(!btns||btns.dataset.v28)return;btns.dataset.v28='1';
   const all=[...btns.children],find=re=>all.find(b=>re.test(b.textContent));
   const main=[find(/Zur Etappe/),find(/Wo bin ich/),find(/Navigation zum Hotel|Hotel auf Karte/),find(/Anrufen/)].filter(Boolean);
   const rest=all.filter(b=>!main.includes(b));main.forEach(b=>btns.appendChild(b));
-  if(rest.length){const d=document.createElement('details');d.className='tc-more';d.innerHTML='<summary>Mehr: Teilen, GPX, Komoot</summary>';
-    const w=document.createElement('div');w.className='tc-more-btns';rest.forEach(b=>w.appendChild(b));d.appendChild(w);btns.after(d);}
+  const preview=document.createElement('button');
+  preview.type='button';preview.className='btn';preview.textContent='Teilen mit Vorschau';
+  preview.addEventListener('click',()=>previewDay(i));
+  rest.push(preview);
+  const routes=dayRoutes(DAYS[i].stage);
+  if(routes.length)btns.after(dayRoutePanel(DAYS[i].stage,routes));
+  if(rest.length){const d=document.createElement('details');d.className='tc-more';d.innerHTML='<summary>Mehr: Teilen und Komoot</summary>';
+    const w=document.createElement('div');w.className='tc-more-btns';rest.forEach(b=>w.appendChild(b));d.appendChild(w);(btns.parentElement.querySelector('.day-route')||btns).after(d);}
 };
 (function(){const on=[...document.querySelectorAll('.tp')].findIndex(b=>b.classList.contains('on'));if(on>=0)renderToday(on);})();
 /* Karte: am Reisetag auf die heutige Etappe zoomen, Knopf für die ganze Route */
@@ -1022,7 +1074,8 @@ STAGES.forEach((s,k)=>{const x=SDAYS[k],a=s.querySelector('.dc-addr');if(x&&a&&x
   const label=(name,value)=>!value?`${name}: unbekannt`:value.found===value.total?`${name}: verfügbar (${value.found}/${value.total})`:`${name}: unvollständig (${value.found}/${value.total})`;
   let busy=false,saveFailed=false;
   async function refresh(){
-    const result=await CaminoOfflineReadiness.inspect(window.caches,'camino-v75',core,routes,photos,location.href,Boolean(navigator.serviceWorker?.controller));
+    document.querySelector('.day-route')?.refreshOffline();
+    const result=await CaminoOfflineReadiness.inspect(window.caches,CORE_CACHE,core,routes,photos,location.href,Boolean(navigator.serviceWorker?.controller));
     detail.textContent=[label('Reisedaten und Unterkünfte',result.core),label('GPX',result.routes),label('Ausgewählte Fotos',result.photos)].join(' · ')+(saveFailed?' · Nicht alle Fotos gespeichert – bitte erneut versuchen.':'');
     const complete=result.photos&&result.photos.found===result.photos.total;
     button.disabled=busy||Boolean(complete)||!photos.length||!('caches' in window);

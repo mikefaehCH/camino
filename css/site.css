@@ -1249,3 +1249,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .kx-seg-mini button{min-height:38px;padding:0 .55rem;font-size:.82rem;}
 .kx-ok{font-size:.82rem;color:var(--link);font-weight:700;}
 
+
+.day-route{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem;}
+.day-route .btn,#day-share-preview button,#day-share-preview select{min-height:48px;}
+.day-route p{flex-basis:100%;margin:0;color:var(--ink);font-size:.85rem;}
+#day-share-preview label{display:block;margin:.5rem 0;}
