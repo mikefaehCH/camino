@@ -426,7 +426,9 @@ function locate(){
     const nav=`https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=walking`;
     const kmT=km<10?km.toFixed(1).replace('.',','):Math.round(km).toLocaleString('de-CH');
     const ar=(x.stage&&typeof alongRoute==='function')?alongRoute(x.stage,la,lo):null;
-    out.innerHTML=ar&&ar.off<1
+    out.innerHTML=ar&&ar.off<1&&ar.section
+      ?`Fussweg <b>${ar.section}</b> · noch <b>${ar.left.toFixed(1).replace('.',',')} km</b> bis zum Ende dieses GPX-Abschnitts.`
+      :ar&&ar.off<1
       ?`Noch <b>${ar.left.toFixed(1).replace('.',',')} km auf dem Weg</b> bis <b>${escH(x.hotel)}</b> · ${ar.done.toFixed(1).replace('.',',')} km geschafft${ar.off>0.15?` (${Math.round(ar.off*1000)} m neben der Route)`:''}.<br><a href="${nav}" target="_blank" rel="noopener">${ICON('navigation')} Zu Fuss dorthin navigieren</a>`
       :km>250
       ?`Du bist noch <b>${kmT} km</b> von ${escH(x.place)} entfernt.${TODAY<DAYS[1].d?' Buen Camino ab dem 12. Juni! ':''}`
@@ -615,9 +617,16 @@ async function _loadGPX(){
   if(document.readyState==='complete')go();else addEventListener('load',go,{once:true});})();
 /* «Wo bin ich?» entlang der Route */
 function alongRoute(stage,la,lo){
-  const g=GPX[stage];if(!g)return null;let bi=0,bd=1e9;
-  g.pts.forEach((p,i)=>{const d=distKm(la,lo,p[0],p[1]);if(d<bd){bd=d;bi=i;}});
-  return {off:bd,left:g.km-g.cum[bi],done:g.cum[bi]};
+  const tracks=stage===6?[window.GPX6A,GPX[6]]:[GPX[stage]];
+  let best=null;
+  tracks.forEach((track,index)=>{
+    if(!track)return;
+    track.pts.forEach((point,i)=>{
+      const off=distKm(la,lo,point[0],point[1]);
+      if(!best||off<best.off)best={off,left:track.km-track.cum[i],done:track.cum[i],section:stage===6?(index===0?'6a':'6b'):null};
+    });
+  });
+  return best;
 }
 
 /* ===== v12: Camino Journal ===== */
