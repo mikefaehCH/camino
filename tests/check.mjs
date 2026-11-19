@@ -141,6 +141,14 @@ async function open(opts = {}) {
     heads: STAGES.slice(0, 7).map(s => (s.querySelector('.skm') || {}).textContent),
     facts: [...document.querySelectorAll('.j-facts')].map(e => e.textContent),
   }));
+  const sections = await p.evaluate(async () => {
+    await loadGPX();
+    return [window.GPX6A, GPX[6]].map(track => {
+      const point=track.pts[Math.floor(track.pts.length/2)];
+      return alongRoute(6,point[0],point[1]);
+    });
+  });
+  ok(sections.every((r,i)=>r.section===['6a','6b'][i] && r.off===0 && r.left>0), 'Beide Fusswege der Bootsetappe separat erkennen');
   ok(d.days.length === 10, `DAYS: 10 Tage erwartet, ${d.days.length} gefunden`);
   const walk = d.days.filter(x => x.stage && x.stage <= 7);
   ok(walk.length === 7, 'Genau 7 Etappen erwartet');
