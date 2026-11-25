@@ -132,6 +132,9 @@ async function open(opts = {}) {
 
 // 2a. Daten und Konsistenz
 {
+  const appCache = fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8').match(/const CORE_CACHE = '(camino-v\d+)'/)?.[1];
+  const serviceWorkerCache = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/const CACHE = '(camino-v\d+)'/)?.[1];
+  ok(appCache === serviceWorkerCache, `Offline-Cache-Namen stimmen nicht überein (${appCache} / ${serviceWorkerCache})`);
   const p = await open({ date: '2026-10-18T10:00:00+02:00' });
   const d = await p.evaluate(() => ({
     days: DAYS.map(x => ({ d: x.d, stage: x.stage, km: x.km, up: x.up, dn: x.dn, hotel: x.hotel, addr: x.addr, tel: x.tel, lat: x.lat, lon: x.lon })),
@@ -402,7 +405,35 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   await p.context().close();
 }
 
-// 2g. Rapid stage updates keep every requested state and release shared transition names.
+// 2g. Both walking sections of the boat stage keep route context and navigation.
+{
+  const p = await open({ date: '2027-06-17T10:00:00+02:00' });
+  const results = [];
+  for (const section of ['6a', '6b']) {
+    results.push(await p.evaluate(section => {
+      renderToday(DAYS.findIndex(day => day.stage === 6));
+      window.CMAP = null;
+      loadGPX = () => Promise.resolve();
+      alongRoute = () => ({ section, off: 0.4, left: section === '6a' ? 0.8 : 3.2, done: section === '6a' ? 0.5 : 5.5, target: [42.6, -8.7] });
+      Object.defineProperty(navigator, 'geolocation', { configurable: true, value: {
+        getCurrentPosition: success => success({ coords: { latitude: 42.61, longitude: -8.69, accuracy: 20 } }),
+      } });
+      locate();
+      return new Promise(resolve => setTimeout(() => {
+        const out = document.getElementById('loc-out'), link = out.querySelector('a');
+        resolve({ text: out.textContent, href: link?.href, target: link?.target, rel: link?.rel });
+      }));
+    }, section));
+  }
+  ok(results[0].text.includes('Fussweg 6a') && results[0].text.includes('0,5 km geschafft') && results[0].text.includes('400 m neben der Route'), 'Etappe 6a: Abschnitt, Fortschritt oder Abweichung fehlt');
+  ok(results[0].href?.includes('destination=42.6,-8.7'), 'Etappe 6a: Navigation führt nicht zum Ende des ersten Fusswegs');
+  ok(results[1].text.includes('Fussweg 6b') && results[1].text.includes('Pazo Arretén') && results[1].text.includes('5,5 km geschafft') && results[1].text.includes('400 m neben der Route'), 'Etappe 6b: Abschnitt, Hotel, Fortschritt oder Abweichung fehlt');
+  ok(results[1].href?.includes('destination=42.7441,-8.64742'), 'Etappe 6b: Navigation führt nicht zum Hotel');
+  ok(results.every(result => result.target === '_blank' && result.rel.includes('noopener')), 'Bootsetappe: sichere Navigationslinks fehlen');
+  await p.context().close();
+}
+
+// 2h. Rapid stage updates keep every requested state and release shared transition names.
 {
   const p = await open({ date: '2026-10-18T10:00:00+02:00' });
   await p.evaluate(() => {
@@ -422,7 +453,7 @@ for (const [date, chip] of [['2026-10-18T10:00:00+02:00', 'Vorschau'], ['2027-06
   await p.context().close();
 }
 
-// 2h. Text-Schnappschuss (erkennt ungewollte Inhaltsänderungen)
+// 2i. Text-Schnappschuss (erkennt ungewollte Inhaltsänderungen)
 {
   const p = await open({ date: '2027-06-16T08:00:00+02:00' });
   await p.evaluate(() => { for (let n = 1; n <= 8; n++) try { openStage(n, false); } catch (e) {}
