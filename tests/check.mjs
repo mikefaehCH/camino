@@ -148,10 +148,11 @@ async function open(opts = {}) {
     await loadGPX();
     return [window.GPX6A, GPX[6]].map(track => {
       const point=track.pts[Math.floor(track.pts.length/2)];
-      return alongRoute(6,point[0],point[1]);
+      return { route: alongRoute(6,point[0],point[1]), end: track.pts[track.pts.length-1] };
     });
   });
-  ok(sections.every((r,i)=>r.section===['6a','6b'][i] && r.off===0 && r.left>0), 'Beide Fusswege der Bootsetappe separat erkennen');
+  ok(sections.every(({route},i)=>route.section===['6a','6b'][i] && route.off===0 && route.left>0), 'Beide Fusswege der Bootsetappe separat erkennen');
+  ok(sections.every(({route,end})=>route.target?.length===2 && route.target.every((value,index)=>value===end[index])), 'Bootsetappe: Navigationsziele entsprechen nicht den GPX-Endpunkten');
   ok(d.days.length === 10, `DAYS: 10 Tage erwartet, ${d.days.length} gefunden`);
   const walk = d.days.filter(x => x.stage && x.stage <= 7);
   ok(walk.length === 7, 'Genau 7 Etappen erwartet');
